@@ -1,26 +1,23 @@
 package io.trepix.ia.aplicacion;
 
-import io.trepix.ia.sistemaexperto.IHM;
-import io.trepix.ia.sistemaexperto.IHecho;
-import io.trepix.ia.sistemaexperto.MotorInterferencias;
-import io.trepix.ia.sistemaexperto.Regla;
+import io.trepix.ia.sistemaexperto.Fact;
+import io.trepix.ia.sistemaexperto.InferenceEngine;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class Aplicacion implements IHM {
+public class HumanMachineInterface {
     public static void main(String[] args) {
-        Aplicacion app = new Aplicacion();
-        app.Run();
+        HumanMachineInterface humanMachineInterface = new HumanMachineInterface();
+        humanMachineInterface.run();
     }
 
-    // Funcionamiento del programa, con el ejemplo de las polígonos
-    public void Run() {
+    public void run() {
         // Creación del motor
         System.out.println("** Creación del motor **");
-        MotorInterferencias m = new MotorInterferencias(this);
+        InferenceEngine m = new InferenceEngine(this);
         
         // Agregar las reglas
         System.out.println("** Agregar las reglas **");
@@ -42,11 +39,9 @@ public class Aplicacion implements IHM {
             m.Resolver();
         } while (true);
     }
-    
-    // Pide una valor entero al usuario, sin verificaciones (0 en caso de problema)
-    @Override
-    public int PedirValorEntero(String pregunta) {
-        System.out.println(pregunta);
+
+    public int askForIntegerValue(String question) {
+        System.out.println(question);
         try { 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             return Integer.decode(br.readLine()); 
@@ -56,12 +51,9 @@ public class Aplicacion implements IHM {
         } 
     }
 
-    // Solicita un valor booleano, con sí (verdadero) o no. 
-    // Se ignorarn los errores (devuelve falso)
-    @Override
-    public boolean PedirValorBooleano(String pregunta) {
+    public boolean askForBooleanValue(String question) {
         try {
-            System.out.println(pregunta + " (si, no)");
+            System.out.println(question + " (si, no)");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String res = br.readLine();
             return (res.equals("si"));
@@ -71,28 +63,15 @@ public class Aplicacion implements IHM {
         }
     }
 
-    // Muestra la lista de hechos de nivel >0 y por orden decreciente de nivel
-    @Override
-    public void MostrarHechos(ArrayList<IHecho> hechos) {
+    public void showFacts(ArrayList<Fact<?>> facts) {
         StringBuilder res = new StringBuilder("Solución(s) encontrada(s) : \n");
-        hechos.sort((IHecho f1, IHecho f2) -> {
-            return Integer.compare(f2.Nivel(), f1.Nivel());
-        });
-        for(IHecho f : hechos) {
-            if (f.Nivel() != 0) {
+        facts.sort((Fact<?> f1, Fact<?> f2) -> Integer.compare(f2.level(), f1.level()));
+        for(Fact<?> f : facts) {
+            if (f.level() != 0) {
                 res.append(f).append("\n");
             }
         }
         System.out.println(res);
     }
 
-    // Muestra las reglas contenidas en la base
-    @Override
-    public void MostrarReglas(ArrayList<Regla> reglas) {
-        StringBuilder res = new StringBuilder();
-        for(Regla r : reglas) {
-            res.append(r.toString()).append("\n");
-        }
-        System.out.println(res);
-    }
 }
