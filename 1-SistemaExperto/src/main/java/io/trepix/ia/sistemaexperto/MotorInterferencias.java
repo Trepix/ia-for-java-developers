@@ -1,17 +1,17 @@
-package sistemaexperto;
+package io.trepix.ia.sistemaexperto;
 
 import java.util.ArrayList;
 
 // Motor de inferencias del sistema experto
 public class MotorInterferencias {
-    private BaseDeHechos bdf;
-    private BaseDeReglas bdr;
-    private IHM ihm;
+    private final BaseDeHechos bdf;
+    private final BaseDeReglas bdr;
+    private final IHM ihm;
     private int nivelMaxRegla;
     
     // Constructor
-    public MotorInterferencias(IHM _ihm) {
-        ihm = _ihm;
+    public MotorInterferencias(IHM ihm) {
+        this.ihm = ihm;
         bdf = new BaseDeHechos();
         bdr = new BaseDeReglas();
     }
@@ -109,7 +109,7 @@ public class MotorInterferencias {
             String[] premisasConclusion = regla.split("THEN");
             if (premisasConclusion.length == 2) {
                 // Lectura de las premisas
-                ArrayList<IHecho> premisas = new ArrayList();
+                ArrayList<IHecho> premisas = new ArrayList<>();
                 String[] premisasStr = premisasConclusion[0].split(" AND ");
                 for(String cadena : premisasStr) {
                     IHecho premisa = HechoFactory.Hecho(cadena.trim());

@@ -1,4 +1,4 @@
-package sistemaexperto;
+package io.trepix.ia.sistemaexperto;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ class BaseDeReglas {
    
     // Constructor
     public BaseDeReglas() { 
-        reglas = new ArrayList(); 
+        reglas = new ArrayList<>();
     } 
 
     // Eliminar las reglas

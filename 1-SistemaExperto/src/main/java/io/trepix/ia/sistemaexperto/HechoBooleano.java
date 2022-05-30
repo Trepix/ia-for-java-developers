@@ -1,7 +1,7 @@
-package sistemaexperto;
+package io.trepix.ia.sistemaexperto;
 
 // Clase para los hechos booleanos (comme el hecho de être o no un triangulo)
-class HechoBooleen implements IHecho {
+class HechoBooleano implements IHecho {
 
     // Nombre del hecho
     protected String nombre;
@@ -36,7 +36,7 @@ class HechoBooleen implements IHecho {
     }
 
     // Constructor
-    public HechoBooleen(String _nombre , boolean _valor, String _pregunta, int _nivel) {
+    public HechoBooleano(String _nombre , boolean _valor, String _pregunta, int _nivel) {
         nombre = _nombre ;
         valor = _valor;
         pregunta = _pregunta;

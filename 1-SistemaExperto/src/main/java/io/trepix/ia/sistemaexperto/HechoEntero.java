@@ -1,4 +1,4 @@
-package sistemaexperto;
+package io.trepix.ia.sistemaexperto;
 
 // Clase para los hechos enteros (como el número de aldos)
 class HechoEntero implements IHecho {

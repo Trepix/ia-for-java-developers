@@ -1,14 +1,14 @@
-package application;
+package io.trepix.ia.aplicacion;
+
+import io.trepix.ia.sistemaexperto.IHM;
+import io.trepix.ia.sistemaexperto.IHecho;
+import io.trepix.ia.sistemaexperto.MotorInterferencias;
+import io.trepix.ia.sistemaexperto.Regla;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Colleccions;
-import sistemaexperto.IHecho;
-import sistemaexperto.IHM;
-import sistemaexperto.MotorInterferencias;
-import sistemaexperto.Regla;
 
 public class Aplicacion implements IHM {
     public static void main(String[] args) {
@@ -37,10 +37,10 @@ public class Aplicacion implements IHM {
         m.AgregarRegla("R11 : IF (Rectángulo AND Rombo THEN Cuadrado");
          
         // Resolución
-        while(true) {
+        do {
             System.out.println("\n** Resolución **");
             m.Resolver();
-        }
+        } while (true);
     }
     
     // Pide una valor entero al usuario, sin verificaciones (0 en caso de problema)
@@ -61,10 +61,10 @@ public class Aplicacion implements IHM {
     @Override
     public boolean PedirValorBooleano(String pregunta) {
         try {
-            System.out.println(pregunta + " (oui, non)");
+            System.out.println(pregunta + " (si, no)");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String res = br.readLine();
-            return (res.equals("oui"));
+            return (res.equals("si"));
         } 
         catch (IOException e) {
             return false;
@@ -74,13 +74,13 @@ public class Aplicacion implements IHM {
     // Muestra la lista de hechos de nivel >0 y por orden decreciente de nivel
     @Override
     public void MostrarHechos(ArrayList<IHecho> hechos) {
-        String res = "Solución(s) encontrada(s) : \n"; 
-        Colleccions.sort(hechos,(IHecho f1, IHecho f2) -> {
+        StringBuilder res = new StringBuilder("Solución(s) encontrada(s) : \n");
+        hechos.sort((IHecho f1, IHecho f2) -> {
             return Integer.compare(f2.Nivel(), f1.Nivel());
         });
         for(IHecho f : hechos) {
             if (f.Nivel() != 0) {
-                res += f.toString() + "\n";
+                res.append(f).append("\n");
             }
         }
         System.out.println(res);
@@ -89,9 +89,9 @@ public class Aplicacion implements IHM {
     // Muestra las reglas contenidas en la base
     @Override
     public void MostrarReglas(ArrayList<Regla> reglas) {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for(Regla r : reglas) {
-            res += r.toString() + "\n";
+            res.append(r.toString()).append("\n");
         }
         System.out.println(res);
     }

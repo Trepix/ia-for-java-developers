@@ -1,28 +1,20 @@
-package sistemaexperto;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+package io.trepix.ia.sistemaexperto;
 
 // Clase que permtite crear los hechos, independientemente de su tipo
 class HechoFactory {
     // Crea un nuevo hecho rellenando el valor dado por el usuario
     static IHecho Hecho(IHecho f, MotorInterferencias m) {
-        try {
-            IHecho nuevoHecho;
-            Class clase = f.getClass();
-            if (clase.equals(Class.forName("sistemaexperto.HechoEntero"))) {
-                nuevoHecho = CrearHechoEntero(f, m);
-            }
-            else {
-                nuevoHecho = CrearHechoBooleen(f, m);
-            }
-            return nuevoHecho;
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(HechoFactory.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+        IHecho nuevoHecho;
+        Class<?> clase = f.getClass();
+        if (clase.equals(HechoEntero.class)) {
+            nuevoHecho = CrearHechoEntero(f, m);
+        } else if (clase.equals(HechoBooleano.class)) {
+            nuevoHecho = CrearHechoBooleen(f, m);
+        } else nuevoHecho = null;
+
+        return nuevoHecho;
     }
-    
+
     // Crea un hecho entero
     static IHecho CrearHechoEntero(IHecho f, MotorInterferencias m) {
         int valor = m.PedirValorEntero(f.Pregunta());
@@ -30,9 +22,9 @@ class HechoFactory {
     }
 
     // Crea un hecho booleano
-    static IHecho CrearHechoBooleen(IHecho f, MotorInterferencias m) {    
+    static IHecho CrearHechoBooleen(IHecho f, MotorInterferencias m) {
         boolean valorB = m.PedirValorBooleano(f.Pregunta());
-        return new HechoBooleen(f.Nombre(), valorB, null, 0);
+        return new HechoBooleano(f.Nombre(), valorB, null, 0);
     }
 
     // Crea un nuevo hecho a partir de su cadena
@@ -50,8 +42,7 @@ class HechoFactory {
                 }
                 return new HechoEntero(nombreValorPregunta[0].trim(), Integer.parseInt(nombreValorPregunta[1].trim()), pregunta, 0);
             }
-        }
-        else {
+        } else {
             // Es un hecho booleano nombre[(pregunta)] o !nombre[(pregunta)]
             boolean valor = true;
             if (hechoStr.startsWith("!")) {
@@ -65,7 +56,7 @@ class HechoFactory {
             if (nombrePregunta.length == 2) {
                 pregunta = nombrePregunta[1].trim();
             }
-            return new HechoBooleen(nombrePregunta[0].trim(), valor, pregunta, 0);
+            return new HechoBooleano(nombrePregunta[0].trim(), valor, pregunta, 0);
         }
         // Si llegamos aquí, la sintaxis es incorrecta
         return null;

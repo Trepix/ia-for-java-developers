@@ -1,18 +1,18 @@
-package sistemaexperto;
+package io.trepix.ia.sistemaexperto;
 
 import java.util.ArrayList;
 
 // Clase que gestiona la base de hechos
 class BaseDeHechos {
     // Lista de los hechos
-    protected ArrayList<IHecho> hechos; 
-    public ArrayList<IHecho> getHechos () { 
+    protected ArrayList<IHecho> hechos;
+    public ArrayList<IHecho> getHechos () {
         return hechos; 
     } 
   
     // Constructor
     public BaseDeHechos() { 
-        hechos = new ArrayList(); 
+        hechos = new ArrayList<>();
     } 
 
     // Vaciar la base
@@ -22,7 +22,7 @@ class BaseDeHechos {
     
     // Agregar un hecho
     public void AgregarHecho(IHecho hecho) {
-        hechos.add(fait);
+        hechos.add(hecho);
     }
     
     // Buscar un hecho a partir de su nomnre, null si no existe

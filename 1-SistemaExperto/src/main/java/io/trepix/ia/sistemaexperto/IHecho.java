@@ -1,4 +1,4 @@
-package sistemaexperto;
+package io.trepix.ia.sistemaexperto;
 
 // Interface para todos los hechos que se debe implementar
 public interface IHecho {

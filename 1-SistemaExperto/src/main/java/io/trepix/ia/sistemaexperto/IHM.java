@@ -1,4 +1,4 @@
-package sistemaexperto;
+package io.trepix.ia.sistemaexperto;
 
 import java.util.ArrayList;
 
