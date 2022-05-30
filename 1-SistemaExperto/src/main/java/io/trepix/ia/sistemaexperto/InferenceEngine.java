@@ -60,39 +60,31 @@ public class InferenceEngine {
         return maxLevel.orElseThrow();
     }
 
-    Rule searchRule(Rules rules) {
+    Optional<Rule> searchApplicableRule(Rules rules) {
         for(Rule rule : rules.getRules()) {
             if (canBeApplied(rule)) {
                 maxRuleLevel = getRuleLevel(rule);
-                return rule;
+                return Optional.of(rule);
             }
         }
-        return null;
+        return Optional.empty();
     }
-    
-    // Algoritmo principal que permtite resolver un caso dado
-    public void Resolver() {
-        // Se copian todas las reglas
-        Rules bdrLocale = new Rules();
-        bdrLocale.setRules(rules.getRules());
-        
-        // Se vacía la base de hechos
+
+    public void resolve() {
+        Rules rules = new Rules(this.rules.getRules());
+
         knownFacts.clear();
-        
-        // mientras existan reglas a aplicar
-        Rule r = searchRule(bdrLocale);
-        while(r!=null) {
-            // Aplicar la regla
-            Fact nuevoHecho = r.conclusion;
-            nuevoHecho.setLevel(maxRuleLevel + 1);
-            knownFacts.addFact(nuevoHecho);
-            // Eliminar la regla de las posibles
-            bdrLocale.delete(r);
-            // Buscar la siguiente regla aplicable
-            r = searchRule(bdrLocale);
+
+        Optional<Rule> rule = searchApplicableRule(rules);
+        while(rule.isPresent()) {
+            Fact<?> newFact = rule.get().conclusion;
+            newFact.setLevel(maxRuleLevel + 1);
+            knownFacts.addFact(newFact);
+
+            rules.delete(rule.get());
+            rule = searchApplicableRule(rules);
         }
-        
-        // Visualización de los resultados
+
         app.showFacts(knownFacts.getFacts());
     }
     

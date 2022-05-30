@@ -7,14 +7,17 @@ class Rules {
     public ArrayList<Rule> getRules() {
        return rules;
     }
-    public void setRules(ArrayList<Rule> rules) {
+
+    public Rules() {
+        rules = new ArrayList<>();
+    }
+
+    public Rules(ArrayList<Rule> rules) {
+        this.rules = new ArrayList<>();
         for (Rule rule : rules) {
             Rule copy = new Rule(rule.name, rule.premises, rule.conclusion);
             this.rules.add(copy);
         }
-    }
-    public Rules() {
-        rules = new ArrayList<>();
     }
     public void addRule(Rule r) {
         rules.add(r);

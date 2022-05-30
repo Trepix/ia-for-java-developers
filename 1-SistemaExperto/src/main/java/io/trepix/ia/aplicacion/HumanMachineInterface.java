@@ -36,7 +36,7 @@ public class HumanMachineInterface {
         // Resolución
         do {
             System.out.println("\n** Resolución **");
-            m.Resolver();
+            m.resolve();
         } while (true);
     }
 
