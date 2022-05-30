@@ -1,19 +1,19 @@
 package io.trepix.ia.sistemaexperto;
 
 
+import java.security.InvalidParameterException;
+
 import static java.lang.Integer.parseInt;
 
 class FactFactory {
-    static Fact<?> createFact(Fact<?> f, InferenceEngine m) {
-        Fact<?> newFact;
-        Class<?> factClass = f.getClass();
+    static Fact<?> createFact(Fact<?> fact, InferenceEngine inferenceEngine) {
+        Class<?> factClass = fact.getClass();
         if (factClass.equals(IntegerFact.class)) {
-            newFact = createIntegerFact(f, m);
+            return createIntegerFact(fact, inferenceEngine);
         } else if (factClass.equals(BooleanFact.class)) {
-            newFact = createBooleanFact(f, m);
-        } else newFact = null;
-
-        return newFact;
+            return createBooleanFact(fact, inferenceEngine);
+        }
+        throw new InvalidParameterException();
     }
     static IntegerFact createIntegerFact(Fact<?> f, InferenceEngine m) {
         int valor = m.askForIntegerValue(f.question());

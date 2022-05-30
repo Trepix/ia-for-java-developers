@@ -1,6 +1,8 @@
 package io.trepix.ia.sistemaexperto;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
 class Facts {
     protected ArrayList<Fact<?>> facts;
     public ArrayList<Fact<?>> getFacts() {
@@ -17,12 +19,9 @@ class Facts {
     public void addFact(Fact<?> fact) {
         facts.add(fact);
     }
-    public Fact<?> search(String name) {
-        for(Fact<?> fact : facts) {
-            if (fact.name().equals(name)) {
-                return fact;
-            }
-        }
-        return null;
+    public Optional<Fact<?>> search(Fact<?> factToSearch) {
+        return facts.stream()
+                .filter(fact -> fact.name().equals(factToSearch.name()))
+                .findFirst();
     }
 }

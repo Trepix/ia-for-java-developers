@@ -8,7 +8,7 @@ import java.util.Optional;
 
 // Motor de inferencias del sistema experto
 public class InferenceEngine {
-    private final Facts facts;
+    private final Facts knownFacts;
     private final Rules rules;
     private final HumanMachineInterface app;
     private int maxRuleLevel;
@@ -16,7 +16,7 @@ public class InferenceEngine {
     // Constructor
     public InferenceEngine(HumanMachineInterface app) {
         this.app = app;
-        facts = new Facts();
+        knownFacts = new Facts();
         rules = new Rules();
     }
     
@@ -24,44 +24,42 @@ public class InferenceEngine {
         return app.askForIntegerValue(question);
     }
     
-    boolean askForBooleanValue(String pregunta) {
-        return app.askForBooleanValue(pregunta);
+    boolean askForBooleanValue(String question) {
+        return app.askForBooleanValue(question);
     }
-    
-    // Indica si una regla pasada como argumento ss aplicable. 
-    // Si lo es, devuelve su nivel, si no devuelve -1
+
     boolean canBeApplied(Rule rule) {
-        for (Fact<?> premises : rule.getPremises()) {
-            Fact<?> fact = facts.search(premises.name());
-            if (fact == null) {
-                // Este hecho no existe en base de hechos
-                if (premises.question() != null) {
-                    fact = FactFactory.createFact(premises, this);
-                    facts.addFact(fact);
-                } else {
+        for (Fact<?> premise : rule.getPremises()) {
+            Optional<Fact<?>> fact = knownFacts.search(premise);
+            if (fact.isEmpty()) {
+                if (premise.isInferred()) {
                     return false;
                 }
+                fact = Optional.of(FactFactory.createFact(premise, this));
+                knownFacts.addFact(fact.get());
             }
 
-            // El hecho existe en base (antes o creado), ¿pero con el valor correcto?
-            if (!fact.value().equals(premises.value())) {
+            if (premiseDoesNotSatisfyFact(premise, fact.get())) {
                 return false;
             }
         }
         return true;
     }
 
+    private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact){
+        return !fact.value().equals(premise.value());
+    }
+
     int getRuleLevel(Rule rule) {
         Optional<Integer> maxLevel = rule.getPremises().stream()
-                .map(premise -> facts.search(premise.name()))
+                .map(knownFacts::search)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .map(Fact::level)
                 .max(Comparator.naturalOrder());
         return maxLevel.orElseThrow();
     }
-    
-    // Devuelve la primera regla aplicable de la base que se pasa  como argumento
-    // Si hay una, rellena también el atributo de la clase (nivelMaxRegla)
-    // si no devuelve null
+
     Rule searchRule(Rules rules) {
         for(Rule rule : rules.getRules()) {
             if (canBeApplied(rule)) {
@@ -79,7 +77,7 @@ public class InferenceEngine {
         bdrLocale.setRules(rules.getRules());
         
         // Se vacía la base de hechos
-        facts.clear();
+        knownFacts.clear();
         
         // mientras existan reglas a aplicar
         Rule r = searchRule(bdrLocale);
@@ -87,7 +85,7 @@ public class InferenceEngine {
             // Aplicar la regla
             Fact nuevoHecho = r.conclusion;
             nuevoHecho.setLevel(maxRuleLevel + 1);
-            facts.addFact(nuevoHecho);
+            knownFacts.addFact(nuevoHecho);
             // Eliminar la regla de las posibles
             bdrLocale.delete(r);
             // Buscar la siguiente regla aplicable
@@ -95,7 +93,7 @@ public class InferenceEngine {
         }
         
         // Visualización de los resultados
-        app.showFacts(facts.getFacts());
+        app.showFacts(knownFacts.getFacts());
     }
     
     // Agregar una regla a la base a partir de su cadena

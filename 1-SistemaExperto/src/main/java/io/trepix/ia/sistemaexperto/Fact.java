@@ -5,6 +5,9 @@ public interface Fact<T> {
     T value();
     int level();
     String question();
+    default boolean isInferred() {
+        return question() != null;
+    }
     
     void setLevel(int level);
 }
