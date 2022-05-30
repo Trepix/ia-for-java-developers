@@ -3,6 +3,8 @@ package io.trepix.ia.sistemaexperto;
 import io.trepix.ia.aplicacion.HumanMachineInterface;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 
 // Motor de inferencias del sistema experto
 public class InferenceEngine {
@@ -28,8 +30,7 @@ public class InferenceEngine {
     
     // Indica si una regla pasada como argumento ss aplicable. 
     // Si lo es, devuelve su nivel, si no devuelve -1
-    int getRuleLevel(Rule rule) {
-        int maxLevel = -1;
+    boolean canBeApplied(Rule rule) {
         for (Fact<?> premises : rule.getPremises()) {
             Fact<?> fact = facts.search(premises.name());
             if (fact == null) {
@@ -37,32 +38,35 @@ public class InferenceEngine {
                 if (premises.question() != null) {
                     fact = FactFactory.createFact(premises, this);
                     facts.addFact(fact);
-                }
-                else {
-                    return -1;
+                } else {
+                    return false;
                 }
             }
-            
+
             // El hecho existe en base (antes o creado), ¿pero con el valor correcto?
             if (!fact.value().equals(premises.value())) {
-                return -1;
-            }
-            else {
-                maxLevel = Math.max(maxLevel, fact.level());
+                return false;
             }
         }
-        return maxLevel;
+        return true;
+    }
+
+    int getRuleLevel(Rule rule) {
+        Optional<Integer> maxLevel = rule.getPremises().stream()
+                .map(premise -> facts.search(premise.name()))
+                .map(Fact::level)
+                .max(Comparator.naturalOrder());
+        return maxLevel.orElseThrow();
     }
     
     // Devuelve la primera regla aplicable de la base que se pasa  como argumento
     // Si hay una, rellena también el atributo de la clase (nivelMaxRegla)
     // si no devuelve null
-    Rule BuscadorRegla(Rules bdrLocale) {
-        for(Rule r : bdrLocale.getRules()) {
-            int nivel = getRuleLevel(r);
-            if (nivel != -1) {
-                maxRuleLevel = nivel;
-                return r;
+    Rule searchRule(Rules rules) {
+        for(Rule rule : rules.getRules()) {
+            if (canBeApplied(rule)) {
+                maxRuleLevel = getRuleLevel(rule);
+                return rule;
             }
         }
         return null;
@@ -78,7 +82,7 @@ public class InferenceEngine {
         facts.clear();
         
         // mientras existan reglas a aplicar
-        Rule r = BuscadorRegla(bdrLocale);
+        Rule r = searchRule(bdrLocale);
         while(r!=null) {
             // Aplicar la regla
             Fact nuevoHecho = r.conclusion;
@@ -87,7 +91,7 @@ public class InferenceEngine {
             // Eliminar la regla de las posibles
             bdrLocale.delete(r);
             // Buscar la siguiente regla aplicable
-            r = BuscadorRegla(bdrLocale);
+            r = searchRule(bdrLocale);
         }
         
         // Visualización de los resultados
