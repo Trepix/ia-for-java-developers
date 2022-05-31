@@ -1,4 +1,6 @@
-package io.trepix.ia.sistemaexperto;
+package io.trepix.ia.sistemaexperto.facts;
+
+import io.trepix.ia.sistemaexperto.Fact;
 
 class BooleanFact implements Fact<Boolean> {
 

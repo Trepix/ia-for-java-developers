@@ -1,12 +1,15 @@
-package io.trepix.ia.sistemaexperto;
+package io.trepix.ia.sistemaexperto.facts;
 
+
+import io.trepix.ia.sistemaexperto.Fact;
+import io.trepix.ia.sistemaexperto.InferenceEngine;
 
 import java.security.InvalidParameterException;
 
 import static java.lang.Integer.parseInt;
 
-class FactFactory {
-    static Fact<?> createFact(Fact<?> fact, InferenceEngine inferenceEngine) {
+public class FactFactory {
+    public static Fact<?> createFact(Fact<?> fact, InferenceEngine inferenceEngine) {
         Class<?> factClass = fact.getClass();
         if (factClass.equals(IntegerFact.class)) {
             return createIntegerFact(fact, inferenceEngine);
@@ -16,17 +19,17 @@ class FactFactory {
         throw new InvalidParameterException();
     }
 
-    static IntegerFact createIntegerFact(Fact<?> f, InferenceEngine m) {
-        int valor = m.askForIntegerValue(f.question());
-        return new IntegerFact(f.name(), valor, null, 0);
+    private static IntegerFact createIntegerFact(Fact<?> fact, InferenceEngine m) {
+        int value = m.askForIntegerValue(fact.question());
+        return new IntegerFact(fact.name(), value, null, 0);
     }
 
-    static BooleanFact createBooleanFact(Fact<?> f, InferenceEngine m) {
-        boolean valorB = m.askForBooleanValue(f.question());
-        return new BooleanFact(f.name(), valorB, null, 0);
+    private static BooleanFact createBooleanFact(Fact<?> fact, InferenceEngine m) {
+        boolean value = m.askForBooleanValue(fact.question());
+        return new BooleanFact(fact.name(), value, null, 0);
     }
 
-    static Fact<?> createFact(String stringFact) {
+    public static Fact<?> createFact(String stringFact) {
         stringFact = stringFact.trim();
         if (isIntegerFact(stringFact)) {
             return createIntegerFact(stringFact);

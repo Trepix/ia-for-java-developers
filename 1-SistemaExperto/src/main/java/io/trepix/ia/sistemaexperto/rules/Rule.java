@@ -1,4 +1,6 @@
-package io.trepix.ia.sistemaexperto;
+package io.trepix.ia.sistemaexperto.rules;
+
+import io.trepix.ia.sistemaexperto.Fact;
 
 import java.util.List;
 import java.util.StringJoiner;
@@ -14,8 +16,16 @@ public class Rule {
         this.conclusion = conclusion;
     }
 
-    public List<Fact<?>> getPremises() {
+    public static Rule copy(Rule rule) {
+        return new Rule(rule.name, rule.premises, rule.conclusion);
+    }
+
+    public List<Fact<?>> premises() {
         return premises;
+    }
+
+    public Fact<?> conclusion() {
+        return this.conclusion;
     }
 
     @Override

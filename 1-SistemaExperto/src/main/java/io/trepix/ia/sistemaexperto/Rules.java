@@ -1,5 +1,7 @@
 package io.trepix.ia.sistemaexperto;
 
+import io.trepix.ia.sistemaexperto.rules.Rule;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ class Rules {
     public Rules(Rules rules) {
         this.rules = new ArrayList<>();
         for (Rule rule : rules.rules) {
-            Rule copy = new Rule(rule.name, rule.premises, rule.conclusion);
+            Rule copy = Rule.copy(rule);
             this.rules.add(copy);
         }
     }

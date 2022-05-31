@@ -1,35 +1,36 @@
 package io.trepix.ia.sistemaexperto;
 
 import io.trepix.ia.aplicacion.HumanMachineInterface;
+import io.trepix.ia.sistemaexperto.facts.FactFactory;
+import io.trepix.ia.sistemaexperto.rules.Rule;
+import io.trepix.ia.sistemaexperto.rules.RuleFactory;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 
 public class InferenceEngine {
     private final Facts knownFacts;
     private final Rules rules;
-    private final HumanMachineInterface app;
+    private final HumanMachineInterface humanMachineInterface;
     private int maxRuleLevel;
 
     // Constructor
-    public InferenceEngine(HumanMachineInterface app) {
-        this.app = app;
+    public InferenceEngine(HumanMachineInterface humanMachineInterface) {
+        this.humanMachineInterface = humanMachineInterface;
         knownFacts = new Facts();
         rules = new Rules();
     }
 
-    int askForIntegerValue(String question) {
-        return app.askForIntegerValue(question);
+    public int askForIntegerValue(String question) {
+        return humanMachineInterface.askForIntegerValue(question);
     }
 
-    boolean askForBooleanValue(String question) {
-        return app.askForBooleanValue(question);
+    public boolean askForBooleanValue(String question) {
+        return humanMachineInterface.askForBooleanValue(question);
     }
 
     boolean canBeApplied(Rule rule) {
-        for (Fact<?> premise : rule.getPremises()) {
+        for (Fact<?> premise : rule.premises()) {
             Optional<Fact<?>> fact = knownFacts.search(premise);
             if (fact.isEmpty()) {
                 if (premise.isInferred()) {
@@ -51,7 +52,7 @@ public class InferenceEngine {
     }
 
     int getRuleLevel(Rule rule) {
-        Optional<Integer> maxLevel = rule.getPremises().stream()
+        Optional<Integer> maxLevel = rule.premises().stream()
                 .map(knownFacts::search)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -77,7 +78,7 @@ public class InferenceEngine {
 
         Optional<Rule> rule = searchApplicableRule(rules);
         while (rule.isPresent()) {
-            Fact<?> newFact = rule.get().conclusion;
+            Fact<?> newFact = rule.get().conclusion();
             newFact.setLevel(maxRuleLevel + 1);
             knownFacts.addFact(newFact);
 
@@ -85,36 +86,12 @@ public class InferenceEngine {
             rule = searchApplicableRule(rules);
         }
 
-        app.showFacts(knownFacts.getFacts());
+        humanMachineInterface.showFacts(knownFacts.getFacts());
     }
 
     public void addRule(String input) {
-        String[] splitInput = input.split(":");
-        if (splitInput.length == 2) {
-            String name = splitInput[0].trim();
-            String rule = splitInput[1].trim();
-
-            rule = rule.replaceFirst("^IF", "");
-            String[] splitRule = rule.split("THEN");
-            if (splitRule.length == 2) {
-                String premisesAsString = splitRule[0];
-                String conclusionsAsString = splitRule[1];
-
-                List<Fact<?>> premises = createPremises(premisesAsString);
-                Fact<?> conclusion = FactFactory.createFact(conclusionsAsString);
-
-                rules.addRule(new Rule(name, premises, conclusion));
-            }
-        }
-    }
-
-    private List<Fact<?>> createPremises(String premisesAsString) {
-        List<Fact<?>> premises = new ArrayList<>();
-        for (String premiseAsString : premisesAsString.split(" AND ")) {
-            Fact<?> premise = FactFactory.createFact(premiseAsString.trim());
-            premises.add(premise);
-        }
-        return premises;
+        Rule rule = RuleFactory.createRule(input);
+        rules.addRule(rule);
     }
 
 }
