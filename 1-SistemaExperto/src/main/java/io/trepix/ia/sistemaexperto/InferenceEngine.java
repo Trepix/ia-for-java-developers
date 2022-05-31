@@ -21,14 +21,6 @@ public class InferenceEngine {
         rules = new Rules();
     }
 
-    public int askForIntegerValue(String question) {
-        return humanMachineInterface.askForIntegerValue(question);
-    }
-
-    public boolean askForBooleanValue(String question) {
-        return humanMachineInterface.askForBooleanValue(question);
-    }
-
     boolean canBeApplied(Rule rule) {
         for (Fact<?> premise : rule.premises()) {
             Optional<Fact<?>> fact = knownFacts.search(premise);
@@ -36,7 +28,8 @@ public class InferenceEngine {
                 if (premise.isInferred()) {
                     return false;
                 }
-                fact = Optional.of(FactFactory.createFact(premise, this));
+                String value = humanMachineInterface.askForValue(premise.question());
+                fact = Optional.of(FactFactory.createFact(premise, value));
                 knownFacts.addFact(fact.get());
             }
 
