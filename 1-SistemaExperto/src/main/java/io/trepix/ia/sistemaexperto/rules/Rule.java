@@ -1,8 +1,11 @@
 package io.trepix.ia.sistemaexperto.rules;
 
 import io.trepix.ia.sistemaexperto.Fact;
+import io.trepix.ia.sistemaexperto.Facts;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringJoiner;
 
 public class Rule {
@@ -39,5 +42,15 @@ public class Rule {
 
         rule += sj + ") THEN " + conclusion.toString();
         return rule;
+    }
+
+    public int getLevel(Facts knownFacts) {
+        return premises.stream()
+                .map(knownFacts::search)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(Fact::level)
+                .max(Comparator.naturalOrder())
+                .orElseThrow();
     }
 }

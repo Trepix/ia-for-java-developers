@@ -38,26 +38,15 @@ public class InferenceEngine {
             knownFacts.addFact(FactFactory.createFact(premise, value));
         }
     }
-
-
+    
     private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact) {
         return !fact.value().equals(premise.value());
-    }
-
-    int getRuleLevel(Rule rule) {
-        Optional<Integer> maxLevel = rule.premises().stream()
-                .map(knownFacts::search)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .map(Fact::level)
-                .max(Comparator.naturalOrder());
-        return maxLevel.orElseThrow();
     }
 
     Optional<Rule> searchApplicableRule(Rules rules) {
         for (Rule rule : rules.getRules()) {
             if (canBeApplied(rule)) {
-                maxRuleLevel = getRuleLevel(rule);
+                maxRuleLevel = rule.getLevel(knownFacts);
                 return Optional.of(rule);
             }
         }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-class Facts {
+public class Facts {
     protected List<Fact<?>> facts;
 
     public Facts() {
