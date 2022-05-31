@@ -71,7 +71,7 @@ public class InferenceEngine {
     }
 
     public void resolve() {
-        Rules rules = new Rules(this.rules.getRules());
+        Rules rules = new Rules(this.rules);
 
         knownFacts.clear();
 

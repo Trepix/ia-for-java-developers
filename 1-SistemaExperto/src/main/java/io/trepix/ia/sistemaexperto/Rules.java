@@ -10,9 +10,9 @@ class Rules {
         rules = new ArrayList<>();
     }
 
-    public Rules(List<Rule> rules) {
+    public Rules(Rules rules) {
         this.rules = new ArrayList<>();
-        for (Rule rule : rules) {
+        for (Rule rule : rules.rules) {
             Rule copy = new Rule(rule.name, rule.premises, rule.conclusion);
             this.rules.add(copy);
         }
