@@ -28,4 +28,9 @@ class Facts {
                 .filter(fact -> fact.name().equals(factToSearch.name()))
                 .findFirst();
     }
+
+    public boolean exists(Fact<?> factToSearch) {
+        return facts.stream()
+                .anyMatch(fact -> fact.name().equals(factToSearch.name()));
+    }
 }

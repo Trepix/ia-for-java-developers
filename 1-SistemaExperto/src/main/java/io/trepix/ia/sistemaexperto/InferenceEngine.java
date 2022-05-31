@@ -23,22 +23,22 @@ public class InferenceEngine {
 
     boolean canBeApplied(Rule rule) {
         for (Fact<?> premise : rule.premises()) {
-            Optional<Fact<?>> fact = knownFacts.search(premise);
-            if (fact.isEmpty()) {
-                if (premise.isInferred()) {
-                    return false;
-                }
-                String value = humanMachineInterface.askForValue(premise.question());
-                fact = Optional.of(FactFactory.createFact(premise, value));
-                knownFacts.addFact(fact.get());
-            }
+            addToKnownFacts(premise);
 
-            if (premiseDoesNotSatisfyFact(premise, fact.get())) {
-                return false;
-            }
+            Optional<Fact<?>> fact = knownFacts.search(premise);
+            if (fact.isEmpty()) return false;
+            if (premiseDoesNotSatisfyFact(premise, fact.get())) return false;
         }
         return true;
     }
+
+    private void addToKnownFacts(Fact<?> premise) {
+        if (!knownFacts.exists(premise) && premise.requiresInput()) {
+            String value = humanMachineInterface.askForValue(premise.question());
+            knownFacts.addFact(FactFactory.createFact(premise, value));
+        }
+    }
+
 
     private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact) {
         return !fact.value().equals(premise.value());
