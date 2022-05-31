@@ -25,8 +25,8 @@ public class App implements HumanMachineInterface {
         m.addRule("R4 : IF (Right Triangle AND Isosceles Triangle) THEN Isosceles Right Triangle");
         m.addRule("R5 : IF (Triangle AND Equal Sides=3(How many equal sides does the figure have?)) THEN Equilateral Triangle");
         m.addRule("R6 : IF (Sides=4(How many sides does it have?)) THEN Quadrilateral");
-        m.addRule("R7 : IF (Quadrilateral AND Parallel Sides=2(How many sides are parallel to one another? - 0, 2 o 4?)) THEN Trapezium");
-        m.addRule("R8 : IF (Quadrilateral AND Parallel Sides=4(How many sides are parallel to one another? - 0, 2 o 4?)) THEN Parallelogram");
+        m.addRule("R7 : IF (Quadrilateral AND Parallel Sides=2(How many sides are parallel to each other? - 0, 2 o 4?)) THEN Trapezium");
+        m.addRule("R8 : IF (Quadrilateral AND Parallel Sides=4(How many sides are parallel to each other? - 0, 2 o 4?)) THEN Parallelogram");
         m.addRule("R9 : IF (Parallelogram AND Right Angle(Does the figure have at least one right angle? <yes, no>)) THEN Rectangle");
         m.addRule("R10 : IF (Parallelogram AND Equal Sides=4(How many equal sides does the figure have?)) THEN Diamond");
         m.addRule("R11 : IF (Rectangle AND Diamond THEN Square");
