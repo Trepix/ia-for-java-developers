@@ -1,11 +1,9 @@
 package io.trepix.ia.sistemaexperto;
 
-import io.trepix.ia.aplicacion.HumanMachineInterface;
 import io.trepix.ia.sistemaexperto.facts.FactFactory;
 import io.trepix.ia.sistemaexperto.rules.Rule;
 import io.trepix.ia.sistemaexperto.rules.RuleFactory;
 
-import java.util.Comparator;
 import java.util.Optional;
 
 public class InferenceEngine {
@@ -38,7 +36,7 @@ public class InferenceEngine {
             knownFacts.addFact(FactFactory.createFact(premise, value));
         }
     }
-    
+
     private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact) {
         return !fact.value().equals(premise.value());
     }

@@ -1,16 +1,17 @@
 package io.trepix.ia.aplicacion;
 
 import io.trepix.ia.sistemaexperto.Fact;
+import io.trepix.ia.sistemaexperto.HumanMachineInterface;
 import io.trepix.ia.sistemaexperto.InferenceEngine;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class HumanMachineInterface {
+public class App implements HumanMachineInterface {
     public static void main(String[] args) {
-        HumanMachineInterface humanMachineInterface = new HumanMachineInterface();
-        humanMachineInterface.run();
+        App app = new App();
+        app.run();
     }
 
     public void run() {
@@ -36,6 +37,7 @@ public class HumanMachineInterface {
         } while (true);
     }
 
+    @Override
     public String askForValue(String question) {
         System.out.println(question);
         try {
