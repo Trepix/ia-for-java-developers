@@ -10,7 +10,7 @@ public interface Fact<T> {
     String question();
 
     default boolean isInferred() {
-        return question() != null;
+        return question() == null;
     }
 
     void setLevel(int level);
