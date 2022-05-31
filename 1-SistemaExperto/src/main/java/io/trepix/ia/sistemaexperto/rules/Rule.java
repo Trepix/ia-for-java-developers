@@ -2,6 +2,8 @@ package io.trepix.ia.sistemaexperto.rules;
 
 import io.trepix.ia.sistemaexperto.Fact;
 import io.trepix.ia.sistemaexperto.Facts;
+import io.trepix.ia.sistemaexperto.HumanMachineInterface;
+import io.trepix.ia.sistemaexperto.facts.FactFactory;
 
 import java.util.Comparator;
 import java.util.List;
@@ -23,12 +25,37 @@ public class Rule {
         return new Rule(rule.name, rule.premises, rule.conclusion);
     }
 
-    public List<Fact<?>> premises() {
-        return premises;
-    }
-
     public Fact<?> conclusion() {
         return this.conclusion;
+    }
+
+
+    public int getLevel(Facts knownFacts) {
+        return premises.stream()
+                .map(knownFacts::search)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(Fact::level)
+                .max(Comparator.naturalOrder())
+                .orElseThrow();
+    }
+
+    public boolean canBeApplied(Facts knownFacts, HumanMachineInterface humanMachineInterface) {
+        for (Fact<?> premise : premises) {
+            if (!knownFacts.exists(premise) && premise.requiresInput()) {
+                String value = humanMachineInterface.askForValue(premise.question());
+                knownFacts.addFact(FactFactory.createFact(premise, value));
+            }
+
+            Optional<Fact<?>> fact = knownFacts.search(premise);
+            if (fact.isEmpty()) return false;
+            if (premiseDoesNotSatisfyFact(premise, fact.get())) return false;
+        }
+        return true;
+    }
+
+    private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact) {
+        return !fact.value().equals(premise.value());
     }
 
     @Override
@@ -44,13 +71,4 @@ public class Rule {
         return rule;
     }
 
-    public int getLevel(Facts knownFacts) {
-        return premises.stream()
-                .map(knownFacts::search)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .map(Fact::level)
-                .max(Comparator.naturalOrder())
-                .orElseThrow();
-    }
 }

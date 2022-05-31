@@ -4,9 +4,11 @@ import io.trepix.ia.sistemaexperto.rules.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 class Rules {
-    protected List<Rule> rules;
+    private int maxRuleLevel;
+    final private List<Rule> rules;
 
     public Rules() {
         rules = new ArrayList<>();
@@ -15,13 +17,13 @@ class Rules {
     public Rules(Rules rules) {
         this.rules = new ArrayList<>();
         for (Rule rule : rules.rules) {
-            Rule copy = Rule.copy(rule);
-            this.rules.add(copy);
+            this.rules.add(Rule.copy(rule));
         }
+        this.maxRuleLevel = rules.maxRuleLevel;
     }
 
-    public List<Rule> getRules() {
-        return rules;
+    public int maxRuleLevel() {
+        return maxRuleLevel;
     }
 
     public void addRule(Rule r) {
@@ -30,5 +32,15 @@ class Rules {
 
     public void delete(Rule r) {
         rules.remove(r);
+    }
+
+    public Optional<Rule> searchApplicableRule(Facts knownFacts, HumanMachineInterface humanMachineInterface) {
+        for (Rule rule : rules) {
+            if (rule.canBeApplied(knownFacts, humanMachineInterface)) {
+                maxRuleLevel = rule.getLevel(knownFacts);
+                return Optional.of(rule);
+            }
+        }
+        return Optional.empty();
     }
 }
