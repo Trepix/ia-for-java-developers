@@ -24,7 +24,7 @@ public class HumanMachineInterface {
         m.addRule("R1 : IF (Orden=3(¿Cuál es el orden?)) THEN  Triángulo");
         m.addRule("R2 : IF (Triángulo AND Ángulo Recto(¿La figura tiene al menos un ángulo recto?)) THEN Triángulo Rectángulo");
         m.addRule("R3 : IF (Triángulo AND Lados Iguales=2(¿Cuántos lados iguales tiene la figura?)) THEN Triángulo Isósceles");
-        m.addRule("R4 : IF (Triángulo rectángulo AND Triángulo Isósceles) THEN Triángulo Rectángulo Isósceles");
+        m.addRule("R4 : IF (Triángulo Rectángulo AND Triángulo Isósceles) THEN Triángulo Rectángulo Isósceles");
         m.addRule("R5 : IF (Triángulo AND Lados Iguales=3(¿Cuántos lados iguales tiene la figura?)) THEN Triángulo Equilátero");
         m.addRule("R6 : IF (Orden=4(¿Cuál es el orden?)) THEN Cuadrilátero");
         m.addRule("R7 : IF (Cuadrilátero AND Lados Paralelos=2(¿Cuántos lados paralelos entre sí - 0, 2 o 4?)) THEN Trapecio");
