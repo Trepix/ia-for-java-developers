@@ -15,27 +15,24 @@ public class HumanMachineInterface {
     }
 
     public void run() {
-        // Creación del motor
-        System.out.println("** Creación del motor **");
+        System.out.println("** Creating engine **");
         InferenceEngine m = new InferenceEngine(this);
 
-        // Agregar las reglas
-        System.out.println("** Agregar las reglas **");
-        m.addRule("R1 : IF (Orden=3(¿Cuál es el orden?)) THEN  Triángulo");
-        m.addRule("R2 : IF (Triángulo AND Ángulo Recto(¿La figura tiene al menos un ángulo recto?)) THEN Triángulo Rectángulo");
-        m.addRule("R3 : IF (Triángulo AND Lados Iguales=2(¿Cuántos lados iguales tiene la figura?)) THEN Triángulo Isósceles");
-        m.addRule("R4 : IF (Triángulo Rectángulo AND Triángulo Isósceles) THEN Triángulo Rectángulo Isósceles");
-        m.addRule("R5 : IF (Triángulo AND Lados Iguales=3(¿Cuántos lados iguales tiene la figura?)) THEN Triángulo Equilátero");
-        m.addRule("R6 : IF (Orden=4(¿Cuál es el orden?)) THEN Cuadrilátero");
-        m.addRule("R7 : IF (Cuadrilátero AND Lados Paralelos=2(¿Cuántos lados paralelos entre sí - 0, 2 o 4?)) THEN Trapecio");
-        m.addRule("R8 : IF (Cuadrilátero AND Lados Paralelos=4(¿Cuántos lados paralelos entre sí - 0, 2 o 4?)) THEN Paralelogramo");
-        m.addRule("R9 : IF (Paralelogramo AND Ángulo Recto(¿La figura tiene al menos un ángulo recto?)) THEN Rectángulo");
-        m.addRule("R10 : IF (Paralelogramo AND Lados Iguales=4(¿Cuántos lados iguales tiene la figura?)) THEN Rombo");
-        m.addRule("R11 : IF (Rectángulo AND Rombo THEN Cuadrado");
+        System.out.println("** Adding rules **");
+        m.addRule("R1 : IF (Sides=3(How many sides does it have?)) THEN  Triangle");
+        m.addRule("R2 : IF (Triangle AND Right Angle(Does the figure have at least one right angle?)) THEN Right Triangle");
+        m.addRule("R3 : IF (Triangle AND Equal Sides=2(How many equal sides does the figure have?)) THEN Isosceles Triangle");
+        m.addRule("R4 : IF (Right Triangle AND Isosceles Triangle) THEN Isosceles Right Triangle");
+        m.addRule("R5 : IF (Triangle AND Equal Sides=3(How many equal sides does the figure have?)) THEN Equilateral Triangle");
+        m.addRule("R6 : IF (Sides=4(How many sides does it have?)) THEN Quadrilateral");
+        m.addRule("R7 : IF (Quadrilateral AND Parallel Sides=2(How many sides are parallel to one another? - 0, 2 o 4?)) THEN Trapezium");
+        m.addRule("R8 : IF (Quadrilateral AND Parallel Sides=4(How many sides are parallel to one another? - 0, 2 o 4?)) THEN Parallelogram");
+        m.addRule("R9 : IF (Parallelogram AND Right Angle(Does the figure have at least one right angle?)) THEN Rectangle");
+        m.addRule("R10 : IF (Parallelogram AND Equal Sides=4(How many equal sides does the figure have?)) THEN Diamond");
+        m.addRule("R11 : IF (Rectangle AND Diamond THEN Square");
 
-        // Resolución
         do {
-            System.out.println("\n** Resolución **");
+            System.out.println("\n** Resolution **");
             m.resolve();
         } while (true);
     }
@@ -52,21 +49,21 @@ public class HumanMachineInterface {
 
     public boolean askForBooleanValue(String question) {
         try {
-            System.out.println(question + " (si, no)");
+            System.out.println(question + " (yes, no)");
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String res = br.readLine();
-            return (res.equals("si"));
+            return (res.equals("yes"));
         } catch (IOException e) {
             return false;
         }
     }
 
     public void showFacts(List<Fact<?>> facts) {
-        StringBuilder res = new StringBuilder("Solución(s) encontrada(s) : \n");
+        StringBuilder res = new StringBuilder("Found solution(s) : \n");
         facts.sort((Fact<?> f1, Fact<?> f2) -> Integer.compare(f2.level(), f1.level()));
-        for (Fact<?> f : facts) {
-            if (f.level() != 0) {
-                res.append(f).append("\n");
+        for (Fact<?> fact : facts) {
+            if (fact.level() != 0) {
+                res.append(fact).append("\n");
             }
         }
         System.out.println(res);
