@@ -6,7 +6,7 @@ import io.trepix.ia.sistemaexperto.InferenceEngine;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.List;
 
 public class HumanMachineInterface {
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class HumanMachineInterface {
         // Creación del motor
         System.out.println("** Creación del motor **");
         InferenceEngine m = new InferenceEngine(this);
-        
+
         // Agregar las reglas
         System.out.println("** Agregar las reglas **");
         m.addRule("R1 : IF (Orden=3(¿Cuál es el orden?)) THEN  Triángulo");
@@ -32,7 +32,7 @@ public class HumanMachineInterface {
         m.addRule("R9 : IF (Paralelogramo AND Ángulo Recto(¿La figura tiene al menos un ángulo recto?)) THEN Rectángulo");
         m.addRule("R10 : IF (Paralelogramo AND Lados Iguales=4(¿Cuántos lados iguales tiene la figura?)) THEN Rombo");
         m.addRule("R11 : IF (Rectángulo AND Rombo THEN Cuadrado");
-         
+
         // Resolución
         do {
             System.out.println("\n** Resolución **");
@@ -42,13 +42,12 @@ public class HumanMachineInterface {
 
     public int askForIntegerValue(String question) {
         System.out.println(question);
-        try { 
+        try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            return Integer.decode(br.readLine()); 
-        } 
-        catch (Exception e) { 
-            return 0; 
-        } 
+            return Integer.decode(br.readLine());
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public boolean askForBooleanValue(String question) {
@@ -57,16 +56,15 @@ public class HumanMachineInterface {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             String res = br.readLine();
             return (res.equals("si"));
-        } 
-        catch (IOException e) {
+        } catch (IOException e) {
             return false;
         }
     }
 
-    public void showFacts(ArrayList<Fact<?>> facts) {
+    public void showFacts(List<Fact<?>> facts) {
         StringBuilder res = new StringBuilder("Solución(s) encontrada(s) : \n");
         facts.sort((Fact<?> f1, Fact<?> f2) -> Integer.compare(f2.level(), f1.level()));
-        for(Fact<?> f : facts) {
+        for (Fact<?> f : facts) {
             if (f.level() != 0) {
                 res.append(f).append("\n");
             }

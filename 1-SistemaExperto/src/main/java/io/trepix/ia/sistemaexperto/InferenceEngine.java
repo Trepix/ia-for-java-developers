@@ -4,26 +4,26 @@ import io.trepix.ia.aplicacion.HumanMachineInterface;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
-// Motor de inferencias del sistema experto
 public class InferenceEngine {
     private final Facts knownFacts;
     private final Rules rules;
     private final HumanMachineInterface app;
     private int maxRuleLevel;
-    
+
     // Constructor
     public InferenceEngine(HumanMachineInterface app) {
         this.app = app;
         knownFacts = new Facts();
         rules = new Rules();
     }
-    
+
     int askForIntegerValue(String question) {
         return app.askForIntegerValue(question);
     }
-    
+
     boolean askForBooleanValue(String question) {
         return app.askForBooleanValue(question);
     }
@@ -46,7 +46,7 @@ public class InferenceEngine {
         return true;
     }
 
-    private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact){
+    private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact) {
         return !fact.value().equals(premise.value());
     }
 
@@ -61,7 +61,7 @@ public class InferenceEngine {
     }
 
     Optional<Rule> searchApplicableRule(Rules rules) {
-        for(Rule rule : rules.getRules()) {
+        for (Rule rule : rules.getRules()) {
             if (canBeApplied(rule)) {
                 maxRuleLevel = getRuleLevel(rule);
                 return Optional.of(rule);
@@ -76,7 +76,7 @@ public class InferenceEngine {
         knownFacts.clear();
 
         Optional<Rule> rule = searchApplicableRule(rules);
-        while(rule.isPresent()) {
+        while (rule.isPresent()) {
             Fact<?> newFact = rule.get().conclusion;
             newFact.setLevel(maxRuleLevel + 1);
             knownFacts.addFact(newFact);
@@ -87,7 +87,7 @@ public class InferenceEngine {
 
         app.showFacts(knownFacts.getFacts());
     }
-    
+
     public void addRule(String input) {
         String[] splitInput = input.split(":");
         if (splitInput.length == 2) {
@@ -100,7 +100,7 @@ public class InferenceEngine {
                 String premisesAsString = splitRule[0];
                 String conclusionsAsString = splitRule[1];
 
-                ArrayList<Fact<?>> premises = createPremises(premisesAsString);
+                List<Fact<?>> premises = createPremises(premisesAsString);
                 Fact<?> conclusion = FactFactory.createFact(conclusionsAsString);
 
                 rules.addRule(new Rule(name, premises, conclusion));
@@ -108,9 +108,9 @@ public class InferenceEngine {
         }
     }
 
-    private ArrayList<Fact<?>> createPremises(String premisesAsString) {
-        ArrayList<Fact<?>> premises = new ArrayList<>();
-        for(String premiseAsString : premisesAsString.split(" AND ")) {
+    private List<Fact<?>> createPremises(String premisesAsString) {
+        List<Fact<?>> premises = new ArrayList<>();
+        for (String premiseAsString : premisesAsString.split(" AND ")) {
             Fact<?> premise = FactFactory.createFact(premiseAsString.trim());
             premises.add(premise);
         }

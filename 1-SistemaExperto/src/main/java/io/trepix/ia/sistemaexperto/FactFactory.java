@@ -15,6 +15,7 @@ class FactFactory {
         }
         throw new InvalidParameterException();
     }
+
     static IntegerFact createIntegerFact(Fact<?> f, InferenceEngine m) {
         int valor = m.askForIntegerValue(f.question());
         return new IntegerFact(f.name(), valor, null, 0);
@@ -33,7 +34,6 @@ class FactFactory {
             return createBooleanFact(stringFact);
         }
     }
-
 
 
     private static boolean isIntegerFact(String stringFact) {
@@ -78,8 +78,6 @@ class FactFactory {
     private static boolean isNegativeFact(String stringFact) {
         return stringFact.startsWith("!");
     }
-
-
 
 
 }
