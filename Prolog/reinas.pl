@@ -2,7 +2,7 @@
 
 reinas(N, Res) :-
     numlist(1,N,Base),
-    permutacion(Res,Base),
+    permutation(Res,Base),
     diagsOK(Res).
 
 diagsOK( [ _ | [] ] ) :-
