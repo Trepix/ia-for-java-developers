@@ -12,23 +12,23 @@ sides(X) :- ask(sides, 'How many sides does it have? ', X).
 
 % dyanimic because it's mutable
 % /2 because it receives 2 arguments
-:- dynamic memory/2.
+:- dynamic knownFacts/2.
 
 solve :-
-    retractall(memory(_,_)),
+    retractall(knownFacts(_,_)),
     findall(X, name(X), R),
     write(R).
 
 ask(Predicate, _, X) :-
-    memory(Predicate, X).
+    knownFacts(Predicate, X).
 ask(Predicate, _, _) :-
-    memory(Predicate, _),
+    knownFacts(Predicate, _),
     !,
     fail.
 ask(Predicate, Question, X) :-
     write(Question),
     read(Y),
-    asserta(memory(Predicate, Y)),
+    asserta(knownFacts(Predicate, Y)),
     X == Y.
 
 
