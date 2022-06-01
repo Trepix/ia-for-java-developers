@@ -1,6 +1,6 @@
 %********** Facts **********
 
-equalSides(X) :- ask(equalSides, 'How many sides does it have? ', X).
+equalSides(X) :- ask(equalSides, 'How many equal sides does the figure have? ', X).
 
 rightAngle(X) :- ask(rightAngle, 'Does the figure have at least one right angle? (yes, no)? ', X).
 
@@ -10,6 +10,8 @@ sides(X) :- ask(sides, 'How many sides does it have? ', X).
 
 %********** Engine **********
 
+% dyanimic because it's mutable
+% /2 because it receives 2 arguments
 :- dynamic memory/2.
 
 solve :-
@@ -17,23 +19,23 @@ solve :-
     findall(X, name(X), R),
     write(R).
 
-ask(Pred, _, X) :-
-    memory(Pred, X).
-ask(Pred, _, _) :-
-    memory(Pred, _),
+ask(Predicate, _, X) :-
+    memory(Predicate, X).
+ask(Predicate, _, _) :-
+    memory(Predicate, _),
     !,
     fail.
-ask(Pred, Pregunta, X) :-
-    write(Pregunta),
+ask(Predicate, Question, X) :-
+    write(Question),
     read(Y),
-    asserta(memory(Pred, Y)),
+    asserta(memory(Predicate, Y)),
     X == Y.
 
 
 %********** Rules **********
 % Triangles
 name(triangle) :-
-    order(3).
+    sides(3).
 
 name(isoscelesTriangle) :-
     name(triangle),
@@ -41,7 +43,7 @@ name(isoscelesTriangle) :-
 
 name(rightTriangle) :-
     name(triangle),
-    rightAngle(oui).
+    rightAngle(yes).
 
 name(isoscelesRightTriangle) :-
     name(isoscelesTriangle),
@@ -53,7 +55,7 @@ name(equilateralTriangle) :-
 
 % Quadrilaterals
 name(quadrilateral) :-
-    order(4).
+    sides(4).
 
 name(trapezium) :-
     name(quadrilateral),
@@ -65,12 +67,12 @@ name(parallelogram) :-
 
 name(rectangle) :-
     name(parallelogram),
-    rightAngle(si).
+    rightAngle(yes).
 
 name(diamond) :-
     name(parallelogram),
     equalSides(4).
 
-name(Square) :-
+name(square) :-
     name(diamond),
     name(rectangle).
