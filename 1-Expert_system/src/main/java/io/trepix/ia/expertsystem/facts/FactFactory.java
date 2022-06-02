@@ -1,7 +1,7 @@
-package io.trepix.ia.sistemaexperto.facts;
+package io.trepix.ia.expertsystem.facts;
 
 
-import io.trepix.ia.sistemaexperto.Fact;
+import io.trepix.ia.expertsystem.Fact;
 
 import java.security.InvalidParameterException;
 
@@ -9,13 +9,15 @@ import static java.lang.Integer.parseInt;
 
 public class FactFactory {
 
+    public static final String YES_ANSWER = "yes";
+
     public static Fact<?> createFact(Fact<?> fact, String value) {
         Class<?> factClass = fact.getClass();
         if (factClass.equals(IntegerFact.class)) {
             Integer integerValue = Integer.decode(value);
             return new IntegerFact(fact.name(), integerValue, null, 0);
         } else if (factClass.equals(BooleanFact.class)) {
-            boolean booleanValue = value.equals("yes");
+            boolean booleanValue = value.equals(YES_ANSWER);
             return new BooleanFact(fact.name(), booleanValue, null, 0);
         }
         throw new InvalidParameterException();

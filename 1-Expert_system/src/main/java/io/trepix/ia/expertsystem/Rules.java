@@ -1,6 +1,6 @@
-package io.trepix.ia.sistemaexperto;
+package io.trepix.ia.expertsystem;
 
-import io.trepix.ia.sistemaexperto.rules.Rule;
+import io.trepix.ia.expertsystem.rules.Rule;
 
 import java.util.ArrayList;
 import java.util.List;

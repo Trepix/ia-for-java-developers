@@ -1,7 +1,7 @@
-package io.trepix.ia.sistemaexperto.rules;
+package io.trepix.ia.expertsystem.rules;
 
-import io.trepix.ia.sistemaexperto.Fact;
-import io.trepix.ia.sistemaexperto.facts.FactFactory;
+import io.trepix.ia.expertsystem.Fact;
+import io.trepix.ia.expertsystem.facts.FactFactory;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package io.trepix.ia.sistemaexperto;
+package io.trepix.ia.expertsystem;
 
 public interface Fact<T> {
     String name();

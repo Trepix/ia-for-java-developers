@@ -1,9 +1,9 @@
-package io.trepix.ia.sistemaexperto.rules;
+package io.trepix.ia.expertsystem.rules;
 
-import io.trepix.ia.sistemaexperto.Fact;
-import io.trepix.ia.sistemaexperto.Facts;
-import io.trepix.ia.sistemaexperto.HumanMachineInterface;
-import io.trepix.ia.sistemaexperto.facts.FactFactory;
+import io.trepix.ia.expertsystem.Fact;
+import io.trepix.ia.expertsystem.Facts;
+import io.trepix.ia.expertsystem.HumanMachineInterface;
+import io.trepix.ia.expertsystem.facts.FactFactory;
 
 import java.util.Comparator;
 import java.util.List;

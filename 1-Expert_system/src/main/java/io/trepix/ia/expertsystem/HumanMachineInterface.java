@@ -1,4 +1,4 @@
-package io.trepix.ia.sistemaexperto;
+package io.trepix.ia.expertsystem;
 
 import java.util.List;
 

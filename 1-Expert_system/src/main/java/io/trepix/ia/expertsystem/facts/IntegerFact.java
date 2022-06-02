@@ -1,6 +1,6 @@
-package io.trepix.ia.sistemaexperto.facts;
+package io.trepix.ia.expertsystem.facts;
 
-import io.trepix.ia.sistemaexperto.Fact;
+import io.trepix.ia.expertsystem.Fact;
 
 class IntegerFact implements Fact<Integer> {
     protected String name;

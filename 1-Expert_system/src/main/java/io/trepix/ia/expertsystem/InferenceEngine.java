@@ -1,7 +1,7 @@
-package io.trepix.ia.sistemaexperto;
+package io.trepix.ia.expertsystem;
 
-import io.trepix.ia.sistemaexperto.rules.Rule;
-import io.trepix.ia.sistemaexperto.rules.RuleFactory;
+import io.trepix.ia.expertsystem.rules.Rule;
+import io.trepix.ia.expertsystem.rules.RuleFactory;
 
 import java.util.Optional;
 
