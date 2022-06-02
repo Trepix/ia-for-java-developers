@@ -8,7 +8,7 @@ queens(N, Result) :-
 diagonalsDontCollide( [ _ | [] ] ) :-
     true.
 
-diagonalsDontCollide([Head | List]) :-
+diagonalsDontCollide([Head | List],) :-
      queenDontCollideOnDiagonal(Head, List, 1),
      diagonalsDontCollide(List).
 
@@ -19,3 +19,4 @@ queenDontCollideOnDiagonal(Queen, [Head | List], Col) :-
      (Queen + Col) =\= Head,
      (Queen - Col) =\= Head,
      queenDontCollideOnDiagonal(Queen, List, Col+1).
+% alternative: abs(x1 - x2) =\= abs(y1 - y2)
