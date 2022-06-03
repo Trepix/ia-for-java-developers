@@ -1,6 +1,6 @@
-package Logicadifusa;
+package io.trepix.ia.Logicadifusa;
 
-// Expresión difusa : Variable IS Valor
+// Expresiï¿½n difusa : Variable IS Valor
 public class ExpresionDifusa {
     protected VariableLinguistica varL;
     protected String nombreValorLinguistico;

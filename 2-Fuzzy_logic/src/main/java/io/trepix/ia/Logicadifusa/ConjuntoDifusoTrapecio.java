@@ -1,4 +1,4 @@
-package Logicadifusa;
+package io.trepix.ia.Logicadifusa;
 
 // Conjunto difuso particular : función trapecio
 // Forme :

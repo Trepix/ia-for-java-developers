@@ -1,11 +1,11 @@
-package application;
+package io.trepix.ia.aplicacion;
 
-import Logicadifusa.ControladorDifuso;
-import Logicadifusa.ConjuntoDifusoTrapecio;
-import Logicadifusa.ConjuntoDifusoTrapecioDerecha;
-import Logicadifusa.ConjuntoDifusoTrapecioIzquierda;
-import Logicadifusa.ValorLinguistico;
-import Logicadifusa.VariableLinguistica;
+import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecio;
+import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecioDerecha;
+import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecioIzquierda;
+import io.trepix.ia.Logicadifusa.ControladorDifuso;
+import io.trepix.ia.Logicadifusa.ValorLinguistico;
+import io.trepix.ia.Logicadifusa.VariableLinguistica;
 
 // Clase principal, y sobrer el ejemplo del zoom de un GPS
 public class ZoomGPS {
@@ -18,7 +18,7 @@ public class ZoomGPS {
         System.out.println("Agregar las variables de entrada");
         // Variable linguistica de entrada : distancia (en m, de 0 a 500 000)
         VariableLinguistica distancia = new VariableLinguistica("Distancia", 0, 500000); 
-        distancia.AgregarValorLinguistico(new ValorLinguistico("Baja", new ConjuntoDifusoTrapecioIzquierda(0, 500000, 30, 50))); 
+        distancia.AgregarValorLinguistico(new ValorLinguistico("Baja", new ConjuntoDifusoTrapecioIzquierda(0, 500000, 30, 50)));
         distancia.AgregarValorLinguistico(new ValorLinguistico("Media", new ConjuntoDifusoTrapecio(0, 500000, 40, 50, 100, 150))); 
         distancia.AgregarValorLinguistico(new ValorLinguistico("Grande", new ConjuntoDifusoTrapecioDerecha(0, 500000, 100, 150))); 
         controlador.AgregarVariableEntrada(distancia);
@@ -36,7 +36,7 @@ public class ZoomGPS {
         VariableLinguistica zoom = new VariableLinguistica("Zoom", 0, 5); 
         zoom.AgregarValorLinguistico(new ValorLinguistico("Pequeña", new ConjuntoDifusoTrapecioIzquierda(0, 5, 1, 2))); 
         zoom.AgregarValorLinguistico(new ValorLinguistico("Normal", new ConjuntoDifusoTrapecio(0, 5, 1, 2, 3, 4))); 
-        zoom.AgregarValorLinguistico(new ValorLinguistico("Groanda, new ConjuntoDifusoTrapecioDerecha(0, 5, 3, 4))); 
+        zoom.AgregarValorLinguistico(new ValorLinguistico("Grande", new ConjuntoDifusoTrapecioDerecha(0, 5, 3, 4)));
         controlador.AgregarVariableSalida(zoom);
 
         System.out.println("Agregar las reglas");

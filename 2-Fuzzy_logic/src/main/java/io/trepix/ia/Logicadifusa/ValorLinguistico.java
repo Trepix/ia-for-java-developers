@@ -1,4 +1,4 @@
-package Logicadifusa;
+package io.trepix.ia.Logicadifusa;
 
 // Clase que representa un valor linguistico un nombre y un conjunto difuso
 public class ValorLinguistico {

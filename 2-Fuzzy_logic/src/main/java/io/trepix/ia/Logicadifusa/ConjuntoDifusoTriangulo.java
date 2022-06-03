@@ -1,6 +1,6 @@
-package Logicadifusa;
+package io.trepix.ia.Logicadifusa;
 
-// Conjunto difuso particular : función triángulo
+// Conjunto difuso particular : funciï¿½n triï¿½ngulo
 // Forma :
 // *         
 // *        /\ 

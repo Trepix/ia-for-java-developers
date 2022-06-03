@@ -1,4 +1,4 @@
-package Logicadifusa;
+package io.trepix.ia.Logicadifusa;
 
 import java.util.ArrayList;
 

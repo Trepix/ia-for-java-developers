@@ -1,4 +1,4 @@
-package Logicadifusa;
+package io.trepix.ia.Logicadifusa;
 
 // Conjunto difuso particular : 1/2 trapecio izquierda
 // Forme :

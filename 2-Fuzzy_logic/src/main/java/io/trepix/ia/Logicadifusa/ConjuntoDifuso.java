@@ -1,7 +1,7 @@
-package Logicadifusa;
+package io.trepix.ia.Logicadifusa;
 
 import java.util.ArrayList;
-import java.util.Colleccions;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.StringJoiner;
 
@@ -15,7 +15,7 @@ public class ConjuntoDifuso {
     
     // Constructor
     public ConjuntoDifuso(double _min, double _max) {
-        puntos = new ArrayList();
+        puntos = new ArrayList<>();
         min = _min;
         max = _max;
     }
@@ -23,7 +23,7 @@ public class ConjuntoDifuso {
     // Añadir un punto
     public void Agregar(Punto2D pt) {
         puntos.add(pt);
-        Colleccions.sort(puntos);
+        Collections.sort(puntos);
     }
     public void Agregar(double x, double y) {
         Punto2D pt = new Punto2D(x,y);
@@ -116,10 +116,10 @@ public class ConjuntoDifuso {
         ConjuntoDifuso resultado = new ConjuntoDifuso(Math.min(e1.min, e2.min), Math.max(e1.max, e2.max));
         
         // On va recorrer las listas con los iteradores
-        Iterator<Punto2D> iterador1 = e1.puntos.iterador();
+        Iterator<Punto2D> iterador1 = e1.puntos.iterator();
         Punto2D ptConjunto1 = iterador1.next();
         Punto2D antiguoPtConjunto1 = ptConjunto1;
-        Iterator<Punto2D> iterador2 = e2.puntos.iterador();
+        Iterator<Punto2D> iterador2 = e2.puntos.iterator();
         Punto2D ptConjunto2 = iterador2.next();
         
         // Se calcula la posición relativa de las dos curvas
