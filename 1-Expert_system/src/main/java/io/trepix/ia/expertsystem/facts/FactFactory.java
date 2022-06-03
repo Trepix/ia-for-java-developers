@@ -15,10 +15,10 @@ public class FactFactory {
         Class<?> factClass = fact.getClass();
         if (factClass.equals(IntegerFact.class)) {
             Integer integerValue = Integer.decode(value);
-            return new IntegerFact(fact.name(), integerValue, null, 0);
+            return new IntegerFact(fact, integerValue, null, 0);
         } else if (factClass.equals(BooleanFact.class)) {
             boolean booleanValue = value.equals(YES_ANSWER);
-            return new BooleanFact(fact.name(), booleanValue, null, 0);
+            return new BooleanFact(fact, booleanValue, null, 0);
         }
         throw new InvalidParameterException();
     }

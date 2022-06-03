@@ -55,7 +55,7 @@ public class Rule {
     }
 
     private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact) {
-        return !fact.value().equals(premise.value());
+        return !fact.hasSameValue(premise);
     }
 
     @Override

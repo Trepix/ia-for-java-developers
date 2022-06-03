@@ -25,12 +25,12 @@ public class Facts {
 
     public Optional<Fact<?>> search(Fact<?> factToSearch) {
         return facts.stream()
-                .filter(fact -> fact.name().equals(factToSearch.name()))
+                .filter(fact -> fact.isTheSame(factToSearch))
                 .findFirst();
     }
 
     public boolean exists(Fact<?> factToSearch) {
         return facts.stream()
-                .anyMatch(fact -> fact.name().equals(factToSearch.name()));
+                .anyMatch(fact -> fact.isTheSame(factToSearch));
     }
 }

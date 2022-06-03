@@ -1,11 +1,11 @@
 package io.trepix.ia.expertsystem;
 
-public abstract class Fact<T> {
+public abstract class Fact<T> implements Comparable<Fact<?>>{
 
-    protected String name;
-    protected T value;
+    protected final String name;
+    protected final T value;
     protected int level;
-    protected String question;
+    protected final String question;
 
     protected Fact(String name, T value, String question, int level) {
         this.name = name;
@@ -13,27 +13,34 @@ public abstract class Fact<T> {
         this.question = question;
         this.level = level;
     }
-    public String name() {
-        return this.name;
+
+    protected Fact(Fact<?> fact, T value, String question, int level) {
+        this(fact.name, value, question, level);
+    }
+    public boolean isTheSame(Fact<?> fact) {
+        return this.name.equals(fact.name);
     }
 
-    public T value() {
-        return this.value;
+    public boolean hasSameValue(Fact<?> fact) {
+        return this.value.equals(fact.value);
     }
-
     public int level() {
         return this.level;
     }
-
     public String question() {
         return this.question;
     }
 
     public boolean requiresInput() {
-        return question() != null;
+        return question != null;
     }
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    @Override
+    public int compareTo(Fact<?> fact) {
+        return Integer.compare(fact.level(), this.level());
     }
 }

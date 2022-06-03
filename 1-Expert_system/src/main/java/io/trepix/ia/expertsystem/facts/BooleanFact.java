@@ -7,6 +7,10 @@ class BooleanFact extends Fact<Boolean> {
         super(name, value, question, level);
     }
 
+    public BooleanFact(Fact<?> fact, boolean value, String question, int level) {
+        super(fact, value, question, level);
+    }
+
     @Override
     public String toString() {
         String res = "";

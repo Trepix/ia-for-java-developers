@@ -6,9 +6,11 @@ import io.trepix.ia.expertsystem.InferenceEngine;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.List;
 
 import static io.trepix.ia.expertsystem.facts.FactFactory.YES_ANSWER;
+import static java.util.Collections.*;
 
 public class App implements HumanMachineInterface {
     public static void main(String[] args) {
@@ -52,7 +54,7 @@ public class App implements HumanMachineInterface {
 
     public void showFacts(List<Fact<?>> facts) {
         StringBuilder res = new StringBuilder("Found solution(s) : \n");
-        facts.sort((Fact<?> f1, Fact<?> f2) -> Integer.compare(f2.level(), f1.level()));
+        sort(facts);
         for (Fact<?> fact : facts) {
             if (fact.level() != 0) {
                 res.append(fact).append("\n");
