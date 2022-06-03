@@ -29,8 +29,4 @@ public class Facts {
                 .findFirst();
     }
 
-    public boolean exists(Fact<?> factToSearch) {
-        return facts.stream()
-                .anyMatch(fact -> fact.isTheSame(factToSearch));
-    }
 }

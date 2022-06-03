@@ -36,7 +36,8 @@ class Rules {
 
     public Optional<Rule> searchApplicableRule(Facts knownFacts, HumanMachineInterface humanMachineInterface) {
         for (Rule rule : rules) {
-            if (rule.canBeApplied(knownFacts, humanMachineInterface)) {
+            rule.addNonDeductedPremisesToKnownFacts(knownFacts, humanMachineInterface);
+            if (rule.canBeApplied(knownFacts)) {
                 maxRuleLevel = rule.getLevel(knownFacts);
                 return Optional.of(rule);
             }

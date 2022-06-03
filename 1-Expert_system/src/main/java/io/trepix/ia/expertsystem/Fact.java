@@ -31,7 +31,7 @@ public abstract class Fact<T> implements Comparable<Fact<?>>{
         return this.question;
     }
 
-    public boolean requiresInput() {
+    public boolean isNotDeducted() {
         return question != null;
     }
 

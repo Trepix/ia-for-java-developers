@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 
+import static io.trepix.ia.expertsystem.facts.FactFactory.*;
+
 public class Rule {
     protected List<Fact<?>> premises;
     protected Fact<?> conclusion;
     protected String name;
-    // Constructor
     public Rule(String name, List<Fact<?>> premises, Fact<?> conclusion) {
         this.name = name;
         this.premises = premises;
@@ -40,21 +41,30 @@ public class Rule {
                 .orElseThrow();
     }
 
-    public boolean canBeApplied(Facts knownFacts, HumanMachineInterface humanMachineInterface) {
+    public void addNonDeductedPremisesToKnownFacts(Facts knownFacts, HumanMachineInterface humanMachineInterface) {
         for (Fact<?> premise : premises) {
-            if (!knownFacts.exists(premise) && premise.requiresInput()) {
-                String value = humanMachineInterface.askForValue(premise.question());
-                knownFacts.addFact(FactFactory.createFact(premise, value));
+            Optional<Fact<?>> knownFact = knownFacts.search(premise);
+            if (knownFact.isPresent()) {
+                if (factDoesNotSatisfyPremise(knownFact.get(), premise)) break;
             }
+            else if (premise.isNotDeducted()) {
+                String value = humanMachineInterface.askForValue(premise.question());
+                knownFacts.addFact(createFact(premise, value));
+            }
+            else break;
+        }
+    }
 
+    public boolean canBeApplied(Facts knownFacts) {
+        for (Fact<?> premise : premises) {
             Optional<Fact<?>> fact = knownFacts.search(premise);
             if (fact.isEmpty()) return false;
-            if (premiseDoesNotSatisfyFact(premise, fact.get())) return false;
+            if (factDoesNotSatisfyPremise(fact.get(), premise)) return false;
         }
         return true;
     }
 
-    private boolean premiseDoesNotSatisfyFact(Fact<?> premise, Fact<?> fact) {
+    private boolean factDoesNotSatisfyPremise(Fact<?> fact, Fact<?> premise) {
         return !fact.hasSameValue(premise);
     }
 
