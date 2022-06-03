@@ -3,19 +3,19 @@ package io.trepix.ia.expertsystem.rules;
 import io.trepix.ia.expertsystem.Fact;
 import io.trepix.ia.expertsystem.Facts;
 import io.trepix.ia.expertsystem.HumanMachineInterface;
-import io.trepix.ia.expertsystem.facts.FactFactory;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 
-import static io.trepix.ia.expertsystem.facts.FactFactory.*;
+import static io.trepix.ia.expertsystem.facts.FactFactory.createFact;
 
 public class Rule {
     protected List<Fact<?>> premises;
     protected Fact<?> conclusion;
     protected String name;
+
     public Rule(String name, List<Fact<?>> premises, Fact<?> conclusion) {
         this.name = name;
         this.premises = premises;
@@ -44,14 +44,13 @@ public class Rule {
     public void addNonDeductedPremisesToKnownFacts(Facts knownFacts, HumanMachineInterface humanMachineInterface) {
         for (Fact<?> premise : premises) {
             Optional<Fact<?>> knownFact = knownFacts.search(premise);
-            if (knownFact.isPresent()) {
-                if (factDoesNotSatisfyPremise(knownFact.get(), premise)) break;
-            }
-            else if (premise.isNotDeducted()) {
+            if (knownFact.isPresent() && factDoesNotSatisfyPremise(knownFact.get(), premise)) break;
+            if (knownFact.isEmpty() && premise.isDeducted()) break;
+
+            if (knownFact.isEmpty() && !premise.isDeducted()) {
                 String value = humanMachineInterface.askForValue(premise.question());
                 knownFacts.addFact(createFact(premise, value));
             }
-            else break;
         }
     }
 

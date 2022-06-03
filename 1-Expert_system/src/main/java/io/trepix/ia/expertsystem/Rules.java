@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 class Rules {
-    private int maxRuleLevel;
     final private List<Rule> rules;
+    private int maxRuleLevel;
 
     public Rules() {
         rules = new ArrayList<>();
