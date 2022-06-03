@@ -1,7 +1,7 @@
 package io.trepix.ia.Logicadifusa;
 
 // Clase que gestiona los puntos de las funciones de pertenencia
-public class Punto2D implements Comparable {
+public class Punto2D implements Comparable<Punto2D> {
 
     // Coordenadas
     public double x;
@@ -15,8 +15,8 @@ public class Punto2D implements Comparable {
 
     // Comparador
     @Override
-    public int compareTo(Object t) {
-        return (int) (x - ((Punto2D) t).x);
+    public int compareTo(Punto2D t) {
+        return (int) (x - t.x);
     }
     
     // Visualización

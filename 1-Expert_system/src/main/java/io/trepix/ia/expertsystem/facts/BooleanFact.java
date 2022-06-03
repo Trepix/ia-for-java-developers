@@ -2,44 +2,9 @@ package io.trepix.ia.expertsystem.facts;
 
 import io.trepix.ia.expertsystem.Fact;
 
-class BooleanFact implements Fact<Boolean> {
-
-    protected String name;
-    protected boolean value;
-    protected int level;
-    protected String question;
-
-    // Constructor
+class BooleanFact extends Fact<Boolean> {
     public BooleanFact(String name, boolean value, String question, int level) {
-        this.name = name;
-        this.value = value;
-        this.question = question;
-        this.level = level;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public Boolean value() {
-        return value;
-    }
-
-    @Override
-    public int level() {
-        return level;
-    }
-
-    @Override
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    @Override
-    public String question() {
-        return question;
+        super(name, value, question, level);
     }
 
     @Override

@@ -1,15 +1,12 @@
 package io.trepix.ia.Logicadifusa;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.StringJoiner;
+import java.util.*;
 
 // Clase principal que gestiona los conjuntos difusos
 public class ConjuntoDifuso {
 
     // Atributos
-    protected ArrayList<Punto2D> puntos;
+    protected List<Punto2D> puntos;
     protected double min;
     protected double max;
     

@@ -1,17 +1,39 @@
 package io.trepix.ia.expertsystem;
 
-public interface Fact<T> {
-    String name();
+public abstract class Fact<T> {
 
-    T value();
+    protected String name;
+    protected T value;
+    protected int level;
+    protected String question;
 
-    int level();
+    protected Fact(String name, T value, String question, int level) {
+        this.name = name;
+        this.value = value;
+        this.question = question;
+        this.level = level;
+    }
+    public String name() {
+        return this.name;
+    }
 
-    String question();
+    public T value() {
+        return this.value;
+    }
 
-    default boolean requiresInput() {
+    public int level() {
+        return this.level;
+    }
+
+    public String question() {
+        return this.question;
+    }
+
+    public boolean requiresInput() {
         return question() != null;
     }
 
-    void setLevel(int level);
+    public void setLevel(int level) {
+        this.level = level;
+    }
 }
