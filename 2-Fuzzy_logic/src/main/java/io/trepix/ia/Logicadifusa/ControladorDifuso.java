@@ -5,8 +5,8 @@ import java.util.ArrayList;
 // Clase que gestiona todo el sistema difuso
 public class ControladorDifuso {
     protected String nombre;
-    protected ArrayList<VariableLinguistica> entradas;
-    protected VariableLinguistica salida;
+    protected ArrayList<LinguisticVariable> entradas;
+    protected LinguisticVariable salida;
     protected ArrayList<ReglaDifusa> reglas;
     protected ArrayList<ValorNumerico> problema;
     
@@ -19,13 +19,13 @@ public class ControladorDifuso {
     }
     
     // Agregar una variable linguistica como entrada
-    public void AgregarVariableEntrada(VariableLinguistica vl) {
+    public void AgregarVariableEntrada(LinguisticVariable vl) {
         entradas.add(vl);
     }
     
     // Agregar una variable linguistica como salida
     // 1 única posible : sustituye la existante si es necesario
-    public void AgregarVariableSalida(VariableLinguistica vl) {
+    public void AgregarVariableSalida(LinguisticVariable vl) {
         salida = vl;
     }
     
@@ -41,7 +41,7 @@ public class ControladorDifuso {
     }
     
     // Agregar un valor numérico como entrada
-    public void AgregarValorNumerico(VariableLinguistica var, double valor) {
+    public void AgregarValorNumerico(LinguisticVariable var, double valor) {
         problema.add(new ValorNumerico(var,valor));
     }
     
@@ -51,13 +51,13 @@ public class ControladorDifuso {
     }
     
     // Encontrar una variable linguistica a partir de su nombre
-    public VariableLinguistica VariableLinguisticaParaNombre(String nombre) {
-        for (VariableLinguistica var : entradas) {
-            if (var.nombre.equalsIgnoreCase(nombre)) {
+    public LinguisticVariable VariableLinguisticaParaNombre(String nombre) {
+        for (LinguisticVariable var : entradas) {
+            if (var.name.equalsIgnoreCase(nombre)) {
                 return var;
             }
         }
-        if (salida.nombre.equalsIgnoreCase(nombre)) {
+        if (salida.name.equalsIgnoreCase(nombre)) {
             return salida;
         }
         return null;
@@ -65,9 +65,9 @@ public class ControladorDifuso {
     
     public double Resolver() {
         // Iinicialización del conjunto difuso resultado
-        ConjuntoDifuso resultado = new ConjuntoDifuso(salida.valorMin, salida.valorMax);
-        resultado.Agregar(salida.valorMin, 0);
-        resultado.Agregar(salida.valorMax, 0);
+        ConjuntoDifuso resultado = new ConjuntoDifuso(salida.minimumValue, salida.maximumValue);
+        resultado.Agregar(salida.minimumValue, 0);
+        resultado.Agregar(salida.maximumValue, 0);
         
         // Aplicación de las reglas y modificación del conjunto difuso resultante
         for(ReglaDifusa regla : reglas) {

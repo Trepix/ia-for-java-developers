@@ -1,6 +1,7 @@
 package io.trepix.ia.Logicadifusa;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 // Clase que representa una regla difusa, con varias premisas y una conclusión
 public class ReglaDifusa {
@@ -46,21 +47,21 @@ public class ReglaDifusa {
         double degre = 1;
         for (ExpresionDifusa premisa : premisas) {
             double degreLocal = 0;
-            ValorLinguistico vl = null;
+            Optional<LinguisticValue> vl = Optional.empty();
             for (ValorNumerico pb : problema) {
                 if (premisa.varL.equals(pb.vl)) {
-                    vl = premisa.varL.ValorLinguisticoParaNombre(premisa.nombreValorLinguistico);
-                    if (vl != null) {
-                        degreLocal = vl.ValorDePertenencia(pb.valor);
+                    vl = premisa.varL.searchLinguisticValue(premisa.nombreValorLinguistico);
+                    if (vl.isPresent()) {
+                        degreLocal = vl.get().membershipDegree(pb.valor);
                         break;
                     }
                 }
             }
-            if (vl == null) {
+            if (vl.isEmpty()) {
                 return null;
             }
             degre = Math.min(degre, degreLocal);
         }
-        return conclusion.varL.ValorLinguisticoParaNombre(conclusion.nombreValorLinguistico).conjuntoDifuso.MultiplicarPor(degre);
+        return conclusion.varL.searchLinguisticValue(conclusion.nombreValorLinguistico).orElseThrow().fuzzySet.MultiplicarPor(degre);
     }
 }

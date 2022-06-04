@@ -4,8 +4,8 @@ import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecio;
 import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecioDerecha;
 import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecioIzquierda;
 import io.trepix.ia.Logicadifusa.ControladorDifuso;
-import io.trepix.ia.Logicadifusa.ValorLinguistico;
-import io.trepix.ia.Logicadifusa.VariableLinguistica;
+import io.trepix.ia.Logicadifusa.LinguisticValue;
+import io.trepix.ia.Logicadifusa.LinguisticVariable;
 
 // Clase principal, y sobrer el ejemplo del zoom de un GPS
 public class ZoomGPS {
@@ -17,26 +17,26 @@ public class ZoomGPS {
         
         System.out.println("Agregar las variables de entrada");
         // Variable linguistica de entrada : distancia (en m, de 0 a 500 000)
-        VariableLinguistica distancia = new VariableLinguistica("Distancia", 0, 500000); 
-        distancia.AgregarValorLinguistico(new ValorLinguistico("Baja", new ConjuntoDifusoTrapecioIzquierda(0, 500000, 30, 50)));
-        distancia.AgregarValorLinguistico(new ValorLinguistico("Media", new ConjuntoDifusoTrapecio(0, 500000, 40, 50, 100, 150))); 
-        distancia.AgregarValorLinguistico(new ValorLinguistico("Grande", new ConjuntoDifusoTrapecioDerecha(0, 500000, 100, 150))); 
+        LinguisticVariable distancia = new LinguisticVariable("Distancia", 0, 500000);
+        distancia.addLinguisticValue(new LinguisticValue("Baja", new ConjuntoDifusoTrapecioIzquierda(0, 500000, 30, 50)));
+        distancia.addLinguisticValue(new LinguisticValue("Media", new ConjuntoDifusoTrapecio(0, 500000, 40, 50, 100, 150)));
+        distancia.addLinguisticValue(new LinguisticValue("Grande", new ConjuntoDifusoTrapecioDerecha(0, 500000, 100, 150)));
         controlador.AgregarVariableEntrada(distancia);
 
         // Variable linguistica de entrada : velocidad (en km/h, de 0 a 200)
-        VariableLinguistica velocidad = new VariableLinguistica("Velocidad", 0, 200);
-        velocidad.AgregarValorLinguistico(new ValorLinguistico("Lenta", new ConjuntoDifusoTrapecioIzquierda(0, 200, 20, 30)));
-        velocidad.AgregarValorLinguistico(new ValorLinguistico("PocoRapida", new ConjuntoDifusoTrapecio(0, 200, 20, 30, 70, 80)));
-        velocidad.AgregarValorLinguistico(new ValorLinguistico("Rapida", new ConjuntoDifusoTrapecio(0, 200, 70, 80, 90, 110)));
-        velocidad.AgregarValorLinguistico(new ValorLinguistico("MuyRapida", new ConjuntoDifusoTrapecioDerecha(0, 200, 90, 110)));
+        LinguisticVariable velocidad = new LinguisticVariable("Velocidad", 0, 200);
+        velocidad.addLinguisticValue(new LinguisticValue("Lenta", new ConjuntoDifusoTrapecioIzquierda(0, 200, 20, 30)));
+        velocidad.addLinguisticValue(new LinguisticValue("PocoRapida", new ConjuntoDifusoTrapecio(0, 200, 20, 30, 70, 80)));
+        velocidad.addLinguisticValue(new LinguisticValue("Rapida", new ConjuntoDifusoTrapecio(0, 200, 70, 80, 90, 110)));
+        velocidad.addLinguisticValue(new LinguisticValue("MuyRapida", new ConjuntoDifusoTrapecioDerecha(0, 200, 90, 110)));
         controlador.AgregarVariableEntrada(velocidad);
         
         System.out.println("Agregar la variable de salida");
         // Variable linguistiqe de salida : nivel de zoom (de 1 a 5)
-        VariableLinguistica zoom = new VariableLinguistica("Zoom", 0, 5); 
-        zoom.AgregarValorLinguistico(new ValorLinguistico("Pequeña", new ConjuntoDifusoTrapecioIzquierda(0, 5, 1, 2))); 
-        zoom.AgregarValorLinguistico(new ValorLinguistico("Normal", new ConjuntoDifusoTrapecio(0, 5, 1, 2, 3, 4))); 
-        zoom.AgregarValorLinguistico(new ValorLinguistico("Grande", new ConjuntoDifusoTrapecioDerecha(0, 5, 3, 4)));
+        LinguisticVariable zoom = new LinguisticVariable("Zoom", 0, 5);
+        zoom.addLinguisticValue(new LinguisticValue("Pequeña", new ConjuntoDifusoTrapecioIzquierda(0, 5, 1, 2)));
+        zoom.addLinguisticValue(new LinguisticValue("Normal", new ConjuntoDifusoTrapecio(0, 5, 1, 2, 3, 4)));
+        zoom.addLinguisticValue(new LinguisticValue("Grande", new ConjuntoDifusoTrapecioDerecha(0, 5, 3, 4)));
         controlador.AgregarVariableSalida(zoom);
 
         System.out.println("Agregar las reglas");

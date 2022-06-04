@@ -63,7 +63,7 @@ public class ConjuntoDifuso {
     }
     
     // Cálculo del grado de pertenencia de un punto
-    public double ValorDePertenencia(double valor) {
+    public double membershipDegree(double valor) {
         // Caso 1 : al exteriour del intervalo del conjunto difuso
         if (valor < min || valor > max || puntos.size() < 2) {
             return 0;
@@ -143,16 +143,16 @@ public class ConjuntoDifuso {
                 double xPrimo = Math.max(x1, x2);
                 
                 // Cálculo de las pendientes
-                double p1 = e1.ValorDePertenencia(xPrimo) - e1.ValorDePertenencia(x) / (xPrimo - x);
-                double p2 = e2.ValorDePertenencia(xPrimo) - e2.ValorDePertenencia(x) / (xPrimo - x);
+                double p1 = e1.membershipDegree(xPrimo) - e1.membershipDegree(x) / (xPrimo - x);
+                double p2 = e2.membershipDegree(xPrimo) - e2.membershipDegree(x) / (xPrimo - x);
                 // Cálculo del delta
                 double delta = 0;
                 if ((p2-p1) != 0) {
-                    delta = (e2.ValorDePertenencia(x) - e1.ValorDePertenencia(x)) / (p1 - p2);
+                    delta = (e2.membershipDegree(x) - e1.membershipDegree(x)) / (p1 - p2);
                 }
                 
                 // Agregar el punto de intersección al resultado
-                resultado.Agregar(x + delta, e1.ValorDePertenencia(x + delta));
+                resultado.Agregar(x + delta, e1.membershipDegree(x + delta));
                 
                 // Se pasa al punto siguiente
                 if (x1 < x2) {
@@ -199,7 +199,7 @@ public class ConjuntoDifuso {
             else if (x1 < x2) {
                 // La curva 1 tiene un punto antes
                 // Se calcula el gradio para el segundo y se guarda el correcto
-                resultado.Agregar(x1, Optimo(ptConjunto1.y, e2.ValorDePertenencia(x1), metodo));
+                resultado.Agregar(x1, Optimo(ptConjunto1.y, e2.membershipDegree(x1), metodo));
                 if (iterador1.hasNext()) {
                     antiguoPtConjunto1 = ptConjunto1;
                     ptConjunto1 = iterador1.next();
@@ -212,7 +212,7 @@ public class ConjuntoDifuso {
             else {
                 // ültimo caso, es la curva 2 que tiene un punto antes
                 // Se calcula el grado para la primera y se guarda el correcto
-                resultado.Agregar(x2, Optimo(e1.ValorDePertenencia(x2), ptConjunto2.y, metodo));
+                resultado.Agregar(x2, Optimo(e1.membershipDegree(x2), ptConjunto2.y, metodo));
                 if (iterador2.hasNext()) {
                     ptConjunto2 = iterador2.next();
                 }
