@@ -1,4 +1,4 @@
-package io.trepix.ia.Logicadifusa;
+package io.trepix.ia.fuzzylogic;
 
 // Clase que gestiona los puntos de las funciones de pertenencia
 public class Punto2D implements Comparable<Punto2D> {

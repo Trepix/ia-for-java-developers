@@ -1,4 +1,4 @@
-package io.trepix.ia.Logicadifusa;
+package io.trepix.ia.fuzzylogic;
 
 import java.util.ArrayList;
 import java.util.Optional;

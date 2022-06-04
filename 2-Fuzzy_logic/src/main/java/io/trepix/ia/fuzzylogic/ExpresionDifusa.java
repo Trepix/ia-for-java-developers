@@ -1,4 +1,4 @@
-package io.trepix.ia.Logicadifusa;
+package io.trepix.ia.fuzzylogic;
 
 // Expresi�n difusa : Variable IS Valor
 public class ExpresionDifusa {

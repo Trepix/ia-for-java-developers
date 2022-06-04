@@ -1,4 +1,4 @@
-package io.trepix.ia.Logicadifusa;
+package io.trepix.ia.fuzzylogic;
 
 // Clase que permite asociar una variable linguística y su valor numerico
 public class ValorNumerico {

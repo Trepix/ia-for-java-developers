@@ -1,11 +1,11 @@
-package io.trepix.ia.aplicacion;
+package io.trepix.ia.application;
 
-import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecio;
-import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecioDerecha;
-import io.trepix.ia.Logicadifusa.ConjuntoDifusoTrapecioIzquierda;
-import io.trepix.ia.Logicadifusa.ControladorDifuso;
-import io.trepix.ia.Logicadifusa.LinguisticValue;
-import io.trepix.ia.Logicadifusa.LinguisticVariable;
+import io.trepix.ia.fuzzylogic.ConjuntoDifusoTrapecio;
+import io.trepix.ia.fuzzylogic.ConjuntoDifusoTrapecioDerecha;
+import io.trepix.ia.fuzzylogic.ConjuntoDifusoTrapecioIzquierda;
+import io.trepix.ia.fuzzylogic.ControladorDifuso;
+import io.trepix.ia.fuzzylogic.LinguisticValue;
+import io.trepix.ia.fuzzylogic.LinguisticVariable;
 
 // Clase principal, y sobrer el ejemplo del zoom de un GPS
 public class ZoomGPS {
