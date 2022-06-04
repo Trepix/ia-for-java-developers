@@ -7,7 +7,7 @@ public class ControladorDifuso {
     protected String nombre;
     protected ArrayList<LinguisticVariable> entradas;
     protected LinguisticVariable salida;
-    protected ArrayList<ReglaDifusa> reglas;
+    protected ArrayList<FuzzyRule> reglas;
     protected ArrayList<NumericalValue> problema;
     
     // Constructor
@@ -30,13 +30,13 @@ public class ControladorDifuso {
     }
     
     // Agregar una regla
-    public void AgregarRegla(ReglaDifusa regla) {
+    public void AgregarRegla(FuzzyRule regla) {
         reglas.add(regla);
     }
     
     // Agregar una regla (formato textual)
     public void AgregarRegla(String reglaStr) {
-        ReglaDifusa regla = new ReglaDifusa(reglaStr, this);
+        FuzzyRule regla = new FuzzyRule(reglaStr, this);
         reglas.add(regla);
     }
     
@@ -70,8 +70,8 @@ public class ControladorDifuso {
         resultado.Agregar(salida.maximumValue, 0);
         
         // Aplicación de las reglas y modificación del conjunto difuso resultante
-        for(ReglaDifusa regla : reglas) {
-            resultado = resultado.O(regla.Aplicar(problema));
+        for(FuzzyRule regla : reglas) {
+            resultado = resultado.O(regla.apply(problema));
         }
         
         // Défuzzification

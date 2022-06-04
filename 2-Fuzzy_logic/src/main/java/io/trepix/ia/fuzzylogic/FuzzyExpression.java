@@ -9,7 +9,15 @@ public class FuzzyExpression {
         this.linguisticValueName = linguisticValueName;
     }
 
-    public LinguisticValue linguisticValue() {
+    public ConjuntoDifuso fuzzySet() {
+        return linguisticValue().fuzzySet();
+    }
+
+    public double membershipDegree(NumericalValue numericalValue) {
+        return linguisticValue().membershipDegree(numericalValue.value());
+    }
+
+    private LinguisticValue linguisticValue() {
         return linguisticVariable.linguisticValue(this.linguisticValueName);
     }
 

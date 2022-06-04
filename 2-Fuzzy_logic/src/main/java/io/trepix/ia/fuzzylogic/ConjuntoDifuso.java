@@ -45,10 +45,10 @@ public class ConjuntoDifuso {
     }
     
     // Operador de multiplicación
-    public ConjuntoDifuso MultiplicarPor(double valor) {
+    public ConjuntoDifuso applyMembershipDegree(double value) {
         ConjuntoDifuso ens = new ConjuntoDifuso(min, max);
         for(Punto2D pt : puntos) {
-            ens.Agregar(pt.x, pt.y * valor);
+            ens.Agregar(pt.x, pt.y * value);
         }
         return ens;
     }
