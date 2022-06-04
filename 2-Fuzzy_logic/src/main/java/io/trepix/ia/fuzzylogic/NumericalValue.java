@@ -12,7 +12,7 @@ public class NumericalValue {
         return value;
     }
 
-    boolean belongsTo(ExpresionDifusa fuzzyExpression) {
-        return fuzzyExpression.varL.equals(linguisticVariable);
+    boolean belongsTo(FuzzyExpression fuzzyExpression) {
+        return fuzzyExpression.belongsTo(linguisticVariable);
     }
 }

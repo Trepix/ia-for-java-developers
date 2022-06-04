@@ -1,15 +1,14 @@
 package io.trepix.ia.fuzzylogic;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 // Clase que representa una regla difusa, con varias premisas y una conclusión
 public class ReglaDifusa {
-    protected ArrayList<ExpresionDifusa> premisas;
-    protected ExpresionDifusa conclusion;
+    protected ArrayList<FuzzyExpression> premisas;
+    protected FuzzyExpression conclusion;
     
     // Constructor
-    public ReglaDifusa(ArrayList<ExpresionDifusa> _premisas, ExpresionDifusa _conclusion) {
+    public ReglaDifusa(ArrayList<FuzzyExpression> _premisas, FuzzyExpression _conclusion) {
         premisas = _premisas;
         conclusion = _conclusion;
     }
@@ -29,14 +28,14 @@ public class ReglaDifusa {
                 // Cortamos la palabra clave "IS", y se crea una expresión difusa
                 String[] partes = exp.trim().split(" IS ");
                 if (partes.length == 2) {
-                    ExpresionDifusa expDifusa = new ExpresionDifusa(controlador.VariableLinguisticaParaNombre(partes[0]), partes[1]);
+                    FuzzyExpression expDifusa = new FuzzyExpression(controlador.VariableLinguisticaParaNombre(partes[0]), partes[1]);
                     premisas.add(expDifusa);
                 }
             }
             // Se trata la conclusión
             String[] concluStr = regla[1].trim().split(" IS ");
             if (concluStr.length == 2) {
-                conclusion = new ExpresionDifusa(controlador.VariableLinguisticaParaNombre(concluStr[0]), concluStr[1]);
+                conclusion = new FuzzyExpression(controlador.VariableLinguisticaParaNombre(concluStr[0]), concluStr[1]);
             }
         }
     }
@@ -45,23 +44,17 @@ public class ReglaDifusa {
     // Esto produce un conjunto difuso
     ConjuntoDifuso Aplicar(ArrayList<NumericalValue> problema) {
         double degre = 1;
-        for (ExpresionDifusa premisa : premisas) {
+        for (FuzzyExpression fuzzyExpression : premisas) {
             double degreLocal = 0;
-            Optional<LinguisticValue> vl = Optional.empty();
             for (NumericalValue numericalValue : problema) {
-                if (numericalValue.belongsTo(premisa)) {
-                    vl = premisa.varL.searchLinguisticValue(premisa.nombreValorLinguistico);
-                    if (vl.isPresent()) {
-                        degreLocal = vl.get().membershipDegree(numericalValue.value());
-                        break;
-                    }
+                if (numericalValue.belongsTo(fuzzyExpression)) {
+                    LinguisticValue linguisticValue = fuzzyExpression.linguisticValue();
+                    degreLocal = linguisticValue.membershipDegree(numericalValue.value());
+                    break;
                 }
-            }
-            if (vl.isEmpty()) {
-                return null;
             }
             degre = Math.min(degre, degreLocal);
         }
-        return conclusion.varL.searchLinguisticValue(conclusion.nombreValorLinguistico).orElseThrow().fuzzySet().MultiplicarPor(degre);
+        return conclusion.linguisticValue().fuzzySet().MultiplicarPor(degre);
     }
 }
