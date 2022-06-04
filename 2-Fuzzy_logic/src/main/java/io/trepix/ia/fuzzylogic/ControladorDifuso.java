@@ -8,7 +8,7 @@ public class ControladorDifuso {
     protected ArrayList<LinguisticVariable> entradas;
     protected LinguisticVariable salida;
     protected ArrayList<ReglaDifusa> reglas;
-    protected ArrayList<ValorNumerico> problema;
+    protected ArrayList<NumericalValue> problema;
     
     // Constructor
     public ControladorDifuso(String _nombre ) {
@@ -42,7 +42,7 @@ public class ControladorDifuso {
     
     // Agregar un valor numérico como entrada
     public void AgregarValorNumerico(LinguisticVariable var, double valor) {
-        problema.add(new ValorNumerico(var,valor));
+        problema.add(new NumericalValue(var,valor));
     }
     
     // Puesta a cero del problema (para pasar al caso siguiente)

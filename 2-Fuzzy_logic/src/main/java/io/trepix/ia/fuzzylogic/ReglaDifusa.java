@@ -43,16 +43,16 @@ public class ReglaDifusa {
     
     // Aplicar la regla a un problema numérico dado
     // Esto produce un conjunto difuso
-    ConjuntoDifuso Aplicar(ArrayList<ValorNumerico> problema) {
+    ConjuntoDifuso Aplicar(ArrayList<NumericalValue> problema) {
         double degre = 1;
         for (ExpresionDifusa premisa : premisas) {
             double degreLocal = 0;
             Optional<LinguisticValue> vl = Optional.empty();
-            for (ValorNumerico pb : problema) {
-                if (premisa.varL.equals(pb.vl)) {
+            for (NumericalValue numericalValue : problema) {
+                if (numericalValue.belongsTo(premisa)) {
                     vl = premisa.varL.searchLinguisticValue(premisa.nombreValorLinguistico);
                     if (vl.isPresent()) {
-                        degreLocal = vl.get().membershipDegree(pb.valor);
+                        degreLocal = vl.get().membershipDegree(numericalValue.value());
                         break;
                     }
                 }
@@ -62,6 +62,6 @@ public class ReglaDifusa {
             }
             degre = Math.min(degre, degreLocal);
         }
-        return conclusion.varL.searchLinguisticValue(conclusion.nombreValorLinguistico).orElseThrow().fuzzySet.MultiplicarPor(degre);
+        return conclusion.varL.searchLinguisticValue(conclusion.nombreValorLinguistico).orElseThrow().fuzzySet().MultiplicarPor(degre);
     }
 }
