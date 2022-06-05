@@ -54,16 +54,14 @@ public class FuzzyRule {
                 .orElseThrow();
     }
 
-    ConjuntoDifuso apply(ArrayList<NumericalValue> problema) {
+    ConjuntoDifuso apply(ArrayList<NumericalValue> values) {
         double degree = 1;
         for (FuzzyExpression fuzzyExpression : premises) {
-            double localDegree = 0;
-            for (NumericalValue numericalValue : problema) {
-                if (numericalValue.belongsTo(fuzzyExpression)) {
-                    localDegree = fuzzyExpression.membershipDegree(numericalValue);
-                    break;
-                }
-            }
+            double localDegree = values.stream()
+                    .filter(value -> value.belongsTo(fuzzyExpression))
+                    .findFirst()
+                    .map(fuzzyExpression::membershipDegree)
+                    .orElse(0.0);
             degree = Math.min(degree, localDegree);
         }
         return conclusion.fuzzySet().applyMembershipDegree(degree);
