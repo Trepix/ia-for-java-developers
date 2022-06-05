@@ -1,43 +1,46 @@
 package io.trepix.ia.fuzzylogic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 // Clase que gestiona todo el sistema difuso
 public class ControladorDifuso {
     protected String nombre;
-    protected ArrayList<LinguisticVariable> entradas;
-    protected LinguisticVariable salida;
-    protected ArrayList<FuzzyRule> reglas;
+    protected ArrayList<LinguisticVariable> inputs;
+    protected LinguisticVariable output;
+    protected ArrayList<FuzzyRule> rules;
     protected ArrayList<NumericalValue> problema;
     
     // Constructor
     public ControladorDifuso(String _nombre ) {
         nombre = _nombre ;
-        entradas = new ArrayList();
-        reglas = new ArrayList();
+        inputs = new ArrayList();
+        rules = new ArrayList();
         problema = new ArrayList();
     }
     
     // Agregar una variable linguistica como entrada
     public void AgregarVariableEntrada(LinguisticVariable vl) {
-        entradas.add(vl);
+        inputs.add(vl);
     }
     
     // Agregar una variable linguistica como salida
     // 1 única posible : sustituye la existante si es necesario
     public void AgregarVariableSalida(LinguisticVariable vl) {
-        salida = vl;
+        output = vl;
     }
     
     // Agregar una regla
     public void AgregarRegla(FuzzyRule regla) {
-        reglas.add(regla);
+        rules.add(regla);
     }
     
     // Agregar una regla (formato textual)
-    public void AgregarRegla(String reglaStr) {
-        FuzzyRule regla = new FuzzyRule(reglaStr, this);
-        reglas.add(regla);
+    public void AgregarRegla(String rule) {
+        Set<LinguisticVariable> linguisticVariables = new HashSet<>(inputs);
+        linguisticVariables.add(output);
+        rules.add(new FuzzyRule(rule, linguisticVariables));
     }
     
     // Agregar un valor numérico como entrada
@@ -49,28 +52,15 @@ public class ControladorDifuso {
     public void EliminarValoresNumericos() {
         problema.clear();
     }
-    
-    // Encontrar una variable linguistica a partir de su nombre
-    public LinguisticVariable VariableLinguisticaParaNombre(String nombre) {
-        for (LinguisticVariable var : entradas) {
-            if (var.name.equalsIgnoreCase(nombre)) {
-                return var;
-            }
-        }
-        if (salida.name.equalsIgnoreCase(nombre)) {
-            return salida;
-        }
-        return null;
-    }
-    
+
     public double Resolver() {
         // Iinicialización del conjunto difuso resultado
-        ConjuntoDifuso resultado = new ConjuntoDifuso(salida.minimumValue, salida.maximumValue);
-        resultado.Agregar(salida.minimumValue, 0);
-        resultado.Agregar(salida.maximumValue, 0);
+        ConjuntoDifuso resultado = new ConjuntoDifuso(output.minimumValue, output.maximumValue);
+        resultado.Agregar(output.minimumValue, 0);
+        resultado.Agregar(output.maximumValue, 0);
         
         // Aplicación de las reglas y modificación del conjunto difuso resultante
-        for(FuzzyRule regla : reglas) {
+        for(FuzzyRule regla : rules) {
             resultado = resultado.O(regla.apply(problema));
         }
         
