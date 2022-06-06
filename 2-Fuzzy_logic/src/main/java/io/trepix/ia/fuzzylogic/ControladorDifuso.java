@@ -55,9 +55,9 @@ public class ControladorDifuso {
 
     public double Resolver() {
         // Iinicialización del conjunto difuso resultado
-        FuzzySet resultado = new FuzzySet(output.minimumValue, output.maximumValue);
-        resultado.Agregar(output.minimumValue, 0);
-        resultado.Agregar(output.maximumValue, 0);
+        FuzzySet resultado = new FuzzySet(output.getMinimumValue(), output.getMaximumValue());
+        resultado.Agregar(output.getMinimumValue(), 0);
+        resultado.Agregar(output.getMaximumValue(), 0);
         
         // Aplicación de las reglas y modificación del conjunto difuso resultante
         for(FuzzyRule regla : rules) {

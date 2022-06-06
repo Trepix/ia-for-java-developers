@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class LinguisticVariable {
     protected String name;
     protected ArrayList<LinguisticValue> linguisticValues;
-    protected double minimumValue;
-    protected double maximumValue;
+    private final double minimumValue;
+    private final double maximumValue;
     public LinguisticVariable(String name, double minimum, double maximum) {
         this.name = name;
         this.minimumValue = minimum;
@@ -25,4 +25,13 @@ public class LinguisticVariable {
         }
         throw new InvalidParameterException();
     }
+
+    public double getMinimumValue() {
+        return minimumValue;
+    }
+
+    public double getMaximumValue() {
+        return maximumValue;
+    }
+
 }
