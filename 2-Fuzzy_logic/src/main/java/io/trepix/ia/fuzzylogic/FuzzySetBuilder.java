@@ -34,7 +34,7 @@ public class FuzzySetBuilder {
        |.......
        |___________________
     */
-    public static class LeftTrapezoidalFuzzySetBuilder {
+    public static class OpenLeftTrapezoidalFuzzySetBuilder {
         private final double minimum;
         private final double maximum;
 
@@ -42,12 +42,12 @@ public class FuzzySetBuilder {
 
         private double endBoundary;
 
-        public LeftTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
+        public OpenLeftTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
             this.minimum = minimum;
             this.maximum = maximum;
         }
 
-        public LeftTrapezoidalFuzzySetBuilder withBoundary(Boundary boundary) {
+        public OpenLeftTrapezoidalFuzzySetBuilder withBoundary(Boundary boundary) {
             this.startBoundary = boundary.start;
             this.endBoundary = boundary.end;
             return this;
@@ -67,7 +67,7 @@ public class FuzzySetBuilder {
        |___________________
     */
 
-    public static class RightTrapezoidalFuzzySetBuilder {
+    public static class OpenRightTrapezoidalFuzzySetBuilder {
         private final double minimum;
         private final double maximum;
 
@@ -75,12 +75,12 @@ public class FuzzySetBuilder {
 
         private double endBoundary;
 
-        public RightTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
+        public OpenRightTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
             this.minimum = minimum;
             this.maximum = maximum;
         }
 
-        public RightTrapezoidalFuzzySetBuilder withBoundary(Boundary boundary) {
+        public OpenRightTrapezoidalFuzzySetBuilder withBoundary(Boundary boundary) {
             startBoundary = boundary.start;
             endBoundary = boundary.end;
             return this;
@@ -101,7 +101,7 @@ public class FuzzySetBuilder {
        |___________________
     */
 
-    public static class TrapezoidalFuzzySetBuilder {
+    public static class ClosedTrapezoidalFuzzySetBuilder {
         private final double minimum;
         private final double maximum;
 
@@ -113,18 +113,18 @@ public class FuzzySetBuilder {
 
         private double endRightBoundary;
 
-        public TrapezoidalFuzzySetBuilder(double minimum, double maximum) {
+        public ClosedTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
             this.minimum = minimum;
             this.maximum = maximum;
         }
 
-        public TrapezoidalFuzzySetBuilder withLeftBoundary(Boundary boundary) {
+        public ClosedTrapezoidalFuzzySetBuilder withLeftBoundary(Boundary boundary) {
             this.startLeftBoundary = boundary.start;
             this.endLeftBoundary = boundary.end;
             return this;
         }
 
-        public TrapezoidalFuzzySetBuilder withRightBoundary(Boundary boundary) {
+        public ClosedTrapezoidalFuzzySetBuilder withRightBoundary(Boundary boundary) {
             this.startRightBoundary = boundary.start;
             this.endRightBoundary = boundary.end;
             return this;
@@ -137,16 +137,16 @@ public class FuzzySetBuilder {
 
     }
 
-    public static LeftTrapezoidalFuzzySetBuilder leftTrapezoidal(double minimum, double maximum) {
-        return new LeftTrapezoidalFuzzySetBuilder(minimum, maximum);
+    public static OpenLeftTrapezoidalFuzzySetBuilder openLeftTrapezoidal(double minimum, double maximum) {
+        return new OpenLeftTrapezoidalFuzzySetBuilder(minimum, maximum);
     }
 
-    public static RightTrapezoidalFuzzySetBuilder rightTrapezoidal(double minimum, double maximum) {
-        return new RightTrapezoidalFuzzySetBuilder(minimum, maximum);
+    public static OpenRightTrapezoidalFuzzySetBuilder openRightTrapezoidal(double minimum, double maximum) {
+        return new OpenRightTrapezoidalFuzzySetBuilder(minimum, maximum);
     }
 
-    public static TrapezoidalFuzzySetBuilder trapezoidal(double minimum, double maximum) {
-        return new TrapezoidalFuzzySetBuilder(minimum, maximum);
+    public static ClosedTrapezoidalFuzzySetBuilder closedTrapezoidal(double minimum, double maximum) {
+        return new ClosedTrapezoidalFuzzySetBuilder(minimum, maximum);
     }
 
 
