@@ -57,10 +57,10 @@ public class FuzzySetBuilder {
 
         public FuzzySet build() {
             List<Punto2D> points = List.of(
-                new Punto2D(minimum, 1),
-                new Punto2D(startBoundary, 1),
-                new Punto2D(endBoundary, 0),
-                new Punto2D(maximum, 0)
+                    new Punto2D(minimum, 1),
+                    new Punto2D(startBoundary, 1),
+                    new Punto2D(endBoundary, 0),
+                    new Punto2D(maximum, 0)
             );
             return new FuzzySet(minimum, maximum, points);
         }
@@ -94,8 +94,14 @@ public class FuzzySetBuilder {
             return this;
         }
 
-        public ConjuntoDifusoTrapecioDerecha build() {
-            return new ConjuntoDifusoTrapecioDerecha(minimum, maximum, startBoundary, endBoundary);
+        public FuzzySet build() {
+            List<Punto2D> points = List.of(
+                    new Punto2D(minimum, 0),
+                    new Punto2D(startBoundary, 0),
+                    new Punto2D(endBoundary, 1),
+                    new Punto2D(maximum, 1)
+            );
+            return new FuzzySet(minimum, maximum, points);
         }
 
 
