@@ -13,6 +13,13 @@ public class FuzzySet {
     // Constructor
     public FuzzySet(double _min, double _max) {
         puntos = new ArrayList<>();
+        Collections.sort(puntos);
+        min = _min;
+        max = _max;
+    }
+
+    public FuzzySet(double _min, double _max, List<Punto2D> points) {
+        puntos = points;
         min = _min;
         max = _max;
     }

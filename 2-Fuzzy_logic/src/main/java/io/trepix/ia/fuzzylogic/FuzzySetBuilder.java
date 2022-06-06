@@ -1,5 +1,7 @@
 package io.trepix.ia.fuzzylogic;
 
+import java.util.List;
+
 public class FuzzySetBuilder {
 
     public static class Boundary {
@@ -53,8 +55,14 @@ public class FuzzySetBuilder {
             return this;
         }
 
-        public ConjuntoDifusoTrapecioIzquierda build() {
-            return new ConjuntoDifusoTrapecioIzquierda(minimum, maximum, startBoundary, endBoundary);
+        public FuzzySet build() {
+            List<Punto2D> points = List.of(
+                new Punto2D(minimum, 1),
+                new Punto2D(startBoundary, 1),
+                new Punto2D(endBoundary, 0),
+                new Punto2D(maximum, 0)
+            );
+            return new FuzzySet(minimum, maximum, points);
         }
     }
 
