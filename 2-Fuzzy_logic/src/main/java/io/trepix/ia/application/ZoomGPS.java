@@ -1,11 +1,6 @@
 package io.trepix.ia.application;
 
-import io.trepix.ia.fuzzylogic.ConjuntoDifusoTrapecio;
-import io.trepix.ia.fuzzylogic.ConjuntoDifusoTrapecioDerecha;
-import io.trepix.ia.fuzzylogic.ConjuntoDifusoTrapecioIzquierda;
-import io.trepix.ia.fuzzylogic.ControladorDifuso;
-import io.trepix.ia.fuzzylogic.LinguisticValue;
-import io.trepix.ia.fuzzylogic.LinguisticVariable;
+import io.trepix.ia.fuzzylogic.*;
 
 // Clase principal, y sobrer el ejemplo del zoom de un GPS
 public class ZoomGPS {
@@ -18,14 +13,14 @@ public class ZoomGPS {
         System.out.println("Agregar las variables de entrada");
         // Variable linguistica de entrada : distancia (en m, de 0 a 500 000)
         LinguisticVariable distancia = new LinguisticVariable("Distancia", 0, 500000);
-        distancia.addLinguisticValue(new LinguisticValue("Baja", new ConjuntoDifusoTrapecioIzquierda(0, 500000, 30, 50)));
+        distancia.addLinguisticValue(new LinguisticValue("Baja", FuzzySetBuilder.leftTrapezoidal(0, 50000).withStartBoundaryAt(30).withEndBoundaryAt(50).build()));
         distancia.addLinguisticValue(new LinguisticValue("Media", new ConjuntoDifusoTrapecio(0, 500000, 40, 50, 100, 150)));
         distancia.addLinguisticValue(new LinguisticValue("Grande", new ConjuntoDifusoTrapecioDerecha(0, 500000, 100, 150)));
         controlador.AgregarVariableEntrada(distancia);
 
         // Variable linguistica de entrada : velocidad (en km/h, de 0 a 200)
         LinguisticVariable velocidad = new LinguisticVariable("Velocidad", 0, 200);
-        velocidad.addLinguisticValue(new LinguisticValue("Lenta", new ConjuntoDifusoTrapecioIzquierda(0, 200, 20, 30)));
+        velocidad.addLinguisticValue(new LinguisticValue("Lenta", FuzzySetBuilder.leftTrapezoidal(0, 200).withStartBoundaryAt(20).withEndBoundaryAt(30).build()));
         velocidad.addLinguisticValue(new LinguisticValue("PocoRapida", new ConjuntoDifusoTrapecio(0, 200, 20, 30, 70, 80)));
         velocidad.addLinguisticValue(new LinguisticValue("Rapida", new ConjuntoDifusoTrapecio(0, 200, 70, 80, 90, 110)));
         velocidad.addLinguisticValue(new LinguisticValue("MuyRapida", new ConjuntoDifusoTrapecioDerecha(0, 200, 90, 110)));
@@ -34,7 +29,7 @@ public class ZoomGPS {
         System.out.println("Agregar la variable de salida");
         // Variable linguistiqe de salida : nivel de zoom (de 1 a 5)
         LinguisticVariable zoom = new LinguisticVariable("Zoom", 0, 5);
-        zoom.addLinguisticValue(new LinguisticValue("Pequeña", new ConjuntoDifusoTrapecioIzquierda(0, 5, 1, 2)));
+        zoom.addLinguisticValue(new LinguisticValue("Pequeña", FuzzySetBuilder.leftTrapezoidal(0, 5).withStartBoundaryAt(1).withEndBoundaryAt(2).build()));
         zoom.addLinguisticValue(new LinguisticValue("Normal", new ConjuntoDifusoTrapecio(0, 5, 1, 2, 3, 4)));
         zoom.addLinguisticValue(new LinguisticValue("Grande", new ConjuntoDifusoTrapecioDerecha(0, 5, 3, 4)));
         controlador.AgregarVariableSalida(zoom);
