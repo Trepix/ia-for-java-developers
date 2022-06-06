@@ -3,30 +3,31 @@ package io.trepix.ia.fuzzylogic;
 public class FuzzySetBuilder {
 
     /* Form :
-      _____
-           \
-            \
-             \_________
+       |         .........
+       |        .
+       |       .
+       |.......
+       |___________________
     */
-    public static class LeftTrapezoidalFuzzySet {
-        private final int minimum;
-        private final int maximum;
+    public static class LeftTrapezoidalFuzzySetBuilder {
+        private final double minimum;
+        private final double maximum;
 
-        private int startBoundary;
+        private double startBoundary;
 
-        private int endBoundary;
+        private double endBoundary;
 
-        public LeftTrapezoidalFuzzySet(int minimum, int maximum) {
+        public LeftTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
             this.minimum = minimum;
             this.maximum = maximum;
         }
 
-        public LeftTrapezoidalFuzzySet withStartBoundaryAt(int value) {
+        public LeftTrapezoidalFuzzySetBuilder withStartBoundaryAt(double value) {
             this.startBoundary = value;
             return this;
         }
 
-        public LeftTrapezoidalFuzzySet withEndBoundaryAt(int value) {
+        public LeftTrapezoidalFuzzySetBuilder withEndBoundaryAt(double value) {
             this.endBoundary = value;
             return this;
         }
@@ -36,8 +37,49 @@ public class FuzzySetBuilder {
         }
     }
 
-    public static LeftTrapezoidalFuzzySet leftTrapezoidal(int minimum, int maximum) {
-        return new LeftTrapezoidalFuzzySet(minimum, maximum);
+
+    /* Form:
+       |.......
+       |       .
+       |        .
+       |         .........
+       |___________________
+    */
+
+        public static class RightTrapezoidalFuzzySetBuilder {
+        private final double minimum;
+        private final double maximum;
+
+        private double startBoundary;
+
+        private double endBoundary;
+
+        public RightTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
+            this.minimum = minimum;
+            this.maximum = maximum;
+        }
+
+        public RightTrapezoidalFuzzySetBuilder withStartBoundaryAt(double value) {
+            this.startBoundary = value;
+            return this;
+        }
+
+        public RightTrapezoidalFuzzySetBuilder withEndBoundaryAt(double value) {
+            this.endBoundary = value;
+            return this;
+        }
+
+        public ConjuntoDifusoTrapecioDerecha build() {
+            return new ConjuntoDifusoTrapecioDerecha(minimum, maximum, startBoundary, endBoundary);
+        }
+    }
+
+    public static LeftTrapezoidalFuzzySetBuilder leftTrapezoidal(int minimum, int maximum) {
+        return new LeftTrapezoidalFuzzySetBuilder(minimum, maximum);
+    }
+
+    public static RightTrapezoidalFuzzySetBuilder rightTrapezoidal(int minimum, int maximum) {
+        return new RightTrapezoidalFuzzySetBuilder(minimum, maximum);
     }
 
 }

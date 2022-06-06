@@ -15,7 +15,7 @@ public class ZoomGPS {
         LinguisticVariable distancia = new LinguisticVariable("Distancia", 0, 500000);
         distancia.addLinguisticValue(new LinguisticValue("Baja", FuzzySetBuilder.leftTrapezoidal(0, 50000).withStartBoundaryAt(30).withEndBoundaryAt(50).build()));
         distancia.addLinguisticValue(new LinguisticValue("Media", new ConjuntoDifusoTrapecio(0, 500000, 40, 50, 100, 150)));
-        distancia.addLinguisticValue(new LinguisticValue("Grande", new ConjuntoDifusoTrapecioDerecha(0, 500000, 100, 150)));
+        distancia.addLinguisticValue(new LinguisticValue("Grande", FuzzySetBuilder.rightTrapezoidal(0, 50000).withStartBoundaryAt(100).withEndBoundaryAt(150).build()));
         controlador.AgregarVariableEntrada(distancia);
 
         // Variable linguistica de entrada : velocidad (en km/h, de 0 a 200)
@@ -23,7 +23,7 @@ public class ZoomGPS {
         velocidad.addLinguisticValue(new LinguisticValue("Lenta", FuzzySetBuilder.leftTrapezoidal(0, 200).withStartBoundaryAt(20).withEndBoundaryAt(30).build()));
         velocidad.addLinguisticValue(new LinguisticValue("PocoRapida", new ConjuntoDifusoTrapecio(0, 200, 20, 30, 70, 80)));
         velocidad.addLinguisticValue(new LinguisticValue("Rapida", new ConjuntoDifusoTrapecio(0, 200, 70, 80, 90, 110)));
-        velocidad.addLinguisticValue(new LinguisticValue("MuyRapida", new ConjuntoDifusoTrapecioDerecha(0, 200, 90, 110)));
+        velocidad.addLinguisticValue(new LinguisticValue("MuyRapida", FuzzySetBuilder.rightTrapezoidal(0, 200).withStartBoundaryAt(90).withEndBoundaryAt(110).build()));
         controlador.AgregarVariableEntrada(velocidad);
         
         System.out.println("Agregar la variable de salida");
@@ -31,7 +31,7 @@ public class ZoomGPS {
         LinguisticVariable zoom = new LinguisticVariable("Zoom", 0, 5);
         zoom.addLinguisticValue(new LinguisticValue("Pequeña", FuzzySetBuilder.leftTrapezoidal(0, 5).withStartBoundaryAt(1).withEndBoundaryAt(2).build()));
         zoom.addLinguisticValue(new LinguisticValue("Normal", new ConjuntoDifusoTrapecio(0, 5, 1, 2, 3, 4)));
-        zoom.addLinguisticValue(new LinguisticValue("Grande", new ConjuntoDifusoTrapecioDerecha(0, 5, 3, 4)));
+        zoom.addLinguisticValue(new LinguisticValue("Grande", FuzzySetBuilder.rightTrapezoidal(0, 5).withStartBoundaryAt(3).withEndBoundaryAt(4).build()));
         controlador.AgregarVariableSalida(zoom);
 
         System.out.println("Agregar las reglas");
