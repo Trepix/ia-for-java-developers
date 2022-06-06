@@ -7,7 +7,7 @@ package io.trepix.ia.fuzzylogic;
 // *       /      \
 // *______/        \______
 // ***********************
-public class ConjuntoDifusoTrapecio extends ConjuntoDifuso {
+public class ConjuntoDifusoTrapecio extends FuzzySet {
     // Constructor
     public ConjuntoDifusoTrapecio(double min, double max, double inicioBase, double inicioLado, double finLado, double finBase) {
         super(min, max);

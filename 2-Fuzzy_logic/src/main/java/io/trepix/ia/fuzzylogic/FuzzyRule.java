@@ -54,7 +54,7 @@ public class FuzzyRule {
                 .orElseThrow();
     }
 
-    ConjuntoDifuso apply(ArrayList<NumericalValue> values) {
+    FuzzySet apply(ArrayList<NumericalValue> values) {
         double degree = 1;
         for (FuzzyExpression fuzzyExpression : premises) {
             double localDegree = values.stream()

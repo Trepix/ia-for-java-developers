@@ -3,7 +3,7 @@ package io.trepix.ia.fuzzylogic;
 import java.util.*;
 
 // Clase principal que gestiona los conjuntos difusos
-public class ConjuntoDifuso {
+public class FuzzySet {
 
     // Atributos
     protected List<Punto2D> puntos;
@@ -11,7 +11,7 @@ public class ConjuntoDifuso {
     protected double max;
     
     // Constructor
-    public ConjuntoDifuso(double _min, double _max) {
+    public FuzzySet(double _min, double _max) {
         puntos = new ArrayList<>();
         min = _min;
         max = _max;
@@ -45,23 +45,14 @@ public class ConjuntoDifuso {
     }
     
     // Operador de multiplicación
-    public ConjuntoDifuso applyMembershipDegree(double value) {
-        ConjuntoDifuso ens = new ConjuntoDifuso(min, max);
+    public FuzzySet applyMembershipDegree(double value) {
+        FuzzySet ens = new FuzzySet(min, max);
         for(Punto2D pt : puntos) {
             ens.Agregar(pt.x, pt.y * value);
         }
         return ens;
     }
-    
-    // Operador NOT (negación)
-    public ConjuntoDifuso No() {
-        ConjuntoDifuso ens = new ConjuntoDifuso(min, max);
-        for (Punto2D pt : puntos) {
-            ens.Agregar(pt.x, 1 - pt.y);
-        }
-        return ens;
-    }
-    
+
     // Cálculo del grado de pertenencia de un punto
     public double membershipDegree(double valor) {
         // Caso 1 : al exteriour del intervalo del conjunto difuso
@@ -88,12 +79,12 @@ public class ConjuntoDifuso {
     }
     
     // Operador Y
-    public ConjuntoDifuso Yt(ConjuntoDifuso e2) {
+    public FuzzySet Yt(FuzzySet e2) {
         return Fusionar(this, e2, "Min");
     }
     
     // Operador O
-    public ConjuntoDifuso O(ConjuntoDifuso e2) {
+    public FuzzySet O(FuzzySet e2) {
         return Fusionar(this, e2, "Max");
     }
     
@@ -108,9 +99,9 @@ public class ConjuntoDifuso {
     }
     
     // Métodos genérico
-    private static ConjuntoDifuso Fusionar(ConjuntoDifuso e1, ConjuntoDifuso e2, String metodo) {
+    private static FuzzySet Fusionar(FuzzySet e1, FuzzySet e2, String metodo) {
         // Creación del resultado
-        ConjuntoDifuso resultado = new ConjuntoDifuso(Math.min(e1.min, e2.min), Math.max(e1.max, e2.max));
+        FuzzySet resultado = new FuzzySet(Math.min(e1.min, e2.min), Math.max(e1.max, e2.max));
         
         // On va recorrer las listas con los iteradores
         Iterator<Punto2D> iterador1 = e1.puntos.iterator();

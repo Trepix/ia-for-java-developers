@@ -1,8 +1,8 @@
 package io.trepix.ia.fuzzylogic;
 public class LinguisticValue {
-    private final ConjuntoDifuso fuzzySet;
+    private final FuzzySet fuzzySet;
     private final String name;
-    public LinguisticValue(String name , ConjuntoDifuso fuzzySet) {
+    public LinguisticValue(String name , FuzzySet fuzzySet) {
         this.fuzzySet = fuzzySet;
         this.name = name ;
     }
@@ -13,7 +13,7 @@ public class LinguisticValue {
     double membershipDegree(double value) {
         return fuzzySet.membershipDegree(value);
     }
-    ConjuntoDifuso fuzzySet() {
+    FuzzySet fuzzySet() {
         return fuzzySet;
     }
 }

@@ -9,7 +9,7 @@ public class FuzzyExpression {
         this.linguisticValueName = linguisticValueName;
     }
 
-    public ConjuntoDifuso fuzzySet() {
+    public FuzzySet fuzzySet() {
         return linguisticValue().fuzzySet();
     }
 
