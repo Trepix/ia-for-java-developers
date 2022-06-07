@@ -3,7 +3,7 @@ package io.trepix.ia.fuzzylogic;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FuzzySetBuilder {
+public abstract class FuzzySetBuilder {
 
     public static class Boundary {
         private final double start;
@@ -37,7 +37,7 @@ public class FuzzySetBuilder {
        |.......
        |___________________
     */
-    public static class OpenLeftTrapezoidalFuzzySetBuilder {
+    public static class OpenLeftTrapezoidalFuzzySetBuilder extends FuzzySetBuilder {
         private final double minimum;
         private final double maximum;
 
@@ -56,6 +56,7 @@ public class FuzzySetBuilder {
             return this;
         }
 
+        @Override
         public FuzzySet build() {
             List<Punto2D> points = List.of(
                     new Punto2D(minimum, 1),
@@ -76,7 +77,7 @@ public class FuzzySetBuilder {
        |___________________
     */
 
-    public static class OpenRightTrapezoidalFuzzySetBuilder {
+    public static class OpenRightTrapezoidalFuzzySetBuilder extends FuzzySetBuilder {
         private final double minimum;
         private final double maximum;
 
@@ -95,6 +96,7 @@ public class FuzzySetBuilder {
             return this;
         }
 
+        @Override
         public FuzzySet build() {
             List<Punto2D> points = List.of(
                     new Punto2D(minimum, 0),
@@ -116,7 +118,7 @@ public class FuzzySetBuilder {
        |___________________
     */
 
-    public static class ClosedTrapezoidalFuzzySetBuilder {
+    public static class ClosedTrapezoidalFuzzySetBuilder extends FuzzySetBuilder {
         private final double minimum;
         private final double maximum;
 
@@ -145,6 +147,7 @@ public class FuzzySetBuilder {
             return this;
         }
 
+        @Override
         public FuzzySet build() {
             List<Punto2D> points = List.of(
                 new Punto2D(minimum, 0),
@@ -171,6 +174,8 @@ public class FuzzySetBuilder {
     public static ClosedTrapezoidalFuzzySetBuilder closedTrapezoidal(double minimum, double maximum) {
         return new ClosedTrapezoidalFuzzySetBuilder(minimum, maximum);
     }
+
+    public abstract FuzzySet build();
 
 
 }
