@@ -18,6 +18,16 @@ public class LinguisticValueBuilder {
         return this;
     }
 
+    public LinguisticValueBuilder changeMinimum(double minimum) {
+        fuzzySetBuilder = fuzzySetBuilder.changeMinimum(minimum);
+        return this;
+    }
+
+    public LinguisticValueBuilder changeMaximum(double maximum) {
+        fuzzySetBuilder = fuzzySetBuilder.changeMaximum(maximum);
+        return this;
+    }
+
     public LinguisticValue build() {
         return new LinguisticValue(name, fuzzySetBuilder.build());
     }

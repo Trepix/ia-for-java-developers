@@ -1,8 +1,8 @@
 package io.trepix.ia.application;
 
 import io.trepix.ia.fuzzylogic.ControladorDifuso;
-import io.trepix.ia.fuzzylogic.LinguisticValue;
 import io.trepix.ia.fuzzylogic.LinguisticVariable;
+import io.trepix.ia.fuzzylogic.LinguisticVariableBuilder;
 
 import static io.trepix.ia.fuzzylogic.FuzzySetBuilder.BoundaryBuilder.startingAt;
 import static io.trepix.ia.fuzzylogic.FuzzySetBuilder.*;
@@ -18,26 +18,31 @@ public class ZoomGPS {
 
         System.out.println("Agregar las variables de entrada");
         // Variable linguistica de entrada : distancia (en m, de 0 a 500 000)
-        LinguisticVariable distancia = new LinguisticVariable("Distancia");
-        distancia.addLinguisticValue(withName("Baja").andFuzzySet(openLeftTrapezoidal(0, 500000).withBoundary(startingAt(30).endingAt(50))).build());
-        distancia.addLinguisticValue(withName("Media").andFuzzySet(closedTrapezoidal(0, 500000).withLeftBoundary(startingAt(40).endingAt(50)).withRightBoundary(startingAt(100).endingAt(150))).build());
-        distancia.addLinguisticValue(withName("Grande").andFuzzySet(openRightTrapezoidal(0, 500000).withBoundary(startingAt(100).endingAt(150))).build());
+        LinguisticVariable distancia = LinguisticVariableBuilder
+                .withName("Distancia")
+                .withMinimumValue(0)
+                .withMaximumValue(500000)
+                .andLinguisticValue(withName("Baja").andFuzzySet(OpenLeftTrapezoidal().withBoundary(startingAt(30).endingAt(50))))
+                .andLinguisticValue(withName("Media").andFuzzySet(ClosedTrapezoidal().withLeftBoundary(startingAt(40).endingAt(50)).withRightBoundary(startingAt(100).endingAt(150))))
+                .andLinguisticValue(withName("Grande").andFuzzySet(OpenRightTrapezoidal().withBoundary(startingAt(100).endingAt(150))))
+                .build();
+
         controlador.AgregarVariableEntrada(distancia);
 
         // Variable linguistica de entrada : velocidad (en km/h, de 0 a 200)
         LinguisticVariable velocidad = new LinguisticVariable("Velocidad");
-        velocidad.addLinguisticValue(withName("Lenta").andFuzzySet(openLeftTrapezoidal(0, 200).withBoundary(startingAt(20).endingAt(30))).build());
-        velocidad.addLinguisticValue(withName("PocoRapida").andFuzzySet(closedTrapezoidal(0, 200).withLeftBoundary(startingAt(20).endingAt(30)).withRightBoundary(startingAt(70).endingAt(80))).build());
-        velocidad.addLinguisticValue(withName("Rapida").andFuzzySet(closedTrapezoidal(0, 200).withLeftBoundary(startingAt(70).endingAt(80)).withRightBoundary(startingAt(90).endingAt(110))).build());
-        velocidad.addLinguisticValue(withName("MuyRapida").andFuzzySet(openRightTrapezoidal(0, 200).withBoundary(startingAt(90).endingAt(110))).build());
+        velocidad.addLinguisticValue(withName("Lenta").andFuzzySet(OpenLeftTrapezoidal(0, 200).withBoundary(startingAt(20).endingAt(30))).build());
+        velocidad.addLinguisticValue(withName("PocoRapida").andFuzzySet(ClosedTrapezoidal(0, 200).withLeftBoundary(startingAt(20).endingAt(30)).withRightBoundary(startingAt(70).endingAt(80))).build());
+        velocidad.addLinguisticValue(withName("Rapida").andFuzzySet(ClosedTrapezoidal(0, 200).withLeftBoundary(startingAt(70).endingAt(80)).withRightBoundary(startingAt(90).endingAt(110))).build());
+        velocidad.addLinguisticValue(withName("MuyRapida").andFuzzySet(OpenRightTrapezoidal(0, 200).withBoundary(startingAt(90).endingAt(110))).build());
         controlador.AgregarVariableEntrada(velocidad);
 
         System.out.println("Agregar la variable de salida");
         // Variable linguistiqe de salida : nivel de zoom (de 1 a 5)
         LinguisticVariable zoom = new LinguisticVariable("Zoom");
-        zoom.addLinguisticValue(withName("Pequeña").andFuzzySet(openLeftTrapezoidal(0, 5).withBoundary(startingAt(1).endingAt(2))).build());
-        zoom.addLinguisticValue(withName("Normal").andFuzzySet(closedTrapezoidal(0, 5).withLeftBoundary(startingAt(1).endingAt(2)).withRightBoundary(startingAt(3).endingAt(4))).build());
-        zoom.addLinguisticValue(withName("Grande").andFuzzySet(openRightTrapezoidal(0, 5).withBoundary(startingAt(3).endingAt(4))).build());
+        zoom.addLinguisticValue(withName("Pequeña").andFuzzySet(OpenLeftTrapezoidal(0, 5).withBoundary(startingAt(1).endingAt(2))).build());
+        zoom.addLinguisticValue(withName("Normal").andFuzzySet(ClosedTrapezoidal(0, 5).withLeftBoundary(startingAt(1).endingAt(2)).withRightBoundary(startingAt(3).endingAt(4))).build());
+        zoom.addLinguisticValue(withName("Grande").andFuzzySet(OpenRightTrapezoidal(0, 5).withBoundary(startingAt(3).endingAt(4))).build());
         controlador.AgregarVariableSalida(zoom);
 
         System.out.println("Agregar las reglas");
