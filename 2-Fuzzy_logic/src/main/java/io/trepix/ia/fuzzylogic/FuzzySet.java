@@ -12,21 +12,17 @@ public class FuzzySet {
 
     // Atributos
     protected final LinkedList<Punto2D> puntos;
-    protected double min;
-    protected double max;
 
     public FuzzySet(LinkedList<Punto2D> points) {
         puntos = points;
         Collections.sort(puntos);
-        min = points.getFirst().x;
-        max = points.getLast().x;
     }
 
     // Visualización
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(" ");
-        sj.add("[" + min + "-" + max + "]:");
+        sj.add("[" + minimum() + "-" + maximum() + "]:");
         for (Punto2D pt : puntos) {
             sj.add(pt.toString());
         }
@@ -51,9 +47,9 @@ public class FuzzySet {
     // Cálculo del grado de pertenencia de un punto
     public double membershipDegree(double valor) {
         // Caso 1 : al exteriour del intervalo del conjunto difuso
-        if (valor < min || valor > max || puntos.size() < 2) {
-            return 0;
-        }
+        if (puntos.size() < 2) return 0;
+        if (valor < minimum() || valor > maximum()) return 0;
+
         Punto2D ptAntes = puntos.get(0);
         Punto2D ptDespues = puntos.get(1);
         int index = 0;
@@ -258,5 +254,13 @@ public class FuzzySet {
             // Se devuelve la coordada del baricentro
             return areaPonderada / areaTotal;
         }
+    }
+
+    public double minimum() {
+        return puntos.getFirst().x;
+    }
+
+    public double maximum() {
+        return puntos.getLast().x;
     }
 }
