@@ -1,6 +1,6 @@
 package io.trepix.ia.application;
 
-import io.trepix.ia.fuzzylogic.ControladorDifuso;
+import io.trepix.ia.fuzzylogic.FuzzyController;
 import io.trepix.ia.fuzzylogic.LinguisticVariable;
 import io.trepix.ia.fuzzylogic.LinguisticVariableBuilder;
 
@@ -12,7 +12,7 @@ public class ZoomGPS {
     public static void main(String[] arg) {
         System.out.println("Fuzzy Logic : use case of zoom in a GPS");
 
-        ControladorDifuso controller = new ControladorDifuso("Management of the zoom of a GPS");
+        FuzzyController controller = new FuzzyController("Management of the zoom of a GPS");
 
         LinguisticVariable distance = LinguisticVariableBuilder
                 .withName("Distance")
@@ -31,7 +31,7 @@ public class ZoomGPS {
                         OpenRightTrapezoidal()
                                 .withBoundary(startingAt(100).endingAt(150)))
                 ).build();
-        controller.AgregarVariableEntrada(distance);
+        controller.addInputVariable(distance);
 
         LinguisticVariable speed = LinguisticVariableBuilder
                 .withName("Speed")
@@ -55,7 +55,7 @@ public class ZoomGPS {
                         OpenRightTrapezoidal()
                                 .withBoundary(startingAt(90).endingAt(110)))
                 ).build();
-        controller.AgregarVariableEntrada(speed);
+        controller.addInputVariable(speed);
 
 
         LinguisticVariable zoom = LinguisticVariableBuilder
@@ -75,46 +75,46 @@ public class ZoomGPS {
                         OpenRightTrapezoidal()
                                 .withBoundary(startingAt(3).endingAt(4)))
                 ).build();
-        controller.AgregarVariableSalida(zoom);
+        controller.addOutputVariable(zoom);
 
 
-        controller.AgregarRegla("IF Distance IS Long THEN Zoom IS Small");
-        controller.AgregarRegla("IF Distance IS Short AND Speed IS Slow THEN Zoom IS Normal");
-        controller.AgregarRegla("IF Distance IS Short AND Speed IS Steady THEN Zoom IS Normal");
-        controller.AgregarRegla("IF Distance IS Short AND Speed IS Fast THEN Zoom IS Big");
-        controller.AgregarRegla("IF Distance IS Short AND Speed IS VeryFast THEN Zoom IS Big");
-        controller.AgregarRegla("IF Distance IS Middle AND Speed IS Slow THEN Zoom IS Small");
-        controller.AgregarRegla("IF Distance IS Middle AND Speed IS Steady THEN Zoom IS Normal");
-        controller.AgregarRegla("IF Distance IS Middle AND Speed IS Fast THEN Zoom IS Normal");
-        controller.AgregarRegla("IF Distance IS Middle AND Speed IS VeryFast THEN Zoom IS Big");
+        controller.addRule("IF Distance IS Long THEN Zoom IS Small");
+        controller.addRule("IF Distance IS Short AND Speed IS Slow THEN Zoom IS Normal");
+        controller.addRule("IF Distance IS Short AND Speed IS Steady THEN Zoom IS Normal");
+        controller.addRule("IF Distance IS Short AND Speed IS Fast THEN Zoom IS Big");
+        controller.addRule("IF Distance IS Short AND Speed IS VeryFast THEN Zoom IS Big");
+        controller.addRule("IF Distance IS Middle AND Speed IS Slow THEN Zoom IS Small");
+        controller.addRule("IF Distance IS Middle AND Speed IS Steady THEN Zoom IS Normal");
+        controller.addRule("IF Distance IS Middle AND Speed IS Fast THEN Zoom IS Normal");
+        controller.addRule("IF Distance IS Middle AND Speed IS VeryFast THEN Zoom IS Big");
 
         System.out.println("Case 1 :");
-        controller.AgregarValorNumerico(speed, 35);
-        controller.AgregarValorNumerico(distance, 70);
-        System.out.println("Result : " + controller.Resolver() + "\n");
+        controller.addNumericalValue(speed, 35);
+        controller.addNumericalValue(distance, 70);
+        System.out.println("Result : " + controller.resolve() + "\n");
 
-        controller.EliminarValoresNumericos();
+        controller.clearNumericalValues();
         System.out.println("Case 2 :");
-        controller.AgregarValorNumerico(speed, 25);
-        controller.AgregarValorNumerico(distance, 70);
-        System.out.println("Result : " + controller.Resolver() + "\n");
+        controller.addNumericalValue(speed, 25);
+        controller.addNumericalValue(distance, 70);
+        System.out.println("Result : " + controller.resolve() + "\n");
 
-        controller.EliminarValoresNumericos();
+        controller.clearNumericalValues();
         System.out.println("Case 3 :");
-        controller.AgregarValorNumerico(speed, 72.5);
-        controller.AgregarValorNumerico(distance, 40);
-        System.out.println("Result : " + controller.Resolver() + "\n");
+        controller.addNumericalValue(speed, 72.5);
+        controller.addNumericalValue(distance, 40);
+        System.out.println("Result : " + controller.resolve() + "\n");
 
-        controller.EliminarValoresNumericos();
+        controller.clearNumericalValues();
         System.out.println("Case 4 :");
-        controller.AgregarValorNumerico(speed, 100);
-        controller.AgregarValorNumerico(distance, 110);
-        System.out.println("Result : " + controller.Resolver() + "\n");
+        controller.addNumericalValue(speed, 100);
+        controller.addNumericalValue(distance, 110);
+        System.out.println("Result : " + controller.resolve() + "\n");
 
-        controller.EliminarValoresNumericos();
+        controller.clearNumericalValues();
         System.out.println("Case 5 :");
-        controller.AgregarValorNumerico(speed, 45);
-        controller.AgregarValorNumerico(distance, 160);
-        System.out.println("Result : " + controller.Resolver() + "\n");
+        controller.addNumericalValue(speed, 45);
+        controller.addNumericalValue(distance, 160);
+        System.out.println("Result : " + controller.resolve() + "\n");
     }
 }
