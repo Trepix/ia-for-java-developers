@@ -18,24 +18,6 @@ public class FuzzySet {
         Collections.sort(puntos);
     }
 
-    // Visualización
-    @Override
-    public String toString() {
-        StringJoiner sj = new StringJoiner(" ");
-        sj.add("[" + minimum() + "-" + maximum() + "]:");
-        for (Punto2D pt : puntos) {
-            sj.add(pt.toString());
-        }
-        return sj.toString();
-    }
-
-    // Operador de comparación (se comparan las cadenas resultantes)
-    @Override
-    public boolean equals(Object pt2) {
-        return toString().equals(pt2.toString());
-    }
-
-
     public FuzzySet applyMembershipDegree(double value) {
         return new FuzzySet(
                 puntos.stream()
@@ -262,5 +244,22 @@ public class FuzzySet {
 
     public double maximum() {
         return puntos.getLast().x;
+    }
+
+    // Visualización
+    @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner(" ");
+        sj.add("[" + minimum() + "-" + maximum() + "]:");
+        for (Punto2D pt : puntos) {
+            sj.add(pt.toString());
+        }
+        return sj.toString();
+    }
+
+    // Operador de comparación (se comparan las cadenas resultantes)
+    @Override
+    public boolean equals(Object pt2) {
+        return toString().equals(pt2.toString());
     }
 }

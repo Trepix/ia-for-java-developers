@@ -8,15 +8,6 @@ public abstract class FuzzySetBuilder {
     protected double minimum;
     protected double maximum;
 
-    FuzzySetBuilder(double minimum, double maximum) {
-        this.minimum = minimum;
-        this.maximum = maximum;
-    }
-
-    FuzzySetBuilder() {
-
-    }
-
     public FuzzySetBuilder changeMinimum(double minimum) {
         this.minimum = minimum;
         return this;
@@ -27,25 +18,12 @@ public abstract class FuzzySetBuilder {
         return this;
     }
 
-
-    public static OpenLeftTrapezoidalFuzzySetBuilder OpenLeftTrapezoidal(double minimum, double maximum) {
-        return new OpenLeftTrapezoidalFuzzySetBuilder(minimum, maximum);
-    }
-
     public static OpenLeftTrapezoidalFuzzySetBuilder OpenLeftTrapezoidal() {
         return new OpenLeftTrapezoidalFuzzySetBuilder();
     }
 
-    public static OpenRightTrapezoidalFuzzySetBuilder OpenRightTrapezoidal(double minimum, double maximum) {
-        return new OpenRightTrapezoidalFuzzySetBuilder(minimum, maximum);
-    }
-
     public static OpenRightTrapezoidalFuzzySetBuilder OpenRightTrapezoidal() {
         return new OpenRightTrapezoidalFuzzySetBuilder();
-    }
-
-    public static ClosedTrapezoidalFuzzySetBuilder ClosedTrapezoidal(double minimum, double maximum) {
-        return new ClosedTrapezoidalFuzzySetBuilder(minimum, maximum);
     }
 
     public static ClosedTrapezoidalFuzzySetBuilder ClosedTrapezoidal() {
@@ -53,7 +31,6 @@ public abstract class FuzzySetBuilder {
     }
 
     public abstract FuzzySet build();
-
 
 
     public static class Boundary {
@@ -94,13 +71,6 @@ public abstract class FuzzySetBuilder {
 
         private double endBoundary;
 
-        public OpenLeftTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
-            super(minimum, maximum);
-        }
-
-        public OpenLeftTrapezoidalFuzzySetBuilder() {
-        }
-
         public OpenLeftTrapezoidalFuzzySetBuilder withBoundary(Boundary boundary) {
             this.startBoundary = boundary.start;
             this.endBoundary = boundary.end;
@@ -132,14 +102,6 @@ public abstract class FuzzySetBuilder {
         private double startBoundary;
 
         private double endBoundary;
-
-        public OpenRightTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
-            super(minimum, maximum);
-        }
-
-        public OpenRightTrapezoidalFuzzySetBuilder() {
-
-        }
 
         public OpenRightTrapezoidalFuzzySetBuilder withBoundary(Boundary boundary) {
             startBoundary = boundary.start;
@@ -179,13 +141,6 @@ public abstract class FuzzySetBuilder {
 
         private double endRightBoundary;
 
-        public ClosedTrapezoidalFuzzySetBuilder(double minimum, double maximum) {
-            super(minimum, maximum);
-        }
-
-        public ClosedTrapezoidalFuzzySetBuilder() {
-        }
-
         public ClosedTrapezoidalFuzzySetBuilder withLeftBoundary(Boundary boundary) {
             this.startLeftBoundary = boundary.start;
             this.endLeftBoundary = boundary.end;
@@ -201,19 +156,14 @@ public abstract class FuzzySetBuilder {
         @Override
         public FuzzySet build() {
             List<Punto2D> points = List.of(
-                new Punto2D(minimum, 0),
-                new Punto2D(startLeftBoundary, 0),
-                new Punto2D(endLeftBoundary, 1),
-                new Punto2D(startRightBoundary, 1),
-                new Punto2D(endRightBoundary, 0),
-                new Punto2D(maximum, 0)
+                    new Punto2D(minimum, 0),
+                    new Punto2D(startLeftBoundary, 0),
+                    new Punto2D(endLeftBoundary, 1),
+                    new Punto2D(startRightBoundary, 1),
+                    new Punto2D(endRightBoundary, 0),
+                    new Punto2D(maximum, 0)
             );
             return new FuzzySet(new LinkedList<>(points));
         }
-
-
     }
-
-
-
 }

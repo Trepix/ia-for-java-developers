@@ -1,7 +1,6 @@
 package io.trepix.ia.fuzzylogic;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,18 +8,11 @@ public class LinguisticVariable {
     protected String name;
     protected List<LinguisticValue> linguisticValues;
 
-    public LinguisticVariable(String name) {
-        this.name = name;
-        this.linguisticValues = new ArrayList<>();
-    }
-
     public LinguisticVariable(String name, List<LinguisticValue> linguisticValues) {
         this.name = name;
         this.linguisticValues = linguisticValues;
     }
-    public void addLinguisticValue(LinguisticValue linguisticValue) {
-        linguisticValues.add(linguisticValue);
-    }
+
     LinguisticValue linguisticValue(String name) {
         for(LinguisticValue linguisticValue : linguisticValues) {
             if (linguisticValue.hasSameName(name)) {
