@@ -53,7 +53,7 @@ public class ControladorDifuso {
 
     public double Resolver() {
         LinkedList<Punto2D> points = new LinkedList<>(List.of(
-                new Punto2D(output.getMaximumValue(), 0),
+                new Punto2D(output.getMinimumValue(), 0),
                 new Punto2D(output.getMaximumValue(), 0)
         ));
         FuzzySet resultado = new FuzzySet(points);

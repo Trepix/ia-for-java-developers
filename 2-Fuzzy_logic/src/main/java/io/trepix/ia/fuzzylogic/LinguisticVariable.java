@@ -6,12 +6,9 @@ import java.util.ArrayList;
 public class LinguisticVariable {
     protected String name;
     protected ArrayList<LinguisticValue> linguisticValues;
-    private final double minimumValue;
-    private final double maximumValue;
-    public LinguisticVariable(String name, double minimum, double maximum) {
+
+    public LinguisticVariable(String name) {
         this.name = name;
-        this.minimumValue = minimum;
-        this.maximumValue = maximum;
         this.linguisticValues = new ArrayList<>();
     }
     public void addLinguisticValue(LinguisticValue linguisticValue) {
@@ -27,11 +24,19 @@ public class LinguisticVariable {
     }
 
     public double getMinimumValue() {
-        return minimumValue;
+        return linguisticValues.stream()
+                .map(LinguisticValue::fuzzySet)
+                .map(FuzzySet::minimum)
+                .min(Double::compare)
+                .orElseThrow();
     }
 
     public double getMaximumValue() {
-        return maximumValue;
+        return linguisticValues.stream()
+                .map(LinguisticValue::fuzzySet)
+                .map(FuzzySet::maximum)
+                .max(Double::compare)
+                .orElseThrow();
     }
 
 }
