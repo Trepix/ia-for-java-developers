@@ -2,23 +2,19 @@ package io.trepix.ia.fuzzylogic;
 
 public class FuzzyExpression {
     private final LinguisticVariable linguisticVariable;
-    private final String linguisticValueName;
+    private final LinguisticValue linguisticValue;
 
     public FuzzyExpression(LinguisticVariable linguisticVariable, String linguisticValueName) {
         this.linguisticVariable = linguisticVariable;
-        this.linguisticValueName = linguisticValueName;
+        this.linguisticValue = linguisticVariable.linguisticValue(linguisticValueName);
     }
 
     public FuzzySet fuzzySet() {
-        return linguisticValue().fuzzySet();
+        return linguisticValue.fuzzySet();
     }
 
     public double membershipDegree(NumericalValue numericalValue) {
-        return linguisticValue().membershipDegree(numericalValue.value());
-    }
-
-    private LinguisticValue linguisticValue() {
-        return linguisticVariable.linguisticValue(this.linguisticValueName);
+        return linguisticValue.membershipDegree(numericalValue.value());
     }
 
     public boolean belongsTo(LinguisticVariable linguisticVariable) {
