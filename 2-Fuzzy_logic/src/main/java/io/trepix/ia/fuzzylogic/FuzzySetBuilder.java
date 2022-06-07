@@ -1,5 +1,6 @@
 package io.trepix.ia.fuzzylogic;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class FuzzySetBuilder {
@@ -62,7 +63,7 @@ public class FuzzySetBuilder {
                     new Punto2D(endBoundary, 0),
                     new Punto2D(maximum, 0)
             );
-            return new FuzzySet(minimum, maximum, points);
+            return new FuzzySet(new LinkedList<>(points));
         }
     }
 
@@ -101,7 +102,7 @@ public class FuzzySetBuilder {
                     new Punto2D(endBoundary, 1),
                     new Punto2D(maximum, 1)
             );
-            return new FuzzySet(minimum, maximum, points);
+            return new FuzzySet(new LinkedList<>(points));
         }
 
 
@@ -153,7 +154,7 @@ public class FuzzySetBuilder {
                 new Punto2D(endRightBoundary, 0),
                 new Punto2D(maximum, 0)
             );
-            return new FuzzySet(minimum, maximum, points);
+            return new FuzzySet(new LinkedList<>(points));
         }
 
 

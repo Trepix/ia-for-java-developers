@@ -1,8 +1,6 @@
 package io.trepix.ia.fuzzylogic;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 // Clase que gestiona todo el sistema difuso
 public class ControladorDifuso {
@@ -54,11 +52,11 @@ public class ControladorDifuso {
     }
 
     public double Resolver() {
-        // Iinicialización del conjunto difuso resultado
-        FuzzySet resultado = new FuzzySet(output.getMinimumValue(), output.getMaximumValue());
-        resultado.Agregar(output.getMinimumValue(), 0);
-        resultado.Agregar(output.getMaximumValue(), 0);
-        
+        LinkedList<Punto2D> points = new LinkedList<>(List.of(
+                new Punto2D(output.getMaximumValue(), 0),
+                new Punto2D(output.getMaximumValue(), 0)
+        ));
+        FuzzySet resultado = new FuzzySet(points);
         // Aplicación de las reglas y modificación del conjunto difuso resultante
         for(FuzzyRule regla : rules) {
             resultado = resultado.O(regla.apply(problema));
