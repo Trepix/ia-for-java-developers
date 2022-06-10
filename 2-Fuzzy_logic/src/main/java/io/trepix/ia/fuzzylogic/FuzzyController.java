@@ -39,13 +39,13 @@ public class FuzzyController {
     }
 
     public double resolve() {
-        LinkedList<Punto2D> points = new LinkedList<>(List.of(
-                new Punto2D(output.getMinimumValue(), 0),
-                new Punto2D(output.getMaximumValue(), 0)
+        LinkedList<Point> points = new LinkedList<>(List.of(
+                new Point(output.getMinimumValue(), 0),
+                new Point(output.getMaximumValue(), 0)
         ));
         FuzzySet result = new FuzzySet(points);
         for (FuzzyRule rule : rules) {
-            result = result.O(rule.apply(problems));
+            result = result.union(rule.apply(problems));
         }
 
         return result.Baricentro();

@@ -79,11 +79,11 @@ public abstract class FuzzySetBuilder {
 
         @Override
         public FuzzySet build() {
-            List<Punto2D> points = List.of(
-                    new Punto2D(minimum, 1),
-                    new Punto2D(startBoundary, 1),
-                    new Punto2D(endBoundary, 0),
-                    new Punto2D(maximum, 0)
+            List<Point> points = List.of(
+                    new Point(minimum, 1),
+                    new Point(startBoundary, 1),
+                    new Point(endBoundary, 0),
+                    new Point(maximum, 0)
             );
             return new FuzzySet(new LinkedList<>(points));
         }
@@ -111,11 +111,11 @@ public abstract class FuzzySetBuilder {
 
         @Override
         public FuzzySet build() {
-            List<Punto2D> points = List.of(
-                    new Punto2D(minimum, 0),
-                    new Punto2D(startBoundary, 0),
-                    new Punto2D(endBoundary, 1),
-                    new Punto2D(maximum, 1)
+            List<Point> points = List.of(
+                    new Point(minimum, 0),
+                    new Point(startBoundary, 0),
+                    new Point(endBoundary, 1),
+                    new Point(maximum, 1)
             );
             return new FuzzySet(new LinkedList<>(points));
         }
@@ -155,13 +155,13 @@ public abstract class FuzzySetBuilder {
 
         @Override
         public FuzzySet build() {
-            List<Punto2D> points = List.of(
-                    new Punto2D(minimum, 0),
-                    new Punto2D(startLeftBoundary, 0),
-                    new Punto2D(endLeftBoundary, 1),
-                    new Punto2D(startRightBoundary, 1),
-                    new Punto2D(endRightBoundary, 0),
-                    new Punto2D(maximum, 0)
+            List<Point> points = List.of(
+                    new Point(minimum, 0),
+                    new Point(startLeftBoundary, 0),
+                    new Point(endLeftBoundary, 1),
+                    new Point(startRightBoundary, 1),
+                    new Point(endRightBoundary, 0),
+                    new Point(maximum, 0)
             );
             return new FuzzySet(new LinkedList<>(points));
         }

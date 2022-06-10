@@ -1,200 +1,146 @@
 package io.trepix.ia.fuzzylogic;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.StringJoiner;
+import java.util.*;
+import java.util.function.BiFunction;
 
+import static io.trepix.ia.fuzzylogic.Point.leftmostPoint;
+import static io.trepix.ia.fuzzylogic.Point.rightestPoint;
 import static java.util.stream.Collectors.toCollection;
 
-// Clase principal que gestiona los conjuntos difusos
 public class FuzzySet {
 
-    // Atributos
-    protected final LinkedList<Punto2D> puntos;
+    private final LinkedList<Point> points;
 
-    public FuzzySet(LinkedList<Punto2D> points) {
-        puntos = points;
-        Collections.sort(puntos);
+    public FuzzySet(LinkedList<Point> points) {
+        this.points = points;
+        Collections.sort(this.points);
     }
 
-    public FuzzySet applyMembershipDegree(double value) {
+    public FuzzySet applyDegree(double degree) {
         return new FuzzySet(
-                puntos.stream()
-                        .map(point -> new Punto2D(point.x, point.y * value))
+                points.stream()
+                        .map(point -> point.applyDegree(degree))
                         .collect(toCollection(LinkedList::new))
         );
     }
 
-    // Cálculo del grado de pertenencia de un punto
-    public double membershipDegree(double valor) {
-        // Caso 1 : al exteriour del intervalo del conjunto difuso
-        if (puntos.size() < 2) return 0;
-        if (valor < minimum() || valor > maximum()) return 0;
+    public double membershipDegree(double value) {
 
-        Punto2D ptAntes = puntos.get(0);
-        Punto2D ptDespues = puntos.get(1);
-        int index = 0;
-        while (valor >= ptDespues.x) {
-            index++;
-            ptAntes = ptDespues;
-            ptDespues = puntos.get(index);
+        if (notBelongToFuzzySet(value)) return 0;
+
+        Point firstPoint = points.get(0);
+        Point secondPoint = points.get(1);
+        Iterator<Point> iterator = points.iterator();
+        while (value >= secondPoint.value()) {
+            firstPoint = secondPoint;
+            secondPoint = iterator.next();
         }
 
-        if (ptAntes.x == valor) {
-            // Caso 2 : un punto con eete valor
-            return ptAntes.y;
+        if (firstPoint.isValue(value)) {
+            return firstPoint.membershipDegree();
         } else {
-            // Caso 3 : se appica la interpolación
-            return ((ptAntes.y - ptDespues.y) * (ptDespues.x - valor) / (ptDespues.x - ptAntes.x) + ptDespues.y);
+            return firstPoint.interpolateAt(secondPoint, value).membershipDegree();
         }
     }
 
-    // Operador Y
-    public FuzzySet Y(FuzzySet e2) {
-        return Fusionar(this, e2, "Min");
+    public Point getPointAtValue(double value) {
+        return new Point(value, membershipDegree(value));
     }
 
-    // Operador O
-    public FuzzySet O(FuzzySet e2) {
-        return Fusionar(this, e2, "Max");
+
+    private boolean notBelongToFuzzySet(double value) {
+        if (points.size() < 2) return true;
+        return value < minimum() || value > maximum();
     }
 
-    // Métodos min o max
-    private static double Optimo(double valor1, double valor2, String metodo) {
-        if (metodo.equals("Min")) {
-            return Math.min(valor1, valor2);
-        } else {
-            return Math.max(valor1, valor2);
-        }
+//    public FuzzySet intersect(FuzzySet set) {
+//        return merge(this, set, Point::min);
+//    }
+
+    public FuzzySet union(FuzzySet set) {
+        return merge(this, set, Point::max);
     }
 
-    // Métodos genérico
-    private static FuzzySet Fusionar(FuzzySet e1, FuzzySet e2, String metodo) {
-        // Creación del resultado
-        LinkedList<Punto2D> mergedPoints = new LinkedList<>();
 
-        // On va recorrer las listas con los iteradores
-        Iterator<Punto2D> iterador1 = e1.puntos.iterator();
-        Punto2D ptConjunto1 = iterador1.next();
-        Punto2D antiguoPtConjunto1 = ptConjunto1;
-        Iterator<Punto2D> iterador2 = e2.puntos.iterator();
-        Punto2D ptConjunto2 = iterador2.next();
+    private static FuzzySet merge(FuzzySet firstSet, FuzzySet secondSet, BiFunction<Point, Point, Point> optimum) {
+        LinkedList<Point> mergedPoints = new LinkedList<>();
 
-        // Se calcula la posición relativa de las dos curvas
-        int antiguaPosicionRelativa;
-        int nuevaPosicionRelativa = (int) Math.signum(ptConjunto1.y - ptConjunto2.y);
+        Iterator<Point> firstIterator = firstSet.points.iterator();
+        Iterator<Point> secondIterator = secondSet.points.iterator();
+        Point firstPoint = firstIterator.next();
+        Point secondPoint = secondIterator.next();
+        Point lastFirstPoint = firstPoint;
 
-        boolean lista1terminada = false;
-        boolean lista2terminada = false;
-        // Bucle sobre todos los puntos de las dos colecciones
-        while (!lista1terminada && !lista2terminada) {
-            // Se recuperan las abcisas de las puntos actuales
-            double x1 = ptConjunto1.x;
-            double x2 = ptConjunto2.x;
+        Slope slopeBefore;
+        Slope pointsSlope = firstPoint.slope(secondPoint);
 
-            // Cálculo de las posiciones relativas
-            antiguaPosicionRelativa = nuevaPosicionRelativa;
-            nuevaPosicionRelativa = (int) Math.signum(ptConjunto1.y - ptConjunto2.y);
+        while (firstPoint != null && secondPoint != null) {
+            slopeBefore = pointsSlope;
+            pointsSlope = firstPoint.slope(secondPoint);
 
-            // ¿Están invertidas las curvas?
-            // Si no, ¿se debe tener en cuenta dos o un único punto?
-            if (antiguaPosicionRelativa != nuevaPosicionRelativa && antiguaPosicionRelativa != 0 && nuevaPosicionRelativa != 0) {
-                // Se debe calcular el punto de intersección
-                double x = (x1 == x2 ? antiguoPtConjunto1.x : Math.min(x1, x2));
-                double xPrimo = Math.max(x1, x2);
+            if (pointsSlope.isIntersectingWith(slopeBefore)) {
+                double leftmostValue = (firstPoint.isSameValue(secondPoint) ? lastFirstPoint : leftmostPoint(firstPoint, secondPoint)).value();
+                double rightestValue = rightestPoint(firstPoint, secondPoint).value();
 
-                // Cálculo de las pendientes
-                double p1 = e1.membershipDegree(xPrimo) - e1.membershipDegree(x) / (xPrimo - x);
-                double p2 = e2.membershipDegree(xPrimo) - e2.membershipDegree(x) / (xPrimo - x);
-                // Cálculo del delta
-                double delta = 0;
-                if ((p2 - p1) != 0) {
-                    delta = (e2.membershipDegree(x) - e1.membershipDegree(x)) / (p1 - p2);
+                Slope firstSetSlope = new Slope(firstSet.getPointAtValue(leftmostValue), firstSet.getPointAtValue(rightestValue));
+                Slope secondSetSlope = new Slope(secondSet.getPointAtValue(leftmostValue), secondSet.getPointAtValue(rightestValue));
+
+                double intersectionDistance = 0;
+                if (firstSetSlope.isNotEqual(secondSetSlope)) {
+                    intersectionDistance = firstSetSlope.intersectionDistance(secondSetSlope);
                 }
 
-                // Agregar el punto de intersección al resultado
-                mergedPoints.add(new Punto2D(x + delta, e1.membershipDegree(x + delta)));
+                mergedPoints.add(firstSet.getPointAtValue(leftmostValue + intersectionDistance));
 
-                // Se pasa al punto siguiente
-                if (x1 < x2) {
-                    antiguoPtConjunto1 = ptConjunto1;
-                    if (iterador1.hasNext()) {
-                        ptConjunto1 = iterador1.next();
-                    } else {
-                        lista1terminada = true;
-                        ptConjunto1 = null;
-                    }
-                } else if (x1 > x2) {
-                    if (iterador2.hasNext()) {
-                        ptConjunto2 = iterador2.next();
-                    } else {
-                        ptConjunto2 = null;
-                        lista2terminada = true;
-                    }
+                if (firstPoint.isPreviousTo(secondPoint)) {
+                    lastFirstPoint = firstPoint;
+                    firstPoint = iterate(firstIterator);
+                } else if (secondPoint.isPreviousTo(firstPoint)) {
+                    secondPoint = iterate(secondIterator);
                 }
-            } else if (x1 == x2) {
-                // Dos puntos con la misma abcisa, es suficiente con guardar el correcto
-                mergedPoints.add(new Punto2D(x1, Optimo(ptConjunto1.y, ptConjunto2.y, metodo)));
+            }
+            else if (firstPoint.isSameValue(secondPoint)) {
+                mergedPoints.add(optimum.apply(firstPoint, secondPoint));
 
-                // Se pasa al siguiente punto 
-                if (iterador1.hasNext()) {
-                    antiguoPtConjunto1 = ptConjunto1;
-                    ptConjunto1 = iterador1.next();
-                } else {
-                    ptConjunto1 = null;
-                    lista1terminada = true;
-                }
-                if (iterador2.hasNext()) {
-                    ptConjunto2 = iterador2.next();
-                } else {
-                    ptConjunto2 = null;
-                    lista2terminada = true;
-                }
-            } else if (x1 < x2) {
-                // La curva 1 tiene un punto antes
-                // Se calcula el gradio para el segundo y se guarda el correcto
-                mergedPoints.add(new Punto2D(x1, Optimo(ptConjunto1.y, e2.membershipDegree(x1), metodo)));
-                if (iterador1.hasNext()) {
-                    antiguoPtConjunto1 = ptConjunto1;
-                    ptConjunto1 = iterador1.next();
-                } else {
-                    ptConjunto1 = null;
-                    lista1terminada = true;
-                }
-            } else {
-                // ültimo caso, es la curva 2 que tiene un punto antes
-                // Se calcula el grado para la primera y se guarda el correcto
-                mergedPoints.add(new Punto2D(x2, Optimo(e1.membershipDegree(x2), ptConjunto2.y, metodo)));
-                if (iterador2.hasNext()) {
-                    ptConjunto2 = iterador2.next();
-                } else {
-                    ptConjunto2 = null;
-                    lista2terminada = true;
-                }
+                lastFirstPoint = firstPoint;
+                firstPoint = iterate(firstIterator);
+                secondPoint = iterate(secondIterator);
+            }
+            else if (firstPoint.isPreviousTo(secondPoint)) {
+                Point pointAtSecondSet = secondSet.getPointAtValue(firstPoint.value());
+                mergedPoints.add(optimum.apply(firstPoint, pointAtSecondSet));
+                lastFirstPoint = firstPoint;
+                firstPoint = iterate(firstIterator);
+            }
+            else {
+                Point pointAtFirstSet = firstSet.getPointAtValue(secondPoint.value());
+                mergedPoints.add(optimum.apply(pointAtFirstSet, secondPoint));
+                secondPoint = iterate(secondIterator);
             }
         }
 
-        // Aquí, al menos una de las listas está termianda
-        // Se añaden los puntos restants
-        if (!lista1terminada) {
-            while (iterador1.hasNext()) {
-                ptConjunto1 = iterador1.next();
-                mergedPoints.add(new Punto2D(ptConjunto1.x, Optimo(ptConjunto1.y, 0, metodo)));
-            }
-        } else if (!lista2terminada) {
-            while (iterador2.hasNext()) {
-                ptConjunto2 = iterador2.next();
-                mergedPoints.add(new Punto2D(ptConjunto2.x, Optimo(ptConjunto2.y, 0, metodo)));
-            }
+
+        while (firstIterator.hasNext()) {
+            firstPoint = firstIterator.next();
+            mergedPoints.add(optimum.apply(firstPoint, null));
+        }
+
+        while (secondIterator.hasNext()) {
+            secondPoint = secondIterator.next();
+            mergedPoints.add(optimum.apply(secondPoint, null));
         }
 
         return new FuzzySet(mergedPoints);
     }
 
+    private static Point iterate(Iterator<Point> firstIterator) {
+        if (firstIterator.hasNext()) return firstIterator.next();
+        else return  null;
+    }
+
     public double Baricentro() {
         // Si hay menos de dos puntos, no hay baricentro
-        if (puntos.size() <= 2) {
+        if (points.size() <= 2) {
             return 0;
         } else {
             // Iinicialización de las áreas
@@ -202,32 +148,32 @@ public class FuzzySet {
             double areaTotal = 0;
             double areaLocal;
             // Recorrido de la lista conservando 2 puntos
-            Punto2D antiguoPt = null;
-            for (Punto2D pt : puntos) {
+            Point antiguoPt = null;
+            for (Point pt : points) {
                 if (antiguoPt != null) {
                     // Cálculo del baricentro local
-                    if (antiguoPt.y == pt.y) {
+                    if (antiguoPt.membershipDegree() == pt.membershipDegree()) {
                         // Es un rectángulo, baricentro al centro
-                        areaLocal = pt.y * (pt.x - antiguoPt.x);
+                        areaLocal = pt.membershipDegree() * (pt.value() - antiguoPt.value());
                         areaTotal += areaLocal;
-                        areaPonderada += areaLocal * ((pt.x - antiguoPt.x) / 2.0 + antiguoPt.x);
+                        areaPonderada += areaLocal * ((pt.value() - antiguoPt.value()) / 2.0 + antiguoPt.value());
                     } else {
                         // Es un trapecio, se puede descomponer
                         // como un rectángulo con un triangulo rectángulo debajo
                         // Se separan los dos formas
                         // Momento 1 : rectángulo
-                        areaLocal = Math.min(pt.y, antiguoPt.y) * (pt.x - antiguoPt.x);
+                        areaLocal = Math.min(pt.membershipDegree(), antiguoPt.membershipDegree()) * (pt.value() - antiguoPt.value());
                         areaTotal += areaLocal;
-                        areaPonderada += areaLocal * ((pt.x - antiguoPt.x) / 2.0 + antiguoPt.x);
+                        areaPonderada += areaLocal * ((pt.value() - antiguoPt.value()) / 2.0 + antiguoPt.value());
                         // Momento 2 : triangulo rectángulo
-                        areaLocal = (pt.x - antiguoPt.x) * Math.abs(pt.y - antiguoPt.y) / 2.0;
+                        areaLocal = (pt.value() - antiguoPt.value()) * Math.abs(pt.membershipDegree() - antiguoPt.membershipDegree()) / 2.0;
                         areaTotal += areaLocal;
-                        if (pt.y > antiguoPt.y) {
+                        if (pt.membershipDegree() > antiguoPt.membershipDegree()) {
                             // Baricentro de 1/3 lado pt
-                            areaPonderada += areaLocal * (2.0 / 3.0 * (pt.x - antiguoPt.x) + antiguoPt.x);
+                            areaPonderada += areaLocal * (2.0 / 3.0 * (pt.value() - antiguoPt.value()) + antiguoPt.value());
                         } else {
                             // Baricentro de 1/3 lado antiguoPt
-                            areaPonderada += areaLocal * (1.0 / 3.0 * (pt.x - antiguoPt.x) + antiguoPt.x);
+                            areaPonderada += areaLocal * (1.0 / 3.0 * (pt.value() - antiguoPt.value()) + antiguoPt.value());
                         }
                     }
                 }
@@ -239,27 +185,33 @@ public class FuzzySet {
     }
 
     public double minimum() {
-        return puntos.getFirst().x;
+        return points.getFirst().value();
     }
 
     public double maximum() {
-        return puntos.getLast().x;
+        return points.getLast().value();
     }
 
-    // Visualización
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(" ");
         sj.add("[" + minimum() + "-" + maximum() + "]:");
-        for (Punto2D pt : puntos) {
+        for (Point pt : points) {
             sj.add(pt.toString());
         }
         return sj.toString();
     }
 
-    // Operador de comparación (se comparan las cadenas resultantes)
     @Override
-    public boolean equals(Object pt2) {
-        return toString().equals(pt2.toString());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FuzzySet fuzzySet = (FuzzySet) o;
+        return points.equals(fuzzySet.points);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(points);
     }
 }

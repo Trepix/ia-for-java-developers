@@ -64,6 +64,10 @@ public class FuzzyRule {
                     .orElse(0.0);
             degree = Math.min(degree, localDegree);
         }
-        return conclusion.fuzzySet().applyMembershipDegree(degree);
+        /* Larsen implication
+            μ     (x,y) = μ (x)·μ (y)
+             (A→B)         A     B
+        */
+        return conclusion.fuzzySet().applyDegree(degree);
     }
 }
