@@ -2,6 +2,7 @@ package io.trepix.ia.fuzzylogic;
 
 import java.util.*;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 import static io.trepix.ia.fuzzylogic.Point.leftmostPoint;
 import static io.trepix.ia.fuzzylogic.Point.rightestPoint;
@@ -71,23 +72,23 @@ public class FuzzySet {
         Point secondPoint = secondIterator.next();
         Point lastFirstPoint = firstPoint;
 
-        Slope slopeBefore;
-        Slope pointsSlope = firstPoint.slope(secondPoint);
+        Line lineBefore;
+        Line currentLine = firstPoint.lineBetween(secondPoint);
 
         while (firstPoint != null && secondPoint != null) {
-            slopeBefore = pointsSlope;
-            pointsSlope = firstPoint.slope(secondPoint);
+            lineBefore = currentLine;
+            currentLine = firstPoint.lineBetween(secondPoint);
 
-            if (pointsSlope.isIntersectingWith(slopeBefore)) {
+            if (currentLine.isIntersectingWith(lineBefore)) {
                 double leftmostValue = (firstPoint.isSameValue(secondPoint) ? lastFirstPoint : leftmostPoint(firstPoint, secondPoint)).value();
                 double rightestValue = rightestPoint(firstPoint, secondPoint).value();
 
-                Slope firstSetSlope = new Slope(firstSet.getPointAtValue(leftmostValue), firstSet.getPointAtValue(rightestValue));
-                Slope secondSetSlope = new Slope(secondSet.getPointAtValue(leftmostValue), secondSet.getPointAtValue(rightestValue));
+                Line firstSetLine = new Line(firstSet.getPointAtValue(leftmostValue), firstSet.getPointAtValue(rightestValue));
+                Line secondSetLine = new Line(secondSet.getPointAtValue(leftmostValue), secondSet.getPointAtValue(rightestValue));
 
                 double intersectionDistance = 0;
-                if (firstSetSlope.isNotEqual(secondSetSlope)) {
-                    intersectionDistance = firstSetSlope.intersectionDistance(secondSetSlope);
+                if (firstSetLine.isNotEqual(secondSetLine)) {
+                    intersectionDistance = firstSetLine.intersectionDistance(secondSetLine);
                 }
 
                 mergedPoints.add(firstSet.getPointAtValue(leftmostValue + intersectionDistance));
@@ -119,16 +120,9 @@ public class FuzzySet {
             }
         }
 
-
-        while (firstIterator.hasNext()) {
-            firstPoint = firstIterator.next();
-            mergedPoints.add(optimum.apply(firstPoint, null));
-        }
-
-        while (secondIterator.hasNext()) {
-            secondPoint = secondIterator.next();
-            mergedPoints.add(optimum.apply(secondPoint, null));
-        }
+        Consumer<Point> addPoints = point -> mergedPoints.add(optimum.apply(point, null));
+        firstIterator.forEachRemaining(addPoints);
+        secondIterator.forEachRemaining(addPoints);
 
         return new FuzzySet(mergedPoints);
     }

@@ -22,8 +22,8 @@ public record Point(double value, double membershipDegree) implements Comparable
         return new Point(value, Math.max(membershipDegree, point.membershipDegree));
     }
 
-    public Slope slope(Point point) {
-        return new Slope(this, point);
+    public Line lineBetween(Point point) {
+        return new Line(this, point);
     }
 
     public Point interpolateAt(Point second, double value) {

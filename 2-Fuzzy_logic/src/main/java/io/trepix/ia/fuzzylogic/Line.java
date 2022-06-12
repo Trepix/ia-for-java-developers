@@ -1,6 +1,6 @@
 package io.trepix.ia.fuzzylogic;
 
-public class Slope {
+public class Line {
     enum SlopeType {
         POSITIVE,
         ZERO,
@@ -22,24 +22,24 @@ public class Slope {
     private final Point first;
     private final Point second;
 
-    Slope(Point first, Point second) {
+    Line(Point first, Point second) {
         this.first = first;
         this.second = second;
         this.slopeType = SlopeType.from(first.membershipDegree(), second.membershipDegree());
     }
 
-    private double value() {
+    private double slope() {
         return (second.membershipDegree() - first.membershipDegree()) / (second.value() - first.value());
     }
 
-    public double intersectionDistance(Slope slope) {
-        return (slope.first.membershipDegree() - this.first.membershipDegree()) / (this.value() - slope.value());
+    public double intersectionDistance(Line line) {
+        return (line.first.membershipDegree() - this.first.membershipDegree()) / (this.slope() - line.slope());
     }
-    boolean isIntersectingWith(Slope slope) {
-        return !this.slopeType.equals(slope.slopeType) && slope.slopeType.isNotZero() && this.slopeType.isNotZero();
+    boolean isIntersectingWith(Line line) {
+        return !this.slopeType.equals(line.slopeType) && line.slopeType.isNotZero() && this.slopeType.isNotZero();
     }
 
-    boolean isNotEqual(Slope slope) {
-        return this.value() != slope.value();
+    boolean isNotEqual(Line line) {
+        return this.slope() != line.slope();
     }
 }
