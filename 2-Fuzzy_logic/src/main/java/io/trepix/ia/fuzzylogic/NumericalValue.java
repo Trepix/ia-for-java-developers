@@ -8,6 +8,7 @@ public class NumericalValue {
         this.linguisticVariable = linguisticVariable;
         this.value = value;
     }
+
     public double value() {
         return value;
     }

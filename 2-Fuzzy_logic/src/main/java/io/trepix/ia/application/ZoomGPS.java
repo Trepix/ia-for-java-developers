@@ -2,11 +2,11 @@ package io.trepix.ia.application;
 
 import io.trepix.ia.fuzzylogic.FuzzyController;
 import io.trepix.ia.fuzzylogic.LinguisticVariable;
-import io.trepix.ia.fuzzylogic.LinguisticVariableBuilder;
+import io.trepix.ia.fuzzylogic.LinguisticVariable.LinguisticVariableBuilder;
 
 import static io.trepix.ia.fuzzylogic.FuzzySetBuilder.BoundaryBuilder.startingAt;
 import static io.trepix.ia.fuzzylogic.FuzzySetBuilder.*;
-import static io.trepix.ia.fuzzylogic.LinguisticValueBuilder.withName;
+import static io.trepix.ia.fuzzylogic.LinguisticValue.LinguisticValueBuilder.withName;
 
 public class ZoomGPS {
     public static void main(String[] arg) {
@@ -19,16 +19,16 @@ public class ZoomGPS {
                 .withMinimumValue(0)
                 .withMaximumValue(500000)
                 .andLinguisticValue(withName("Short").andFuzzySet(
-                        OpenLeftTrapezoidal()
+                        OpenLeftTrapezium()
                                 .withBoundary(startingAt(30).endingAt(50)))
                 )
                 .andLinguisticValue(withName("Middle").andFuzzySet(
-                        ClosedTrapezoidal()
+                        ClosedTrapezium()
                                 .withLeftBoundary(startingAt(40).endingAt(50))
                                 .withRightBoundary(startingAt(100).endingAt(150)))
                 )
                 .andLinguisticValue(withName("Long").andFuzzySet(
-                        OpenRightTrapezoidal()
+                        OpenRightTrapezium()
                                 .withBoundary(startingAt(100).endingAt(150)))
                 ).build();
         controller.addInputVariable(distance);
@@ -38,21 +38,21 @@ public class ZoomGPS {
                 .withMinimumValue(0)
                 .withMaximumValue(200)
                 .andLinguisticValue(withName("Slow").andFuzzySet(
-                        OpenLeftTrapezoidal()
+                        OpenLeftTrapezium()
                                 .withBoundary(startingAt(20).endingAt(30)))
                 )
                 .andLinguisticValue(withName("Steady").andFuzzySet(
-                        ClosedTrapezoidal()
+                        ClosedTrapezium()
                                 .withLeftBoundary(startingAt(20).endingAt(30))
                                 .withRightBoundary(startingAt(70).endingAt(80)))
                 )
                 .andLinguisticValue(withName("Fast").andFuzzySet(
-                        ClosedTrapezoidal()
+                        ClosedTrapezium()
                                 .withLeftBoundary(startingAt(70).endingAt(80))
                                 .withRightBoundary(startingAt(90).endingAt(110)))
                 )
                 .andLinguisticValue(withName("VeryFast").andFuzzySet(
-                        OpenRightTrapezoidal()
+                        OpenRightTrapezium()
                                 .withBoundary(startingAt(90).endingAt(110)))
                 ).build();
         controller.addInputVariable(speed);
@@ -63,16 +63,16 @@ public class ZoomGPS {
                 .withMinimumValue(0)
                 .withMaximumValue(5)
                 .andLinguisticValue(withName("Small").andFuzzySet(
-                        OpenLeftTrapezoidal()
+                        OpenLeftTrapezium()
                                 .withBoundary(startingAt(1).endingAt(2)))
                 )
                 .andLinguisticValue(withName("Normal").andFuzzySet(
-                        ClosedTrapezoidal()
+                        ClosedTrapezium()
                                 .withLeftBoundary(startingAt(1).endingAt(2))
                                 .withRightBoundary(startingAt(3).endingAt(4)))
                 )
                 .andLinguisticValue(withName("Big").andFuzzySet(
-                        OpenRightTrapezoidal()
+                        OpenRightTrapezium()
                                 .withBoundary(startingAt(3).endingAt(4)))
                 ).build();
         controller.addOutputVariable(zoom);

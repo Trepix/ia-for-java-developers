@@ -1,10 +1,31 @@
-package io.trepix.ia.fuzzylogic;
+package io.trepix.ia.fuzzylogic.geometry;
 
 public record Point(double value, double membershipDegree) implements Comparable<Point> {
+
+    public static Point max(Point first, Point second) {
+        if (second == null || first.membershipDegree > second.membershipDegree) return first;
+        return second;
+    }
+
+    public static Point min(Point first, Point second) {
+        if (second == null || first.membershipDegree < second.membershipDegree) return first;
+        return second;
+    }
+
+    public static Point leftmostPoint(Point p1, Point p2) {
+        if (p1.isPreviousTo(p2)) return p1;
+        else return p2;
+    }
+
+    public static Point rightestPoint(Point p1, Point p2) {
+        if (p1.isPreviousTo(p2)) return p2;
+        else return p1;
+    }
 
     public Point applyDegree(double degree) {
         return new Point(value, membershipDegree * degree);
     }
+
     public boolean isValue(double value) {
         return value() == value;
     }
@@ -17,9 +38,8 @@ public record Point(double value, double membershipDegree) implements Comparable
         return this.value < secondPoint.value();
     }
 
-    public Point max(Point point) {
-        if (point == null) return this;
-        return new Point(value, Math.max(membershipDegree, point.membershipDegree));
+    public boolean isHigherThan(Point point) {
+        return this.membershipDegree > point.membershipDegree;
     }
 
     public Line lineBetween(Point point) {
@@ -40,15 +60,14 @@ public record Point(double value, double membershipDegree) implements Comparable
         return new Point(value, memberShipDegree);
     }
 
-    public static Point leftmostPoint(Point p1, Point p2) {
-        if (p1.isPreviousTo(p2)) return p1;
-        else return p2;
+    public double distanceBetweenValues(Point point) {
+        return this.value() - point.value();
     }
 
-    public static Point rightestPoint(Point p1, Point p2) {
-        if (p1.isPreviousTo(p2)) return p2;
-        else return p1;
+    public double distanceBetweenMembershipDegree(Point point) {
+        return this.membershipDegree() - point.membershipDegree();
     }
+
     @Override
     public int compareTo(Point t) {
         return (int) (value - t.value);
@@ -58,5 +77,4 @@ public record Point(double value, double membershipDegree) implements Comparable
     public String toString() {
         return "(" + value + ";" + membershipDegree + ")";
     }
-
 }

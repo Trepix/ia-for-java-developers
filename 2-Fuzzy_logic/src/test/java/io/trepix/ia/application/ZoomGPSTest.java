@@ -23,7 +23,7 @@ public class ZoomGPSTest {
 
         assert output.contains("2.5") : "1 - Case fail";
         assert output.contains("1.782051282051282") : "2 - Case fail";
-        assert output.contains("2.931899641577060") : "3 - Case fail";
+        assert output.contains("2.93189964157706") : "3 - Case fail";
         assert output.contains("2.8919625653729") : "4 - Case fail";
         assert output.contains("0.777777777777777") : "5 - Case fail";
 

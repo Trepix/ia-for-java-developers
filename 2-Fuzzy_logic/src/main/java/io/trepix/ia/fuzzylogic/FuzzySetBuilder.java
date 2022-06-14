@@ -1,5 +1,7 @@
 package io.trepix.ia.fuzzylogic;
 
+import io.trepix.ia.fuzzylogic.geometry.Point;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,6 +9,18 @@ public abstract class FuzzySetBuilder {
 
     protected double minimum;
     protected double maximum;
+
+    public static OpenLeftTrapeziumFuzzySetBuilder OpenLeftTrapezium() {
+        return new OpenLeftTrapeziumFuzzySetBuilder();
+    }
+
+    public static OpenRightTrapeziumFuzzySetBuilder OpenRightTrapezium() {
+        return new OpenRightTrapeziumFuzzySetBuilder();
+    }
+
+    public static ClosedTrapeziumFuzzySetBuilder ClosedTrapezium() {
+        return new ClosedTrapeziumFuzzySetBuilder();
+    }
 
     public FuzzySetBuilder changeMinimum(double minimum) {
         this.minimum = minimum;
@@ -16,18 +30,6 @@ public abstract class FuzzySetBuilder {
     public FuzzySetBuilder changeMaximum(double maximum) {
         this.maximum = maximum;
         return this;
-    }
-
-    public static OpenLeftTrapezoidalFuzzySetBuilder OpenLeftTrapezoidal() {
-        return new OpenLeftTrapezoidalFuzzySetBuilder();
-    }
-
-    public static OpenRightTrapezoidalFuzzySetBuilder OpenRightTrapezoidal() {
-        return new OpenRightTrapezoidalFuzzySetBuilder();
-    }
-
-    public static ClosedTrapezoidalFuzzySetBuilder ClosedTrapezoidal() {
-        return new ClosedTrapezoidalFuzzySetBuilder();
     }
 
     public abstract FuzzySet build();
@@ -65,13 +67,13 @@ public abstract class FuzzySetBuilder {
        |.......
        |___________________
     */
-    public static class OpenLeftTrapezoidalFuzzySetBuilder extends FuzzySetBuilder {
+    public static class OpenLeftTrapeziumFuzzySetBuilder extends FuzzySetBuilder {
 
         private double startBoundary;
 
         private double endBoundary;
 
-        public OpenLeftTrapezoidalFuzzySetBuilder withBoundary(Boundary boundary) {
+        public OpenLeftTrapeziumFuzzySetBuilder withBoundary(Boundary boundary) {
             this.startBoundary = boundary.start;
             this.endBoundary = boundary.end;
             return this;
@@ -98,12 +100,12 @@ public abstract class FuzzySetBuilder {
        |___________________
     */
 
-    public static class OpenRightTrapezoidalFuzzySetBuilder extends FuzzySetBuilder {
+    public static class OpenRightTrapeziumFuzzySetBuilder extends FuzzySetBuilder {
         private double startBoundary;
 
         private double endBoundary;
 
-        public OpenRightTrapezoidalFuzzySetBuilder withBoundary(Boundary boundary) {
+        public OpenRightTrapeziumFuzzySetBuilder withBoundary(Boundary boundary) {
             startBoundary = boundary.start;
             endBoundary = boundary.end;
             return this;
@@ -131,7 +133,7 @@ public abstract class FuzzySetBuilder {
        |___________________
     */
 
-    public static class ClosedTrapezoidalFuzzySetBuilder extends FuzzySetBuilder {
+    public static class ClosedTrapeziumFuzzySetBuilder extends FuzzySetBuilder {
 
         private double startLeftBoundary;
 
@@ -141,13 +143,13 @@ public abstract class FuzzySetBuilder {
 
         private double endRightBoundary;
 
-        public ClosedTrapezoidalFuzzySetBuilder withLeftBoundary(Boundary boundary) {
+        public ClosedTrapeziumFuzzySetBuilder withLeftBoundary(Boundary boundary) {
             this.startLeftBoundary = boundary.start;
             this.endLeftBoundary = boundary.end;
             return this;
         }
 
-        public ClosedTrapezoidalFuzzySetBuilder withRightBoundary(Boundary boundary) {
+        public ClosedTrapeziumFuzzySetBuilder withRightBoundary(Boundary boundary) {
             this.startRightBoundary = boundary.start;
             this.endRightBoundary = boundary.end;
             return this;

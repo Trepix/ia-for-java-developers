@@ -1,5 +1,7 @@
 package io.trepix.ia.fuzzylogic;
 
+import io.trepix.ia.fuzzylogic.geometry.Point;
+
 import java.util.*;
 
 public class FuzzyController {
@@ -8,7 +10,7 @@ public class FuzzyController {
     protected LinguisticVariable output;
     protected ArrayList<FuzzyRule> rules;
     protected ArrayList<NumericalValue> problems;
-    
+
     public FuzzyController(String name) {
         this.name = name;
         inputs = new ArrayList<>();
@@ -48,6 +50,6 @@ public class FuzzyController {
             result = result.union(rule.apply(problems));
         }
 
-        return result.Baricentro();
+        return result.barycenter();
     }
 }

@@ -18,7 +18,7 @@ public class FuzzyRule {
             premise = premise.replaceFirst("IF ", "").trim();
             String[] splitPremiseConditions = premise.split(" AND ");
             premises = new ArrayList<>();
-            for(String expression : splitPremiseConditions) {
+            for (String expression : splitPremiseConditions) {
                 String[] splitExpression = expression.trim().split(" IS ");
                 if (hasCorrectFormat(splitExpression)) {
                     FuzzyExpression fuzzyExpression = createFuzzyExpression(splitExpression, linguisticVariables);
@@ -33,6 +33,13 @@ public class FuzzyRule {
         }
     }
 
+    private static LinguisticVariable find(Set<LinguisticVariable> linguisticVariables, String linguisticVariableName) {
+        return linguisticVariables.stream()
+                .filter(x -> x.name.equalsIgnoreCase(linguisticVariableName))
+                .findFirst()
+                .orElseThrow();
+    }
+
     private boolean hasCorrectFormat(String[] splitExpression) {
         return splitExpression.length == 2;
     }
@@ -45,13 +52,6 @@ public class FuzzyRule {
         String linguisticVariableName = splitConclusion[0];
         String linguisticValueName = splitConclusion[1];
         return new FuzzyExpression(find(linguisticVariables, linguisticVariableName), linguisticValueName);
-    }
-
-    private static LinguisticVariable find(Set<LinguisticVariable> linguisticVariables, String linguisticVariableName) {
-        return linguisticVariables.stream()
-                .filter(x -> x.name.equalsIgnoreCase(linguisticVariableName))
-                .findFirst()
-                .orElseThrow();
     }
 
     FuzzySet apply(ArrayList<NumericalValue> values) {
