@@ -1,4 +1,4 @@
-package busquedaCaminos;
+package io.trepix.ia.busquedaCaminos;
 
 // Clase genérica que representa un algoritmo de búsqueda de caminos
 // Todos los algoritmos heredados

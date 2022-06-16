@@ -1,4 +1,4 @@
-package busquedaCaminos;
+package io.trepix.ia.busquedaCaminos;
 
 import java.util.ArrayList;
 

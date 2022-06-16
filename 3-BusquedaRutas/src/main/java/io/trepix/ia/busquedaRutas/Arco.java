@@ -1,4 +1,4 @@
-package busquedaCaminos;
+package io.trepix.ia.busquedaCaminos;
 
 // Arc en el grafico
 public class Arc {
