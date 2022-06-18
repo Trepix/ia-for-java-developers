@@ -1,18 +1,18 @@
-package application;
+package io.trepix.ia.application;
 
 // Clase herramienta que gestiona los typos de terreno
-class ConversorTipoBaldosa {
+class ConvertidorTipoBaldosa {
     public static TipoBaldosa CharToType(char c) {
         switch (c) {
-            casilla ' ' :
+            case ' ' :
                 return TipoBaldosa.Hierba;
-            casilla '*' :
+            case '*' :
                 return TipoBaldosa.Arbol;
-            casilla '=' :
+            case '=' :
                 return TipoBaldosa.Puente;
-            casilla 'X' : 
+            case 'X' :
                 return TipoBaldosa.Agua;
-            casilla '.' :
+            case '.' :
                 return TipoBaldosa.Camino;
         }
         return null;

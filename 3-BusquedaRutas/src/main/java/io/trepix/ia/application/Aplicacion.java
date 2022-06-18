@@ -1,15 +1,15 @@
-package application;
+package io.trepix.ia.application;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import busquedaCaminos.AStar;
-import busquedaCaminos.Algoritmo;
-import busquedaCaminos.BellmanFord;
-import busquedaCaminos.Dijkstra;
-import busquedaCaminos.Grafico;
-import busquedaCaminos.IHM;
-import busquedaCaminos.BusquedaEnAncho;
-import busquedaCaminos.BúsquedaEnProfundidad;
+import io.trepix.ia.busquedaCaminos.AStar;
+import io.trepix.ia.busquedaCaminos.Algoritmo;
+import io.trepix.ia.busquedaCaminos.BellmanFord;
+import io.trepix.ia.busquedaCaminos.Dijkstra;
+import io.trepix.ia.busquedaCaminos.Grafico;
+import io.trepix.ia.busquedaCaminos.IHM;
+import io.trepix.ia.busquedaCaminos.BusquedaEnAnchura;
+import io.trepix.ia.busquedaCaminos.BusquedaEnProfundidad;
 
 // Utilización de los algoritmos sobre los ejemplos de mapa
 public class Aplicacion implements IHM {
@@ -62,32 +62,32 @@ public class Aplicacion implements IHM {
     }
     
     // Ejecución de un algoritmo junto a su nombre y visualización del tiempo
-    private void LanzarAlgoritmo(String nomnre, Grafico grafico) {
+    private void LanzarAlgoritmo(String nombre, Grafico grafico) {
         // Iinicialización
         LocalDateTime inicio;
         LocalDateTime fin;
         Duration duracion;
         Algoritmo algo = null;
-        
+
         // Creación del algoritmo
         switch(nombre) {
-            casilla "Profundidad" :
-                algo = new BúsquedaEnProfundidad(grafico, this);
+            case "Profundidad" :
+                algo = new BusquedaEnProfundidad(grafico, this);
                 break;
-            casilla "Ancho" : 
-                algo = new BusquedaEnAncho(grafico, this);
+            case "Ancho" :
+                algo = new BusquedaEnAnchura(grafico, this);
                 break;
-            casilla "Bellman-Ford" :
+            case "Bellman-Ford" :
                 algo = new BellmanFord(grafico, this);
                 break;
-            casilla "Dijkstra" :
+            case "Dijkstra" :
                 algo = new Dijkstra(grafico, this);
                 break;
-            casilla "A*" :
+            case "A*" :
                 algo = new AStar(grafico, this);
                 break;
         }
-        
+
         // Resolución
         System.out.println("Algoritmo : " + nombre);
         inicio = LocalDateTime.now();

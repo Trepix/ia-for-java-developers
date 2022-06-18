@@ -1,10 +1,10 @@
-package application;
+package io.trepix.ia.application;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import busquedaCaminos.Arco;
-import busquedaCaminos.Grafico;
-import busquedaCaminos.Nodo;
+import io.trepix.ia.busquedaCaminos.Arc;
+import io.trepix.ia.busquedaCaminos.Grafico;
+import io.trepix.ia.busquedaCaminos.Nodo;
 
 // Clase que representa el mapa a recorrer, heredando de Grafico
 public class Mapa implements Grafico {
@@ -30,14 +30,14 @@ public class Mapa implements Grafico {
         for (int i = 0; i < numLineas; i++) {
             baldosas[i] = new Baldosa[numColumnas];
             for (int j = 0; j < numColumnas; j++) {
-                TipoBaldosa type = ConversorTipoBaldosa.CharToType(lineas[i].charAt(j));
+                TipoBaldosa type = ConvertidorTipoBaldosa.CharToType(lineas[i].charAt(j));
                 baldosas[i][j] = new Baldosa(type, i, j);
             }
         }
         
         // Inicio y llegada
         nodoInicio = baldosas[_lineaInicio][_columnaInicio];
-        nodoInicio.distanciaDesdeInicio = nodoInicio.Cout();
+        nodoInicio.distanciaDesdeInicio = nodoInicio.Coste();
         nodoLLegada = baldosas[_lineaLLegada][_columnaLLegada];
         
         // Lista de los nodos y de las arcos
@@ -109,22 +109,22 @@ public class Mapa implements Grafico {
         if (baldosas[linea][columna].Accessible()) {
             // Derecha
             if (columna - 1 >= 0 && baldosas[linea][columna-1].Accessible()) {
-                listaArcosSalientes.add(new Arc(baldosas[linea][columna], baldosas[linea][columna-1], baldosas[linea][columna-1].Cout()));
+                listaArcosSalientes.add(new Arc(baldosas[linea][columna], baldosas[linea][columna-1], baldosas[linea][columna-1].Coste()));
             }
 
             // Izquierda
             if (columna + 1 < numColumnas && baldosas[linea][columna+1].Accessible()) {
-                listaArcosSalientes.add(new Arc(baldosas[linea][columna], baldosas[linea][columna+1], baldosas[linea][columna+1].Cout()));
+                listaArcosSalientes.add(new Arc(baldosas[linea][columna], baldosas[linea][columna+1], baldosas[linea][columna+1].Coste()));
             }
 
             // Arriba
             if (linea - 1 >= 0 && baldosas[linea-1][columna].Accessible()) {
-                listaArcosSalientes.add(new Arc(baldosas[linea][columna], baldosas[linea-1][columna], baldosas[linea-1][columna].Cout()));
+                listaArcosSalientes.add(new Arc(baldosas[linea][columna], baldosas[linea-1][columna], baldosas[linea-1][columna].Coste()));
             }
 
             // Abajo
             if (linea + 1 < numLineas && baldosas[linea+1][columna].Accessible()) {
-                listaArcosSalientes.add(new Arc(baldosas[linea][columna], baldosas[linea+1][columna], baldosas[linea+1][columna].Cout()));
+                listaArcosSalientes.add(new Arc(baldosas[linea][columna], baldosas[linea+1][columna], baldosas[linea+1][columna].Coste()));
             }
         }
         return listaArcosSalientes;
@@ -148,7 +148,7 @@ public class Mapa implements Grafico {
     
     @Override
     public double Coste(Nodo inicio, Nodo llegada) {
-        return ((Baldosa)llegada).Cout();
+        return ((Baldosa)llegada).Coste();
     }
 
     @Override
@@ -192,6 +192,6 @@ public class Mapa implements Grafico {
         }
         
         // Nodo inicial
-        nodoInicio.distanciaDesdeInicio = nodoInicio.Cout();
+        nodoInicio.distanciaDesdeInicio = nodoInicio.Coste();
     }
 }

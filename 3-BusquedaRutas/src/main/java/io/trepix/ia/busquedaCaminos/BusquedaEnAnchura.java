@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 // Algoritmo de búsqueda en ancho
-public class BusquedaEnAncho extends Algoritmo {
+public class BusquedaEnAnchura extends Algoritmo {
 
     // Constructor
-    public BusquedaEnAncho(Grafico _grafico, IHM _ihm) {
+    public BusquedaEnAnchura(Grafico _grafico, IHM _ihm) {
         super(_grafico,_ihm);
     }
     
@@ -37,7 +37,7 @@ public class BusquedaEnAncho extends Algoritmo {
                     if (nodosNoVisitados.contains(n)) {
                         nodosNoVisitados.remove(n);
                         n.predecesor = nodoActual;
-                        n.distanciaDesdeInicio = nodoActual.distanciaDesdeInicio + grafico.Cout(nodoActual, n);
+                        n.distanciaDesdeInicio = nodoActual.distanciaDesdeInicio + grafico.Coste(nodoActual, n);
                         nodosAVisitador.add(n);
                     }
                 }

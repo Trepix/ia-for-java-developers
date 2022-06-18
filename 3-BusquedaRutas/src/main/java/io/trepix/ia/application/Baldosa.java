@@ -1,6 +1,6 @@
-package application;
+package io.trepix.ia.application;
 
-import busquedaCaminos.Nodo;
+import io.trepix.ia.busquedaCaminos.Nodo;
 
 // Clase que representa chaque casilla de nuestra carte
 public class Baldosa extends Nodo {
@@ -23,10 +23,10 @@ public class Baldosa extends Nodo {
     // Devuelve el coste de la casilla
     double Coste() {
         switch (type) {
-            casilla Camino :
+            case Camino :
                 return 1;
-            casilla Puente :
-            casilla Hierba :
+            case Puente :
+            case Hierba :
                 return 2;
             default :
                 return Double.POSITIVE_INFINITY;

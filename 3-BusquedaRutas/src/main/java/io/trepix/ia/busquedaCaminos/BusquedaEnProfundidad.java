@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 // Algoritmo de búsqueda en profundidad
-public class BúsquedaEnProfundidad extends Algoritmo {
+public class BusquedaEnProfundidad extends Algoritmo {
 
     // Constructor
-    public BúsquedaEnProfundidad(Grafico _grafico, IHM _ihm) {
+    public BusquedaEnProfundidad(Grafico _grafico, IHM _ihm) {
         super(_grafico,_ihm);
     }
     
@@ -37,7 +37,7 @@ public class BúsquedaEnProfundidad extends Algoritmo {
                     if (nodosNoVisitados.contains(n)) {
                         nodosNoVisitados.remove(n);
                         n.predecesor = nodoActual;
-                        n.distanciaDesdeInicio = nodoActual.distanciaDesdeInicio + grafico.Cout(nodoActual, n);
+                        n.distanciaDesdeInicio = nodoActual.distanciaDesdeInicio + grafico.Coste(nodoActual, n);
                         nodosAVisitador.push(n);
                     }
                 }
