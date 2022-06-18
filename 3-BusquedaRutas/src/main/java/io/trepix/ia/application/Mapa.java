@@ -2,11 +2,9 @@ package io.trepix.ia.application;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import io.trepix.ia.busquedaCaminos.structure.Arc;
+
+import io.trepix.ia.busquedaCaminos.structure.*;
 import io.trepix.ia.busquedaCaminos.Grafico;
-import io.trepix.ia.busquedaCaminos.structure.Node;
-import io.trepix.ia.busquedaCaminos.structure.Tile;
-import io.trepix.ia.busquedaCaminos.structure.TileType;
 
 // Clase que representa el mapa a recorrer, heredando de Grafico
 public class Mapa implements Grafico {
@@ -32,8 +30,7 @@ public class Mapa implements Grafico {
         for (int i = 0; i < numLineas; i++) {
             tiles[i] = new Tile[numColumnas];
             for (int j = 0; j < numColumnas; j++) {
-                TileType type = ConvertidorTipoBaldosa.CharToType(lineas[i].charAt(j));
-                tiles[i][j] = new Tile(type, i, j);
+                tiles[i][j] = TileFactory.create(lineas[i].charAt(j), i, j);
             }
         }
         
