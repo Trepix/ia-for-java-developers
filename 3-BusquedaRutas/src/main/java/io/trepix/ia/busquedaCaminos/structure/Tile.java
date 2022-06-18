@@ -1,26 +1,29 @@
-package io.trepix.ia.application;
+package io.trepix.ia.busquedaCaminos.structure;
 
-import io.trepix.ia.busquedaCaminos.Node;
 public class Tile extends Node {
-    protected TileType type;
-    protected int row;
-    protected int column;
-    
-    // Constructor
+    private final TileType type;
+    private final int row;
+    private final int column;
     public Tile(TileType type, int row, int column) {
         this.type = type;
         this.row = row;
         this.column = column;
     }
-    boolean isAccessible() {
+    public boolean isAccessible() {
         return type.isAccessible();
     }
-    
-    // Devuelve el coste de la casilla
-    double Coste() {
+    public double movementCost() {
         return type.cost();
     }
-    
+
+    public int row() {
+        return row;
+    }
+
+    public int column() {
+        return column;
+    }
+
     @Override
     public String toString() {
         return "[" + row + ";" + column + ";" + type.toString() + "]";

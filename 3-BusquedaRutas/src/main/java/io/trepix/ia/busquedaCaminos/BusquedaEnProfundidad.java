@@ -1,5 +1,7 @@
 package io.trepix.ia.busquedaCaminos;
 
+import io.trepix.ia.busquedaCaminos.structure.Node;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -36,8 +38,8 @@ public class BusquedaEnProfundidad extends Algoritmo {
                 for (Node n : grafico.ListaNodosAdyacentes(nodeActual)) {
                     if (nodosNoVisitados.contains(n)) {
                         nodosNoVisitados.remove(n);
-                        n.parent = nodeActual;
-                        n.distanceFromBeginning = nodeActual.distanceFromBeginning + grafico.Coste(nodeActual, n);
+                        n.setParent(nodeActual);
+                        n.setDistanceFromBeginning(nodeActual.getDistanceFromBeginning() + grafico.Coste(nodeActual, n));
                         nodosAVisitador.push(n);
                     }
                 }

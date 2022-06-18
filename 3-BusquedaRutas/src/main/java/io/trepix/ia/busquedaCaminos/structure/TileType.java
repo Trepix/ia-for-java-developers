@@ -1,4 +1,4 @@
-package io.trepix.ia.application;
+package io.trepix.ia.busquedaCaminos.structure;
 
 public enum TileType {
     Arbol,

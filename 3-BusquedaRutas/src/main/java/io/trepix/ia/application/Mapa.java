@@ -2,9 +2,11 @@ package io.trepix.ia.application;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import io.trepix.ia.busquedaCaminos.Arc;
+import io.trepix.ia.busquedaCaminos.structure.Arc;
 import io.trepix.ia.busquedaCaminos.Grafico;
-import io.trepix.ia.busquedaCaminos.Node;
+import io.trepix.ia.busquedaCaminos.structure.Node;
+import io.trepix.ia.busquedaCaminos.structure.Tile;
+import io.trepix.ia.busquedaCaminos.structure.TileType;
 
 // Clase que representa el mapa a recorrer, heredando de Grafico
 public class Mapa implements Grafico {
@@ -37,7 +39,7 @@ public class Mapa implements Grafico {
         
         // Inicio y llegada
         nodoInicio = tiles[_lineaInicio][_columnaInicio];
-        nodoInicio.distanceFromBeginning = nodoInicio.Coste();
+        nodoInicio.setDistanceFromBeginning(nodoInicio.movementCost());
         nodoLLegada = tiles[_lineaLLegada][_columnaLLegada];
         
         // Lista de los nodos y de las arcos
@@ -70,8 +72,8 @@ public class Mapa implements Grafico {
     public ArrayList<Node> ListaNodosAdyacentes(Node origen) {
         // Iinicialización
         ArrayList<Node> listaNodosSalientes = new ArrayList();
-        int linea = ((Tile)origen).row;
-        int columna = ((Tile)origen).column;
+        int linea = ((Tile) origen).row();
+        int columna = ((Tile) origen).column();
         
         // Vecino de la derecha
         if (columna - 1 >= 0 && tiles[linea][columna-1].isAccessible()) {
@@ -103,28 +105,28 @@ public class Mapa implements Grafico {
     @Override
     public ArrayList<Arc> ListaArcosSalientes(Node origen) {
         ArrayList<Arc> listaArcosSalientes = new ArrayList();
-        int linea = ((Tile)origen).row;
-        int columna = ((Tile)origen).column;
+        int linea = ((Tile) origen).row();
+        int columna = ((Tile) origen).column();
         
         if (tiles[linea][columna].isAccessible()) {
             // Derecha
             if (columna - 1 >= 0 && tiles[linea][columna-1].isAccessible()) {
-                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea][columna-1], tiles[linea][columna-1].Coste()));
+                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea][columna-1], tiles[linea][columna-1].movementCost()));
             }
 
             // Izquierda
             if (columna + 1 < numColumnas && tiles[linea][columna+1].isAccessible()) {
-                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea][columna+1], tiles[linea][columna+1].Coste()));
+                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea][columna+1], tiles[linea][columna+1].movementCost()));
             }
 
             // Arriba
             if (linea - 1 >= 0 && tiles[linea-1][columna].isAccessible()) {
-                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea-1][columna], tiles[linea-1][columna].Coste()));
+                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea-1][columna], tiles[linea-1][columna].movementCost()));
             }
 
             // Abajo
             if (linea + 1 < numLineas && tiles[linea+1][columna].isAccessible()) {
-                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea+1][columna], tiles[linea+1][columna].Coste()));
+                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea+1][columna], tiles[linea+1][columna].movementCost()));
             }
         }
         return listaArcosSalientes;
@@ -148,7 +150,7 @@ public class Mapa implements Grafico {
     
     @Override
     public double Coste(Node inicio, Node llegada) {
-        return ((Tile)llegada).Coste();
+        return ((Tile)llegada).movementCost();
     }
 
     @Override
@@ -156,13 +158,13 @@ public class Mapa implements Grafico {
         // Iinicialización
         String camino = "";
         Tile nodoActual = nodoLLegada;
-        Tile nodoAnterior = (Tile) nodoLLegada.parent;
+        Tile nodoAnterior = (Tile) nodoLLegada.getParent();
         
         // Bucle sobre los nodos del camino
         while (nodoAnterior != null) {
             camino = "-" + nodoActual.toString() + camino;
             nodoActual = nodoAnterior;
-            nodoAnterior = (Tile) nodoActual.parent;
+            nodoAnterior = (Tile) nodoActual.getParent();
         }
         camino = nodoActual.toString() + camino;
         return camino;
@@ -172,7 +174,7 @@ public class Mapa implements Grafico {
     public void CalcularDistanciasEstimadas() {
         for (int linea = 0; linea < numLineas; linea++) {
             for (int columna = 0; columna < numColumnas; columna++) {
-                tiles[linea][columna].estimatedDistance = Math.abs(nodoLLegada.row - linea) + Math.abs(nodoLLegada.column - columna);
+                tiles[linea][columna].setEstimatedDistance(Math.abs(nodoLLegada.row() - linea) + Math.abs(nodoLLegada.column() - columna));
             }
         }
     }
@@ -186,12 +188,12 @@ public class Mapa implements Grafico {
         // Eliminar las distancias y precursores
         for (int linea = 0; linea < numLineas; linea++) {
             for (int columna = 0; columna < numColumnas; columna++) {
-                tiles[linea][columna].distanceFromBeginning = Double.POSITIVE_INFINITY;
-                tiles[linea][columna].parent = null;
+                tiles[linea][columna].setDistanceFromBeginning(Double.POSITIVE_INFINITY);
+                tiles[linea][columna].setParent(null);
             }
         }
         
         // Nodo inicial
-        nodoInicio.distanceFromBeginning = nodoInicio.Coste();
+        nodoInicio.setDistanceFromBeginning(nodoInicio.movementCost());
     }
 }

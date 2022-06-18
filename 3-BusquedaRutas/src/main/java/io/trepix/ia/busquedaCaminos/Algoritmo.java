@@ -14,7 +14,7 @@ public abstract class Algoritmo {
     public final void Resolver() {
         grafico.Eliminar();
         Run();
-        ihm.MostrarResultado(grafico.ReconstruirCamino(), grafico.NodoSalida().distanceFromBeginning);
+        ihm.MostrarResultado(grafico.ReconstruirCamino(), grafico.NodoSalida().getDistanceFromBeginning());
     }
     
     protected abstract void Run();

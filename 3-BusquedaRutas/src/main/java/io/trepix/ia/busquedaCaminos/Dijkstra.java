@@ -1,5 +1,8 @@
 package io.trepix.ia.busquedaCaminos;
 
+import io.trepix.ia.busquedaCaminos.structure.Arc;
+import io.trepix.ia.busquedaCaminos.structure.Node;
+
 import java.util.ArrayList;
 
 // Algoritmo de Dijkstra
@@ -22,7 +25,7 @@ public class Dijkstra extends Algoritmo {
             // Búsqueda del nodo con la distancia la más baja
             Node nodeActual = listaNodes.get(0);
             for (Node node : listaNodes) {
-                if (node.distanceFromBeginning < nodeActual.distanceFromBeginning) {
+                if (node.getDistanceFromBeginning() < nodeActual.getDistanceFromBeginning()) {
                     nodeActual = node;
                 }
             }
@@ -35,9 +38,9 @@ public class Dijkstra extends Algoritmo {
                 ArrayList<Arc> arcosSalientes = grafico.ListaArcosSalientes(nodeActual);
                 
                 for (Arc arc : arcosSalientes) {
-                    if (arc.origen.distanceFromBeginning + arc.cout < arc.destino.distanceFromBeginning) {
-                        arc.destino.distanceFromBeginning = arc.origen.distanceFromBeginning + arc.cout;
-                        arc.destino.parent = arc.origen;
+                    if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
+                        arc.destination().setDistanceFromBeginning(arc.origin().getDistanceFromBeginning() + arc.cost());
+                        arc.destination().setParent(arc.origin());
                     }
                 }
                 

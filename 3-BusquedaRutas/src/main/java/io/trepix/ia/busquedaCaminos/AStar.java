@@ -1,5 +1,8 @@
 package io.trepix.ia.busquedaCaminos;
 
+import io.trepix.ia.busquedaCaminos.structure.Arc;
+import io.trepix.ia.busquedaCaminos.structure.Node;
+
 import java.util.ArrayList;
 
 // Algoritmo A*
@@ -23,7 +26,7 @@ public class AStar extends Algoritmo {
             // Búsqueda del nodo con la distancia más baja
             Node nodeActual = listaNodes.get(0);
             for (Node node : listaNodes) {
-                if (node.distanceFromBeginning + node.estimatedDistance < nodeActual.distanceFromBeginning + nodeActual.estimatedDistance) {
+                if (node.getDistanceFromBeginning() + node.getEstimatedDistance() < nodeActual.getDistanceFromBeginning() + nodeActual.getEstimatedDistance()) {
                     nodeActual = node;
                 }
             }
@@ -37,9 +40,9 @@ public class AStar extends Algoritmo {
                 ArrayList<Arc> arcosSalientes = grafico.ListaArcosSalientes(nodeActual);
                 
                 for (Arc arc : arcosSalientes) {
-                    if (arc.origen.distanceFromBeginning + arc.cout < arc.destino.distanceFromBeginning) {
-                        arc.destino.distanceFromBeginning = arc.origen.distanceFromBeginning + arc.cout;
-                        arc.destino.parent = arc.origen;
+                    if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
+                        arc.destination().setDistanceFromBeginning(arc.origin().getDistanceFromBeginning() + arc.cost());
+                        arc.destination().setParent(arc.origin());
                     }
                 }
                 

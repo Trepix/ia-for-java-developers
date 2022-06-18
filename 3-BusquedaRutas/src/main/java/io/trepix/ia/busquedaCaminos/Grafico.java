@@ -1,5 +1,8 @@
 package io.trepix.ia.busquedaCaminos;
 
+import io.trepix.ia.busquedaCaminos.structure.Arc;
+import io.trepix.ia.busquedaCaminos.structure.Node;
+
 import java.util.ArrayList;
 
 // Interface que define los graficos

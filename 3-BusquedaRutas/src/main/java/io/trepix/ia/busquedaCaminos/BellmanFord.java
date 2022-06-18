@@ -1,5 +1,7 @@
 package io.trepix.ia.busquedaCaminos;
 
+import io.trepix.ia.busquedaCaminos.structure.Arc;
+
 import java.util.ArrayList;
 
 // Algoritmo de Bellman-Ford
@@ -22,10 +24,10 @@ public class BellmanFord extends Algoritmo {
         while (i < numBucleMax && distanciaCambiada) {
             distanciaCambiada = false;
             for (Arc arc : listaArcos) {
-                if (arc.origen.distanceFromBeginning + arc.cout < arc.destino.distanceFromBeginning) {
+                if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
                     // Encontrado un camino más corto
-                    arc.destino.distanceFromBeginning = arc.origen.distanceFromBeginning + arc.cout;
-                    arc.destino.parent = arc.origen;
+                    arc.destination().setDistanceFromBeginning(arc.origin().getDistanceFromBeginning() + arc.cost());
+                    arc.destination().setParent(arc.origin());
                     distanciaCambiada = true;
                 }
             }
@@ -34,7 +36,7 @@ public class BellmanFord extends Algoritmo {
         
         // Prueba si el bucle es negativo
         for (Arc arc : listaArcos) {
-            if (arc.origen.distanceFromBeginning + arc.cout < arc.destino.distanceFromBeginning) {
+            if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
                 System.err.println("Bucle negativo - sin camino más corto");
             }
         }

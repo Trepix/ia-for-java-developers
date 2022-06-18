@@ -1,7 +1,5 @@
 package io.trepix.ia.application;
 
-import io.trepix.ia.busquedaCaminos.structure.TileType;
-
 // Clase herramienta que gestiona los typos de terreno
 class ConvertidorTipoBaldosa {
     public static TileType CharToType(char c) {
