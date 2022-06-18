@@ -15,35 +15,35 @@ public class AStar extends Algoritmo {
     protected void Run() {
         // Iinicialización
         grafico.CalcularDistanciasEstimadas();
-        ArrayList<Nodo> listaNodos = grafico.ListaNodos();
+        ArrayList<Node> listaNodes = grafico.ListaNodos();
         boolean salidaEncontrada = false;
         
         // Bucle principal
-        while(listaNodos.size() != 0 && !salidaEncontrada) {
+        while(listaNodes.size() != 0 && !salidaEncontrada) {
             // Búsqueda del nodo con la distancia más baja
-            Nodo nodoActual = listaNodos.get(0);
-            for (Nodo nodo : listaNodos) {
-                if (nodo.distanciaDesdeInicio + nodo.distanciaEstimada < nodoActual.distanciaDesdeInicio + nodoActual.distanciaEstimada) {
-                    nodoActual = nodo;
+            Node nodeActual = listaNodes.get(0);
+            for (Node node : listaNodes) {
+                if (node.distanceFromBeginning + node.estimatedDistance < nodeActual.distanceFromBeginning + nodeActual.estimatedDistance) {
+                    nodeActual = node;
                 }
             }
             
-            if (nodoActual.equals(grafico.NodoSalida())) {
+            if (nodeActual.equals(grafico.NodoSalida())) {
                 // Encontrada la salida
                 salidaEncontrada = true;
             }
             else {
                 // Se aplican los arcos salientes de este nodo
-                ArrayList<Arc> arcosSalientes = grafico.ListaArcosSalientes(nodoActual);
+                ArrayList<Arc> arcosSalientes = grafico.ListaArcosSalientes(nodeActual);
                 
                 for (Arc arc : arcosSalientes) {
-                    if (arc.origen.distanciaDesdeInicio + arc.cout < arc.destino.distanciaDesdeInicio) {
-                        arc.destino.distanciaDesdeInicio = arc.origen.distanciaDesdeInicio + arc.cout;
-                        arc.destino.predecesor = arc.origen;
+                    if (arc.origen.distanceFromBeginning + arc.cout < arc.destino.distanceFromBeginning) {
+                        arc.destino.distanceFromBeginning = arc.origen.distanceFromBeginning + arc.cout;
+                        arc.destino.parent = arc.origen;
                     }
                 }
                 
-                listaNodos.remove(nodoActual);
+                listaNodes.remove(nodeActual);
             }
         }
     }

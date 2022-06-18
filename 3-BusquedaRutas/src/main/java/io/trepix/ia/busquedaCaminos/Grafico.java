@@ -5,18 +5,18 @@ import java.util.ArrayList;
 // Interface que define los graficos
 public interface Grafico {
     // Información del grafico
-    Nodo NodoInicio();
-    Nodo NodoSalida();
+    Node NodoInicio();
+    Node NodoSalida();
     
     // Recuperacion de las nodos y de las arcos
-    ArrayList<Nodo> ListaNodos();
-    ArrayList<Nodo> ListaNodosAdyacentes(Nodo origen);
+    ArrayList<Node> ListaNodos();
+    ArrayList<Node> ListaNodosAdyacentes(Node origen);
     ArrayList<Arc> ListaArcos();
-    ArrayList<Arc> ListaArcosSalientes(Nodo origen);
+    ArrayList<Arc> ListaArcosSalientes(Node origen);
     
     // Métodos herramientas
     int NumeroNodos();
-    double Coste(Nodo inicio, Nodo llegada);
+    double Coste(Node inicio, Node llegada);
     String ReconstruirCamino();
     void CalcularDistanciasEstimadas();
     void Eliminar();

@@ -15,29 +15,29 @@ public class BusquedaEnProfundidad extends Algoritmo {
     @Override
     protected void Run() {
         // Creación de la lista de  nodos no visitados y de la pila
-        ArrayList<Nodo> nodosNoVisitados = grafico.ListaNodos();
-        Stack<Nodo> nodosAVisitador = new Stack();
+        ArrayList<Node> nodosNoVisitados = grafico.ListaNodos();
+        Stack<Node> nodosAVisitador = new Stack();
         nodosAVisitador.push(grafico.NodoInicio());
         nodosNoVisitados.remove(grafico.NodoInicio());
         
         // Iinicialización de la salida
-        Nodo nodoSalida = grafico.NodoSalida();
+        Node nodeSalida = grafico.NodoSalida();
         boolean salidaEncontrada = false;
         
         // Bucle principal
         while(!salidaEncontrada && nodosAVisitador.size() != 0) {
-            Nodo nodoActual = nodosAVisitador.pop();
-            if (nodoActual.equals(nodoSalida)) {
+            Node nodeActual = nodosAVisitador.pop();
+            if (nodeActual.equals(nodeSalida)) {
                 // Se terina el algoritmo
                 salidaEncontrada = true;
             }
             else {
                 // Se añaden los vecinos no visitados todavía
-                for (Nodo n : grafico.ListaNodosAdyacentes(nodoActual)) {
+                for (Node n : grafico.ListaNodosAdyacentes(nodeActual)) {
                     if (nodosNoVisitados.contains(n)) {
                         nodosNoVisitados.remove(n);
-                        n.predecesor = nodoActual;
-                        n.distanciaDesdeInicio = nodoActual.distanciaDesdeInicio + grafico.Coste(nodoActual, n);
+                        n.parent = nodeActual;
+                        n.distanceFromBeginning = nodeActual.distanceFromBeginning + grafico.Coste(nodeActual, n);
                         nodosAVisitador.push(n);
                     }
                 }

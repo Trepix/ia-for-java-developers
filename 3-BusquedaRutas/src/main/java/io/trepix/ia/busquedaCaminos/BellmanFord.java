@@ -22,10 +22,10 @@ public class BellmanFord extends Algoritmo {
         while (i < numBucleMax && distanciaCambiada) {
             distanciaCambiada = false;
             for (Arc arc : listaArcos) {
-                if (arc.origen.distanciaDesdeInicio + arc.cout < arc.destino.distanciaDesdeInicio) {
+                if (arc.origen.distanceFromBeginning + arc.cout < arc.destino.distanceFromBeginning) {
                     // Encontrado un camino más corto
-                    arc.destino.distanciaDesdeInicio = arc.origen.distanciaDesdeInicio + arc.cout;
-                    arc.destino.predecesor = arc.origen;
+                    arc.destino.distanceFromBeginning = arc.origen.distanceFromBeginning + arc.cout;
+                    arc.destino.parent = arc.origen;
                     distanciaCambiada = true;
                 }
             }
@@ -34,7 +34,7 @@ public class BellmanFord extends Algoritmo {
         
         // Prueba si el bucle es negativo
         for (Arc arc : listaArcos) {
-            if (arc.origen.distanciaDesdeInicio + arc.cout < arc.destino.distanciaDesdeInicio) {
+            if (arc.origen.distanceFromBeginning + arc.cout < arc.destino.distanceFromBeginning) {
                 System.err.println("Bucle negativo - sin camino más corto");
             }
         }

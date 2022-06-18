@@ -14,34 +14,34 @@ public class Dijkstra extends Algoritmo {
     @Override
     protected void Run() {
         // Iinicialización
-        ArrayList<Nodo> listaNodos = grafico.ListaNodos();
+        ArrayList<Node> listaNodes = grafico.ListaNodos();
         boolean salidaEncontrada = false;
         
         // Bucle principal
-        while(listaNodos.size() != 0 && !salidaEncontrada) {
+        while(listaNodes.size() != 0 && !salidaEncontrada) {
             // Búsqueda del nodo con la distancia la más baja
-            Nodo nodoActual = listaNodos.get(0);
-            for (Nodo nodo : listaNodos) {
-                if (nodo.distanciaDesdeInicio < nodoActual.distanciaDesdeInicio) {
-                    nodoActual = nodo;
+            Node nodeActual = listaNodes.get(0);
+            for (Node node : listaNodes) {
+                if (node.distanceFromBeginning < nodeActual.distanceFromBeginning) {
+                    nodeActual = node;
                 }
             }
             
-            if (nodoActual.equals(grafico.NodoSalida())) {
+            if (nodeActual.equals(grafico.NodoSalida())) {
                 salidaEncontrada = true;
             }
             else {
                 // Se aplica los arco salientes de este nodo
-                ArrayList<Arc> arcosSalientes = grafico.ListaArcosSalientes(nodoActual);
+                ArrayList<Arc> arcosSalientes = grafico.ListaArcosSalientes(nodeActual);
                 
                 for (Arc arc : arcosSalientes) {
-                    if (arc.origen.distanciaDesdeInicio + arc.cout < arc.destino.distanciaDesdeInicio) {
-                        arc.destino.distanciaDesdeInicio = arc.origen.distanciaDesdeInicio + arc.cout;
-                        arc.destino.predecesor = arc.origen;
+                    if (arc.origen.distanceFromBeginning + arc.cout < arc.destino.distanceFromBeginning) {
+                        arc.destino.distanceFromBeginning = arc.origen.distanceFromBeginning + arc.cout;
+                        arc.destino.parent = arc.origen;
                     }
                 }
                 
-                listaNodos.remove(nodoActual);
+                listaNodes.remove(nodeActual);
             }
         }
     }
