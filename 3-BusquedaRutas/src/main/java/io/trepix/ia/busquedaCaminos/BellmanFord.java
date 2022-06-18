@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class BellmanFord extends Algoritmo {
     // Constructor
     public BellmanFord(Grafico _grafico, IHM _ihm) {
-        super(_grafico, _ihm);
+        super("Bellman-Ford", _grafico, _ihm);
     }
 
     // Métodos de resolución

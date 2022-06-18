@@ -15,7 +15,7 @@ public class ApplicationTest {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
 
-        Aplicacion.main(new String[]{});
+        Application.main(new String[]{});
 
         String output = outContent.toString();
 

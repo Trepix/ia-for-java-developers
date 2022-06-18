@@ -10,7 +10,7 @@ public class Dijkstra extends Algoritmo {
 
     // Constructor
     public Dijkstra(Grafico _grafico, IHM _ihm) {
-        super(_grafico, _ihm);
+        super("Dijkstra", _grafico, _ihm);
     }
     
     // Métodos principal

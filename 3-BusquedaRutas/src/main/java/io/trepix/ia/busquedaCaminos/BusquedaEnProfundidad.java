@@ -10,7 +10,7 @@ public class BusquedaEnProfundidad extends Algoritmo {
 
     // Constructor
     public BusquedaEnProfundidad(Grafico _grafico, IHM _ihm) {
-        super(_grafico,_ihm);
+        super("Depth (DFS)", _grafico,_ihm);
     }
     
     // Métodos de resolución

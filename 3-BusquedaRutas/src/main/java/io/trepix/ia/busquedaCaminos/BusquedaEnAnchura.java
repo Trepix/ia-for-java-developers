@@ -10,7 +10,7 @@ public class BusquedaEnAnchura extends Algoritmo {
 
     // Constructor
     public BusquedaEnAnchura(Grafico _grafico, IHM _ihm) {
-        super(_grafico,_ihm);
+        super("Breadth (BFS)", _grafico,_ihm);
     }
     
     // Métodos de resolución

@@ -10,7 +10,7 @@ public class AStar extends Algoritmo {
 
     // Constructor
     public AStar(Grafico _grafico, IHM _ihm) {
-        super(_grafico, _ihm);
+        super("A*", _grafico, _ihm);
     }
     
     // Métodos principal
