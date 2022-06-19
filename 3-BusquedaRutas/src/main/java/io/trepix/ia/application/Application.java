@@ -1,13 +1,17 @@
 package io.trepix.ia.application;
 
-import io.trepix.ia.pathfinding.*;
-import io.trepix.ia.pathfinding.algorithms.*;
+import io.trepix.ia.pathfinding.Algorithm;
+import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.Map;
+import io.trepix.ia.pathfinding.algorithms.*;
+import io.trepix.ia.pathfinding.structure.Tile;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static io.trepix.ia.pathfinding.Algorithm.Path;
 import static io.trepix.ia.pathfinding.MapBuilder.createMap;
 
 public class Application {
@@ -19,11 +23,13 @@ public class Application {
             new Dijkstra(),
             new AStar()
     );
+
     public static void main(String[] args) {
         System.out.println("Pathfinding");
         Application app = new Application();
         app.run();
     }
+
     private void run() {
         Map map = createMap(
                 "..  XX   .",
@@ -36,8 +42,8 @@ public class Application {
                 " .  * =   ",
                 " .... XX  ",
                 "   *.  X* ")
-                .withStartAt(0,0)
-                .withArrivalAt(9,9)
+                .withStartAt(0, 0)
+                .withArrivalAt(9, 9)
                 .build();
         runAlgorithms(map);
 
@@ -51,8 +57,8 @@ public class Application {
                 "*  .*XX=XX *X . XXXX",
                 " ....  .... X . X   ",
                 " . *....* . X*. = * ")
-                .withStartAt(0,0)
-                .withArrivalAt(9,19)
+                .withStartAt(0, 0)
+                .withArrivalAt(9, 19)
                 .build();
         runAlgorithms(map);
     }
@@ -67,8 +73,8 @@ public class Application {
 
         System.out.println("Algorithm : " + algorithm.name());
         start = LocalDateTime.now();
-        Grafico grafico = algorithm.findPath(map);
-        this.showResults(grafico.ReconstruirCamino(), grafico.NodoSalida().getDistanceFromBeginning());
+        Path path = algorithm.findPath(map);
+        this.showResults(path);
         end = LocalDateTime.now();
 
         System.out.println("Execution time (ms) : " + executionTime(start, end) + "\n");
@@ -79,8 +85,9 @@ public class Application {
         return executionTime.toNanos() / 1000000.0;
     }
 
-    public void showResults(String path, double distance) {
-        System.out.println("Path (distance: " + distance + ") : " + path);
+    public void showResults(Path path) {
+        String steps = path.steps().stream().map(Tile::toString).collect(Collectors.joining("-"));;
+        System.out.println("Path (distance: " + path.distance() + ") : " + steps);
     }
 
 }

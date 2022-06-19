@@ -1,7 +1,6 @@
 package io.trepix.ia.pathfinding;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
@@ -149,20 +148,20 @@ public class Map implements Grafico {
     }
 
     @Override
-    public String ReconstruirCamino() {
-        // Iinicialización
-        String camino = "";
+    public List<Tile> ReconstruirCamino() {
         Tile nodoActual = nodoLLegada;
-        Tile nodoAnterior = (Tile) nodoLLegada.getParent();
-        
+        Tile nodoAnterior = nodoLLegada.getParent();
+
+        LinkedList<Tile> path = new LinkedList<>();
+
         // Bucle sobre los nodos del camino
         while (nodoAnterior != null) {
-            camino = "-" + nodoActual.toString() + camino;
+            path.push(nodoActual);
             nodoActual = nodoAnterior;
-            nodoAnterior = (Tile) nodoActual.getParent();
+            nodoAnterior = nodoActual.getParent();
         }
-        camino = nodoActual.toString() + camino;
-        return camino;
+        path.push(nodoActual);
+        return path;
     }
 
     @Override

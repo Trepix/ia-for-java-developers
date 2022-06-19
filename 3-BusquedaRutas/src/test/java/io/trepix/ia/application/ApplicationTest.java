@@ -36,8 +36,4 @@ public class ApplicationTest {
 
         System.out.println("Everything OK, refactor didn't broke anything, ''anything'' exercised by tests :)");
     }
-
-    private static void Assert() {
-
-    }
 }
