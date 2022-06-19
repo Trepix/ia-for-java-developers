@@ -1,15 +1,10 @@
-package io.trepix.ia.application;
+package io.trepix.ia.busquedaCaminos.structure;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import io.trepix.ia.busquedaCaminos.structure.*;
 import io.trepix.ia.busquedaCaminos.Grafico;
-
-// Clase que representa el mapa a recorrer, heredando de Grafico
-public class Mapa implements Grafico {
-
-    // Atributos
+public class Map implements Grafico {
     Tile[][] tiles;
     int numLineas;
     int numColumnas;
@@ -19,7 +14,7 @@ public class Mapa implements Grafico {
     ArrayList<Arc> listaArcos = null;
     
     // Constructor
-    public Mapa(String _mapa, int _lineaInicio, int _columnaInicio, int _lineaLLegada, int _columnaLLegada) {
+    public Map(String _mapa, int _lineaInicio, int _columnaInicio, int _lineaLLegada, int _columnaLLegada) {
         // Creación de la tabla de baldosas
         String[] lineas = _mapa.split("\n");
         numLineas = lineas.length;
@@ -30,7 +25,7 @@ public class Mapa implements Grafico {
         for (int i = 0; i < numLineas; i++) {
             tiles[i] = new Tile[numColumnas];
             for (int j = 0; j < numColumnas; j++) {
-                tiles[i][j] = TileFactory.create(lineas[i].charAt(j), i, j);
+                tiles[i][j] = Tile.TileFactory.create(lineas[i].charAt(j), i, j);
             }
         }
         
@@ -193,4 +188,6 @@ public class Mapa implements Grafico {
         // Nodo inicial
         nodoInicio.setDistanceFromBeginning(nodoInicio.movementCost());
     }
+
+    public record Cell(int row, int column) {}
 }

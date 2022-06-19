@@ -1,72 +1,85 @@
 package io.trepix.ia.application;
 
+import io.trepix.ia.busquedaCaminos.*;
+import io.trepix.ia.busquedaCaminos.structure.Map;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
-import io.trepix.ia.busquedaCaminos.AStar;
-import io.trepix.ia.busquedaCaminos.Algoritmo;
-import io.trepix.ia.busquedaCaminos.BellmanFord;
-import io.trepix.ia.busquedaCaminos.Dijkstra;
-import io.trepix.ia.busquedaCaminos.Grafico;
-import io.trepix.ia.busquedaCaminos.IHM;
-import io.trepix.ia.busquedaCaminos.BusquedaEnAnchura;
-import io.trepix.ia.busquedaCaminos.BusquedaEnProfundidad;
-public class Application implements IHM {
+import java.util.List;
+
+import static io.trepix.ia.busquedaCaminos.structure.MapBuilder.createMap;
+
+public class Application {
+
+    private final static List<Algoritmo> ALGORITHMS = List.of(
+            new BusquedaEnProfundidad(),
+            new BusquedaEnAnchura(),
+            new BellmanFord(),
+            new Dijkstra(),
+            new AStar()
+    );
     public static void main(String[] args) {
         System.out.println("Pathfinding");
         Application app = new Application();
         app.run();
     }
-
-    // Ejecución de los dos problemas
     private void run() {
-        String stringMap = "..  XX   .\n"
-                      + "*.  *X  *.\n" 
-                      + " .  XX ...\n" 
-                      + " .* X *.* \n" 
-                      + " ...=...  \n" 
-                      + " .* X     \n" 
-                      + " .  XXX*  \n" 
-                      + " .  * =   \n" 
-                      + " .... XX  \n" 
-                      + "   *.  X* "; 
-        Mapa map = new Mapa(stringMap, 0, 0, 9, 9);
+        Map map = createMap(
+                "..  XX   .",
+                "*.  *X  *.",
+                " .  XX ...",
+                " .* X *.* ",
+                " ...=...  ",
+                " .* X     ",
+                " .  XXX*  ",
+                " .  * =   ",
+                " .... XX  ",
+                "   *.  X* ")
+                .withStartAt(0,0)
+                .withArrivalAt(9,9)
+                .build();
         runAlgorithms(map);
 
-        stringMap = "...*     X .*    *  \n"
-                 + " *..*   *X .........\n"  
-                 + "   .     =   *.*  *.\n" 
-                 + "  *.   * XXXX .    .\n" 
-                 + "XXX=XX   X *XX=XXX*.\n" 
-                 + "  *.*X   =  X*.  X  \n" 
-                 + "   . X * X  X . *X* \n" 
-                 + "*  .*XX=XX *X . XXXX\n" 
-                 + " ....  .... X . X   \n" 
-                 + " . *....* . X*. = * "; 
-        map = new Mapa(stringMap, 0, 0, 9, 19);
+        map = createMap("...*     X .*    *  ",
+                " *..*   *X .........",
+                "   .     =   *.*  *.",
+                "  *.   * XXXX .    .",
+                "XXX=XX   X *XX=XXX*.",
+                "  *.*X   =  X*.  X  ",
+                "   . X * X  X . *X* ",
+                "*  .*XX=XX *X . XXXX",
+                " ....  .... X . X   ",
+                " . *....* . X*. = * ")
+                .withStartAt(0,0)
+                .withArrivalAt(9,19)
+                .build();
         runAlgorithms(map);
     }
-    private void runAlgorithms(Grafico grafico) {
-        runAlgorithm(new BusquedaEnProfundidad(grafico, this));
-        runAlgorithm(new BusquedaEnAnchura(grafico, this));
-        runAlgorithm(new BellmanFord(grafico, this));
-        runAlgorithm(new Dijkstra(grafico, this));
-        runAlgorithm(new AStar(grafico, this));
+
+    private void runAlgorithms(Grafico map) {
+        ALGORITHMS.forEach(algorithm -> runAlgorithm(map, algorithm));
     }
-    private void runAlgorithm(Algoritmo algorithm) {
+
+    private void runAlgorithm(Grafico map, Algoritmo algorithm) {
         LocalDateTime start;
         LocalDateTime end;
-        Duration duration;
 
         System.out.println("Algorithm : " + algorithm.name());
         start = LocalDateTime.now();
-        algorithm.Resolver();
+        Grafico grafico = algorithm.findPath(map);
+        this.showResults(grafico.ReconstruirCamino(), grafico.NodoSalida().getDistanceFromBeginning());
         end = LocalDateTime.now();
-        duration = Duration.between(start, end);
-        System.out.println("Execution time (ms) : " + duration.toNanos() / 1000000.0 + "\n");
+
+        System.out.println("Execution time (ms) : " + executionTime(start, end) + "\n");
     }
-    @Override
+
+    private static double executionTime(LocalDateTime start, LocalDateTime end) {
+        Duration executionTime = Duration.between(start, end);
+        return executionTime.toNanos() / 1000000.0;
+    }
+
     public void showResults(String path, double distance) {
         System.out.println("Path (distance: " + distance + ") : " + path);
     }
-    
+
 }

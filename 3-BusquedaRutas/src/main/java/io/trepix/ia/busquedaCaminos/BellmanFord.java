@@ -7,13 +7,13 @@ import java.util.ArrayList;
 // Algoritmo de Bellman-Ford
 public class BellmanFord extends Algoritmo {
     // Constructor
-    public BellmanFord(Grafico _grafico, IHM _ihm) {
-        super("Bellman-Ford", _grafico, _ihm);
+    public BellmanFord() {
+        super("Bellman-Ford");
     }
 
     // Métodos de resolución
     @Override
-    protected void Run() {
+    protected Grafico Run(Grafico grafico) {
         // Iinicialización
         boolean distanciaCambiada = true;
         int i = 0;
@@ -40,5 +40,7 @@ public class BellmanFord extends Algoritmo {
                 System.err.println("Bucle negativo - sin camino más corto");
             }
         }
+
+        return grafico;
     }
 }

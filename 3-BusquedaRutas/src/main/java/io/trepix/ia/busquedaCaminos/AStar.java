@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class AStar extends Algoritmo {
 
     // Constructor
-    public AStar(Grafico _grafico, IHM _ihm) {
-        super("A*", _grafico, _ihm);
+    public AStar() {
+        super("A*");
     }
     
     // Métodos principal
     @Override
-    protected void Run() {
+    protected Grafico Run(Grafico grafico) {
         // Iinicialización
         grafico.CalcularDistanciasEstimadas();
         ArrayList<Node> listaNodes = grafico.ListaNodos();
@@ -49,5 +49,7 @@ public class AStar extends Algoritmo {
                 listaNodes.remove(nodeActual);
             }
         }
+
+        return grafico;
     }
 }

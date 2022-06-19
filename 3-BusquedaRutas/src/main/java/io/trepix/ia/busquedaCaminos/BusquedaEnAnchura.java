@@ -9,13 +9,13 @@ import java.util.LinkedList;
 public class BusquedaEnAnchura extends Algoritmo {
 
     // Constructor
-    public BusquedaEnAnchura(Grafico _grafico, IHM _ihm) {
-        super("Breadth (BFS)", _grafico,_ihm);
+    public BusquedaEnAnchura() {
+        super("Breadth (BFS)");
     }
     
     // Métodos de resolución
     @Override
-    protected void Run() {
+    protected Grafico Run(Grafico grafico) {
         // Creación de la lista de nodos no visitados y de la pila
         ArrayList<Node> nodosNoVisitados = grafico.ListaNodos();
         LinkedList<Node> nodosAVisitador = new LinkedList();
@@ -45,5 +45,7 @@ public class BusquedaEnAnchura extends Algoritmo {
                 }
             }
         }
+
+        return grafico;
     }
 }

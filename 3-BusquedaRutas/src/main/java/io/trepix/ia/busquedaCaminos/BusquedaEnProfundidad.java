@@ -9,13 +9,13 @@ import java.util.Stack;
 public class BusquedaEnProfundidad extends Algoritmo {
 
     // Constructor
-    public BusquedaEnProfundidad(Grafico _grafico, IHM _ihm) {
-        super("Depth (DFS)", _grafico,_ihm);
+    public BusquedaEnProfundidad() {
+        super("Depth (DFS)");
     }
     
     // Métodos de resolución
     @Override
-    protected void Run() {
+    protected Grafico Run(Grafico grafico) {
         // Creación de la lista de  nodos no visitados y de la pila
         ArrayList<Node> nodosNoVisitados = grafico.ListaNodos();
         Stack<Node> nodosAVisitador = new Stack();
@@ -45,5 +45,6 @@ public class BusquedaEnProfundidad extends Algoritmo {
                 }
             }
         }
+        return grafico;
     }
 }

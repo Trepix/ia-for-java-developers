@@ -9,13 +9,13 @@ import java.util.ArrayList;
 public class Dijkstra extends Algoritmo {
 
     // Constructor
-    public Dijkstra(Grafico _grafico, IHM _ihm) {
-        super("Dijkstra", _grafico, _ihm);
+    public Dijkstra() {
+        super("Dijkstra");
     }
     
     // Métodos principal
     @Override
-    protected void Run() {
+    protected Grafico Run(Grafico grafico) {
         // Iinicialización
         ArrayList<Node> listaNodes = grafico.ListaNodos();
         boolean salidaEncontrada = false;
@@ -47,6 +47,8 @@ public class Dijkstra extends Algoritmo {
                 listaNodes.remove(nodeActual);
             }
         }
+        
+        return grafico;
     }
     
 }

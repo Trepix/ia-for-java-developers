@@ -3,25 +3,18 @@ package io.trepix.ia.busquedaCaminos;
 // Clase genérica que representa un algoritmo de búsqueda de caminos
 // Todos los algoritmos heredados
 public abstract class Algoritmo {
-    protected Grafico grafico;
-    protected IHM ihm;
-
     private final String name;
-    
-    public Algoritmo(String name, Grafico _grafico, IHM _ihm) {
+    public Algoritmo(String name) {
         this.name = name;
-        grafico = _grafico;
-        ihm = _ihm;
     }
     
-    public final void Resolver() {
+    public final Grafico findPath(Grafico grafico) {
         grafico.Eliminar();
-        Run();
-        ihm.showResults(grafico.ReconstruirCamino(), grafico.NodoSalida().getDistanceFromBeginning());
+        return Run(grafico);
     }
 
     public final String name() {
         return this.name;
     }
-    protected abstract void Run();
+    protected abstract Grafico Run(Grafico grafico);
 }
