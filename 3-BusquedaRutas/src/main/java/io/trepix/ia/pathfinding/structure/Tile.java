@@ -1,6 +1,6 @@
-package io.trepix.ia.busquedaCaminos.structure;
+package io.trepix.ia.pathfinding.structure;
 
-import static io.trepix.ia.busquedaCaminos.structure.TileType.*;
+import static io.trepix.ia.pathfinding.structure.TileType.*;
 
 public class Tile extends Node {
     private final TileType type;

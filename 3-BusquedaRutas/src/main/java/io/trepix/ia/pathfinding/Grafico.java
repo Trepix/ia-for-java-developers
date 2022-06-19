@@ -1,7 +1,7 @@
-package io.trepix.ia.busquedaCaminos;
+package io.trepix.ia.pathfinding;
 
-import io.trepix.ia.busquedaCaminos.structure.Arc;
-import io.trepix.ia.busquedaCaminos.structure.Node;
+import io.trepix.ia.pathfinding.structure.Arc;
+import io.trepix.ia.pathfinding.structure.Node;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package io.trepix.ia.busquedaCaminos;
+package io.trepix.ia.pathfinding;
 
 // Clase genérica que representa un algoritmo de búsqueda de caminos
 // Todos los algoritmos heredados

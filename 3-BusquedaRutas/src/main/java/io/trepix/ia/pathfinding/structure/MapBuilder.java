@@ -1,6 +1,6 @@
-package io.trepix.ia.busquedaCaminos.structure;
+package io.trepix.ia.pathfinding.structure;
 
-import io.trepix.ia.busquedaCaminos.structure.Map.Cell;
+import io.trepix.ia.pathfinding.structure.Map.Cell;
 
 import java.security.InvalidParameterException;
 import java.util.stream.Stream;
@@ -15,7 +15,7 @@ public class MapBuilder {
         this.rows = rows;
     }
 
-    public static MapBuilder create(String... rows) {
+    public static MapBuilder createMap(String... rows) {
         boolean allRowsHaveSameLength = Stream.of(rows).map(String::length).distinct().count() == 1;
         if (!allRowsHaveSameLength) throw new InvalidParameterException("Matrix must have the same size in all rows");
 

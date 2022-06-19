@@ -1,9 +1,9 @@
-package io.trepix.ia.busquedaCaminos.structure;
+package io.trepix.ia.pathfinding.structure;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import io.trepix.ia.busquedaCaminos.Grafico;
+import io.trepix.ia.pathfinding.Grafico;
 public class Map implements Grafico {
     Tile[][] tiles;
     int numLineas;

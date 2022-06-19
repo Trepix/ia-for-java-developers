@@ -1,42 +1,40 @@
-package io.trepix.ia.busquedaCaminos;
+package io.trepix.ia.pathfinding;
 
-import io.trepix.ia.busquedaCaminos.structure.Arc;
-import io.trepix.ia.busquedaCaminos.structure.Node;
+import io.trepix.ia.pathfinding.structure.Arc;
+import io.trepix.ia.pathfinding.structure.Node;
 
 import java.util.ArrayList;
 
-// Algoritmo A*
-public class AStar extends Algoritmo {
+// Algoritmo de Dijkstra
+public class Dijkstra extends Algoritmo {
 
     // Constructor
-    public AStar() {
-        super("A*");
+    public Dijkstra() {
+        super("Dijkstra");
     }
     
     // Métodos principal
     @Override
     protected Grafico Run(Grafico grafico) {
         // Iinicialización
-        grafico.CalcularDistanciasEstimadas();
         ArrayList<Node> listaNodes = grafico.ListaNodos();
         boolean salidaEncontrada = false;
         
         // Bucle principal
         while(listaNodes.size() != 0 && !salidaEncontrada) {
-            // Búsqueda del nodo con la distancia más baja
+            // Búsqueda del nodo con la distancia la más baja
             Node nodeActual = listaNodes.get(0);
             for (Node node : listaNodes) {
-                if (node.getDistanceFromBeginning() + node.getEstimatedDistance() < nodeActual.getDistanceFromBeginning() + nodeActual.getEstimatedDistance()) {
+                if (node.getDistanceFromBeginning() < nodeActual.getDistanceFromBeginning()) {
                     nodeActual = node;
                 }
             }
             
             if (nodeActual.equals(grafico.NodoSalida())) {
-                // Encontrada la salida
                 salidaEncontrada = true;
             }
             else {
-                // Se aplican los arcos salientes de este nodo
+                // Se aplica los arco salientes de este nodo
                 ArrayList<Arc> arcosSalientes = grafico.ListaArcosSalientes(nodeActual);
                 
                 for (Arc arc : arcosSalientes) {
@@ -49,7 +47,8 @@ public class AStar extends Algoritmo {
                 listaNodes.remove(nodeActual);
             }
         }
-
+        
         return grafico;
     }
+    
 }

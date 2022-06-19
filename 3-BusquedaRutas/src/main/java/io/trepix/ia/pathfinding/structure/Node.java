@@ -1,4 +1,4 @@
-package io.trepix.ia.busquedaCaminos.structure;
+package io.trepix.ia.pathfinding.structure;
 public abstract class Node {
     private Node parent = null;
     private double distanceFromBeginning = Double.POSITIVE_INFINITY;

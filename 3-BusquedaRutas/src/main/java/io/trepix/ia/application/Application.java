@@ -1,13 +1,13 @@
 package io.trepix.ia.application;
 
-import io.trepix.ia.busquedaCaminos.*;
-import io.trepix.ia.busquedaCaminos.structure.Map;
+import io.trepix.ia.pathfinding.*;
+import io.trepix.ia.pathfinding.structure.Map;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static io.trepix.ia.busquedaCaminos.structure.MapBuilder.createMap;
+import static io.trepix.ia.pathfinding.structure.MapBuilder.createMap;
 
 public class Application {
 
