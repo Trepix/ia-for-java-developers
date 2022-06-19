@@ -3,7 +3,6 @@ package io.trepix.ia.pathfinding;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
 import io.trepix.ia.pathfinding.structure.Tile;
@@ -193,5 +192,4 @@ public class Map implements Grafico {
         nodoInicio.setDistanceFromBeginning(nodoInicio.movementCost());
     }
 
-    public record Cell(int row, int column) {}
 }

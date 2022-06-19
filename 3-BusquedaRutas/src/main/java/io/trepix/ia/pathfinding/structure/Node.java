@@ -1,14 +1,14 @@
 package io.trepix.ia.pathfinding.structure;
-public abstract class Node {
-    private Node parent = null;
+public abstract class Node<T> {
+    private T parent = null;
     private double distanceFromBeginning = Double.POSITIVE_INFINITY;
     private double estimatedDistance;
 
-    public Node getParent() {
+    public T getParent() {
         return parent;
     }
 
-    public void setParent(Node parent) {
+    public void setParent(T parent) {
         this.parent = parent;
     }
 

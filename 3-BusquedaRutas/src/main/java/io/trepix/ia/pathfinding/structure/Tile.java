@@ -2,14 +2,13 @@ package io.trepix.ia.pathfinding.structure;
 
 import static io.trepix.ia.pathfinding.structure.TileType.*;
 
-public class Tile extends Node {
+public class Tile extends Node<Tile> {
     private final TileType type;
-    private final int row;
-    private final int column;
+
+    private final Cell cell;
     public Tile(TileType type, int row, int column) {
         this.type = type;
-        this.row = row;
-        this.column = column;
+        cell = new Cell(row, column);
     }
     public boolean isAccessible() {
         return type.isAccessible();
@@ -19,16 +18,16 @@ public class Tile extends Node {
     }
 
     public int row() {
-        return row;
+        return cell.row();
     }
 
     public int column() {
-        return column;
+        return cell.column();
     }
 
     @Override
     public String toString() {
-        return "[" + row + ";" + column + ";" + type.toString() + "]";
+        return "[" + cell.row() + ";" + cell.column() + ";" + type.toString() + "]";
     }
 
     public static class TileFactory {
@@ -45,4 +44,6 @@ public class Tile extends Node {
         }
 
     }
+
+    public record Cell(int row, int column) {}
 }
