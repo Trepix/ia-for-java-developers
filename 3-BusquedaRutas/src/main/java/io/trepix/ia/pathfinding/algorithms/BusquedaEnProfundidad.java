@@ -1,6 +1,6 @@
 package io.trepix.ia.pathfinding.algorithms;
 
-import io.trepix.ia.pathfinding.Algorithm;
+import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.structure.Node;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 // Algoritmo de búsqueda en profundidad
-public class BusquedaEnProfundidad extends Algorithm {
+public class BusquedaEnProfundidad extends PathFindingAlgorithm {
 
     // Constructor
     public BusquedaEnProfundidad() {
@@ -17,7 +17,7 @@ public class BusquedaEnProfundidad extends Algorithm {
     
     // Métodos de resolución
     @Override
-    protected Grafico execute(Grafico grafico) {
+    protected Path execute(Grafico grafico) {
         // Creación de la lista de  nodos no visitados y de la pila
         ArrayList<Node> nodosNoVisitados = grafico.ListaNodos();
         Stack<Node> nodosAVisitador = new Stack();
@@ -47,6 +47,6 @@ public class BusquedaEnProfundidad extends Algorithm {
                 }
             }
         }
-        return grafico;
+        return new Path(grafico.ReconstruirCamino(), grafico.NodoSalida().getEstimatedDistance());
     }
 }

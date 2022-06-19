@@ -4,24 +4,23 @@ import io.trepix.ia.pathfinding.structure.Tile;
 
 import java.util.List;
 
-public abstract class Algorithm {
+public abstract class PathFindingAlgorithm {
     private final String name;
 
-    public Algorithm(String name) {
+    public PathFindingAlgorithm(String name) {
         this.name = name;
     }
 
     public final Path findPath(Grafico grafico) {
         grafico.Eliminar();
-        Grafico result = execute(grafico);
-        return new Path(result.ReconstruirCamino(), result.NodoSalida().getDistanceFromBeginning());
+        return execute(grafico);
     }
 
     public final String name() {
         return this.name;
     }
 
-    protected abstract Grafico execute(Grafico grafico);
+    protected abstract Path execute(Grafico grafico);
 
     public record Path(List<Tile> steps, double distance) {}
 }

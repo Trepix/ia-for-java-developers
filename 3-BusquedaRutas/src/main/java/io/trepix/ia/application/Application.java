@@ -1,6 +1,6 @@
 package io.trepix.ia.application;
 
-import io.trepix.ia.pathfinding.Algorithm;
+import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.Map;
 import io.trepix.ia.pathfinding.algorithms.*;
@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.trepix.ia.pathfinding.Algorithm.Path;
+import static io.trepix.ia.pathfinding.PathFindingAlgorithm.Path;
 import static io.trepix.ia.pathfinding.MapBuilder.createMap;
 
 public class Application {
 
-    private final static List<Algorithm> ALGORITHMS = List.of(
+    private final static List<PathFindingAlgorithm> ALGORITHMS = List.of(
             new BusquedaEnProfundidad(),
             new BusquedaEnAnchura(),
             new BellmanFord(),
@@ -67,7 +67,7 @@ public class Application {
         ALGORITHMS.forEach(algorithm -> runAlgorithm(map, algorithm));
     }
 
-    private void runAlgorithm(Grafico map, Algorithm algorithm) {
+    private void runAlgorithm(Grafico map, PathFindingAlgorithm algorithm) {
         LocalDateTime start;
         LocalDateTime end;
 

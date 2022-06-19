@@ -1,6 +1,6 @@
 package io.trepix.ia.pathfinding.algorithms;
 
-import io.trepix.ia.pathfinding.Algorithm;
+import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.structure.Node;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 // Algoritmo de búsqueda en ancho
-public class BusquedaEnAnchura extends Algorithm {
+public class BusquedaEnAnchura extends PathFindingAlgorithm {
 
     // Constructor
     public BusquedaEnAnchura() {
@@ -17,7 +17,7 @@ public class BusquedaEnAnchura extends Algorithm {
     
     // Métodos de resolución
     @Override
-    protected Grafico execute(Grafico grafico) {
+    protected Path execute(Grafico grafico) {
         // Creación de la lista de nodos no visitados y de la pila
         ArrayList<Node> nodosNoVisitados = grafico.ListaNodos();
         LinkedList<Node> nodosAVisitador = new LinkedList();
@@ -48,6 +48,6 @@ public class BusquedaEnAnchura extends Algorithm {
             }
         }
 
-        return grafico;
+        return new Path(grafico.ReconstruirCamino(), grafico.NodoSalida().getEstimatedDistance());
     }
 }

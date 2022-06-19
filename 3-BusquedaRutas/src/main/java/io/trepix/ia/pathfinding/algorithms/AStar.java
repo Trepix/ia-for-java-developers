@@ -1,6 +1,6 @@
 package io.trepix.ia.pathfinding.algorithms;
 
-import io.trepix.ia.pathfinding.Algorithm;
+import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
@@ -8,7 +8,7 @@ import io.trepix.ia.pathfinding.structure.Node;
 import java.util.ArrayList;
 
 // Algoritmo A*
-public class AStar extends Algorithm {
+public class AStar extends PathFindingAlgorithm {
 
     // Constructor
     public AStar() {
@@ -17,7 +17,7 @@ public class AStar extends Algorithm {
     
     // Métodos principal
     @Override
-    protected Grafico execute(Grafico grafico) {
+    protected Path execute(Grafico grafico) {
         // Iinicialización
         grafico.CalcularDistanciasEstimadas();
         ArrayList<Node> listaNodes = grafico.ListaNodos();
@@ -52,6 +52,6 @@ public class AStar extends Algorithm {
             }
         }
 
-        return grafico;
+        return new Path(grafico.ReconstruirCamino(), grafico.NodoSalida().getEstimatedDistance());
     }
 }
