@@ -35,11 +35,11 @@ public class Tile extends Node {
 
         public static Tile create(char tileChar, int row, int column) {
             return switch (tileChar) {
-                case ' ' -> new Tile(Hierba, row, column);
-                case '*' -> new Tile(Arbol, row, column);
-                case '=' -> new Tile(Puente, row, column);
-                case 'X' -> new Tile(Agua, row, column);
-                case '.' -> new Tile(Camino, row, column);
+                case ' ' -> new Tile(Grass, row, column);
+                case '*' -> new Tile(Tree, row, column);
+                case '=' -> new Tile(Bridge, row, column);
+                case 'X' -> new Tile(Water, row, column);
+                case '.' -> new Tile(Road, row, column);
                 default -> null;
             };
         }

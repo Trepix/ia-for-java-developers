@@ -1,9 +1,9 @@
 package io.trepix.ia.pathfinding.structure;
 
 public enum TileType {
-    Arbol,
-    Agua,
-    Hierba {
+    Tree,
+    Water,
+    Grass {
         @Override
         public boolean isAccessible() {
             return true;
@@ -14,7 +14,7 @@ public enum TileType {
             return SLOWED_DOWN_MOVE;
         }
     },
-    Camino {
+    Road {
         @Override
         public boolean isAccessible() {
             return true;
@@ -25,7 +25,7 @@ public enum TileType {
             return NORMAL_MOVE;
         }
     },
-    Puente {
+    Bridge {
         @Override
         public boolean isAccessible() {
             return true;
