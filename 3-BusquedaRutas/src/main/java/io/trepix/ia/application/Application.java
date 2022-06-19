@@ -1,17 +1,18 @@
 package io.trepix.ia.application;
 
 import io.trepix.ia.pathfinding.*;
-import io.trepix.ia.pathfinding.structure.Map;
+import io.trepix.ia.pathfinding.algorithms.*;
+import io.trepix.ia.pathfinding.Map;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static io.trepix.ia.pathfinding.structure.MapBuilder.createMap;
+import static io.trepix.ia.pathfinding.MapBuilder.createMap;
 
 public class Application {
 
-    private final static List<Algoritmo> ALGORITHMS = List.of(
+    private final static List<Algorithm> ALGORITHMS = List.of(
             new BusquedaEnProfundidad(),
             new BusquedaEnAnchura(),
             new BellmanFord(),
@@ -60,7 +61,7 @@ public class Application {
         ALGORITHMS.forEach(algorithm -> runAlgorithm(map, algorithm));
     }
 
-    private void runAlgorithm(Grafico map, Algoritmo algorithm) {
+    private void runAlgorithm(Grafico map, Algorithm algorithm) {
         LocalDateTime start;
         LocalDateTime end;
 

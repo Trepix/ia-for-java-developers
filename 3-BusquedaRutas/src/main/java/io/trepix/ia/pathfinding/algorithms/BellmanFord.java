@@ -1,11 +1,13 @@
-package io.trepix.ia.pathfinding;
+package io.trepix.ia.pathfinding.algorithms;
 
+import io.trepix.ia.pathfinding.Algorithm;
+import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.structure.Arc;
 
 import java.util.ArrayList;
 
 // Algoritmo de Bellman-Ford
-public class BellmanFord extends Algoritmo {
+public class BellmanFord extends Algorithm {
     // Constructor
     public BellmanFord() {
         super("Bellman-Ford");
@@ -13,7 +15,7 @@ public class BellmanFord extends Algoritmo {
 
     // Métodos de resolución
     @Override
-    protected Grafico Run(Grafico grafico) {
+    protected Grafico execute(Grafico grafico) {
         // Iinicialización
         boolean distanciaCambiada = true;
         int i = 0;

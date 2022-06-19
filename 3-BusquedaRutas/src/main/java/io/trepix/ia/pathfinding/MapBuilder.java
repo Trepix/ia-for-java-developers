@@ -1,6 +1,6 @@
-package io.trepix.ia.pathfinding.structure;
+package io.trepix.ia.pathfinding;
 
-import io.trepix.ia.pathfinding.structure.Map.Cell;
+import io.trepix.ia.pathfinding.Map.Cell;
 
 import java.security.InvalidParameterException;
 import java.util.stream.Stream;

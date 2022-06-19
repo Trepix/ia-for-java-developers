@@ -1,12 +1,14 @@
-package io.trepix.ia.pathfinding;
+package io.trepix.ia.pathfinding.algorithms;
 
+import io.trepix.ia.pathfinding.Algorithm;
+import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
 
 import java.util.ArrayList;
 
 // Algoritmo de Dijkstra
-public class Dijkstra extends Algoritmo {
+public class Dijkstra extends Algorithm {
 
     // Constructor
     public Dijkstra() {
@@ -15,7 +17,7 @@ public class Dijkstra extends Algoritmo {
     
     // Métodos principal
     @Override
-    protected Grafico Run(Grafico grafico) {
+    protected Grafico execute(Grafico grafico) {
         // Iinicialización
         ArrayList<Node> listaNodes = grafico.ListaNodos();
         boolean salidaEncontrada = false;

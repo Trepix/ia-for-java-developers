@@ -1,12 +1,14 @@
-package io.trepix.ia.pathfinding;
+package io.trepix.ia.pathfinding.algorithms;
 
+import io.trepix.ia.pathfinding.Algorithm;
+import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
 
 import java.util.ArrayList;
 
 // Algoritmo A*
-public class AStar extends Algoritmo {
+public class AStar extends Algorithm {
 
     // Constructor
     public AStar() {
@@ -15,7 +17,7 @@ public class AStar extends Algoritmo {
     
     // Métodos principal
     @Override
-    protected Grafico Run(Grafico grafico) {
+    protected Grafico execute(Grafico grafico) {
         // Iinicialización
         grafico.CalcularDistanciasEstimadas();
         ArrayList<Node> listaNodes = grafico.ListaNodos();
