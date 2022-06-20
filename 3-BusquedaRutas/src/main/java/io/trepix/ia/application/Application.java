@@ -1,8 +1,7 @@
 package io.trepix.ia.application;
 
-import io.trepix.ia.pathfinding.PathFindingAlgorithm;
-import io.trepix.ia.pathfinding.Grafico;
 import io.trepix.ia.pathfinding.Map;
+import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.algorithms.*;
 import io.trepix.ia.pathfinding.structure.Tile;
 
@@ -11,17 +10,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.trepix.ia.pathfinding.PathFindingAlgorithm.Path;
 import static io.trepix.ia.pathfinding.MapBuilder.createMap;
+import static io.trepix.ia.pathfinding.PathFindingAlgorithm.Path;
 
 public class Application {
 
-    private final static List<PathFindingAlgorithm> ALGORITHMS = List.of(
-            new BusquedaEnProfundidad(),
-            new BusquedaEnAnchura(),
-            new BellmanFord(),
-            new Dijkstra(),
-            new AStar()
+    private final static List<PathFindingAlgorithm<Tile>> ALGORITHMS = List.of(
+            new BusquedaEnProfundidad<>(),
+            new BusquedaEnAnchura<>(),
+            new BellmanFord<>(),
+            new Dijkstra<>(),
+            new AStar<>()
     );
 
     public static void main(String[] args) {
@@ -63,11 +62,11 @@ public class Application {
         runAlgorithms(map);
     }
 
-    private void runAlgorithms(Grafico map) {
+    private void runAlgorithms(Map map) {
         ALGORITHMS.forEach(algorithm -> runAlgorithm(map, algorithm));
     }
 
-    private void runAlgorithm(Grafico map, PathFindingAlgorithm algorithm) {
+    private void runAlgorithm(Map map, PathFindingAlgorithm<Tile> algorithm) {
         LocalDateTime start;
         LocalDateTime end;
 
@@ -86,7 +85,7 @@ public class Application {
     }
 
     public void showResults(Path path) {
-        String steps = path.steps().stream().map(Tile::toString).collect(Collectors.joining("-"));;
+        String steps = path.steps().stream().map(Tile::toString).collect(Collectors.joining("-"));
         System.out.println("Path (distance: " + path.distance() + ") : " + steps);
     }
 

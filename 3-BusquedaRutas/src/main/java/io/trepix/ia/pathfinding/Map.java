@@ -1,18 +1,20 @@
 package io.trepix.ia.pathfinding;
 
-import java.util.*;
-
 import io.trepix.ia.pathfinding.structure.Arc;
-import io.trepix.ia.pathfinding.structure.Node;
 import io.trepix.ia.pathfinding.structure.Tile;
 
-public class Map implements Grafico {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Map implements Graph<Tile> {
     Tile[][] tiles;
     int numLineas;
     int numColumnas;
     Tile nodoInicio;
     Tile nodoLLegada;
-    ArrayList<Node> listaNodes = null;
+    ArrayList<Tile> listaNodes = null;
     ArrayList<Arc> listaArcos = null;
     
     // Constructor
@@ -42,17 +44,17 @@ public class Map implements Grafico {
     }
     
     @Override
-    public Node NodoInicio() {
+    public Tile NodoInicio() {
         return nodoInicio;
     }
 
     @Override
-    public Node NodoSalida() {
+    public Tile NodoSalida() {
         return nodoLLegada;
     }
 
     @Override
-    public ArrayList<Node> ListaNodos() {
+    public ArrayList<Tile> ListaNodos() {
         if (listaNodes == null) {
             listaNodes = new ArrayList();
             for (int i = 0; i < numLineas; i++) {
@@ -63,9 +65,9 @@ public class Map implements Grafico {
     }
 
     @Override
-    public ArrayList<Node> ListaNodosAdyacentes(Node origen) {
+    public ArrayList<Tile> ListaNodosAdyacentes(Tile origen) {
         // Iinicialización
-        ArrayList<Node> listaNodosSalientes = new ArrayList();
+        ArrayList<Tile> listaNodosSalientes = new ArrayList();
         int linea = ((Tile) origen).row();
         int columna = ((Tile) origen).column();
         
@@ -97,7 +99,7 @@ public class Map implements Grafico {
     }
 
     @Override
-    public ArrayList<Arc> ListaArcosSalientes(Node origen) {
+    public ArrayList<Arc> ListaArcosSalientes(Tile origen) {
         ArrayList<Arc> listaArcosSalientes = new ArrayList();
         int linea = ((Tile) origen).row();
         int columna = ((Tile) origen).column();
@@ -143,7 +145,7 @@ public class Map implements Grafico {
     }
     
     @Override
-    public double Coste(Node inicio, Node llegada) {
+    public double Coste(Tile inicio, Tile llegada) {
         return ((Tile)llegada).movementCost();
     }
 

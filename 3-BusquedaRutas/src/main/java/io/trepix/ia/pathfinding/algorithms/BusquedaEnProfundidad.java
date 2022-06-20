@@ -1,14 +1,14 @@
 package io.trepix.ia.pathfinding.algorithms;
 
 import io.trepix.ia.pathfinding.PathFindingAlgorithm;
-import io.trepix.ia.pathfinding.Grafico;
+import io.trepix.ia.pathfinding.Graph;
 import io.trepix.ia.pathfinding.structure.Node;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 // Algoritmo de búsqueda en profundidad
-public class BusquedaEnProfundidad extends PathFindingAlgorithm {
+public class BusquedaEnProfundidad<T extends Node<T>>  extends PathFindingAlgorithm<T> {
 
     // Constructor
     public BusquedaEnProfundidad() {
@@ -17,36 +17,36 @@ public class BusquedaEnProfundidad extends PathFindingAlgorithm {
     
     // Métodos de resolución
     @Override
-    protected Path execute(Grafico grafico) {
+    protected Path execute(Graph<T> graph) {
         // Creación de la lista de  nodos no visitados y de la pila
-        ArrayList<Node> nodosNoVisitados = grafico.ListaNodos();
-        Stack<Node> nodosAVisitador = new Stack();
-        nodosAVisitador.push(grafico.NodoInicio());
-        nodosNoVisitados.remove(grafico.NodoInicio());
+        ArrayList<T> nodosNoVisitados = graph.ListaNodos();
+        Stack<T> nodosAVisitador = new Stack();
+        nodosAVisitador.push(graph.NodoInicio());
+        nodosNoVisitados.remove(graph.NodoInicio());
         
         // Iinicialización de la salida
-        Node nodeSalida = grafico.NodoSalida();
+        T nodeSalida = graph.NodoSalida();
         boolean salidaEncontrada = false;
         
         // Bucle principal
         while(!salidaEncontrada && nodosAVisitador.size() != 0) {
-            Node nodeActual = nodosAVisitador.pop();
+            T nodeActual = nodosAVisitador.pop();
             if (nodeActual.equals(nodeSalida)) {
                 // Se terina el algoritmo
                 salidaEncontrada = true;
             }
             else {
                 // Se añaden los vecinos no visitados todavía
-                for (Node n : grafico.ListaNodosAdyacentes(nodeActual)) {
+                for (T n : graph.ListaNodosAdyacentes(nodeActual)) {
                     if (nodosNoVisitados.contains(n)) {
                         nodosNoVisitados.remove(n);
                         n.setParent(nodeActual);
-                        n.setDistanceFromBeginning(nodeActual.getDistanceFromBeginning() + grafico.Coste(nodeActual, n));
+                        n.setDistanceFromBeginning(nodeActual.getDistanceFromBeginning() + graph.Coste(nodeActual, n));
                         nodosAVisitador.push(n);
                     }
                 }
             }
         }
-        return new Path(grafico.ReconstruirCamino(), grafico.NodoSalida().getEstimatedDistance());
+        return new Path(graph.ReconstruirCamino(), graph.NodoSalida().getEstimatedDistance());
     }
 }

@@ -1,14 +1,14 @@
 package io.trepix.ia.pathfinding.algorithms;
 
 import io.trepix.ia.pathfinding.PathFindingAlgorithm;
-import io.trepix.ia.pathfinding.Grafico;
+import io.trepix.ia.pathfinding.Graph;
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
 
 import java.util.ArrayList;
 
 // Algoritmo de Dijkstra
-public class Dijkstra extends PathFindingAlgorithm {
+public class Dijkstra<T extends Node<T>>  extends PathFindingAlgorithm<T> {
 
     // Constructor
     public Dijkstra() {
@@ -17,27 +17,27 @@ public class Dijkstra extends PathFindingAlgorithm {
     
     // Métodos principal
     @Override
-    protected Path execute(Grafico grafico) {
+    protected Path execute(Graph<T> graph) {
         // Iinicialización
-        ArrayList<Node> listaNodes = grafico.ListaNodos();
+        ArrayList<T> listaNodes = graph.ListaNodos();
         boolean salidaEncontrada = false;
         
         // Bucle principal
         while(listaNodes.size() != 0 && !salidaEncontrada) {
             // Búsqueda del nodo con la distancia la más baja
-            Node nodeActual = listaNodes.get(0);
-            for (Node node : listaNodes) {
+            T nodeActual = listaNodes.get(0);
+            for (T node : listaNodes) {
                 if (node.getDistanceFromBeginning() < nodeActual.getDistanceFromBeginning()) {
                     nodeActual = node;
                 }
             }
             
-            if (nodeActual.equals(grafico.NodoSalida())) {
+            if (nodeActual.equals(graph.NodoSalida())) {
                 salidaEncontrada = true;
             }
             else {
                 // Se aplica los arco salientes de este nodo
-                ArrayList<Arc> arcosSalientes = grafico.ListaArcosSalientes(nodeActual);
+                ArrayList<Arc> arcosSalientes = graph.ListaArcosSalientes(nodeActual);
                 
                 for (Arc arc : arcosSalientes) {
                     if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
@@ -50,7 +50,7 @@ public class Dijkstra extends PathFindingAlgorithm {
             }
         }
 
-        return new Path(grafico.ReconstruirCamino(), grafico.NodoSalida().getEstimatedDistance());
+        return new Path(graph.ReconstruirCamino(), graph.NodoSalida().getEstimatedDistance());
     }
     
 }

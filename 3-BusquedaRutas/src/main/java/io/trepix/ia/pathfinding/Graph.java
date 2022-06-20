@@ -8,20 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Interface que define los graficos
-public interface Grafico {
+public interface Graph<T extends Node<T>> {
     // Información del grafico
-    Node NodoInicio();
-    Node NodoSalida();
+    T NodoInicio();
+    T NodoSalida();
     
     // Recuperacion de las nodos y de las arcos
-    ArrayList<Node> ListaNodos();
-    ArrayList<Node> ListaNodosAdyacentes(Node origen);
+    ArrayList<T> ListaNodos();
+    ArrayList<T> ListaNodosAdyacentes(T origen);
     ArrayList<Arc> ListaArcos();
-    ArrayList<Arc> ListaArcosSalientes(Node origen);
+    ArrayList<Arc> ListaArcosSalientes(T origen);
     
     // Métodos herramientas
     int NumeroNodos();
-    double Coste(Node inicio, Node llegada);
+    double Coste(T inicio, T llegada);
 
     List<Tile> ReconstruirCamino();
     void CalcularDistanciasEstimadas();
