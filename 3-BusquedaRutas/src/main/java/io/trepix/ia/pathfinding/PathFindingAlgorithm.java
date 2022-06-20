@@ -12,7 +12,7 @@ public abstract class PathFindingAlgorithm<T extends Node<T>> {
         this.name = name;
     }
 
-    public final Path findPath(Graph<T> graph) {
+    public final Path<T> findPath(Graph<T> graph) {
         graph.clearPath();
         return execute(graph);
     }
@@ -21,8 +21,7 @@ public abstract class PathFindingAlgorithm<T extends Node<T>> {
         return this.name;
     }
 
-    protected abstract Path execute(Graph<T> graph);
+    protected abstract Path<T> execute(Graph<T> graph);
 
-    public record Path(List<Tile> steps, double distance) {
-    }
+    public record Path<T>(List<T> steps, double distance) {}
 }

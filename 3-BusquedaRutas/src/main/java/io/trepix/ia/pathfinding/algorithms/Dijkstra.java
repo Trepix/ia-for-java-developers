@@ -17,7 +17,7 @@ public class Dijkstra<T extends Node<T>> extends PathFindingAlgorithm<T> {
 
     // Métodos principal
     @Override
-    protected Path execute(Graph<T> graph) {
+    protected Path<T> execute(Graph<T> graph) {
         // Iinicialización
         List<T> listaNodes = graph.nodes();
         boolean salidaEncontrada = false;
@@ -38,7 +38,7 @@ public class Dijkstra<T extends Node<T>> extends PathFindingAlgorithm<T> {
                 // Se aplica los arco salientes de este nodo
                 List<Arc<T>> arcosSalientes = graph.arcsOf(nodeActual);
 
-                for (Arc arc : arcosSalientes) {
+                for (Arc<T> arc : arcosSalientes) {
                     if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
                         arc.destination().setDistanceFromBeginning(arc.origin().getDistanceFromBeginning() + arc.cost());
                         arc.destination().setParent(arc.origin());
@@ -49,7 +49,7 @@ public class Dijkstra<T extends Node<T>> extends PathFindingAlgorithm<T> {
             }
         }
 
-        return new Path(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
+        return new Path<>(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
     }
 
 }

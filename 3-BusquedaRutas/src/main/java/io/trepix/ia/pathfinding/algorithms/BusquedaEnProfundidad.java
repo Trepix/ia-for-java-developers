@@ -17,10 +17,10 @@ public class BusquedaEnProfundidad<T extends Node<T>> extends PathFindingAlgorit
 
     // Métodos de resolución
     @Override
-    protected Path execute(Graph<T> graph) {
+    protected Path<T> execute(Graph<T> graph) {
         // Creación de la lista de  nodos no visitados y de la pila
         List<T> nodosNoVisitados = graph.nodes();
-        Stack<T> nodosAVisitador = new Stack();
+        Stack<T> nodosAVisitador = new Stack<>();
         nodosAVisitador.push(graph.startingNode());
         nodosNoVisitados.remove(graph.startingNode());
 
@@ -46,6 +46,6 @@ public class BusquedaEnProfundidad<T extends Node<T>> extends PathFindingAlgorit
                 }
             }
         }
-        return new Path(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
+        return new Path<>(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
     }
 }

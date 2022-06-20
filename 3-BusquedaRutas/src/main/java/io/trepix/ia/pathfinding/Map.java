@@ -56,7 +56,7 @@ public class Map implements Graph<Tile> {
     @Override
     public List<Tile> nodes() {
         if (listaNodes == null) {
-            listaNodes = new ArrayList();
+            listaNodes = new ArrayList<>();
             for (int i = 0; i < numLineas; i++) {
                 listaNodes.addAll(Arrays.asList(tiles[i]));
             }
@@ -67,7 +67,7 @@ public class Map implements Graph<Tile> {
     @Override
     public List<Tile> adjacentNodes(Tile origen) {
         // Iinicialización
-        List<Tile> listaNodosSalientes = new ArrayList();
+        List<Tile> listaNodosSalientes = new ArrayList<>();
         int linea = origen.row();
         int columna = origen.column();
 
@@ -100,7 +100,7 @@ public class Map implements Graph<Tile> {
 
     @Override
     public List<Arc<Tile>> arcsOf(Tile origen) {
-        List<Arc<Tile>> listaArcosSalientes = new ArrayList();
+        List<Arc<Tile>> listaArcosSalientes = new ArrayList<>();
         int linea = origen.row();
         int columna = origen.column();
 
@@ -131,7 +131,7 @@ public class Map implements Graph<Tile> {
     @Override
     public List<Arc<Tile>> arcs() {
         if (listaArcos == null) {
-            listaArcos = new ArrayList();
+            listaArcos = new ArrayList<>();
 
             // Recorrido de los nodos
             for (int linea = 0; linea < numLineas; linea++) {

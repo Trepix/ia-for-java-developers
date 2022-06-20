@@ -17,10 +17,10 @@ public class BusquedaEnAnchura<T extends Node<T>> extends PathFindingAlgorithm<T
 
     // Métodos de resolución
     @Override
-    protected Path execute(Graph<T> graph) {
+    protected Path<T> execute(Graph<T> graph) {
         // Creación de la lista de nodos no visitados y de la pila
         List<T> nodosNoVisitados = graph.nodes();
-        LinkedList<T> nodosAVisitador = new LinkedList();
+        LinkedList<T> nodosAVisitador = new LinkedList<>();
         nodosAVisitador.add(graph.startingNode());
         nodosNoVisitados.remove(graph.startingNode());
 
@@ -47,6 +47,6 @@ public class BusquedaEnAnchura<T extends Node<T>> extends PathFindingAlgorithm<T
             }
         }
 
-        return new Path(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
+        return new Path<>(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
     }
 }

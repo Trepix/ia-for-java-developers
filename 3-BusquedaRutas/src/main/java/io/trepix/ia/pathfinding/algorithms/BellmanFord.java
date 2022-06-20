@@ -16,7 +16,7 @@ public class BellmanFord<T extends Node<T>> extends PathFindingAlgorithm<T> {
 
     // Métodos de resolución
     @Override
-    protected Path execute(Graph<T> graph) {
+    protected Path<T> execute(Graph<T> graph) {
         // Iinicialización
         boolean distanciaCambiada = true;
         int i = 0;
@@ -26,7 +26,7 @@ public class BellmanFord<T extends Node<T>> extends PathFindingAlgorithm<T> {
         int numBucleMax = graph.numberOfNodes() - 1;
         while (i < numBucleMax && distanciaCambiada) {
             distanciaCambiada = false;
-            for (Arc arc : listaArcos) {
+            for (Arc<T> arc : listaArcos) {
                 if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
                     // Encontrado un camino más corto
                     arc.destination().setDistanceFromBeginning(arc.origin().getDistanceFromBeginning() + arc.cost());
@@ -38,12 +38,12 @@ public class BellmanFord<T extends Node<T>> extends PathFindingAlgorithm<T> {
         }
 
         // Prueba si el bucle es negativo
-        for (Arc arc : listaArcos) {
+        for (Arc<T> arc : listaArcos) {
             if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
                 System.err.println("Bucle negativo - sin camino más corto");
             }
         }
 
-        return new Path(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
+        return new Path<>(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
     }
 }

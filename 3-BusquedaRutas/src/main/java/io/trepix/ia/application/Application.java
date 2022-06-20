@@ -77,14 +77,14 @@ public class Application {
 
         System.out.println("Algorithm : " + algorithm.name());
         start = LocalDateTime.now();
-        Path path = algorithm.findPath(map);
+        Path<Tile> path = algorithm.findPath(map);
         this.showResults(path);
         end = LocalDateTime.now();
 
         System.out.println("Execution time (ms) : " + executionTime(start, end) + "\n");
     }
 
-    public void showResults(Path path) {
+    public void showResults(Path<Tile> path) {
         String steps = path.steps().stream().map(Tile::toString).collect(Collectors.joining("-"));
         System.out.println("Path (distance: " + path.distance() + ") : " + steps);
     }

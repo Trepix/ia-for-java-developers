@@ -17,7 +17,7 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
 
     // Métodos principal
     @Override
-    protected Path execute(Graph<T> graph) {
+    protected Path<T> execute(Graph<T> graph) {
         // Iinicialización
         graph.initializeEstimatedDistances();
         List<T> listaNodes = graph.nodes();
@@ -51,6 +51,6 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
             }
         }
 
-        return new Path(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
+        return new Path<>(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
     }
 }

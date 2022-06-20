@@ -2,7 +2,6 @@ package io.trepix.ia.pathfinding;
 
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
-import io.trepix.ia.pathfinding.structure.Tile;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public interface Graph<T extends Node<T>> {
 
     double cost(T start, T end);
 
-    List<Tile> pathSteps();
+    List<T> pathSteps();
 
     void initializeEstimatedDistances();
 
