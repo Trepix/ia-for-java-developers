@@ -6,13 +6,16 @@ public class Tile extends Node<Tile> {
     private final TileType type;
 
     private final Cell cell;
+
     public Tile(TileType type, int row, int column) {
         this.type = type;
         cell = new Cell(row, column);
     }
+
     public boolean isAccessible() {
         return type.isAccessible();
     }
+
     public double movementCost() {
         return type.cost();
     }
@@ -45,5 +48,6 @@ public class Tile extends Node<Tile> {
 
     }
 
-    public record Cell(int row, int column) {}
+    public record Cell(int row, int column) {
+    }
 }

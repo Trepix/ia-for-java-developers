@@ -1,11 +1,11 @@
 package io.trepix.ia.pathfinding.algorithms;
 
-import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.Graph;
+import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
 
-import java.util.ArrayList;
+import java.util.List;
 
 // Algoritmo A*
 public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
@@ -14,17 +14,17 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
     public AStar() {
         super("A*");
     }
-    
+
     // Métodos principal
     @Override
     protected Path execute(Graph<T> graph) {
         // Iinicialización
         graph.initializeEstimatedDistances();
-        ArrayList<T> listaNodes = graph.nodes();
+        List<T> listaNodes = graph.nodes();
         boolean salidaEncontrada = false;
-        
+
         // Bucle principal
-        while(listaNodes.size() != 0 && !salidaEncontrada) {
+        while (listaNodes.size() != 0 && !salidaEncontrada) {
             // Búsqueda del nodo con la distancia más baja
             T nodeActual = listaNodes.get(0);
             for (T node : listaNodes) {
@@ -32,22 +32,21 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
                     nodeActual = node;
                 }
             }
-            
+
             if (nodeActual.equals(graph.endingNode())) {
                 // Encontrada la salida
                 salidaEncontrada = true;
-            }
-            else {
+            } else {
                 // Se aplican los arcos salientes de este nodo
-                ArrayList<Arc> arcosSalientes = graph.arcsOf(nodeActual);
-                
-                for (Arc arc : arcosSalientes) {
+                List<Arc<T>> arcosSalientes = graph.arcsOf(nodeActual);
+
+                for (Arc<T> arc : arcosSalientes) {
                     if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
                         arc.destination().setDistanceFromBeginning(arc.origin().getDistanceFromBeginning() + arc.cost());
                         arc.destination().setParent(arc.origin());
                     }
                 }
-                
+
                 listaNodes.remove(nodeActual);
             }
         }

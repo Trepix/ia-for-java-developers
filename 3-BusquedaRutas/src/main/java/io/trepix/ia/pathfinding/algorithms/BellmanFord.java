@@ -1,14 +1,14 @@
 package io.trepix.ia.pathfinding.algorithms;
 
-import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.Graph;
+import io.trepix.ia.pathfinding.PathFindingAlgorithm;
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Node;
 
-import java.util.ArrayList;
+import java.util.List;
 
 // Algoritmo de Bellman-Ford
-public class BellmanFord<T extends Node<T>>  extends PathFindingAlgorithm<T> {
+public class BellmanFord<T extends Node<T>> extends PathFindingAlgorithm<T> {
     // Constructor
     public BellmanFord() {
         super("Bellman-Ford");
@@ -20,8 +20,8 @@ public class BellmanFord<T extends Node<T>>  extends PathFindingAlgorithm<T> {
         // Iinicialización
         boolean distanciaCambiada = true;
         int i = 0;
-        ArrayList<Arc> listaArcos = graph.arcs();
-        
+        List<Arc<T>> listaArcos = graph.arcs();
+
         // Bucle principal
         int numBucleMax = graph.numberOfNodes() - 1;
         while (i < numBucleMax && distanciaCambiada) {
@@ -36,7 +36,7 @@ public class BellmanFord<T extends Node<T>>  extends PathFindingAlgorithm<T> {
             }
             i++;
         }
-        
+
         // Prueba si el bucle es negativo
         for (Arc arc : listaArcos) {
             if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {

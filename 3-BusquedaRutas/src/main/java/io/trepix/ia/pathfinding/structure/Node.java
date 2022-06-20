@@ -1,4 +1,5 @@
 package io.trepix.ia.pathfinding.structure;
+
 public abstract class Node<T extends Node<T>> {
     private T parent = null;
     private double distanceFromBeginning = Double.POSITIVE_INFINITY;

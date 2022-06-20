@@ -39,7 +39,7 @@ public enum TileType {
 
     private static final double UNREACHABLE = Double.POSITIVE_INFINITY;
     private static final double NORMAL_MOVE = 1;
-    private static final double SLOWED_DOWN_MOVE = 2*NORMAL_MOVE;
+    private static final double SLOWED_DOWN_MOVE = 2 * NORMAL_MOVE;
 
     public boolean isAccessible() {
         return false;

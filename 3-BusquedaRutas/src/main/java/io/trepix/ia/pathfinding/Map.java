@@ -14,9 +14,9 @@ public class Map implements Graph<Tile> {
     int numColumnas;
     Tile nodoInicio;
     Tile nodoLLegada;
-    ArrayList<Tile> listaNodes = null;
-    ArrayList<Arc> listaArcos = null;
-    
+    List<Tile> listaNodes = null;
+    List<Arc<Tile>> listaArcos = null;
+
     // Constructor
     public Map(String _mapa, int _lineaInicio, int _columnaInicio, int _lineaLLegada, int _columnaLLegada) {
         // Creación de la tabla de baldosas
@@ -24,7 +24,7 @@ public class Map implements Graph<Tile> {
         numLineas = lineas.length;
         numColumnas = lineas[0].length();
         tiles = new Tile[numLineas][];
-        
+
         // Relleno
         for (int i = 0; i < numLineas; i++) {
             tiles[i] = new Tile[numColumnas];
@@ -32,17 +32,17 @@ public class Map implements Graph<Tile> {
                 tiles[i][j] = Tile.TileFactory.create(lineas[i].charAt(j), i, j);
             }
         }
-        
+
         // Inicio y llegada
         nodoInicio = tiles[_lineaInicio][_columnaInicio];
         nodoInicio.setDistanceFromBeginning(nodoInicio.movementCost());
         nodoLLegada = tiles[_lineaLLegada][_columnaLLegada];
-        
+
         // Lista de los nodos y de las arcos
         nodes();
         arcs();
     }
-    
+
     @Override
     public Tile startingNode() {
         return nodoInicio;
@@ -54,7 +54,7 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public ArrayList<Tile> nodes() {
+    public List<Tile> nodes() {
         if (listaNodes == null) {
             listaNodes = new ArrayList();
             for (int i = 0; i < numLineas; i++) {
@@ -65,30 +65,30 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public ArrayList<Tile> adjacentNodes(Tile origen) {
+    public List<Tile> adjacentNodes(Tile origen) {
         // Iinicialización
-        ArrayList<Tile> listaNodosSalientes = new ArrayList();
-        int linea = ((Tile) origen).row();
-        int columna = ((Tile) origen).column();
-        
+        List<Tile> listaNodosSalientes = new ArrayList();
+        int linea = origen.row();
+        int columna = origen.column();
+
         // Vecino de la derecha
-        if (columna - 1 >= 0 && tiles[linea][columna-1].isAccessible()) {
-            listaNodosSalientes.add(tiles[linea][columna-1]);
+        if (columna - 1 >= 0 && tiles[linea][columna - 1].isAccessible()) {
+            listaNodosSalientes.add(tiles[linea][columna - 1]);
         }
-        
+
         // Vecino de la izquierda
-        if (columna + 1 < numColumnas && tiles[linea][columna+1].isAccessible()) {
-            listaNodosSalientes.add(tiles[linea][columna+1]);
+        if (columna + 1 < numColumnas && tiles[linea][columna + 1].isAccessible()) {
+            listaNodosSalientes.add(tiles[linea][columna + 1]);
         }
-        
+
         // Vecino de arriba
-        if (linea - 1 >= 0 && tiles[linea-1][columna].isAccessible()) {
-            listaNodosSalientes.add(tiles[linea-1][columna]);
+        if (linea - 1 >= 0 && tiles[linea - 1][columna].isAccessible()) {
+            listaNodosSalientes.add(tiles[linea - 1][columna]);
         }
-        
+
         // Vecino de abajO
-        if (linea + 1 < numLineas && tiles[linea+1][columna].isAccessible()) {
-            listaNodosSalientes.add(tiles[linea+1][columna]);
+        if (linea + 1 < numLineas && tiles[linea + 1][columna].isAccessible()) {
+            listaNodosSalientes.add(tiles[linea + 1][columna]);
         }
         return listaNodosSalientes;
     }
@@ -99,54 +99,54 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public ArrayList<Arc> arcsOf(Tile origen) {
-        ArrayList<Arc> listaArcosSalientes = new ArrayList();
-        int linea = ((Tile) origen).row();
-        int columna = ((Tile) origen).column();
-        
+    public List<Arc<Tile>> arcsOf(Tile origen) {
+        List<Arc<Tile>> listaArcosSalientes = new ArrayList();
+        int linea = origen.row();
+        int columna = origen.column();
+
         if (tiles[linea][columna].isAccessible()) {
             // Derecha
-            if (columna - 1 >= 0 && tiles[linea][columna-1].isAccessible()) {
-                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea][columna-1], tiles[linea][columna-1].movementCost()));
+            if (columna - 1 >= 0 && tiles[linea][columna - 1].isAccessible()) {
+                listaArcosSalientes.add(new Arc<>(tiles[linea][columna], tiles[linea][columna - 1], tiles[linea][columna - 1].movementCost()));
             }
 
             // Izquierda
-            if (columna + 1 < numColumnas && tiles[linea][columna+1].isAccessible()) {
-                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea][columna+1], tiles[linea][columna+1].movementCost()));
+            if (columna + 1 < numColumnas && tiles[linea][columna + 1].isAccessible()) {
+                listaArcosSalientes.add(new Arc<>(tiles[linea][columna], tiles[linea][columna + 1], tiles[linea][columna + 1].movementCost()));
             }
 
             // Arriba
-            if (linea - 1 >= 0 && tiles[linea-1][columna].isAccessible()) {
-                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea-1][columna], tiles[linea-1][columna].movementCost()));
+            if (linea - 1 >= 0 && tiles[linea - 1][columna].isAccessible()) {
+                listaArcosSalientes.add(new Arc<>(tiles[linea][columna], tiles[linea - 1][columna], tiles[linea - 1][columna].movementCost()));
             }
 
             // Abajo
-            if (linea + 1 < numLineas && tiles[linea+1][columna].isAccessible()) {
-                listaArcosSalientes.add(new Arc(tiles[linea][columna], tiles[linea+1][columna], tiles[linea+1][columna].movementCost()));
+            if (linea + 1 < numLineas && tiles[linea + 1][columna].isAccessible()) {
+                listaArcosSalientes.add(new Arc<>(tiles[linea][columna], tiles[linea + 1][columna], tiles[linea + 1][columna].movementCost()));
             }
         }
         return listaArcosSalientes;
     }
-    
+
     @Override
-    public ArrayList<Arc> arcs() {
-        if(listaArcos == null) {
+    public List<Arc<Tile>> arcs() {
+        if (listaArcos == null) {
             listaArcos = new ArrayList();
-            
+
             // Recorrido de los nodos
             for (int linea = 0; linea < numLineas; linea++) {
                 for (int columna = 0; columna < numColumnas; columna++) {
-                    ArrayList<Arc> arcs = arcsOf(tiles[linea][columna]);
+                    List<Arc<Tile>> arcs = arcsOf(tiles[linea][columna]);
                     listaArcos.addAll(arcs);
                 }
             }
         }
         return listaArcos;
     }
-    
+
     @Override
     public double cost(Tile start, Tile end) {
-        return ((Tile) end).movementCost();
+        return end.movementCost();
     }
 
     @Override
@@ -180,7 +180,7 @@ public class Map implements Graph<Tile> {
         // Eliminar las listas
         listaNodes = null;
         listaArcos = null;
-        
+
         // Eliminar las distancias y precursores
         for (int linea = 0; linea < numLineas; linea++) {
             for (int columna = 0; columna < numColumnas; columna++) {
@@ -188,7 +188,7 @@ public class Map implements Graph<Tile> {
                 tiles[linea][columna].setParent(null);
             }
         }
-        
+
         // Nodo inicial
         nodoInicio.setDistanceFromBeginning(nodoInicio.movementCost());
     }

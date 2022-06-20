@@ -29,6 +29,11 @@ public class Application {
         app.run();
     }
 
+    private static double executionTime(LocalDateTime start, LocalDateTime end) {
+        Duration executionTime = Duration.between(start, end);
+        return executionTime.toNanos() / 1000000.0;
+    }
+
     private void run() {
         Map map = createMap(
                 "..  XX   .",
@@ -77,11 +82,6 @@ public class Application {
         end = LocalDateTime.now();
 
         System.out.println("Execution time (ms) : " + executionTime(start, end) + "\n");
-    }
-
-    private static double executionTime(LocalDateTime start, LocalDateTime end) {
-        Duration executionTime = Duration.between(start, end);
-        return executionTime.toNanos() / 1000000.0;
     }
 
     public void showResults(Path path) {
