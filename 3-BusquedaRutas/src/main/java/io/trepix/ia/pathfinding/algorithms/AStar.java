@@ -19,8 +19,8 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
     @Override
     protected Path execute(Graph<T> graph) {
         // Iinicialización
-        graph.CalcularDistanciasEstimadas();
-        ArrayList<T> listaNodes = graph.ListaNodos();
+        graph.initializeEstimatedDistances();
+        ArrayList<T> listaNodes = graph.nodes();
         boolean salidaEncontrada = false;
         
         // Bucle principal
@@ -33,13 +33,13 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
                 }
             }
             
-            if (nodeActual.equals(graph.NodoSalida())) {
+            if (nodeActual.equals(graph.endingNode())) {
                 // Encontrada la salida
                 salidaEncontrada = true;
             }
             else {
                 // Se aplican los arcos salientes de este nodo
-                ArrayList<Arc> arcosSalientes = graph.ListaArcosSalientes(nodeActual);
+                ArrayList<Arc> arcosSalientes = graph.arcsOf(nodeActual);
                 
                 for (Arc arc : arcosSalientes) {
                     if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
@@ -52,6 +52,6 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
             }
         }
 
-        return new Path(graph.ReconstruirCamino(), graph.NodoSalida().getEstimatedDistance());
+        return new Path(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
     }
 }

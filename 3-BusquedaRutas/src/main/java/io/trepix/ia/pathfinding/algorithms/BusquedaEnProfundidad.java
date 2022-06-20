@@ -19,13 +19,13 @@ public class BusquedaEnProfundidad<T extends Node<T>>  extends PathFindingAlgori
     @Override
     protected Path execute(Graph<T> graph) {
         // Creación de la lista de  nodos no visitados y de la pila
-        ArrayList<T> nodosNoVisitados = graph.ListaNodos();
+        ArrayList<T> nodosNoVisitados = graph.nodes();
         Stack<T> nodosAVisitador = new Stack();
-        nodosAVisitador.push(graph.NodoInicio());
-        nodosNoVisitados.remove(graph.NodoInicio());
+        nodosAVisitador.push(graph.startingNode());
+        nodosNoVisitados.remove(graph.startingNode());
         
         // Iinicialización de la salida
-        T nodeSalida = graph.NodoSalida();
+        T nodeSalida = graph.endingNode();
         boolean salidaEncontrada = false;
         
         // Bucle principal
@@ -37,16 +37,16 @@ public class BusquedaEnProfundidad<T extends Node<T>>  extends PathFindingAlgori
             }
             else {
                 // Se añaden los vecinos no visitados todavía
-                for (T n : graph.ListaNodosAdyacentes(nodeActual)) {
+                for (T n : graph.adjacentNodes(nodeActual)) {
                     if (nodosNoVisitados.contains(n)) {
                         nodosNoVisitados.remove(n);
                         n.setParent(nodeActual);
-                        n.setDistanceFromBeginning(nodeActual.getDistanceFromBeginning() + graph.Coste(nodeActual, n));
+                        n.setDistanceFromBeginning(nodeActual.getDistanceFromBeginning() + graph.cost(nodeActual, n));
                         nodosAVisitador.push(n);
                     }
                 }
             }
         }
-        return new Path(graph.ReconstruirCamino(), graph.NodoSalida().getEstimatedDistance());
+        return new Path(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
     }
 }

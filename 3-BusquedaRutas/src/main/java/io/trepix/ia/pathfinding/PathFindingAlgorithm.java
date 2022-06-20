@@ -13,7 +13,7 @@ public abstract class PathFindingAlgorithm<T extends Node<T>> {
     }
 
     public final Path findPath(Graph<T> graph) {
-        graph.Eliminar();
+        graph.clearPath();
         return execute(graph);
     }
 

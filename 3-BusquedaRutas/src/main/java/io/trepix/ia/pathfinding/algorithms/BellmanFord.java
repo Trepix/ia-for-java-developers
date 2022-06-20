@@ -20,10 +20,10 @@ public class BellmanFord<T extends Node<T>>  extends PathFindingAlgorithm<T> {
         // Iinicialización
         boolean distanciaCambiada = true;
         int i = 0;
-        ArrayList<Arc> listaArcos = graph.ListaArcos();
+        ArrayList<Arc> listaArcos = graph.arcs();
         
         // Bucle principal
-        int numBucleMax = graph.NumeroNodos() - 1;
+        int numBucleMax = graph.numberOfNodes() - 1;
         while (i < numBucleMax && distanciaCambiada) {
             distanciaCambiada = false;
             for (Arc arc : listaArcos) {
@@ -44,6 +44,6 @@ public class BellmanFord<T extends Node<T>>  extends PathFindingAlgorithm<T> {
             }
         }
 
-        return new Path(graph.ReconstruirCamino(), graph.NodoSalida().getEstimatedDistance());
+        return new Path(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
     }
 }

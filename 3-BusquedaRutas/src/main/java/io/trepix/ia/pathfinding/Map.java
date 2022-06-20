@@ -39,22 +39,22 @@ public class Map implements Graph<Tile> {
         nodoLLegada = tiles[_lineaLLegada][_columnaLLegada];
         
         // Lista de los nodos y de las arcos
-        ListaNodos();
-        ListaArcos();
+        nodes();
+        arcs();
     }
     
     @Override
-    public Tile NodoInicio() {
+    public Tile startingNode() {
         return nodoInicio;
     }
 
     @Override
-    public Tile NodoSalida() {
+    public Tile endingNode() {
         return nodoLLegada;
     }
 
     @Override
-    public ArrayList<Tile> ListaNodos() {
+    public ArrayList<Tile> nodes() {
         if (listaNodes == null) {
             listaNodes = new ArrayList();
             for (int i = 0; i < numLineas; i++) {
@@ -65,7 +65,7 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public ArrayList<Tile> ListaNodosAdyacentes(Tile origen) {
+    public ArrayList<Tile> adjacentNodes(Tile origen) {
         // Iinicialización
         ArrayList<Tile> listaNodosSalientes = new ArrayList();
         int linea = ((Tile) origen).row();
@@ -94,12 +94,12 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public int NumeroNodos() {
+    public int numberOfNodes() {
         return numLineas * numColumnas;
     }
 
     @Override
-    public ArrayList<Arc> ListaArcosSalientes(Tile origen) {
+    public ArrayList<Arc> arcsOf(Tile origen) {
         ArrayList<Arc> listaArcosSalientes = new ArrayList();
         int linea = ((Tile) origen).row();
         int columna = ((Tile) origen).column();
@@ -129,14 +129,14 @@ public class Map implements Graph<Tile> {
     }
     
     @Override
-    public ArrayList<Arc> ListaArcos() {
+    public ArrayList<Arc> arcs() {
         if(listaArcos == null) {
             listaArcos = new ArrayList();
             
             // Recorrido de los nodos
             for (int linea = 0; linea < numLineas; linea++) {
                 for (int columna = 0; columna < numColumnas; columna++) {
-                    ArrayList<Arc> arcs = ListaArcosSalientes(tiles[linea][columna]);
+                    ArrayList<Arc> arcs = arcsOf(tiles[linea][columna]);
                     listaArcos.addAll(arcs);
                 }
             }
@@ -145,12 +145,12 @@ public class Map implements Graph<Tile> {
     }
     
     @Override
-    public double Coste(Tile inicio, Tile llegada) {
-        return ((Tile)llegada).movementCost();
+    public double cost(Tile start, Tile end) {
+        return ((Tile) end).movementCost();
     }
 
     @Override
-    public List<Tile> ReconstruirCamino() {
+    public List<Tile> pathSteps() {
         Tile nodoActual = nodoLLegada;
         Tile nodoAnterior = nodoLLegada.getParent();
 
@@ -167,7 +167,7 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public void CalcularDistanciasEstimadas() {
+    public void initializeEstimatedDistances() {
         for (int linea = 0; linea < numLineas; linea++) {
             for (int columna = 0; columna < numColumnas; columna++) {
                 tiles[linea][columna].setEstimatedDistance(Math.abs(nodoLLegada.row() - linea) + Math.abs(nodoLLegada.column() - columna));
@@ -176,7 +176,7 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public void Eliminar() {
+    public void clearPath() {
         // Eliminar las listas
         listaNodes = null;
         listaArcos = null;
