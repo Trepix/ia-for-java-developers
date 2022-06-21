@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public class MapBuilder {
 
     private final String[] rows;
-    private Cell initialTile;
+    private Cell startTile;
     private Cell endTile;
 
     public MapBuilder(String[] rows) {
@@ -23,7 +23,7 @@ public class MapBuilder {
     }
 
     public MapBuilder withStartAt(int row, int column) {
-        this.initialTile = new Cell(row, column);
+        this.startTile = new Cell(row, column);
         return this;
     }
 
@@ -33,7 +33,7 @@ public class MapBuilder {
     }
 
     public Map build() {
-        return new Map(String.join("\n", rows), initialTile.row(), initialTile.column(), endTile.row(), endTile.column());
+        return new Map(rows, startTile, endTile);
     }
 
 }

@@ -2,6 +2,7 @@ package io.trepix.ia.pathfinding;
 
 import io.trepix.ia.pathfinding.structure.Arc;
 import io.trepix.ia.pathfinding.structure.Tile;
+import io.trepix.ia.pathfinding.structure.Tile.Cell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,26 +18,23 @@ public class Map implements Graph<Tile> {
     List<Tile> listaNodes = null;
     List<Arc<Tile>> listaArcos = null;
 
-    // Constructor
-    public Map(String _mapa, int _lineaInicio, int _columnaInicio, int _lineaLLegada, int _columnaLLegada) {
-        // Creación de la tabla de baldosas
-        String[] lineas = _mapa.split("\n");
-        numLineas = lineas.length;
-        numColumnas = lineas[0].length();
+    public Map(String[] map, Cell start, Cell end) {
+        numLineas = map.length;
+        numColumnas = map[0].length();
         tiles = new Tile[numLineas][];
 
         // Relleno
         for (int i = 0; i < numLineas; i++) {
             tiles[i] = new Tile[numColumnas];
             for (int j = 0; j < numColumnas; j++) {
-                tiles[i][j] = Tile.TileFactory.create(lineas[i].charAt(j), i, j);
+                tiles[i][j] = Tile.TileFactory.create(map[i].charAt(j), i, j);
             }
         }
 
         // Inicio y llegada
-        nodoInicio = tiles[_lineaInicio][_columnaInicio];
+        nodoInicio = tiles[start.row()][start.column()];
         nodoInicio.setDistanceFromBeginning(nodoInicio.movementCost());
-        nodoLLegada = tiles[_lineaLLegada][_columnaLLegada];
+        nodoLLegada = tiles[end.row()][end.column()];
 
         // Lista de los nodos y de las arcos
         nodes();
