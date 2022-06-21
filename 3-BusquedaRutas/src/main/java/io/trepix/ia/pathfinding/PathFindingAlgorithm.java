@@ -1,7 +1,6 @@
 package io.trepix.ia.pathfinding;
 
 import io.trepix.ia.pathfinding.structure.Node;
-import io.trepix.ia.pathfinding.structure.Tile;
 
 import java.util.List;
 
