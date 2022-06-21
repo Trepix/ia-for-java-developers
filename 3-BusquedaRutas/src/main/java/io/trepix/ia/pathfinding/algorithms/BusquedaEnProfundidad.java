@@ -46,6 +46,6 @@ public class BusquedaEnProfundidad<T extends Node<T>> extends PathFindingAlgorit
                 }
             }
         }
-        return new Path<>(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
+        return new Path<>(graph.pathSteps(), graph.endingNode().getDistanceFromBeginning());
     }
 }

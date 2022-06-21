@@ -51,6 +51,6 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
             }
         }
 
-        return new Path<>(graph.pathSteps(), graph.endingNode().getEstimatedDistance());
+        return new Path<>(graph.pathSteps(), graph.endingNode().getDistanceFromBeginning());
     }
 }
