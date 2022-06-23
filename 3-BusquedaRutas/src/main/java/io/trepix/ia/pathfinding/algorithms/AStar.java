@@ -28,7 +28,7 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
             // Búsqueda del nodo con la distancia más baja
             T nodeActual = listaNodes.get(0);
             for (T node : listaNodes) {
-                if (node.getDistanceFromBeginning() + node.getEstimatedDistance() < nodeActual.getDistanceFromBeginning() + nodeActual.getEstimatedDistance()) {
+                if (node.distanceFromStart() + node.getEstimatedDistance() < nodeActual.distanceFromStart() + nodeActual.getEstimatedDistance()) {
                     nodeActual = node;
                 }
             }
@@ -41,8 +41,8 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
                 List<Arc<T>> arcosSalientes = graph.arcsOf(nodeActual);
 
                 for (Arc<T> arc : arcosSalientes) {
-                    if (arc.origin().getDistanceFromBeginning() + arc.cost() < arc.destination().getDistanceFromBeginning()) {
-                        arc.destination().setDistanceFromBeginning(arc.origin().getDistanceFromBeginning() + arc.cost());
+                    if (arc.origin().distanceFromStart() + arc.cost() < arc.destination().distanceFromStart()) {
+                        arc.destination().updateDistanceFromStart(arc.origin().distanceFromStart() + arc.cost());
                         arc.destination().setParent(arc.origin());
                     }
                 }
@@ -51,6 +51,6 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
             }
         }
 
-        return new Path<>(graph.pathSteps(), graph.endingNode().getDistanceFromBeginning());
+        return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
     }
 }

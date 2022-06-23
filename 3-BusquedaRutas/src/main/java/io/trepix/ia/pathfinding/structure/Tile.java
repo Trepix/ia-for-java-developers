@@ -18,6 +18,7 @@ public class Tile extends Node<Tile> {
         return type.isAccessible();
     }
 
+    @Override
     public double movementCost() {
         return type.cost();
     }

@@ -7,7 +7,6 @@ import io.trepix.ia.pathfinding.structure.Tile.TileFactory;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Map implements Graph<Tile> {
@@ -29,7 +28,7 @@ public class Map implements Graph<Tile> {
         }
 
         this.start = tiles.get(start);
-        this.start.setDistanceFromBeginning(this.start.movementCost());
+        this.start.updateDistanceFromStart(this.start.movementCost());
         this.end = tiles.get(end);
     }
 
@@ -114,9 +113,9 @@ public class Map implements Graph<Tile> {
     @Override
     public void clearPath() {
         tiles().forEach(tile -> tile.setParent(null));
-        tiles().forEach(tile -> tile.setDistanceFromBeginning(Double.POSITIVE_INFINITY));
+        tiles().forEach(tile -> tile.updateDistanceFromStart(Double.POSITIVE_INFINITY));
 
-        start.setDistanceFromBeginning(start.movementCost());
+        start.updateDistanceFromStart(start.movementCost());
     }
 
 }

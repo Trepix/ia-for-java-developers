@@ -16,7 +16,7 @@ import static io.trepix.ia.pathfinding.PathFindingAlgorithm.Path;
 public class Application {
 
     private final static List<PathFindingAlgorithm<Tile>> ALGORITHMS = List.of(
-            new BusquedaEnProfundidad<>(),
+            new DepthFirstSearch<>(),
             new BusquedaEnAnchura<>(),
             new BellmanFord<>(),
             new Dijkstra<>(),

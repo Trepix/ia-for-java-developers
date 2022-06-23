@@ -40,13 +40,13 @@ public class BusquedaEnAnchura<T extends Node<T>> extends PathFindingAlgorithm<T
                     if (nodosNoVisitados.contains(n)) {
                         nodosNoVisitados.remove(n);
                         n.setParent(nodeActual);
-                        n.setDistanceFromBeginning(nodeActual.getDistanceFromBeginning() + graph.cost(nodeActual, n));
+                        n.updateDistanceFromStart(nodeActual.distanceFromStart() + graph.cost(nodeActual, n));
                         nodosAVisitador.add(n);
                     }
                 }
             }
         }
 
-        return new Path<>(graph.pathSteps(), graph.endingNode().getDistanceFromBeginning());
+        return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
     }
 }

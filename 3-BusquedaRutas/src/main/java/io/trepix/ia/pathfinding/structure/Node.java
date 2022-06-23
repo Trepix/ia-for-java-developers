@@ -13,12 +13,16 @@ public abstract class Node<T extends Node<T>> {
         this.parent = parent;
     }
 
-    public double getDistanceFromBeginning() {
+    public double distanceFromStart() {
         return distanceFromBeginning;
     }
 
-    public void setDistanceFromBeginning(double distanceFromBeginning) {
+    public void updateDistanceFromStart(double distanceFromBeginning) {
         this.distanceFromBeginning = distanceFromBeginning;
+    }
+
+    public void updateDistanceFromStart(Node<T> adjacentNode) {
+        this.distanceFromBeginning = adjacentNode.distanceFromStart() + this.movementCost();
     }
 
     public double getEstimatedDistance() {
@@ -27,5 +31,12 @@ public abstract class Node<T extends Node<T>> {
 
     public void setEstimatedDistance(double estimatedDistance) {
         this.estimatedDistance = estimatedDistance;
+    }
+
+    public abstract double movementCost();
+
+    public void updatePathInfo(T currentNode) {
+        this.setParent(currentNode);
+        this.updateDistanceFromStart(currentNode);
     }
 }
