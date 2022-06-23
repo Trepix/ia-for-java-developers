@@ -39,4 +39,8 @@ public abstract class Node<T extends Node<T>> {
         this.setParent(currentNode);
         this.updateDistanceFromStart(currentNode);
     }
+
+    public boolean isCloserToStartThan(T node) {
+        return this.distanceFromStart() < node.distanceFromStart();
+    }
 }

@@ -7,49 +7,42 @@ import io.trepix.ia.pathfinding.structure.Node;
 
 import java.util.List;
 
-// Algoritmo de Dijkstra
 public class Dijkstra<T extends Node<T>> extends PathFindingAlgorithm<T> {
 
-    // Constructor
     public Dijkstra() {
         super("Dijkstra");
     }
 
-    // Métodos principal
     @Override
     protected Path<T> execute(Graph<T> graph) {
-        // Iinicialización
-        List<T> listaNodes = graph.nodes();
-        boolean salidaEncontrada = false;
+        List<T> nodes = graph.nodes();
+        boolean endReached = false;
 
-        // Bucle principal
-        while (listaNodes.size() != 0 && !salidaEncontrada) {
-            // Búsqueda del nodo con la distancia la más baja
-            T nodeActual = listaNodes.get(0);
-            for (T node : listaNodes) {
-                if (node.distanceFromStart() < nodeActual.distanceFromStart()) {
-                    nodeActual = node;
-                }
+        while (!nodes.isEmpty() && !endReached) {
+            T closerNodeToStart = getCloserNodeToStart(nodes);
+            if (closerNodeToStart.equals(graph.endingNode())) {
+                endReached = true;
             }
 
-            if (nodeActual.equals(graph.endingNode())) {
-                salidaEncontrada = true;
-            } else {
-                // Se aplica los arco salientes de este nodo
-                List<Arc<T>> arcosSalientes = graph.arcsOf(nodeActual);
+            graph.arcsOf(closerNodeToStart)
+                    .stream()
+                    .filter(Arc::isShorterThanKnownPathToDestination)
+                    .forEach(Arc::updatePathInfo);
 
-                for (Arc<T> arc : arcosSalientes) {
-                    if (arc.origin().distanceFromStart() + arc.cost() < arc.destination().distanceFromStart()) {
-                        arc.destination().updateDistanceFromStart(arc.origin().distanceFromStart() + arc.cost());
-                        arc.destination().setParent(arc.origin());
-                    }
-                }
-
-                listaNodes.remove(nodeActual);
-            }
+            nodes.remove(closerNodeToStart);
         }
 
         return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
+    }
+
+    private T getCloserNodeToStart(List<T> nodes) {
+        T closestNodeToStart = nodes.get(0);
+        for (T node : nodes) {
+            if (node.isCloserToStartThan(closestNodeToStart)) {
+                closestNodeToStart = node;
+            }
+        }
+        return closestNodeToStart;
     }
 
 }
