@@ -17,7 +17,7 @@ public class Application {
 
     private final static List<PathFindingAlgorithm<Tile>> ALGORITHMS = List.of(
             new DepthFirstSearch<>(),
-            new BusquedaEnAnchura<>(),
+            new BreadthFirstSearch<>(),
             new BellmanFord<>(),
             new Dijkstra<>(),
             new AStar<>()
