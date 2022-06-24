@@ -1,6 +1,7 @@
 package io.trepix.ia.pathfinding;
 
 import io.trepix.ia.pathfinding.structure.Arc;
+import io.trepix.ia.pathfinding.structure.Node;
 import io.trepix.ia.pathfinding.structure.Tile;
 import io.trepix.ia.pathfinding.structure.Tile.Cell;
 import io.trepix.ia.pathfinding.structure.Tile.TileFactory;
@@ -59,11 +60,6 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public int numberOfNodes() {
-        return tiles.size();
-    }
-
-    @Override
     public List<Arc<Tile>> arcsOf(Tile origen) {
         if (!origen.isAccessible()) return Collections.emptyList();
 
@@ -89,31 +85,13 @@ public class Map implements Graph<Tile> {
     }
 
     @Override
-    public double cost(Tile start, Tile end) {
-        return end.movementCost();
-    }
-
-    @Override
-    public List<Tile> pathSteps() {
-        Tile currentNode = end;
-
-        LinkedList<Tile> path = new LinkedList<>();
-        do {
-            path.push(currentNode);
-            currentNode = currentNode.getParent();
-        } while (currentNode != null);
-        return path;
-    }
-
-    @Override
     public void initializeEstimatedDistances() {
         tiles().forEach(tile -> tile.setManhattanDistanceTo(end));
     }
 
     @Override
     public void clearPath() {
-        tiles().forEach(tile -> tile.setParent(null));
-        tiles().forEach(tile -> tile.updateDistanceFromStart(Double.POSITIVE_INFINITY));
+        tiles().forEach(Node::clearPathInfo);
 
         start.updateDistanceFromStart(start.movementCost());
     }

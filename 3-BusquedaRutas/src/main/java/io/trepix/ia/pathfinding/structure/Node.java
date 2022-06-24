@@ -1,16 +1,15 @@
 package io.trepix.ia.pathfinding.structure;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public abstract class Node<T extends Node<T>> {
     private T parent = null;
     private double distanceFromBeginning = Double.POSITIVE_INFINITY;
     private double estimatedDistance;
 
-    public T getParent() {
+    protected T getParent() {
         return parent;
-    }
-
-    public void setParent(T parent) {
-        this.parent = parent;
     }
 
     public double distanceFromStart() {
@@ -21,32 +20,43 @@ public abstract class Node<T extends Node<T>> {
         this.distanceFromBeginning = distanceFromBeginning;
     }
 
-    public void updateDistanceFromStart(Node<T> adjacentNode) {
-        this.distanceFromBeginning = adjacentNode.distanceFromStart() + this.movementCost();
-    }
-
-    public double getEstimatedDistance() {
-        return estimatedDistance;
-    }
-
     public void setEstimatedDistance(double estimatedDistance) {
         this.estimatedDistance = estimatedDistance;
     }
 
-    public abstract double movementCost();
+    public List<T> pathSteps() {
+        @SuppressWarnings("unchecked")
+        T currentNode = (T) this;
 
-    public void updatePathInfo(T currentNode) {
-        this.setParent(currentNode);
-        this.updateDistanceFromStart(currentNode);
+        LinkedList<T> path = new LinkedList<>();
+        do {
+            path.push(currentNode);
+            currentNode = currentNode.getParent();
+        } while (currentNode != null);
+        return path;
     }
 
-    public boolean isCloserToStartThan(T node) {
+    public void updatePathInfo(T adjacentNode) {
+        this.parent = adjacentNode;
+        this.distanceFromBeginning = adjacentNode.distanceFromStart() + this.movementCost();
+    }
+
+    public void clearPathInfo() {
+        this.parent = null;
+        distanceFromBeginning = Double.POSITIVE_INFINITY;
+    }
+
+    public boolean isCloserToStartThan(Node<T> node) {
         return this.distanceFromStart() < node.distanceFromStart();
     }
 
-    public boolean isEstimatedCloserToStartThan(T node) {
-        return this.distanceFromStart() + this.getEstimatedDistance() < node.distanceFromStart() + node.getEstimatedDistance();
+    public boolean isEstimatedCloserToStartThan(Node<T> node) {
+        return this.distanceFromStart() + this.estimatedDistance < node.distanceFromStart() + node.estimatedDistance;
 
     }
+
+    public abstract double movementCost();
+
+
 
 }

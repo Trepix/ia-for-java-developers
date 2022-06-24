@@ -32,7 +32,7 @@ public class Dijkstra<T extends Node<T>> extends PathFindingAlgorithm<T> {
             nodes.remove(closestNodeToStart);
         }
 
-        return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
+        return new Path<>(graph.endingNode().pathSteps(), graph.endingNode().distanceFromStart());
     }
 
     private T getClosestNodeToStart(List<T> nodes) {

@@ -17,7 +17,7 @@ public class BellmanFord<T extends Node<T>> extends PathFindingAlgorithm<T> {
     protected Path<T> execute(Graph<T> graph) {
         List<Arc<T>> arcs = graph.arcs();
 
-        int maxNodesToVisit = graph.numberOfNodes() - 1;
+        int maxNodesToVisit = graph.nodes().size() - 1;
         boolean foundShortestPath = true;
         for (int visitedNodes=0; visitedNodes < maxNodesToVisit && foundShortestPath; visitedNodes++) {
             foundShortestPath = false;
@@ -30,7 +30,7 @@ public class BellmanFord<T extends Node<T>> extends PathFindingAlgorithm<T> {
         }
         checkIfThereAreNegativeLoops(arcs);
 
-        return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
+        return new Path<>(graph.endingNode().pathSteps(), graph.endingNode().distanceFromStart());
     }
 
     private void checkIfThereAreNegativeLoops(List<Arc<T>> arcs) {

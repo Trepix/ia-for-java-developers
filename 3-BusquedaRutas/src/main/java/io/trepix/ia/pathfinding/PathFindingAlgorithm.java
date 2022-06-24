@@ -22,5 +22,5 @@ public abstract class PathFindingAlgorithm<T extends Node<T>> {
 
     protected abstract Path<T> execute(Graph<T> graph);
 
-    public record Path<T>(List<T> steps, double distance) {}
+    public record Path<T extends Node<T>>(List<T> steps, double distance) {}
 }

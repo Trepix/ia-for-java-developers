@@ -40,6 +40,6 @@ public class BreadthFirstSearch<T extends Node<T>> extends PathFindingAlgorithm<
                 }
             }
         }
-        return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
+        return new Path<>(graph.endingNode().pathSteps(), graph.endingNode().distanceFromStart());
     }
 }

@@ -34,7 +34,7 @@ public class AStar<T extends Node<T>> extends PathFindingAlgorithm<T> {
             nodes.remove(closestNodeToStart);
         }
 
-        return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
+        return new Path<>(graph.endingNode().pathSteps(), graph.endingNode().distanceFromStart());
     }
 
     private T estimatedNodeClosestToStart(List<T> nodes) {

@@ -18,12 +18,6 @@ public interface Graph<T extends Node<T>> {
 
     List<Arc<T>> arcsOf(T origen);
 
-    int numberOfNodes();
-
-    double cost(T start, T end);
-
-    List<T> pathSteps();
-
     void initializeEstimatedDistances();
 
     void clearPath();

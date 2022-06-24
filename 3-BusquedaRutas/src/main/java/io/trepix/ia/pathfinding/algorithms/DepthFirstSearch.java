@@ -36,7 +36,7 @@ public class DepthFirstSearch<T extends Node<T>> extends PathFindingAlgorithm<T>
                 }
             }
         }
-        return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
+        return new Path<>(graph.endingNode().pathSteps(), graph.endingNode().distanceFromStart());
     }
 
 }
