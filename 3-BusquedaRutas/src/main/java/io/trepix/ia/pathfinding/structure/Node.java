@@ -43,4 +43,10 @@ public abstract class Node<T extends Node<T>> {
     public boolean isCloserToStartThan(T node) {
         return this.distanceFromStart() < node.distanceFromStart();
     }
+
+    public boolean isEstimatedCloserToStartThan(T node) {
+        return this.distanceFromStart() + this.getEstimatedDistance() < node.distanceFromStart() + node.getEstimatedDistance();
+
+    }
+
 }

@@ -19,23 +19,23 @@ public class Dijkstra<T extends Node<T>> extends PathFindingAlgorithm<T> {
         boolean endReached = false;
 
         while (!nodes.isEmpty() && !endReached) {
-            T closerNodeToStart = getCloserNodeToStart(nodes);
-            if (closerNodeToStart.equals(graph.endingNode())) {
+            T closestNodeToStart = getClosestNodeToStart(nodes);
+            if (closestNodeToStart.equals(graph.endingNode())) {
                 endReached = true;
             }
 
-            graph.arcsOf(closerNodeToStart)
+            graph.arcsOf(closestNodeToStart)
                     .stream()
                     .filter(Arc::isShorterThanKnownPathToDestination)
                     .forEach(Arc::updatePathInfo);
 
-            nodes.remove(closerNodeToStart);
+            nodes.remove(closestNodeToStart);
         }
 
         return new Path<>(graph.pathSteps(), graph.endingNode().distanceFromStart());
     }
 
-    private T getCloserNodeToStart(List<T> nodes) {
+    private T getClosestNodeToStart(List<T> nodes) {
         T closestNodeToStart = nodes.get(0);
         for (T node : nodes) {
             if (node.isCloserToStartThan(closestNodeToStart)) {
