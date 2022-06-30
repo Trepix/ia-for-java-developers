@@ -5,40 +5,35 @@ import io.trepix.ia.algoritmogenetico.Individuo;
 import io.trepix.ia.algoritmogenetico.Parametros;
 import io.trepix.ia.algoritmogenetico.ProcesoEvolutivo;
 
-// Clase lanza las diferentes aplicaciones
-public class Aplicacion implements IHM {
+public class Application implements IHM {
     public static void main(String[] args) {
-        Aplicacion app = new Aplicacion();
-        app.Run();
+        Application app = new Application();
+        app.run();
     }
 
-    public void Run() {
+    public void run() {
         // Resolución del viajante de comercio
-        // Argumentos
         Parametros.tasaCrossover = 0.0;
         Parametros.tasaMutacion = 0.3;
         Parametros.tasaAgregaGen = 0.0;
         Parametros.tasaEliminaGen = 0.0;
         Parametros.minFitness = 2579;
-        // Ejecución
-        ProcesoEvolutivo syst = new ProcesoEvolutivo(this, "PVC");
-        syst.Run();
+        ProcesoEvolutivo process = new ProcesoEvolutivo(this, "PVC");
+        process.run();
         
         // Resolución del laberinto
-        // Argumentos
         Parametros.tasaCrossover = 0.6;
         Parametros.tasaMutacion = 0.1;
         Parametros.tasaAgregaGen = 0.8;
         Parametros.tasaEliminaGen = 0.1;
         Parametros.minFitness = 0;
         Parametros.numMaxGeneraciones = 300;
-        // Ejecución
-        ProcesoEvolutivo syst2 = new ProcesoEvolutivo(this, "Lab");
-        syst2.Run();
+        ProcesoEvolutivo process2 = new ProcesoEvolutivo(this, "Lab");
+        process2.run();
     }
     
     @Override
-    public void MostrarMejorIndividuo(Individuo ind, int generation) {
+    public void showBestIndividual(Individuo ind, int generation) {
         System.out.println(generation + " -> " + ind.toString());
     }
 }

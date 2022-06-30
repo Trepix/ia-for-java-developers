@@ -40,7 +40,7 @@ public class ProcesoEvolutivo {
     }
     
     // Bucle principal
-    public void Run() {
+    public void run() {
         mejorFitness = Parametros.minFitness + 1;
         while(numGeneracion < Parametros.numMaxGeneraciones && mejorFitness > Parametros.minFitness) {
             Individuo mejorInd = EvaluarYRecuperarMejorInd(poblacion);
@@ -60,7 +60,7 @@ public class ProcesoEvolutivo {
                 mejorInd = ind;
             }
         }
-        ihm.MostrarMejorIndividuo(mejorInd, numGeneracion);
+        ihm.showBestIndividual(mejorInd, numGeneracion);
         return mejorInd;
     }
     
