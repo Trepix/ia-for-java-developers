@@ -1,6 +1,6 @@
 package io.trepix.ia.algoritmogenetico.laberinto;
 
-import io.trepix.ia.algoritmogenetico.IGen;
+import io.trepix.ia.algoritmogenetico.Gene;
 import java.util.ArrayList;
 
 // Representa un laberinto con los posibles pasos, la entrada y la salida
@@ -120,10 +120,10 @@ public class Laberinto {
     }
     
     // Mueve un individuo en el laberinto para evaluarlo
-    static double Evaluar(ArrayList<IGen> genoma) { 
+    static double Evaluar(ArrayList<Gene> genoma) {
         Box boxActual = new Box(entrada.getI(), entrada.getJ());
         boolean finMovimiento = false;
-        for(IGen g : genoma) {
+        for(Gene g : genoma) {
             switch (((LabGen)g).dirección) {
                 case Abajo :
                     Mover(boxActual, 1, 0);

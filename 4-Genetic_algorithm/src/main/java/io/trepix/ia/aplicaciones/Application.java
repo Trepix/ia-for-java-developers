@@ -1,7 +1,7 @@
 package io.trepix.ia.aplicaciones;
 
 import io.trepix.ia.algoritmogenetico.IHM;
-import io.trepix.ia.algoritmogenetico.Individuo;
+import io.trepix.ia.algoritmogenetico.Individual;
 import io.trepix.ia.algoritmogenetico.Parametros;
 import io.trepix.ia.algoritmogenetico.ProcesoEvolutivo;
 
@@ -33,7 +33,7 @@ public class Application implements IHM {
     }
     
     @Override
-    public void showBestIndividual(Individuo ind, int generation) {
+    public void showBestIndividual(Individual ind, int generation) {
         System.out.println(generation + " -> " + ind.toString());
     }
 }

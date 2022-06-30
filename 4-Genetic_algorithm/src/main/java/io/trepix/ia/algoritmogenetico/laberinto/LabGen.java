@@ -1,10 +1,10 @@
 package io.trepix.ia.algoritmogenetico.laberinto;
 
-import io.trepix.ia.algoritmogenetico.IGen;
+import io.trepix.ia.algoritmogenetico.Gene;
 import io.trepix.ia.algoritmogenetico.Parametros;
 
 // Los genes para el laberinto
-public class LabGen implements IGen {
+public class LabGen implements Gene {
     public Laberinto.Direccion dirección;
     
     public LabGen() {
@@ -21,7 +21,7 @@ public class LabGen implements IGen {
     }
     
     @Override
-    public void Mutar() {
+    public void mutate() {
         dirección = Laberinto.Direccion.values()[Parametros.random.nextInt(4)];
     }
 

@@ -1,9 +1,9 @@
 package io.trepix.ia.algoritmogenetico.PVC;
 
-import io.trepix.ia.algoritmogenetico.IGen;
+import io.trepix.ia.algoritmogenetico.Gene;
 
 // Genes para el viajante de comercio
-class PVCGen implements IGen {
+class PVCGen implements Gene {
     protected int ciudadIndice;
     
     // Constructores
@@ -21,7 +21,7 @@ class PVCGen implements IGen {
     
     // Mutaci�n : imposible aqu�
     @Override
-    public void Mutar() {
+    public void mutate() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

@@ -1,8 +1,8 @@
 package io.trepix.ia.algoritmogenetico;
 
 import io.trepix.ia.algoritmogenetico.PVC.PVC;
-import io.trepix.ia.algoritmogenetico.PVC.PVCIndividuo;
-import io.trepix.ia.algoritmogenetico.laberinto.LabIndividuo;
+import io.trepix.ia.algoritmogenetico.PVC.PVCIndividual;
+import io.trepix.ia.algoritmogenetico.laberinto.LabIndividual;
 import io.trepix.ia.algoritmogenetico.laberinto.Laberinto;
 
 // Fábrica de individuos adaptados a los problemas (clase singleton)
@@ -29,40 +29,40 @@ class FabricaIndividuos {
         }
     }
     
-    public Individuo CrearIndividuo(String type) {
-        Individuo ind = null;
+    public Individual CrearIndividuo(String type) {
+        Individual ind = null;
         switch (type) {
             case "PVC" :
-                ind = new PVCIndividuo();
+                ind = new PVCIndividual();
                 break;
             case "Lab" :
-                ind = new LabIndividuo();
+                ind = new LabIndividual();
                 break;
         }
         return ind;
     }
     
-    public Individuo CrearIndividuo(String type, Individuo padre) {
-        Individuo ind = null;
+    public Individual CrearIndividuo(String type, Individual padre) {
+        Individual ind = null;
         switch (type) {
             case "PVC" :
-                ind = new PVCIndividuo((PVCIndividuo)padre);
+                ind = new PVCIndividual((PVCIndividual)padre);
                 break;
             case "Lab" :
-                ind = new LabIndividuo((LabIndividuo)padre);
+                ind = new LabIndividual((LabIndividual)padre);
                 break;
         }
         return ind;
     }
     
-    public Individuo CrearIndividuo(String type, Individuo padre1, Individuo padre2) {
-        Individuo ind = null;
+    public Individual CrearIndividuo(String type, Individual padre1, Individual padre2) {
+        Individual ind = null;
         switch (type) {
             case "PVC" :
-                ind = new PVCIndividuo((PVCIndividuo)padre1, (PVCIndividuo)padre2);
+                ind = new PVCIndividual((PVCIndividual)padre1, (PVCIndividual)padre2);
                 break;
             case "Lab" :
-                ind = new LabIndividuo((LabIndividuo)padre1, (LabIndividuo)padre2);
+                ind = new LabIndividual((LabIndividual)padre1, (LabIndividual)padre2);
                 break;
         }
         return ind;
