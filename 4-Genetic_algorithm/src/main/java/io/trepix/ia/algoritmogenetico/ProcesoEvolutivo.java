@@ -1,4 +1,4 @@
-package algoritmogenetico;
+package io.trepix.ia.algoritmogenetico;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,8 @@
-package algoritmogenetico.PVC;
+package io.trepix.ia.algoritmogenetico.PVC;
 
-import algoritmogenetico.IGen;
-import algoritmogenetico.Individuo;
-import algoritmogenetico.Argumentos;
+import io.trepix.ia.algoritmogenetico.IGen;
+import io.trepix.ia.algoritmogenetico.Individuo;
+import io.trepix.ia.algoritmogenetico.Argumentos;
 import java.util.ArrayList;
 
 // Individuo del problema del viajante de comercio

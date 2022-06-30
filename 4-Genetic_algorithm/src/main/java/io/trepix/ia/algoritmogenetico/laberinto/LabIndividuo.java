@@ -1,8 +1,8 @@
-package algoritmogenetico.laberinto;
+package io.trepix.ia.algoritmogenetico.laberinto;
 
-import algoritmogenetico.IGen;
-import algoritmogenetico.Individuo;
-import algoritmogenetico.Argumentos;
+import io.trepix.ia.algoritmogenetico.IGen;
+import io.trepix.ia.algoritmogenetico.Individuo;
+import io.trepix.ia.algoritmogenetico.Argumentos;
 import java.util.ArrayList;
 
 // Un individuo se mueve en el laberinto

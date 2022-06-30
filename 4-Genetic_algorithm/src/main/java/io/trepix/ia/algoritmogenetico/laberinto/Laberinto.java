@@ -1,6 +1,6 @@
-package algoritmogenetico.laberinto;
+package io.trepix.ia.algoritmogenetico.laberinto;
 
-import algoritmogenetico.IGen;
+import io.trepix.ia.algoritmogenetico.IGen;
 import java.util.ArrayList;
 
 // Representa un laberinto con los posibles pasos, la entrada y la salida

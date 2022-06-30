@@ -1,9 +1,9 @@
-package algoritmogenetico;
+package io.trepix.ia.algoritmogenetico;
 
-import algoritmogenetico.PVC.PVC;
-import algoritmogenetico.PVC.PVCIndividuo;
-import algoritmogenetico.laberinto.LabIndividuo;
-import algoritmogenetico.laberinto.Laberinto;
+import io.trepix.ia.algoritmogenetico.PVC.PVC;
+import io.trepix.ia.algoritmogenetico.PVC.PVCIndividuo;
+import io.trepix.ia.algoritmogenetico.laberinto.LabIndividuo;
+import io.trepix.ia.algoritmogenetico.laberinto.Laberinto;
 
 // Fábrica de individuos adaptados a los problemas (clase singleton)
 class FabricaIndividuos {

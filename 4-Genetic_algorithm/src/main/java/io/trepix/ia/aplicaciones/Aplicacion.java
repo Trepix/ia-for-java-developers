@@ -1,9 +1,9 @@
-package aplicaciones;
+package io.trepix.ia.aplicaciones;
 
-import algoritmogenetico.IHM;
-import algoritmogenetico.Individuo;
-import algoritmogenetico.Argumentos;
-import algoritmogenetico.ProcesoEvolutivo;
+import io.trepix.ia.algoritmogenetico.IHM;
+import io.trepix.ia.algoritmogenetico.Individuo;
+import io.trepix.ia.algoritmogenetico.Argumentos;
+import io.trepix.ia.algoritmogenetico.ProcesoEvolutivo;
 
 // Clase lanza las diferentes aplicaciones
 public class Aplicacion implements IHM {

@@ -1,4 +1,4 @@
-package algoritmogenetico;
+package io.trepix.ia.algoritmogenetico;
 
 // Interface genérico
 public interface IHM {

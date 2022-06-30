@@ -1,6 +1,6 @@
-package algoritmogenetico.PVC;
+package io.trepix.ia.algoritmogenetico.PVC;
 
-import algoritmogenetico.IGen;
+import io.trepix.ia.algoritmogenetico.IGen;
 
 // Genes para el viajante de comercio
 class PVCGen implements IGen {
@@ -19,13 +19,13 @@ class PVCGen implements IGen {
         return PVC.getDistancia(ciudadIndice, g.ciudadIndice);
     }
     
-    // Mutación : imposible aquí
+    // Mutaciï¿½n : imposible aquï¿½
     @Override
     public void Mutar() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    // Visualización
+    // Visualizaciï¿½n
     public String toString() {
         return PVC.getCiudad(ciudadIndice);
     }

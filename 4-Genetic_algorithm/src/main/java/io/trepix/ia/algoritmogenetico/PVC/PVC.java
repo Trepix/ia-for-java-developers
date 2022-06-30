@@ -1,4 +1,4 @@
-package algoritmogenetico.PVC;
+package io.trepix.ia.algoritmogenetico.PVC;
 
 import java.util.ArrayList;
 import java.util.Arrays;

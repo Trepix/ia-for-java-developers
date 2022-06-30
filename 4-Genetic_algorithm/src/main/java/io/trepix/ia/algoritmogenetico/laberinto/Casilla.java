@@ -1,4 +1,4 @@
-package algoritmogenetico.laberinto;
+package io.trepix.ia.algoritmogenetico.laberinto;
 
 // Una casilla del laberinto
 public class Casilla {

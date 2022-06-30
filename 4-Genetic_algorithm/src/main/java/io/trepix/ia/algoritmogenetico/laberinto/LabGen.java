@@ -1,7 +1,7 @@
-package algoritmogenetico.laberinto;
+package io.trepix.ia.algoritmogenetico.laberinto;
 
-import algoritmogenetico.IGen;
-import algoritmogenetico.Argumentos;
+import io.trepix.ia.algoritmogenetico.IGen;
+import io.trepix.ia.algoritmogenetico.Argumentos;
 
 // Los genes para el laberinto
 public class LabGen implements IGen {
