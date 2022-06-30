@@ -2,7 +2,7 @@ package io.trepix.ia.algoritmogenetico.laberinto;
 
 import io.trepix.ia.algoritmogenetico.IGen;
 import io.trepix.ia.algoritmogenetico.Individuo;
-import io.trepix.ia.algoritmogenetico.Argumentos;
+import io.trepix.ia.algoritmogenetico.Parametros;
 import java.util.ArrayList;
 
 // Un individuo se mueve en el laberinto
@@ -11,7 +11,7 @@ public class LabIndividuo extends Individuo {
     // Constructor por defecto : individuo aleatorio
     public LabIndividuo() {
         genoma = new ArrayList();
-        for (int i = 0; i < Argumentos.numGenes; i++) {
+        for (int i = 0; i < Parametros.numGenes; i++) {
             genoma.add(new LabGen());
         }
     }
@@ -29,7 +29,7 @@ public class LabIndividuo extends Individuo {
     public LabIndividuo(LabIndividuo padre1, LabIndividuo padre2) {
         genoma = new ArrayList();
         // Crossover
-        int index = Argumentos.random.nextInt(padre1.genoma.size());
+        int index = Parametros.random.nextInt(padre1.genoma.size());
         for (IGen g : padre1.genoma.subList(0, index)) {
             genoma.add(new LabGen((LabGen) g));
         }
@@ -46,19 +46,19 @@ public class LabIndividuo extends Individuo {
     @Override
     public void Mutar() {
         // ¿Eliminación de un gen?
-        if (Argumentos.random.nextDouble() < Argumentos.tasaEliminaGen) {
-            int index = Argumentos.random.nextInt(genoma.size());
+        if (Parametros.random.nextDouble() < Parametros.tasaEliminaGen) {
+            int index = Parametros.random.nextInt(genoma.size());
             genoma.remove(index);
         }
         
         // ¿Adición de un gen al final?
-        if (Argumentos.random.nextDouble() < Argumentos.tasaAgregaGen) {
+        if (Parametros.random.nextDouble() < Parametros.tasaAgregaGen) {
             genoma.add(new LabGen());
         }
         
         // ¿Cambia valores?
         for(IGen g : genoma) {
-            if (Argumentos.random.nextDouble() < Argumentos.tasaMutacion) {
+            if (Parametros.random.nextDouble() < Parametros.tasaMutacion) {
                 g.Mutar();
             }
         }

@@ -3,7 +3,7 @@ package io.trepix.ia.algoritmogenetico;
 import java.util.Random;
 
 // Conjunto de  argumentos del sistema
-public class Argumentos {
+public class Parametros {
     // Argumentos de la población y los individuos
     public static int numIndividuos = 20;
     public static int numGenes = 10;

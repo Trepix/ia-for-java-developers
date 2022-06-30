@@ -2,7 +2,7 @@ package io.trepix.ia.aplicaciones;
 
 import io.trepix.ia.algoritmogenetico.IHM;
 import io.trepix.ia.algoritmogenetico.Individuo;
-import io.trepix.ia.algoritmogenetico.Argumentos;
+import io.trepix.ia.algoritmogenetico.Parametros;
 import io.trepix.ia.algoritmogenetico.ProcesoEvolutivo;
 
 // Clase lanza las diferentes aplicaciones
@@ -15,25 +15,25 @@ public class Aplicacion implements IHM {
     public void Run() {
         // Resolución del viajante de comercio
         // Argumentos
-        Argumentos.tasaCrossover = 0.0;
-        Argumentos.tasaMutacion = 0.3;
-        Argumentos.tasaAgregaGen = 0.0;
-        Argumentos.tasaEliminaGen = 0.0;
-        Argumentos.minFitness = 2579;
+        Parametros.tasaCrossover = 0.0;
+        Parametros.tasaMutacion = 0.3;
+        Parametros.tasaAgregaGen = 0.0;
+        Parametros.tasaEliminaGen = 0.0;
+        Parametros.minFitness = 2579;
         // Ejecución
-        ProcesoEvolutivo sist = new ProcesoEvolutivo(this, "PVC");
+        ProcesoEvolutivo syst = new ProcesoEvolutivo(this, "PVC");
         syst.Run();
         
         // Resolución del laberinto
         // Argumentos
-        Argumentos.tasaCrossover = 0.6;
-        Argumentos.tasaMutacion = 0.1;
-        Argumentos.tasaAgregaGen = 0.8;
-        Argumentos.tasaEliminaGen = 0.1;
-        Argumentos.minFitness = 0;
-        Argumentos.numMaxGeneraciones = 300;
+        Parametros.tasaCrossover = 0.6;
+        Parametros.tasaMutacion = 0.1;
+        Parametros.tasaAgregaGen = 0.8;
+        Parametros.tasaEliminaGen = 0.1;
+        Parametros.minFitness = 0;
+        Parametros.numMaxGeneraciones = 300;
         // Ejecución
-        ProcesoEvolutivo sist2 = new ProcesoEvolutivo(this, "Lab");
+        ProcesoEvolutivo syst2 = new ProcesoEvolutivo(this, "Lab");
         syst2.Run();
     }
     

@@ -17,7 +17,7 @@ public class ProcesoEvolutivo {
         problema = _problema;
         FabricaIndividuos.getInstance().Init(problema);
         poblacion = new ArrayList();
-        for (int i = 0; i < Argumentos.numIndividuos; i++) {
+        for (int i = 0; i < Parametros.numIndividuos; i++) {
             poblacion.add(FabricaIndividuos.getInstance().CrearIndividuo(problema));
         }
     }
@@ -29,8 +29,8 @@ public class ProcesoEvolutivo {
     
     // Selección : torneo
     private Individuo Seleccion() {
-        int index1 = Argumentos.random.nextInt(Argumentos.numIndividuos);
-        int index2 = Argumentos.random.nextInt(Argumentos.numIndividuos);
+        int index1 = Parametros.random.nextInt(Parametros.numIndividuos);
+        int index2 = Parametros.random.nextInt(Parametros.numIndividuos);
         if (poblacion.get(index1).fitness <= poblacion.get(index2).fitness) {
             return poblacion.get(index1);
         }
@@ -41,9 +41,9 @@ public class ProcesoEvolutivo {
     
     // Bucle principal
     public void Run() {
-        mejorFitness = Argumentos.minFitness + 1;
-        while(numGeneracion < Argumentos.numMaxGeneraciones && mejorFitness > Argumentos.minFitness) {
-            Individuo mejorInd = EvaluarYRecuperarMejorInd(población);
+        mejorFitness = Parametros.minFitness + 1;
+        while(numGeneracion < Parametros.numMaxGeneraciones && mejorFitness > Parametros.minFitness) {
+            Individuo mejorInd = EvaluarYRecuperarMejorInd(poblacion);
             mejorFitness = mejorInd.fitness;
             ArrayList<Individuo> nellePoblacion = Reproduccion(mejorInd);
             Sobrevivir(nellePoblacion);
@@ -68,9 +68,9 @@ public class ProcesoEvolutivo {
     private ArrayList<Individuo> Reproduccion(Individuo mejorInd) {
         ArrayList<Individuo> nellePoblacion = new ArrayList();
         nellePoblacion.add(mejorInd); // elitismo
-        for (int i = 0; i < Argumentos.numIndividuos - 1; i++) {
+        for (int i = 0; i < Parametros.numIndividuos - 1; i++) {
             // Con o sin crossover ?
-            if (Argumentos.random.nextDouble() < Argumentos.tasaCrossover) {
+            if (Parametros.random.nextDouble() < Parametros.tasaCrossover) {
                 // Avec crossover, donc dos padres
                 Individuo padre1 = Seleccion();
                 Individuo padre2 = Seleccion();

@@ -2,7 +2,7 @@ package io.trepix.ia.algoritmogenetico.PVC;
 
 import io.trepix.ia.algoritmogenetico.IGen;
 import io.trepix.ia.algoritmogenetico.Individuo;
-import io.trepix.ia.algoritmogenetico.Argumentos;
+import io.trepix.ia.algoritmogenetico.Parametros;
 import java.util.ArrayList;
 
 // Individuo del problema del viajante de comercio
@@ -13,7 +13,7 @@ public class PVCIndividuo extends Individuo {
         genoma = new ArrayList();
         ArrayList<Integer> indexDispo = PVC.getCiudadesIndex();
         while(!indexDispo.isEmpty()) {
-            int index = Argumentos.random.nextInt(indexDispo.size());
+            int index = Parametros.random.nextInt(indexDispo.size());
             genoma.add(new PVCGen(indexDispo.get(index)));
             indexDispo.remove(index);
         }
@@ -22,11 +22,11 @@ public class PVCIndividuo extends Individuo {
     // Mutacion : nos movemos un gen
     @Override
     public void Mutar() {
-        if (Argumentos.random.nextDouble() < Argumentos.tasaMutacion) {
-            int index1 = Argumentos.random.nextInt(genoma.size());
+        if (Parametros.random.nextDouble() < Parametros.tasaMutacion) {
+            int index1 = Parametros.random.nextInt(genoma.size());
             PVCGen g = (PVCGen)genoma.get(index1);
             genoma.remove(g);
-            int index2 = Argumentos.random.nextInt(genoma.size());
+            int index2 = Parametros.random.nextInt(genoma.size());
             genoma.add(index2, g);
         }
     }
@@ -44,7 +44,7 @@ public class PVCIndividuo extends Individuo {
     public PVCIndividuo(PVCIndividuo padre1, PVCIndividuo padre2) {
         genoma = new ArrayList();
         // Crossover
-        int ptCoupure = Argumentos.random.nextInt(padre1.genoma.size());
+        int ptCoupure = Parametros.random.nextInt(padre1.genoma.size());
         for(int i = 0; i < ptCoupure; i++) {
             genoma.add(new PVCGen((PVCGen) padre1.genoma.get(i)));
         }

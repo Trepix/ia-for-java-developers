@@ -20,10 +20,10 @@ class FabricaIndividuos {
     
     void Init(String type) {
         switch (type) {
-            casilla "PVC" :
+            case "PVC" :
                 PVC.Init();
                 break;
-            casilla "Lab" :
+            case "Lab" :
                 Laberinto.Init(Laberinto.Lab2);
                 break;
         }
@@ -32,10 +32,10 @@ class FabricaIndividuos {
     public Individuo CrearIndividuo(String type) {
         Individuo ind = null;
         switch (type) {
-            casilla "PVC" :
+            case "PVC" :
                 ind = new PVCIndividuo();
                 break;
-            casilla "Lab" :
+            case "Lab" :
                 ind = new LabIndividuo();
                 break;
         }
@@ -45,10 +45,10 @@ class FabricaIndividuos {
     public Individuo CrearIndividuo(String type, Individuo padre) {
         Individuo ind = null;
         switch (type) {
-            casilla "PVC" :
+            case "PVC" :
                 ind = new PVCIndividuo((PVCIndividuo)padre);
                 break;
-            casilla "Lab" :
+            case "Lab" :
                 ind = new LabIndividuo((LabIndividuo)padre);
                 break;
         }
@@ -58,10 +58,10 @@ class FabricaIndividuos {
     public Individuo CrearIndividuo(String type, Individuo padre1, Individuo padre2) {
         Individuo ind = null;
         switch (type) {
-            casilla "PVC" :
+            case "PVC" :
                 ind = new PVCIndividuo((PVCIndividuo)padre1, (PVCIndividuo)padre2);
                 break;
-            casilla "Lab" :
+            case "Lab" :
                 ind = new LabIndividuo((LabIndividuo)padre1, (LabIndividuo)padre2);
                 break;
         }

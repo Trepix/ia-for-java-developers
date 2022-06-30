@@ -52,7 +52,7 @@ public class Laberinto {
                     if (index == linea.length() - 1) {
                         index --;
                     }
-                    entrada = new Case(numLineas/2, index /3);
+                    entrada = new Casilla(numLineas/2, index /3);
                 }
                 index = linea.indexOf("S");
                 if (index != -1) {
@@ -60,14 +60,14 @@ public class Laberinto {
                     if (index == linea.length() - 1) {
                         index--;
                     }
-                    salida = new Case(numLineas/2, index/3);
+                    salida = new Casilla(numLineas/2, index/3);
                 }
                 // recorremos el pasillo para crear los caminos horizontales
                 for (int columna = 0; columna < linea.length() / 3; columna++) {
                     String casillaStr = linea.substring(columna*3, columna*3 + 3);
                     if (!casillaStr.contains("|") && !casillaStr.contains("E") && !casillaStr.contains("S")) {
                         // Paso abierto, se añade
-                        caminos.add(new Case[]{new Case(numLineas/2, columna-1), new Case(numLineas/2, columna)});
+                        caminos.add(new Casilla[]{new Casilla(numLineas/2, columna-1), new Casilla(numLineas/2, columna)});
                     }
                 }
             }
@@ -78,7 +78,7 @@ public class Laberinto {
                 for (String bloc : casillas) {
                     if (bloc.equals("  ")) {
                         // Paso abierto, se añade
-                        caminos.add(new Case[] {new Case(numLineas/2 - 1, columna), new Case(numLineas/2, columna)});
+                        caminos.add(new Casilla[] {new Casilla(numLineas/2 - 1, columna), new Casilla(numLineas/2, columna)});
                     }
                     columna++;
                 }
@@ -111,7 +111,7 @@ public class Laberinto {
     // Mira si el movimiento es posible
     static void Mover(Casilla inicio, int deplI, int deplJ) {
         boolean finMovimiento = false;
-        while(esPosible(inicio, new Case(inicio.i + deplI, inicio.j + deplJ)) && !finMovimiento) {
+        while(esPosible(inicio, new Casilla(inicio.i + deplI, inicio.j + deplJ)) && !finMovimiento) {
             inicio.i += deplI;
             inicio.j += deplJ;
             finMovimiento = EsCruce(inicio) || inicio.equals(salida);
@@ -121,20 +121,20 @@ public class Laberinto {
     
     // Mueve un individuo en el laberinto para evaluarlo
     static double Evaluar(ArrayList<IGen> genoma) { 
-        Casilla casillaActual = new Case(entrada.i, entrada.j);
+        Casilla casillaActual = new Casilla(entrada.i, entrada.j);
         boolean finMovimiento = false;
         for(IGen g : genoma) {
             switch (((LabGen)g).dirección) {
-                casilla Abajo :
+                case Abajo :
                     Mover(casillaActual, 1, 0);
                     break;
-                casilla Arriba :
+                case Arriba :
                     Mover(casillaActual, -1, 0);
                     break;
-                casilla Derecha :
+                case Derecha :
                     Mover(casillaActual, 0, 1);
                     break;
-                casilla Izquierda :
+                case Izquierda :
                     Mover(casillaActual, 0, -1);
                     break;
             }
