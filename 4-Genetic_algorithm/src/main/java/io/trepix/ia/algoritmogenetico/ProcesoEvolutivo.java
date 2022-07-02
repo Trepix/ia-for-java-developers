@@ -10,15 +10,18 @@ public class ProcesoEvolutivo {
     protected IHM ihm = null;
     protected double mejorFitness;
     protected String problema;
+
+    private final Configuration configuration;
     
     // Constructor
-    public ProcesoEvolutivo(IHM _ihm, String _problema) {
+    public ProcesoEvolutivo(IHM _ihm, String _problema, Configuration configuration) {
         ihm = _ihm;
         problema = _problema;
-        FabricaIndividuos.getInstance().Init(problema);
+        this.configuration = configuration;
+        FabricaIndividuos.getInstance(this.configuration).Init(problema);
         poblacion = new ArrayList();
-        for (int i = 0; i < Parametros.numIndividuos; i++) {
-            poblacion.add(FabricaIndividuos.getInstance().CrearIndividuo(problema));
+        for (int i = 0; i < configuration.numIndividuos; i++) {
+            poblacion.add(FabricaIndividuos.getInstance(this.configuration).CrearIndividuo(problema));
         }
     }
     
@@ -29,8 +32,8 @@ public class ProcesoEvolutivo {
     
     // Selección : torneo
     private Individual Seleccion() {
-        int index1 = Parametros.random.nextInt(Parametros.numIndividuos);
-        int index2 = Parametros.random.nextInt(Parametros.numIndividuos);
+        int index1 = configuration.random.nextInt(configuration.numIndividuos);
+        int index2 = configuration.random.nextInt(configuration.numIndividuos);
         if (poblacion.get(index1).fitness <= poblacion.get(index2).fitness) {
             return poblacion.get(index1);
         }
@@ -41,8 +44,8 @@ public class ProcesoEvolutivo {
     
     // Bucle principal
     public void run() {
-        mejorFitness = Parametros.minFitness + 1;
-        while(numGeneracion < Parametros.numMaxGeneraciones && mejorFitness > Parametros.minFitness) {
+        mejorFitness = configuration.minFitness + 1;
+        while(numGeneracion < configuration.numMaxGeneraciones && mejorFitness > configuration.minFitness) {
             Individual mejorInd = EvaluarYRecuperarMejorInd(poblacion);
             mejorFitness = mejorInd.fitness;
             ArrayList<Individual> nellePoblacion = Reproduccion(mejorInd);
@@ -68,20 +71,20 @@ public class ProcesoEvolutivo {
     private ArrayList<Individual> Reproduccion(Individual mejorInd) {
         ArrayList<Individual> nellePoblacion = new ArrayList();
         nellePoblacion.add(mejorInd); // elitismo
-        for (int i = 0; i < Parametros.numIndividuos - 1; i++) {
+        for (int i = 0; i < configuration.numIndividuos - 1; i++) {
             // Con o sin crossover ?
-            if (Parametros.random.nextDouble() < Parametros.tasaCrossover) {
+            if (configuration.random.nextDouble() < configuration.tasaCrossover) {
                 // Avec crossover, donc dos padres
                 Individual padre1 = Seleccion();
                 Individual padre2 = Seleccion();
                 // Reproducción
-                nellePoblacion.add(FabricaIndividuos.getInstance().CrearIndividuo(problema, padre1, padre2));
+                nellePoblacion.add(FabricaIndividuos.getInstance(this.configuration).CrearIndividuo(problema, padre1, padre2));
             }
             else {
                 // Sin crossover, un úncio padre
                 Individual padre = Seleccion();
                 // Reproducción
-                nellePoblacion.add(FabricaIndividuos.getInstance().CrearIndividuo(problema, padre));
+                nellePoblacion.add(FabricaIndividuos.getInstance(this.configuration).CrearIndividuo(problema, padre));
             }
         }
         return nellePoblacion;

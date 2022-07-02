@@ -8,13 +8,14 @@ import io.trepix.ia.algoritmogenetico.laberinto.Laberinto;
 // Fábrica de individuos adaptados a los problemas (clase singleton)
 class FabricaIndividuos {
     private static FabricaIndividuos instancia;
+    private final Configuration configuration;
+
+    private FabricaIndividuos(Configuration configuration) {
+        this.configuration = configuration;
+    }
     
-    private FabricaIndividuos() {}
-    
-    public static FabricaIndividuos getInstance() {
-        if (instancia == null) {
-            instancia = new FabricaIndividuos();
-        }
+    public static FabricaIndividuos getInstance(Configuration configuration) {
+        instancia = new FabricaIndividuos(configuration);
         return instancia;
     }
     
@@ -33,10 +34,10 @@ class FabricaIndividuos {
         Individual ind = null;
         switch (type) {
             case "PVC" :
-                ind = new PVCIndividual();
+                ind = new PVCIndividual(this.configuration);
                 break;
             case "Lab" :
-                ind = new LabIndividual();
+                ind = new LabIndividual(this.configuration);
                 break;
         }
         return ind;

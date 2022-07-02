@@ -2,22 +2,26 @@ package io.trepix.ia.algoritmogenetico.laberinto;
 
 import io.trepix.ia.algoritmogenetico.Gene;
 import io.trepix.ia.algoritmogenetico.Individual;
-import io.trepix.ia.algoritmogenetico.Parametros;
+import io.trepix.ia.algoritmogenetico.Configuration;
 import java.util.ArrayList;
 
 // Un individuo se mueve en el laberinto
 public class LabIndividual extends Individual {
 
+    private final Configuration configuration;
+
     // Constructor por defecto : individuo aleatorio
-    public LabIndividual() {
+    public LabIndividual(Configuration configuration) {
+        this.configuration = configuration;
         genome = new ArrayList();
-        for (int i = 0; i < Parametros.numGenes; i++) {
-            genome.add(new LabGen());
+        for (int i = 0; i < configuration.numGenes; i++) {
+            genome.add(new LabGen(configuration));
         }
     }
     
     // Constructor con un padre : copia y muta
     public LabIndividual(LabIndividual padre) {
+        configuration = padre.configuration;
         genome = new ArrayList();
         for (Gene g : padre.genome) {
             genome.add(new LabGen((LabGen) g));
@@ -27,9 +31,10 @@ public class LabIndividual extends Individual {
     
     // Constructor con dos padres : crossover y muta
     public LabIndividual(LabIndividual padre1, LabIndividual padre2) {
+        this.configuration = padre1.configuration;
         genome = new ArrayList();
         // Crossover
-        int index = Parametros.random.nextInt(padre1.genome.size());
+        int index = configuration.random.nextInt(padre1.genome.size());
         for (Gene g : padre1.genome.subList(0, index)) {
             genome.add(new LabGen((LabGen) g));
         }
@@ -46,19 +51,19 @@ public class LabIndividual extends Individual {
     @Override
     public void mutate() {
         // ¿Eliminación de un gen?
-        if (Parametros.random.nextDouble() < Parametros.tasaEliminaGen) {
-            int index = Parametros.random.nextInt(genome.size());
+        if (configuration.random.nextDouble() < configuration.tasaEliminaGen) {
+            int index = configuration.random.nextInt(genome.size());
             genome.remove(index);
         }
         
         // ¿Adición de un gen al final?
-        if (Parametros.random.nextDouble() < Parametros.tasaAgregaGen) {
-            genome.add(new LabGen());
+        if (configuration.random.nextDouble() < configuration.tasaAgregaGen) {
+            genome.add(new LabGen(configuration));
         }
         
         // ¿Cambia valores?
         for(Gene g : genome) {
-            if (Parametros.random.nextDouble() < Parametros.tasaMutacion) {
+            if (configuration.random.nextDouble() < configuration.tasaMutacion) {
                 g.mutate();
             }
         }

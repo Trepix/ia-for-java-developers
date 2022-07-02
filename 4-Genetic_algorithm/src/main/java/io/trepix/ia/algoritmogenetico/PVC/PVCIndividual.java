@@ -2,18 +2,21 @@ package io.trepix.ia.algoritmogenetico.PVC;
 
 import io.trepix.ia.algoritmogenetico.Gene;
 import io.trepix.ia.algoritmogenetico.Individual;
-import io.trepix.ia.algoritmogenetico.Parametros;
+import io.trepix.ia.algoritmogenetico.Configuration;
 import java.util.ArrayList;
 
 // Individuo del problema del viajante de comercio
 public class PVCIndividual extends Individual {
 
     // Constructor por defecto : elección aleatoria del recorrido
-    public PVCIndividual() {
+
+    private final Configuration configuration;
+    public PVCIndividual(Configuration configuration) {
+        this.configuration = configuration;
         genome = new ArrayList();
         ArrayList<Integer> indexDispo = PVC.getCiudadesIndex();
         while(!indexDispo.isEmpty()) {
-            int index = Parametros.random.nextInt(indexDispo.size());
+            int index = configuration.random.nextInt(indexDispo.size());
             genome.add(new PVCGen(indexDispo.get(index)));
             indexDispo.remove(index);
         }
@@ -22,17 +25,18 @@ public class PVCIndividual extends Individual {
     // Mutacion : nos movemos un gen
     @Override
     public void mutate() {
-        if (Parametros.random.nextDouble() < Parametros.tasaMutacion) {
-            int index1 = Parametros.random.nextInt(genome.size());
+        if (configuration.random.nextDouble() < configuration.tasaMutacion) {
+            int index1 = configuration.random.nextInt(genome.size());
             PVCGen g = (PVCGen) genome.get(index1);
             genome.remove(g);
-            int index2 = Parametros.random.nextInt(genome.size());
+            int index2 = configuration.random.nextInt(genome.size());
             genome.add(index2, g);
         }
     }
     
     // Constructor con un padre
     public PVCIndividual(PVCIndividual padre) {
+        this.configuration = padre.configuration;
         genome = new ArrayList();
         for (Gene g : padre.genome) {
             this.genome.add(new PVCGen((PVCGen)g));
@@ -42,9 +46,10 @@ public class PVCIndividual extends Individual {
 
     // Constructor con dos padres
     public PVCIndividual(PVCIndividual padre1, PVCIndividual padre2) {
+        this.configuration = padre1.configuration;
         genome = new ArrayList();
         // Crossover
-        int ptCoupure = Parametros.random.nextInt(padre1.genome.size());
+        int ptCoupure = configuration.random.nextInt(padre1.genome.size());
         for(int i = 0; i < ptCoupure; i++) {
             genome.add(new PVCGen((PVCGen) padre1.genome.get(i)));
         }
