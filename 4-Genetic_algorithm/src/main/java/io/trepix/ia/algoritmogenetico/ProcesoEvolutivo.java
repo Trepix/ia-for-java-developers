@@ -20,7 +20,7 @@ public class ProcesoEvolutivo {
         this.configuration = configuration;
         FabricaIndividuos.getInstance(this.configuration).Init(problema);
         poblacion = new ArrayList();
-        for (int i = 0; i < configuration.numIndividuos; i++) {
+        for (int i = 0; i < configuration.initialPopulation(); i++) {
             poblacion.add(FabricaIndividuos.getInstance(this.configuration).CrearIndividuo(problema));
         }
     }
@@ -32,8 +32,8 @@ public class ProcesoEvolutivo {
     
     // Selección : torneo
     private Individual Seleccion() {
-        int index1 = configuration.random.nextInt(configuration.numIndividuos);
-        int index2 = configuration.random.nextInt(configuration.numIndividuos);
+        int index1 = configuration.random().nextInt(configuration.initialPopulation());
+        int index2 = configuration.random().nextInt(configuration.initialPopulation());
         if (poblacion.get(index1).fitness <= poblacion.get(index2).fitness) {
             return poblacion.get(index1);
         }
@@ -44,8 +44,8 @@ public class ProcesoEvolutivo {
     
     // Bucle principal
     public void run() {
-        mejorFitness = configuration.minFitness + 1;
-        while(numGeneracion < configuration.numMaxGeneraciones && mejorFitness > configuration.minFitness) {
+        mejorFitness = configuration.minimumFitness() + 1;
+        while(numGeneracion < configuration.maxGenerations() && mejorFitness > configuration.minimumFitness()) {
             Individual mejorInd = EvaluarYRecuperarMejorInd(poblacion);
             mejorFitness = mejorInd.fitness;
             ArrayList<Individual> nellePoblacion = Reproduccion(mejorInd);
@@ -71,9 +71,9 @@ public class ProcesoEvolutivo {
     private ArrayList<Individual> Reproduccion(Individual mejorInd) {
         ArrayList<Individual> nellePoblacion = new ArrayList();
         nellePoblacion.add(mejorInd); // elitismo
-        for (int i = 0; i < configuration.numIndividuos - 1; i++) {
+        for (int i = 0; i < configuration.initialPopulation() - 1; i++) {
             // Con o sin crossover ?
-            if (configuration.random.nextDouble() < configuration.tasaCrossover) {
+            if (configuration.random().nextDouble() < configuration.crossoverRate()) {
                 // Avec crossover, donc dos padres
                 Individual padre1 = Seleccion();
                 Individual padre2 = Seleccion();

@@ -16,7 +16,7 @@ public class PVCIndividual extends Individual {
         genome = new ArrayList();
         ArrayList<Integer> indexDispo = PVC.getCiudadesIndex();
         while(!indexDispo.isEmpty()) {
-            int index = configuration.random.nextInt(indexDispo.size());
+            int index = configuration.random().nextInt(indexDispo.size());
             genome.add(new PVCGen(indexDispo.get(index)));
             indexDispo.remove(index);
         }
@@ -25,11 +25,11 @@ public class PVCIndividual extends Individual {
     // Mutacion : nos movemos un gen
     @Override
     public void mutate() {
-        if (configuration.random.nextDouble() < configuration.tasaMutacion) {
-            int index1 = configuration.random.nextInt(genome.size());
+        if (configuration.random().nextDouble() < configuration.mutationRate()) {
+            int index1 = configuration.random().nextInt(genome.size());
             PVCGen g = (PVCGen) genome.get(index1);
             genome.remove(g);
-            int index2 = configuration.random.nextInt(genome.size());
+            int index2 = configuration.random().nextInt(genome.size());
             genome.add(index2, g);
         }
     }
@@ -49,7 +49,7 @@ public class PVCIndividual extends Individual {
         this.configuration = padre1.configuration;
         genome = new ArrayList();
         // Crossover
-        int ptCoupure = configuration.random.nextInt(padre1.genome.size());
+        int ptCoupure = configuration.random().nextInt(padre1.genome.size());
         for(int i = 0; i < ptCoupure; i++) {
             genome.add(new PVCGen((PVCGen) padre1.genome.get(i)));
         }

@@ -14,7 +14,7 @@ public class LabIndividual extends Individual {
     public LabIndividual(Configuration configuration) {
         this.configuration = configuration;
         genome = new ArrayList();
-        for (int i = 0; i < configuration.numGenes; i++) {
+        for (int i = 0; i < configuration.genesNumber(); i++) {
             genome.add(new LabGen(configuration));
         }
     }
@@ -34,7 +34,7 @@ public class LabIndividual extends Individual {
         this.configuration = padre1.configuration;
         genome = new ArrayList();
         // Crossover
-        int index = configuration.random.nextInt(padre1.genome.size());
+        int index = configuration.random().nextInt(padre1.genome.size());
         for (Gene g : padre1.genome.subList(0, index)) {
             genome.add(new LabGen((LabGen) g));
         }
@@ -51,19 +51,19 @@ public class LabIndividual extends Individual {
     @Override
     public void mutate() {
         // ¿Eliminación de un gen?
-        if (configuration.random.nextDouble() < configuration.tasaEliminaGen) {
-            int index = configuration.random.nextInt(genome.size());
+        if (configuration.random().nextDouble() < configuration.geneDeletionRate()) {
+            int index = configuration.random().nextInt(genome.size());
             genome.remove(index);
         }
         
         // ¿Adición de un gen al final?
-        if (configuration.random.nextDouble() < configuration.tasaAgregaGen) {
+        if (configuration.random().nextDouble() < configuration.geneAggregationRate()) {
             genome.add(new LabGen(configuration));
         }
         
         // ¿Cambia valores?
         for(Gene g : genome) {
-            if (configuration.random.nextDouble() < configuration.tasaMutacion) {
+            if (configuration.random().nextDouble() < configuration.mutationRate()) {
                 g.mutate();
             }
         }

@@ -9,8 +9,8 @@ public class LabGen implements Gene {
     private final Configuration configuration;
     
     public LabGen(Configuration configuration) {
-        this.configuration = new Configuration();
-        dirección = Laberinto.Direccion.values()[configuration.random.nextInt(4)];
+        this.configuration = configuration;
+        dirección = Laberinto.Direccion.values()[configuration.random().nextInt(4)];
     }
     
     public LabGen(LabGen g) {
@@ -25,7 +25,7 @@ public class LabGen implements Gene {
     
     @Override
     public void mutate() {
-        dirección = Laberinto.Direccion.values()[configuration.random.nextInt(4)];
+        dirección = Laberinto.Direccion.values()[configuration.random().nextInt(4)];
     }
 
 }
