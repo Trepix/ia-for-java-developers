@@ -3,20 +3,20 @@ package io.trepix.ia.algoritmogenetico.PVC;
 import io.trepix.ia.algoritmogenetico.Gene;
 
 // Genes para el viajante de comercio
-class PVCGen implements Gene {
+class City implements Gene {
     protected int ciudadIndice;
     
     // Constructores
-    public PVCGen(int _ciudadIndice) {
+    public City(int _ciudadIndice) {
         ciudadIndice = _ciudadIndice;
     }
-    public PVCGen(PVCGen g) {
+    public City(City g) {
         ciudadIndice = g.ciudadIndice;
     }
     
     // Distancia entre este gen y otro
-    protected int getDistancia(PVCGen g) {
-        return PVC.getDistancia(ciudadIndice, g.ciudadIndice);
+    protected int getDistancia(City g) {
+        return TravellingSalesmanProblem.getDistancia(ciudadIndice, g.ciudadIndice);
     }
     
     // Mutaci�n : imposible aqu�
@@ -27,6 +27,6 @@ class PVCGen implements Gene {
     
     // Visualizaci�n
     public String toString() {
-        return PVC.getCiudad(ciudadIndice);
+        return TravellingSalesmanProblem.getCiudad(ciudadIndice);
     }
 }

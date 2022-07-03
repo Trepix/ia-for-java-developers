@@ -4,16 +4,16 @@ import io.trepix.ia.algoritmogenetico.Gene;
 import io.trepix.ia.algoritmogenetico.Configuration;
 
 // Los genes para el laberinto
-public class LabGen implements Gene {
+public class DirectionUntilNextIntersection implements Gene {
     public Laberinto.Direccion dirección;
     private final Configuration configuration;
     
-    public LabGen(Configuration configuration) {
+    public DirectionUntilNextIntersection(Configuration configuration) {
         this.configuration = configuration;
         dirección = Laberinto.Direccion.values()[configuration.random().nextInt(4)];
     }
     
-    public LabGen(LabGen g) {
+    public DirectionUntilNextIntersection(DirectionUntilNextIntersection g) {
         this.configuration = g.configuration;
         dirección = g.dirección;
     }

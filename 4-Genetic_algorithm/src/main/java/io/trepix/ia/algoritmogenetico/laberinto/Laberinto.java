@@ -124,7 +124,7 @@ public class Laberinto {
         Box boxActual = new Box(entrada.getI(), entrada.getJ());
         boolean finMovimiento = false;
         for(Gene g : genoma) {
-            switch (((LabGen)g).dirección) {
+            switch (((DirectionUntilNextIntersection)g).dirección) {
                 case Abajo :
                     Mover(boxActual, 1, 0);
                     break;

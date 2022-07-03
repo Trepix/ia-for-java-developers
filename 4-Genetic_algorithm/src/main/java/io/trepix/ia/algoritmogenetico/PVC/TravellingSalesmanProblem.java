@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 // Problema del Viajante de Comercio
-public class PVC {
+public class TravellingSalesmanProblem {
     // Atributos : ciudades y distancias
     static ArrayList<String> ciudades;
     static int[][] distancias;

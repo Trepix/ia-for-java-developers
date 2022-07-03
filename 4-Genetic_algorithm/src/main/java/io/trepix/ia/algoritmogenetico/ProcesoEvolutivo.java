@@ -9,22 +9,19 @@ public class ProcesoEvolutivo {
     protected int numGeneracion = 0;
     protected IHM ihm = null;
     protected double mejorFitness;
-    protected String problema;
 
     private final Configuration configuration;
 
     private final IndividualFactory individualFactory;
     
     // Constructor
-    public ProcesoEvolutivo(IHM _ihm, String _problema, Configuration configuration) {
+    public ProcesoEvolutivo(IHM _ihm, Configuration configuration, IndividualFactory individualFactory) {
         ihm = _ihm;
-        problema = _problema;
         poblacion = new ArrayList();
         this.configuration = configuration;
-        this.individualFactory = IndividualFactory.getInstance(this.configuration);
-        this.individualFactory.Init(problema);
+        this.individualFactory = individualFactory;
         for (int i = 0; i < configuration.initialPopulation(); i++) {
-            poblacion.add(individualFactory.CrearIndividuo(problema));
+            poblacion.add(individualFactory.create());
         }
     }
     
@@ -81,13 +78,13 @@ public class ProcesoEvolutivo {
                 Individual padre1 = Seleccion();
                 Individual padre2 = Seleccion();
                 // Reproducción
-                nellePoblacion.add(individualFactory.CrearIndividuo(problema, padre1, padre2));
+                nellePoblacion.add(individualFactory.createFrom(padre1, padre2));
             }
             else {
                 // Sin crossover, un úncio padre
                 Individual padre = Seleccion();
                 // Reproducción
-                nellePoblacion.add(individualFactory.CrearIndividuo(problema, padre));
+                nellePoblacion.add(individualFactory.createFrom(padre));
             }
         }
         return nellePoblacion;

@@ -6,41 +6,41 @@ import io.trepix.ia.algoritmogenetico.Configuration;
 import java.util.ArrayList;
 
 // Un individuo se mueve en el laberinto
-public class LabIndividual extends Individual {
+public class Path extends Individual {
 
     private final Configuration configuration;
 
     // Constructor por defecto : individuo aleatorio
-    public LabIndividual(Configuration configuration) {
+    public Path(Configuration configuration) {
         this.configuration = configuration;
         genome = new ArrayList();
         for (int i = 0; i < configuration.genesNumber(); i++) {
-            genome.add(new LabGen(configuration));
+            genome.add(new DirectionUntilNextIntersection(configuration));
         }
     }
     
     // Constructor con un padre : copia y muta
-    public LabIndividual(LabIndividual padre) {
+    public Path(Path padre) {
         configuration = padre.configuration;
         genome = new ArrayList();
         for (Gene g : padre.genome) {
-            genome.add(new LabGen((LabGen) g));
+            genome.add(new DirectionUntilNextIntersection((DirectionUntilNextIntersection) g));
         }
         mutate();
     }
     
     // Constructor con dos padres : crossover y muta
-    public LabIndividual(LabIndividual padre1, LabIndividual padre2) {
+    public Path(Path padre1, Path padre2) {
         this.configuration = padre1.configuration;
         genome = new ArrayList();
         // Crossover
         int index = configuration.random().nextInt(padre1.genome.size());
         for (Gene g : padre1.genome.subList(0, index)) {
-            genome.add(new LabGen((LabGen) g));
+            genome.add(new DirectionUntilNextIntersection((DirectionUntilNextIntersection) g));
         }
         if (index < padre2.genome.size()) {
             for (Gene g : padre2.genome.subList(index, padre2.genome.size())) {
-                genome.add(new LabGen((LabGen) g));
+                genome.add(new DirectionUntilNextIntersection((DirectionUntilNextIntersection) g));
             }
         }
         // Mutación
@@ -58,7 +58,7 @@ public class LabIndividual extends Individual {
         
         // ¿Adición de un gen al final?
         if (configuration.random().nextDouble() < configuration.geneAggregationRate()) {
-            genome.add(new LabGen(configuration));
+            genome.add(new DirectionUntilNextIntersection(configuration));
         }
         
         // ¿Cambia valores?
