@@ -12,16 +12,19 @@ public class ProcesoEvolutivo {
     protected String problema;
 
     private final Configuration configuration;
+
+    private final IndividualFactory individualFactory;
     
     // Constructor
     public ProcesoEvolutivo(IHM _ihm, String _problema, Configuration configuration) {
         ihm = _ihm;
         problema = _problema;
-        this.configuration = configuration;
-        FabricaIndividuos.getInstance(this.configuration).Init(problema);
         poblacion = new ArrayList();
+        this.configuration = configuration;
+        this.individualFactory = IndividualFactory.getInstance(this.configuration);
+        this.individualFactory.Init(problema);
         for (int i = 0; i < configuration.initialPopulation(); i++) {
-            poblacion.add(FabricaIndividuos.getInstance(this.configuration).CrearIndividuo(problema));
+            poblacion.add(individualFactory.CrearIndividuo(problema));
         }
     }
     
@@ -78,13 +81,13 @@ public class ProcesoEvolutivo {
                 Individual padre1 = Seleccion();
                 Individual padre2 = Seleccion();
                 // Reproducción
-                nellePoblacion.add(FabricaIndividuos.getInstance(this.configuration).CrearIndividuo(problema, padre1, padre2));
+                nellePoblacion.add(individualFactory.CrearIndividuo(problema, padre1, padre2));
             }
             else {
                 // Sin crossover, un úncio padre
                 Individual padre = Seleccion();
                 // Reproducción
-                nellePoblacion.add(FabricaIndividuos.getInstance(this.configuration).CrearIndividuo(problema, padre));
+                nellePoblacion.add(individualFactory.CrearIndividuo(problema, padre));
             }
         }
         return nellePoblacion;

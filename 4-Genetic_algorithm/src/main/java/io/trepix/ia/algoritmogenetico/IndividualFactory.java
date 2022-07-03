@@ -4,19 +4,15 @@ import io.trepix.ia.algoritmogenetico.PVC.PVC;
 import io.trepix.ia.algoritmogenetico.PVC.PVCIndividual;
 import io.trepix.ia.algoritmogenetico.laberinto.LabIndividual;
 import io.trepix.ia.algoritmogenetico.laberinto.Laberinto;
-
-// Fábrica de individuos adaptados a los problemas (clase singleton)
-class FabricaIndividuos {
-    private static FabricaIndividuos instancia;
+class IndividualFactory {
     private final Configuration configuration;
 
-    private FabricaIndividuos(Configuration configuration) {
+    private IndividualFactory(Configuration configuration) {
         this.configuration = configuration;
     }
     
-    public static FabricaIndividuos getInstance(Configuration configuration) {
-        instancia = new FabricaIndividuos(configuration);
-        return instancia;
+    public static IndividualFactory getInstance(Configuration configuration) {
+        return new IndividualFactory(configuration);
     }
     
     void Init(String type) {
