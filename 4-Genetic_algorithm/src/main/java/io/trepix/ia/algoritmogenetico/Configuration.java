@@ -31,15 +31,6 @@ public class Configuration {
     public int genesNumber() {
         return this.population.genesNumber;
     }
-
-    public int maxGenerations() {
-        return this.stopCriteria.maxGenerations;
-    }
-
-    public double minimumFitness() {
-        return this.stopCriteria.desiredFitness;
-    }
-
     public double mutationRate() {
         return this.rates.mutation;
     }
@@ -58,6 +49,14 @@ public class Configuration {
 
     public Random random() {
         return random;
+    }
+
+    public StopCriteria stopCriteria() {
+        return this.stopCriteria;
+    }
+
+    boolean haveToApplyCrossover() {
+        return random().nextDouble() < crossoverRate();
     }
 
     public static class ConfigurationBuilder {
@@ -87,6 +86,10 @@ public class Configuration {
 
     record Population(int individuals, int genesNumber) {}
     public record StopCriteria(int maxGenerations, double desiredFitness) {
+
+        public boolean isReached(int ndGeneration, double fitness) {
+            return ndGeneration >= this.maxGenerations || fitness <= this.desiredFitness;
+        }
         public static class StopCriteriaBuilder {
             private int maxGenerations = 50;
             private double desiredFitness;

@@ -4,7 +4,7 @@ import io.trepix.ia.algoritmogenetico.Configuration;
 import io.trepix.ia.algoritmogenetico.IHM;
 import io.trepix.ia.algoritmogenetico.Individual;
 import io.trepix.ia.algoritmogenetico.PVC.RouteFactory;
-import io.trepix.ia.algoritmogenetico.ProcesoEvolutivo;
+import io.trepix.ia.algoritmogenetico.EvolutionaryProcess;
 import io.trepix.ia.algoritmogenetico.laberinto.PathFactory;
 
 import static io.trepix.ia.algoritmogenetico.Configuration.Rates.RatesBuilder.mutation;
@@ -27,7 +27,7 @@ public class Application implements IHM {
                 )
                 .stoppingAt(fitness(2579))
                 .build();
-        ProcesoEvolutivo process = new ProcesoEvolutivo(this, configuration, new RouteFactory(configuration));
+        EvolutionaryProcess process = new EvolutionaryProcess(this, configuration, new RouteFactory(configuration));
         process.run();
 
         // Resolución del laberinto
@@ -42,7 +42,7 @@ public class Application implements IHM {
                 )
                 .build();
 
-        ProcesoEvolutivo process2 = new ProcesoEvolutivo(this, configuration, new PathFactory(configuration));
+        EvolutionaryProcess process2 = new EvolutionaryProcess(this, configuration, new PathFactory(configuration));
         process2.run();
     }
 

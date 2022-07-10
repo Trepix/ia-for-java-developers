@@ -70,8 +70,7 @@ public class Path extends Individual {
     }
 
     @Override
-    public double evaluate() {
-        fitness = Laberinto.Evaluar(genome);
-        return fitness;
+    protected double evaluate() {
+        return Laberinto.Evaluar(genome);
     }
 }

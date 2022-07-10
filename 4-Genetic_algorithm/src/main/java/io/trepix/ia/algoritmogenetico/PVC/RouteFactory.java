@@ -18,12 +18,12 @@ public class RouteFactory extends IndividualFactory {
     }
 
     @Override
-    public Individual createFrom(Individual padre) {
-        return new Route((Route) padre);
+    public Individual reproduceFrom(Individual father) {
+        return new Route((Route) father);
     }
 
     @Override
-    public Individual createFrom(Individual padre1, Individual padre2) {
-        return new Route((Route) padre1, (Route) padre2);
+    public Individual reproduceFrom(Individual father1, Individual father2) {
+        return new Route((Route) father1, (Route) father2);
     }
 }

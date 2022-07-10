@@ -18,12 +18,12 @@ public class PathFactory extends IndividualFactory {
     }
 
     @Override
-    public Individual createFrom(Individual padre) {
-        return new Path((Path) padre);
+    public Individual reproduceFrom(Individual father) {
+        return new Path((Path) father);
     }
 
     @Override
-    public Individual createFrom(Individual padre1, Individual padre2) {
-        return new Path((Path) padre1, (Path) padre2);
+    public Individual reproduceFrom(Individual father1, Individual father2) {
+        return new Path((Path) father1, (Path) father2);
     }
 }

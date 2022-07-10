@@ -64,8 +64,8 @@ public class Route extends Individual {
     
     // Evaluación de un individuo : cálculo de las distancias
     @Override
-    public double evaluate() {
-        int kmTotal = 0;
+    protected double evaluate() {
+        double kmTotal = 0;
         City antiguoGen = null;
         for (Gene g : genome) {
             if (antiguoGen != null) {
@@ -74,8 +74,7 @@ public class Route extends Individual {
             antiguoGen = (City)g;
         }
         kmTotal += antiguoGen.getDistancia((City) genome.get(0));
-        fitness = kmTotal;
-        return fitness;
+        return kmTotal;
     }
 
 }
