@@ -12,35 +12,26 @@ import static java.util.Collections.swap;
 
 public class Route extends Individual {
     private final Configuration configuration;
+
     public Route(Configuration configuration, List<City> cities) {
         this.configuration = configuration;
         genome = new ArrayList<>(cities);
         Collections.shuffle(genome, configuration.random());
     }
 
-    // Constructor con un padre
-    public Route(Route padre) {
-        this.configuration = padre.configuration;
-        genome = new ArrayList<>();
-        this.genome.addAll(padre.genome);
+    public Route(Route father) {
+        this.configuration = father.configuration;
+        genome = new ArrayList<>(father.genome);
         mutate();
     }
 
-    // Constructor con dos padres
-    public Route(Route padre1, Route padre2) {
-        this.configuration = padre1.configuration;
-        genome = new ArrayList<>();
-        // Crossover
-        int ptCoupure = configuration.random().nextInt(padre1.genome.size());
-        for (int i = 0; i < ptCoupure; i++) {
-            genome.add(padre1.genome.get(i));
-        }
-        for (Gene g : padre2.genome) {
-            if (!genome.contains(g)) {
-                genome.add(g);
-            }
-        }
-        // Mutacion
+    public Route(Route father1, Route father2) {
+        this.configuration = father1.configuration;
+
+        int cutOffIndex = configuration.random().nextInt(father1.genome.size());
+        genome = new ArrayList<>(father1.genome.subList(0, cutOffIndex));
+        List<Gene> remainingCities = father2.genome.stream().filter(x -> !genome.contains(x)).toList();
+        genome.addAll(remainingCities);
         mutate();
     }
 
@@ -53,18 +44,17 @@ public class Route extends Individual {
         }
     }
 
-    // Evaluación de un individuo : cálculo de las distancias
     @Override
     protected double evaluate() {
         double kmTotal = 0;
-        City antiguoGen = null;
-        for (Gene gene : genome) {
-            if (antiguoGen != null) {
-                kmTotal += ((City) gene).distanceTo(antiguoGen);
-            }
-            antiguoGen = (City) gene;
+        for (int i = 1; i < genome.size(); i++) {
+            City current = (City) genome.get(i);
+            City before = (City) genome.get(i - 1);
+            kmTotal += current.distanceTo(before);
         }
-        kmTotal += antiguoGen.distanceTo((City) genome.get(0));
+        City firstCity = (City) genome.get(0);
+        City lastCity = (City) genome.get(genome.size() - 1);
+        kmTotal += lastCity.distanceTo(firstCity);
         return kmTotal;
     }
 
