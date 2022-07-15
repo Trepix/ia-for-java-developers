@@ -1,13 +1,13 @@
 package io.trepix.ia.algoritmogenetico;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
 public abstract class Individual {
 
+    protected List<Gene> genome;
     private Double fitness = null;
-    protected ArrayList<Gene> genome;
 
     public double fitness() {
         if (fitness == null) {

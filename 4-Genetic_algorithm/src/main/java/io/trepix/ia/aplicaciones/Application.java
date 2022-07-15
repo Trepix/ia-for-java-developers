@@ -2,7 +2,7 @@ package io.trepix.ia.aplicaciones;
 
 import io.trepix.ia.algoritmogenetico.Configuration;
 import io.trepix.ia.algoritmogenetico.EvolutionaryProcess;
-import io.trepix.ia.algoritmogenetico.IHM;
+import io.trepix.ia.algoritmogenetico.Output;
 import io.trepix.ia.algoritmogenetico.Individual;
 import io.trepix.ia.algoritmogenetico.TSP.CitiesBuilder;
 import io.trepix.ia.algoritmogenetico.TSP.City;
@@ -16,14 +16,13 @@ import static io.trepix.ia.algoritmogenetico.Configuration.StopCriteria.StopCrit
 import static io.trepix.ia.algoritmogenetico.Configuration.withRandomSeed;
 import static io.trepix.ia.algoritmogenetico.TSP.CitiesBuilder.CityBuilder.city;
 
-public class Application implements IHM {
+public class Application implements Output {
     public static void main(String[] args) {
         Application app = new Application();
         app.run();
     }
 
     public void run() {
-        // Resolución del viajante de comercio
         Configuration configuration = withRandomSeed()
                 .withRates(mutation(0.3)
                         .crossover(0.0)
@@ -32,7 +31,8 @@ public class Application implements IHM {
                 )
                 .stoppingAt(fitness(2579))
                 .build();
-        EvolutionaryProcess process = new EvolutionaryProcess(this, configuration, new RouteFactory(configuration, cities()));
+        final var routeFactory = new RouteFactory(configuration, cities());
+        EvolutionaryProcess process = new EvolutionaryProcess(configuration, routeFactory, this);
         process.run();
 
         // Resolución del laberinto
@@ -47,7 +47,7 @@ public class Application implements IHM {
                 )
                 .build();
 
-        EvolutionaryProcess process2 = new EvolutionaryProcess(this, configuration, new PathFactory(configuration));
+        EvolutionaryProcess process2 = new EvolutionaryProcess(configuration, new PathFactory(configuration), this);
         process2.run();
     }
 
@@ -84,7 +84,7 @@ public class Application implements IHM {
     }
 
     @Override
-    public void showBestIndividual(Individual ind, int generation) {
-        System.out.println(generation + " -> " + ind.toString());
+    public void showIndividual(Individual individual, int generation) {
+        System.out.println(generation + " -> " + individual.toString());
     }
 }

@@ -5,24 +5,22 @@ import io.trepix.ia.algoritmogenetico.Configuration.StopCriteria;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
 public class EvolutionaryProcess {
     private final Configuration configuration;
     private final IndividualFactory individualFactory;
-    private final IHM ihm;
+    private final Output output;
     private List<Individual> population;
     private int ndGeneration = 0;
 
-    public EvolutionaryProcess(IHM _ihm, Configuration configuration, IndividualFactory individualFactory) {
-        this.ihm = _ihm;
+    public EvolutionaryProcess(Configuration configuration, IndividualFactory individualFactory, Output output) {
+        this.output = output;
         this.configuration = configuration;
         this.individualFactory = individualFactory;
-        population = range(0, configuration.initialPopulation())
+        this.population = range(0, configuration.initialPopulation())
                 .mapToObj(__ -> individualFactory.create())
-                .collect(toList());
-
+                .toList();
     }
 
     public void run() {
@@ -32,7 +30,7 @@ public class EvolutionaryProcess {
             bestIndividual = bestIndividual();
             List<Individual> newPopulation = reproduceWithElitism(bestIndividual);
             survive(newPopulation);
-            ihm.showBestIndividual(bestIndividual, ndGeneration++);
+            output.showIndividual(bestIndividual, ndGeneration++);
         } while (!stopCriteria.isReached(ndGeneration, bestIndividual.fitness()));
     }
 
