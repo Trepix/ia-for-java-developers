@@ -4,17 +4,20 @@ import io.trepix.ia.algoritmogenetico.IndividualFactory;
 import io.trepix.ia.algoritmogenetico.Configuration;
 import io.trepix.ia.algoritmogenetico.Individual;
 
+import java.util.List;
+
 public class RouteFactory extends IndividualFactory {
     private final Configuration configuration;
+    private final List<City> cities;
 
-    public RouteFactory(Configuration configuration) {
+    public RouteFactory(Configuration configuration, List<City> cities) {
         this.configuration = configuration;
-        TravellingSalesmanProblem.Init();
+        this.cities = cities;
     }
 
     @Override
     public Individual create() {
-        return new Route(this.configuration);
+        return new Route(this.configuration, this.cities);
     }
 
     @Override

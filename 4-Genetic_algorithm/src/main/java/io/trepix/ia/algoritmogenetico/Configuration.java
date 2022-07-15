@@ -35,6 +35,10 @@ public class Configuration {
         return this.rates.mutation;
     }
 
+    public boolean haveToMutate() {
+        return this.random().nextDouble() < this.rates.mutation;
+    }
+
     public double geneAggregationRate() {
         return this.rates.geneAggregation;
     }

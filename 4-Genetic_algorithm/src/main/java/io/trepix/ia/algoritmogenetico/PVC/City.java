@@ -2,31 +2,40 @@ package io.trepix.ia.algoritmogenetico.PVC;
 
 import io.trepix.ia.algoritmogenetico.Gene;
 
-// Genes para el viajante de comercio
-class City implements Gene {
-    protected int ciudadIndice;
-    
-    // Constructores
-    public City(int _ciudadIndice) {
-        ciudadIndice = _ciudadIndice;
+import java.util.Map;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toMap;
+
+public class City implements Gene {
+
+    private final Map<String, Integer> cityDistances;
+    private final String name;
+
+    public City(String name, Set<CityDistance> distances) {
+        this.name = name;
+        this.cityDistances = distances.stream().collect(toMap(CityDistance::city, CityDistance::distance));
+        this.cityDistances.put(name, 0);
     }
-    public City(City g) {
-        ciudadIndice = g.ciudadIndice;
+
+    public String name() {
+        return this.name;
     }
-    
-    // Distancia entre este gen y otro
-    protected int getDistancia(City g) {
-        return TravellingSalesmanProblem.getDistancia(ciudadIndice, g.ciudadIndice);
+
+    protected int distanceTo(City city) {
+        return cityDistances.get(city.name);
     }
-    
-    // Mutaci�n : imposible aqu�
+
     @Override
     public void mutate() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("City can't mutate");
     }
-    
-    // Visualizaci�n
+
+    @Override
     public String toString() {
-        return TravellingSalesmanProblem.getCiudad(ciudadIndice);
+        return name;
+    }
+
+    public record CityDistance(String city, int distance) {
     }
 }
