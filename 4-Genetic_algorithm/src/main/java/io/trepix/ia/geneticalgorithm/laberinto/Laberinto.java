@@ -1,6 +1,6 @@
-package io.trepix.ia.algoritmogenetico.laberinto;
+package io.trepix.ia.geneticalgorithm.laberinto;
 
-import io.trepix.ia.algoritmogenetico.Gene;
+import io.trepix.ia.geneticalgorithm.Gene;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,9 +1,9 @@
-package io.trepix.ia.algoritmogenetico.TSP;
+package io.trepix.ia.geneticalgorithm.TSP;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static io.trepix.ia.algoritmogenetico.TSP.City.*;
+import static io.trepix.ia.geneticalgorithm.TSP.City.*;
 
 public class CitiesBuilder {
     Set<CityBuilder> cityBuilders;

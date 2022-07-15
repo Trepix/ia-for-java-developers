@@ -1,20 +1,20 @@
-package io.trepix.ia.aplicaciones;
+package io.trepix.ia;
 
-import io.trepix.ia.algoritmogenetico.Configuration;
-import io.trepix.ia.algoritmogenetico.EvolutionaryProcess;
-import io.trepix.ia.algoritmogenetico.Output;
-import io.trepix.ia.algoritmogenetico.Individual;
-import io.trepix.ia.algoritmogenetico.TSP.CitiesBuilder;
-import io.trepix.ia.algoritmogenetico.TSP.City;
-import io.trepix.ia.algoritmogenetico.TSP.RouteFactory;
-import io.trepix.ia.algoritmogenetico.laberinto.PathFactory;
+import io.trepix.ia.geneticalgorithm.Configuration;
+import io.trepix.ia.geneticalgorithm.EvolutionaryProcess;
+import io.trepix.ia.geneticalgorithm.Output;
+import io.trepix.ia.geneticalgorithm.Individual;
+import io.trepix.ia.geneticalgorithm.TSP.CitiesBuilder;
+import io.trepix.ia.geneticalgorithm.TSP.City;
+import io.trepix.ia.geneticalgorithm.TSP.RouteFactory;
+import io.trepix.ia.geneticalgorithm.laberinto.PathFactory;
 
 import java.util.List;
 
-import static io.trepix.ia.algoritmogenetico.Configuration.Rates.RatesBuilder.mutation;
-import static io.trepix.ia.algoritmogenetico.Configuration.StopCriteria.StopCriteriaBuilder.fitness;
-import static io.trepix.ia.algoritmogenetico.Configuration.withRandomSeed;
-import static io.trepix.ia.algoritmogenetico.TSP.CitiesBuilder.CityBuilder.city;
+import static io.trepix.ia.geneticalgorithm.Configuration.Rates.RatesBuilder.mutation;
+import static io.trepix.ia.geneticalgorithm.Configuration.StopCriteria.StopCriteriaBuilder.fitness;
+import static io.trepix.ia.geneticalgorithm.Configuration.withRandomSeed;
+import static io.trepix.ia.geneticalgorithm.TSP.CitiesBuilder.CityBuilder.city;
 
 public class Application implements Output {
     public static void main(String[] args) {

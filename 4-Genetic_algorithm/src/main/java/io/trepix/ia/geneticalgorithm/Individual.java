@@ -1,4 +1,4 @@
-package io.trepix.ia.algoritmogenetico;
+package io.trepix.ia.geneticalgorithm;
 
 import java.util.List;
 

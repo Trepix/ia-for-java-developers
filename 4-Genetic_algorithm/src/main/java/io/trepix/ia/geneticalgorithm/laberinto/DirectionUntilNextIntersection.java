@@ -1,7 +1,7 @@
-package io.trepix.ia.algoritmogenetico.laberinto;
+package io.trepix.ia.geneticalgorithm.laberinto;
 
-import io.trepix.ia.algoritmogenetico.Gene;
-import io.trepix.ia.algoritmogenetico.Configuration;
+import io.trepix.ia.geneticalgorithm.Gene;
+import io.trepix.ia.geneticalgorithm.Configuration;
 
 // Los genes para el laberinto
 public class DirectionUntilNextIntersection implements Gene {

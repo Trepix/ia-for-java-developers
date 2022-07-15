@@ -1,6 +1,6 @@
-package io.trepix.ia.algoritmogenetico;
+package io.trepix.ia.geneticalgorithm;
 
-import io.trepix.ia.algoritmogenetico.Configuration.StopCriteria;
+import io.trepix.ia.geneticalgorithm.Configuration.StopCriteria;
 
 import java.util.ArrayList;
 import java.util.List;

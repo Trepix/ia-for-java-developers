@@ -1,8 +1,8 @@
-package io.trepix.ia.algoritmogenetico.TSP;
+package io.trepix.ia.geneticalgorithm.TSP;
 
-import io.trepix.ia.algoritmogenetico.IndividualFactory;
-import io.trepix.ia.algoritmogenetico.Configuration;
-import io.trepix.ia.algoritmogenetico.Individual;
+import io.trepix.ia.geneticalgorithm.IndividualFactory;
+import io.trepix.ia.geneticalgorithm.Configuration;
+import io.trepix.ia.geneticalgorithm.Individual;
 
 import java.util.List;
 

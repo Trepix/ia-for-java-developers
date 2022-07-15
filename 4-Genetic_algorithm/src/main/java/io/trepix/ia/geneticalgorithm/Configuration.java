@@ -1,7 +1,7 @@
-package io.trepix.ia.algoritmogenetico;
+package io.trepix.ia.geneticalgorithm;
 
-import io.trepix.ia.algoritmogenetico.Configuration.Rates.RatesBuilder;
-import io.trepix.ia.algoritmogenetico.Configuration.StopCriteria.StopCriteriaBuilder;
+import io.trepix.ia.geneticalgorithm.Configuration.Rates.RatesBuilder;
+import io.trepix.ia.geneticalgorithm.Configuration.StopCriteria.StopCriteriaBuilder;
 
 import java.util.Random;
 public class Configuration {

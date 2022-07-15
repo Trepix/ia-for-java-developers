@@ -1,4 +1,4 @@
-package io.trepix.ia.algoritmogenetico.laberinto;
+package io.trepix.ia.geneticalgorithm.laberinto;
 
 public class Box {
     private int i;

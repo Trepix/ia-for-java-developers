@@ -1,6 +1,6 @@
-package io.trepix.ia.algoritmogenetico.TSP;
+package io.trepix.ia.geneticalgorithm.TSP;
 
-import io.trepix.ia.algoritmogenetico.Gene;
+import io.trepix.ia.geneticalgorithm.Gene;
 
 import java.util.Map;
 import java.util.Set;
