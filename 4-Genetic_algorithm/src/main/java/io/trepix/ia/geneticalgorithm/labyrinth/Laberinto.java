@@ -1,4 +1,4 @@
-package io.trepix.ia.geneticalgorithm.laberinto;
+package io.trepix.ia.geneticalgorithm.labyrinth;
 
 import io.trepix.ia.geneticalgorithm.Gene;
 import java.util.ArrayList;
