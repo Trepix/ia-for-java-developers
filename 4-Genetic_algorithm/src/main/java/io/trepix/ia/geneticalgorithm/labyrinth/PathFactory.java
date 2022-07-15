@@ -6,15 +6,16 @@ import io.trepix.ia.geneticalgorithm.Individual;
 
 public class PathFactory extends IndividualFactory {
     private final Configuration configuration;
+    private final Laberinto laberinto;
 
     public PathFactory(Configuration configuration) {
         this.configuration = configuration;
-        Laberinto.Init(Laberinto.Lab2);
+        this.laberinto = new Laberinto(Laberinto.Map2);
     }
 
     @Override
     public Individual create() {
-        return new Path(this.configuration);
+        return new Path(this.configuration, this.laberinto);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class Laberinto {
     public enum Direccion { Arriba, Abajo, Izquierda, Derecha};
     
     // Diseño de los laberintos
-    public static String Lab1 = "*--*--*--*--*\n" + 
+    public static String Map1 = "*--*--*--*--*\n" +
                                 "E           |\n" + 
                                 "*  *  *--*--*\n" + 
                                 "|  |  |     |\n" + 
@@ -24,7 +24,7 @@ public class Laberinto {
                                 "*  *--*--*  *\n" + 
                                 "|        |  S\n" + 
                                 "*--*--*--*--*"; 
-    public static String Lab2 = "*--*--*--*--*--*--*\n" + 
+    public static String Map2 = "*--*--*--*--*--*--*\n" +
                                 "E        |  |     |\n" + 
                                 "*--*--*  *  *  *--*\n" + 
                                 "|     |     |     |\n" + 
@@ -38,7 +38,11 @@ public class Laberinto {
                                 "|     |     |     S\n" + 
                                 "*--*--*--*--*--*--*";
 
-    public static void Init(String s) {
+    public Laberinto(String map) {
+        Init(map);
+    }
+
+    private static void Init(String s) {
         caminos = new ArrayList();
         
         // Nos separramos y después se trata cada línea
@@ -121,7 +125,7 @@ public class Laberinto {
     }
     
     // Mueve un individuo en el laberinto para evaluarlo
-    static double Evaluar(List<Gene> genoma) {
+    double Evaluar(List<Gene> genoma) {
         Box boxActual = new Box(entrada.getI(), entrada.getJ());
         boolean finMovimiento = false;
         for(Gene g : genoma) {

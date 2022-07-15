@@ -9,10 +9,12 @@ import java.util.ArrayList;
 public class Path extends Individual {
 
     private final Configuration configuration;
+    private final Laberinto laberinto;
 
     // Constructor por defecto : individuo aleatorio
-    public Path(Configuration configuration) {
+    public Path(Configuration configuration, Laberinto laberinto) {
         this.configuration = configuration;
+        this.laberinto = laberinto;
         genome = new ArrayList();
         for (int i = 0; i < configuration.genesNumber(); i++) {
             genome.add(new DirectionUntilNextIntersection(configuration));
@@ -22,6 +24,7 @@ public class Path extends Individual {
     // Constructor con un padre : copia y muta
     public Path(Path padre) {
         configuration = padre.configuration;
+        laberinto = padre.laberinto;
         genome = new ArrayList();
         for (Gene g : padre.genome) {
             genome.add(new DirectionUntilNextIntersection((DirectionUntilNextIntersection) g));
@@ -32,6 +35,7 @@ public class Path extends Individual {
     // Constructor con dos padres : crossover y muta
     public Path(Path padre1, Path padre2) {
         this.configuration = padre1.configuration;
+        this.laberinto = padre1.laberinto;
         genome = new ArrayList();
         // Crossover
         int index = configuration.random().nextInt(padre1.genome.size());
@@ -71,6 +75,6 @@ public class Path extends Individual {
 
     @Override
     protected double evaluate() {
-        return Laberinto.Evaluar(genome);
+        return laberinto.Evaluar(genome);
     }
 }
