@@ -4,9 +4,9 @@ import io.trepix.ia.algoritmogenetico.Configuration;
 import io.trepix.ia.algoritmogenetico.EvolutionaryProcess;
 import io.trepix.ia.algoritmogenetico.IHM;
 import io.trepix.ia.algoritmogenetico.Individual;
-import io.trepix.ia.algoritmogenetico.PVC.CitiesBuilder;
-import io.trepix.ia.algoritmogenetico.PVC.City;
-import io.trepix.ia.algoritmogenetico.PVC.RouteFactory;
+import io.trepix.ia.algoritmogenetico.TSP.CitiesBuilder;
+import io.trepix.ia.algoritmogenetico.TSP.City;
+import io.trepix.ia.algoritmogenetico.TSP.RouteFactory;
 import io.trepix.ia.algoritmogenetico.laberinto.PathFactory;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 import static io.trepix.ia.algoritmogenetico.Configuration.Rates.RatesBuilder.mutation;
 import static io.trepix.ia.algoritmogenetico.Configuration.StopCriteria.StopCriteriaBuilder.fitness;
 import static io.trepix.ia.algoritmogenetico.Configuration.withRandomSeed;
-import static io.trepix.ia.algoritmogenetico.PVC.CitiesBuilder.CityBuilder.city;
+import static io.trepix.ia.algoritmogenetico.TSP.CitiesBuilder.CityBuilder.city;
 
 public class Application implements IHM {
     public static void main(String[] args) {

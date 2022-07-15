@@ -1,4 +1,4 @@
-package io.trepix.ia.algoritmogenetico.PVC;
+package io.trepix.ia.algoritmogenetico.TSP;
 
 import io.trepix.ia.algoritmogenetico.IndividualFactory;
 import io.trepix.ia.algoritmogenetico.Configuration;

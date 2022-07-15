@@ -1,9 +1,9 @@
-package io.trepix.ia.algoritmogenetico.PVC;
+package io.trepix.ia.algoritmogenetico.TSP;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static io.trepix.ia.algoritmogenetico.PVC.City.*;
+import static io.trepix.ia.algoritmogenetico.TSP.City.*;
 
 public class CitiesBuilder {
     Set<CityBuilder> cityBuilders;
