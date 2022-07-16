@@ -5,12 +5,12 @@ import io.trepix.ia.geneticalgorithm.Configuration;
 
 // Los genes para el laberinto
 public class DirectionUntilNextIntersection implements Gene {
-    public Labyrinth.Direccion dirección;
+    public Labyrinth.Direction dirección;
     private final Configuration configuration;
     
     public DirectionUntilNextIntersection(Configuration configuration) {
         this.configuration = configuration;
-        dirección = Labyrinth.Direccion.values()[configuration.random().nextInt(4)];
+        dirección = Labyrinth.Direction.values()[configuration.random().nextInt(4)];
     }
     
     public DirectionUntilNextIntersection(DirectionUntilNextIntersection g) {
@@ -25,7 +25,7 @@ public class DirectionUntilNextIntersection implements Gene {
     
     @Override
     public void mutate() {
-        dirección = Labyrinth.Direccion.values()[configuration.random().nextInt(4)];
+        dirección = Labyrinth.Direction.values()[configuration.random().nextInt(4)];
     }
 
 }
