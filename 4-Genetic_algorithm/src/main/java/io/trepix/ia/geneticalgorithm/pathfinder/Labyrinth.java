@@ -10,9 +10,10 @@ public class Labyrinth {
     private final List<Movement> possibleMovements;
     private Box start;
     private Box end;
-    public enum Direction {Up, Down, Left, Right};
+    ;
 
     record Movement(Box origin, Box destination) {}
+    record Displacement(int vertical, int horizontal) {}
     public Labyrinth(String map) {
         possibleMovements = new LinkedList<>();
 
@@ -62,8 +63,6 @@ public class Labyrinth {
             numLineas++;
         }
     }
-
-    // Indica si un movimiento entre dos casillas es posible
     private boolean canMoveBetween(Box firstBox, Box secondBox) {
         for (Movement movement : possibleMovements) {
             if (movement.origin.equals(firstBox) && movement.destination.equals(secondBox) || movement.origin.equals(secondBox) && movement.destination.equals(firstBox)) {
@@ -73,49 +72,31 @@ public class Labyrinth {
         return false;
     }
     private boolean isIntersection(Box box) {
-        int numCaminos = 0;
+        int numberPossibleMovements = 0;
         for (Movement movement : possibleMovements) {
             if (movement.origin.equals(box) || movement.destination.equals(box)) {
-                numCaminos++;
+                numberPossibleMovements++;
             }
         }
-        return numCaminos > 2;
+        return numberPossibleMovements > 2;
     }
-    
-    // Mira si el movimiento es posible
-    private void move(Box inicio, int deplI, int deplJ) {
+    private void move(Box origin, Displacement displacement) {
         boolean finMovimiento = false;
-        while(canMoveBetween(inicio, new Box(inicio.getI() + deplI, inicio.getJ() + deplJ)) && !finMovimiento) {
-            inicio.setI(inicio.getI() + deplI);
-            inicio.setJ(inicio.getJ() + deplJ);
-            finMovimiento = isIntersection(inicio) || inicio.equals(end);
+        while(canMoveBetween(origin, new Box(origin.getI() + displacement.vertical, origin.getJ() + displacement.horizontal)) && !finMovimiento) {
+            origin.setI(origin.getI() + displacement.vertical);
+            origin.setJ(origin.getJ() + displacement.horizontal);
+            finMovimiento = isIntersection(origin) || origin.equals(end);
         }
     }
-    
-    // Mueve un individuo en el laberinto para evaluarlo
-    double Evaluar(List<Gene> genoma) {
-        Box boxActual = new Box(start.getI(), start.getJ());
-        for(Gene g : genoma) {
-            switch (((DirectionUntilNextIntersection)g).dirección) {
-                case Down:
-                    move(boxActual, 1, 0);
-                    break;
-                case Up:
-                    move(boxActual, -1, 0);
-                    break;
-                case Right:
-                    move(boxActual, 0, 1);
-                    break;
-                case Left:
-                    move(boxActual, 0, -1);
-                    break;
-            }
-            if (boxActual.equals(end)) {
+    double evaluate(List<DirectionUntilNextIntersection> directions) {
+        Box actualBox = new Box(start.getI(), start.getJ());
+        for(var directionUntilNextIntersection : directions) {
+            Direction direction = directionUntilNextIntersection.dirección;
+            move(actualBox, direction.displacement());
+            if (actualBox.equals(end)) {
                 break;
             }
         }
-        // Cálculo del fitness : distancia de Manhattan
-        int distancia = Math.abs(end.getI() - boxActual.getI()) + Math.abs(end.getJ() - boxActual.getJ());
-        return distancia;
+        return end.manhattanDistanceTo(actualBox);
     }
 }

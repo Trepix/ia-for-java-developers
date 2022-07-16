@@ -25,6 +25,10 @@ public class Box {
         this.j = j;
     }
 
+    public int manhattanDistanceTo(Box box) {
+        return Math.abs(this.i - box.i) + Math.abs(this.j - box.j);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

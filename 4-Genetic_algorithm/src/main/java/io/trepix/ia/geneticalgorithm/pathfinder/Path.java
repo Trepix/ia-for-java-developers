@@ -1,9 +1,11 @@
 package io.trepix.ia.geneticalgorithm.pathfinder;
 
+import io.trepix.ia.geneticalgorithm.Configuration;
 import io.trepix.ia.geneticalgorithm.Gene;
 import io.trepix.ia.geneticalgorithm.Individual;
-import io.trepix.ia.geneticalgorithm.Configuration;
+
 import java.util.ArrayList;
+import java.util.List;
 
 // Un individuo se mueve en el laberinto
 public class Path extends Individual {
@@ -20,7 +22,7 @@ public class Path extends Individual {
             genome.add(new DirectionUntilNextIntersection(configuration));
         }
     }
-    
+
     // Constructor con un padre : copia y muta
     public Path(Path padre) {
         configuration = padre.configuration;
@@ -31,7 +33,7 @@ public class Path extends Individual {
         }
         mutate();
     }
-    
+
     // Constructor con dos padres : crossover y muta
     public Path(Path padre1, Path padre2) {
         this.configuration = padre1.configuration;
@@ -50,7 +52,7 @@ public class Path extends Individual {
         // Mutación
         mutate();
     }
-    
+
     // Mutacion (eliminación, adición o modificación de genes)
     @Override
     public void mutate() {
@@ -59,14 +61,14 @@ public class Path extends Individual {
             int index = configuration.random().nextInt(genome.size());
             genome.remove(index);
         }
-        
+
         // ¿Adición de un gen al final?
         if (configuration.random().nextDouble() < configuration.geneAggregationRate()) {
             genome.add(new DirectionUntilNextIntersection(configuration));
         }
-        
+
         // ¿Cambia valores?
-        for(Gene g : genome) {
+        for (Gene g : genome) {
             if (configuration.random().nextDouble() < configuration.mutationRate()) {
                 g.mutate();
             }
@@ -75,6 +77,9 @@ public class Path extends Individual {
 
     @Override
     protected double evaluate() {
-        return labyrinth.Evaluar(genome);
+        List<DirectionUntilNextIntersection> directions = genome.stream()
+                .map(x -> (DirectionUntilNextIntersection) x)
+                .toList();
+        return labyrinth.evaluate(directions);
     }
 }
