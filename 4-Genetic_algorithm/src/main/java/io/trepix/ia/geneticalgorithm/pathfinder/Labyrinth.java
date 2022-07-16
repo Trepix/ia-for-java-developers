@@ -1,22 +1,20 @@
 package io.trepix.ia.geneticalgorithm.pathfinder;
 
 import io.trepix.ia.geneticalgorithm.Gene;
-import java.util.ArrayList;
+
+import java.util.LinkedList;
 import java.util.List;
 
-// Representa un laberinto con los posibles pasos, la entrada y la salida
 public class Labyrinth {
-    // Información del laberinto
-    private ArrayList<Box[]> caminos;
+
+    private final List<Movement> possibleMovements;
     private Box entrada;
     private Box salida;
-    
-    // Direcciones
     public enum Direccion { Arriba, Abajo, Izquierda, Derecha};
 
-
+    record Movement(Box origin, Box destination) {}
     public Labyrinth(String map) {
-        caminos = new ArrayList();
+        possibleMovements = new LinkedList<>();
 
         // Nos separramos y después se trata cada línea
         String[] lineas = map.split("\n");
@@ -45,7 +43,7 @@ public class Labyrinth {
                     String casillaStr = linea.substring(columna*3, columna*3 + 3);
                     if (!casillaStr.contains("|") && !casillaStr.contains("E") && !casillaStr.contains("S")) {
                         // Paso abierto, se añade
-                        caminos.add(new Box[]{new Box(numLineas/2, columna-1), new Box(numLineas/2, columna)});
+                        possibleMovements.add(new Movement(new Box(numLineas/2, columna-1), new Box(numLineas/2, columna)));
                     }
                 }
             }
@@ -56,7 +54,7 @@ public class Labyrinth {
                 for (String bloc : casillas) {
                     if (bloc.equals("  ")) {
                         // Paso abierto, se añade
-                        caminos.add(new Box[] {new Box(numLineas/2 - 1, columna), new Box(numLineas/2, columna)});
+                        possibleMovements.add(new Movement(new Box(numLineas/2 - 1, columna), new Box(numLineas/2, columna)));
                     }
                     columna++;
                 }
@@ -67,8 +65,8 @@ public class Labyrinth {
 
     // Indica si un movimiento entre dos casillas es posible
     private boolean esPosible(Box pos1, Box pos2) {
-        for (Box[] camino : caminos) {
-            if ((camino[0].equals(pos1) && camino[1].equals(pos2)) || ((camino[0].equals(pos2) && camino[1].equals(pos1)))) {
+        for (Movement movement : possibleMovements) {
+            if (movement.origin.equals(pos1) && movement.destination.equals(pos2) || movement.origin.equals(pos2) && movement.destination.equals(pos1)) {
                 return true;
             }
         }
@@ -78,8 +76,8 @@ public class Labyrinth {
     // Indica si una casilla es un cruce
     private boolean EsCruce(Box pos) {
         int numCaminos = 0;
-        for (Box[] camino : caminos) {
-            if (camino[0].equals(pos) || camino[1].equals(pos)) {
+        for (Movement movement : possibleMovements) {
+            if (movement.origin.equals(pos) || movement.destination.equals(pos)) {
                 numCaminos++;
             }
         }
@@ -94,13 +92,11 @@ public class Labyrinth {
             inicio.setJ(inicio.getJ() + deplJ);
             finMovimiento = EsCruce(inicio) || inicio.equals(salida);
         }
-        finMovimiento = false;
     }
     
     // Mueve un individuo en el laberinto para evaluarlo
     double Evaluar(List<Gene> genoma) {
         Box boxActual = new Box(entrada.getI(), entrada.getJ());
-        boolean finMovimiento = false;
         for(Gene g : genoma) {
             switch (((DirectionUntilNextIntersection)g).dirección) {
                 case Abajo :

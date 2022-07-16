@@ -37,7 +37,6 @@ public class Application implements Output {
         EvolutionaryProcess process = new EvolutionaryProcess(configuration, routeFactory, this);
         process.run();
 
-        // Resolución del laberinto
         configuration = withRandomSeed()
                 .withRates(mutation(0.1)
                         .crossover(0.6)
