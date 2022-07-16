@@ -7,6 +7,7 @@ import io.trepix.ia.geneticalgorithm.Individual;
 import io.trepix.ia.geneticalgorithm.TSP.CitiesBuilder;
 import io.trepix.ia.geneticalgorithm.TSP.City;
 import io.trepix.ia.geneticalgorithm.TSP.RouteFactory;
+import io.trepix.ia.geneticalgorithm.pathfinder.Labyrinth;
 import io.trepix.ia.geneticalgorithm.pathfinder.PathFactory;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import static io.trepix.ia.geneticalgorithm.Configuration.withRandomSeed;
 import static io.trepix.ia.geneticalgorithm.TSP.CitiesBuilder.CityBuilder.city;
 
 public class Application implements Output {
+
     public static void main(String[] args) {
         Application app = new Application();
         app.run();
@@ -47,10 +49,40 @@ public class Application implements Output {
                 )
                 .build();
 
-        EvolutionaryProcess process2 = new EvolutionaryProcess(configuration, new PathFactory(configuration), this);
+        final var pathFactory = new PathFactory(configuration, new Labyrinth(map()));
+        EvolutionaryProcess process2 = new EvolutionaryProcess(configuration, pathFactory, this);
         process2.run();
     }
 
+    private String map() {
+        return """
+                *--*--*--*--*--*--*
+                E        |  |     |
+                *--*--*  *  *  *--*
+                |     |     |     |
+                *  *  *  *  *  *  *
+                |  |  |  |     |  |
+                *--*  *  *--*--*  *
+                |     |  |     |  |
+                *  *--*--*  *  *  *
+                |  |        |  |  |
+                *  *  *  *--*  *  *
+                |     |     |     S
+                *--*--*--*--*--*--*""";
+    }
+
+    private String otherMap() {
+        return """
+            *--*--*--*--*
+            E           |
+            *  *  *--*--*
+            |  |  |     |
+            *  *--*  *  *
+            |        |  |
+            *  *--*--*  *
+            |        |  S
+            *--*--*--*--*""";
+    }
     private List<City> cities() {
         return new CitiesBuilder()
                 .with(city("Paris")

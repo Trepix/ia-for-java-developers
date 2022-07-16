@@ -7,46 +7,19 @@ import java.util.List;
 // Representa un laberinto con los posibles pasos, la entrada y la salida
 public class Labyrinth {
     // Información del laberinto
-    private static ArrayList<Box[]> caminos;
-    private static Box entrada;
-    private static Box salida;
+    private ArrayList<Box[]> caminos;
+    private Box entrada;
+    private Box salida;
     
     // Direcciones
     public enum Direccion { Arriba, Abajo, Izquierda, Derecha};
-    
-    // Diseño de los laberintos
-    public static String Map1 = "*--*--*--*--*\n" +
-                                "E           |\n" + 
-                                "*  *  *--*--*\n" + 
-                                "|  |  |     |\n" + 
-                                "*  *--*  *  *\n" + 
-                                "|        |  |\n" + 
-                                "*  *--*--*  *\n" + 
-                                "|        |  S\n" + 
-                                "*--*--*--*--*"; 
-    public static String Map2 = "*--*--*--*--*--*--*\n" +
-                                "E        |  |     |\n" + 
-                                "*--*--*  *  *  *--*\n" + 
-                                "|     |     |     |\n" + 
-                                "*  *  *  *  *  *  *\n" + 
-                                "|  |  |  |     |  |\n" + 
-                                "*--*  *  *--*--*  *\n" + 
-                                "|     |  |     |  |\n" + 
-                                "*  *--*--*  *  *  *\n" + 
-                                "|  |        |  |  |\n" + 
-                                "*  *  *  *--*  *  *\n" + 
-                                "|     |     |     S\n" + 
-                                "*--*--*--*--*--*--*";
+
 
     public Labyrinth(String map) {
-        Init(map);
-    }
-
-    private static void Init(String s) {
         caminos = new ArrayList();
-        
+
         // Nos separramos y después se trata cada línea
-        String[] lineas = s.split("\n");
+        String[] lineas = map.split("\n");
         int numLineas = 0;
         for (String linea : lineas) {
             if (numLineas % 2 != 0) {
@@ -91,9 +64,9 @@ public class Labyrinth {
             numLineas++;
         }
     }
-    
+
     // Indica si un movimiento entre dos casillas es posible
-    private static boolean esPosible(Box pos1, Box pos2) {
+    private boolean esPosible(Box pos1, Box pos2) {
         for (Box[] camino : caminos) {
             if ((camino[0].equals(pos1) && camino[1].equals(pos2)) || ((camino[0].equals(pos2) && camino[1].equals(pos1)))) {
                 return true;
@@ -103,7 +76,7 @@ public class Labyrinth {
     }
     
     // Indica si una casilla es un cruce
-    private static boolean EsCruce(Box pos) {
+    private boolean EsCruce(Box pos) {
         int numCaminos = 0;
         for (Box[] camino : caminos) {
             if (camino[0].equals(pos) || camino[1].equals(pos)) {
@@ -114,7 +87,7 @@ public class Labyrinth {
     }
     
     // Mira si el movimiento es posible
-    static void Mover(Box inicio, int deplI, int deplJ) {
+    private void Mover(Box inicio, int deplI, int deplJ) {
         boolean finMovimiento = false;
         while(esPosible(inicio, new Box(inicio.getI() + deplI, inicio.getJ() + deplJ)) && !finMovimiento) {
             inicio.setI(inicio.getI() + deplI);

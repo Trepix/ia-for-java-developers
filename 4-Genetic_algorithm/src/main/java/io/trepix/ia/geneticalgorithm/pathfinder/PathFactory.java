@@ -8,9 +8,9 @@ public class PathFactory extends IndividualFactory {
     private final Configuration configuration;
     private final Labyrinth labyrinth;
 
-    public PathFactory(Configuration configuration) {
+    public PathFactory(Configuration configuration, Labyrinth labyrinth) {
         this.configuration = configuration;
-        this.labyrinth = new Labyrinth(Labyrinth.Map2);
+        this.labyrinth = labyrinth;
     }
 
     @Override
