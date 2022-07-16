@@ -1,41 +1,39 @@
 package io.trepix.ia.geneticalgorithm.pathfinder;
 
+import io.trepix.ia.geneticalgorithm.pathfinder.Labyrinth.Displacement;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class Box {
-    private int i;
-    private int j;
+    private final int x;
+    private final int y;
+
+    private final List<Box> adjacentBoxes;
     
-    public Box(int i, int j) {
-        this.i = i;
-        this.j = j;
+    public Box(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.adjacentBoxes = new LinkedList<>();
     }
 
-    public int getI() {
-        return i;
+    public void addAdjacent(Box box) {
+        box.adjacentBoxes.add(this);
+        this.adjacentBoxes.add(box);
     }
 
-    public void setI(int i) {
-        this.i = i;
-    }
-
-    public int getJ() {
-        return j;
-    }
-
-    public void setJ(int j) {
-        this.j = j;
+    public boolean isIntersection() {
+        return this.adjacentBoxes.size() > 2;
     }
 
     public int manhattanDistanceTo(Box box) {
-        return Math.abs(this.i - box.i) + Math.abs(this.j - box.j);
+        return Math.abs(this.y - box.y) + Math.abs(this.x - box.x);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Box box = (Box) o;
-        return i == box.i && j == box.j;
+    public Box move(Displacement displacement) {
+        int y = this.y + displacement.vertical();
+        int x = this.x + displacement.horizontal();
+        return adjacentBoxes.stream().filter(box -> box.y == y && box.x == x).findFirst().orElse(this);
     }
-
 
 }
