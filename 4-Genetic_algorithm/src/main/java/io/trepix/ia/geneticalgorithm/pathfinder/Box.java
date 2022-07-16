@@ -1,4 +1,4 @@
-package io.trepix.ia.geneticalgorithm.labyrinth;
+package io.trepix.ia.geneticalgorithm.pathfinder;
 
 public class Box {
     private int i;

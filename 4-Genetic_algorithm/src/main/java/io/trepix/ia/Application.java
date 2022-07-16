@@ -7,7 +7,7 @@ import io.trepix.ia.geneticalgorithm.Individual;
 import io.trepix.ia.geneticalgorithm.TSP.CitiesBuilder;
 import io.trepix.ia.geneticalgorithm.TSP.City;
 import io.trepix.ia.geneticalgorithm.TSP.RouteFactory;
-import io.trepix.ia.geneticalgorithm.labyrinth.PathFactory;
+import io.trepix.ia.geneticalgorithm.pathfinder.PathFactory;
 
 import java.util.List;
 

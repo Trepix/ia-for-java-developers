@@ -1,11 +1,11 @@
-package io.trepix.ia.geneticalgorithm.labyrinth;
+package io.trepix.ia.geneticalgorithm.pathfinder;
 
 import io.trepix.ia.geneticalgorithm.Gene;
 import java.util.ArrayList;
 import java.util.List;
 
 // Representa un laberinto con los posibles pasos, la entrada y la salida
-public class Laberinto {
+public class Labyrinth {
     // Información del laberinto
     private static ArrayList<Box[]> caminos;
     private static Box entrada;
@@ -38,7 +38,7 @@ public class Laberinto {
                                 "|     |     |     S\n" + 
                                 "*--*--*--*--*--*--*";
 
-    public Laberinto(String map) {
+    public Labyrinth(String map) {
         Init(map);
     }
 
