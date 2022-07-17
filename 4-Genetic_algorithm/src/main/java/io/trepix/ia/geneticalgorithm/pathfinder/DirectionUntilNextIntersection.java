@@ -9,7 +9,7 @@ public class DirectionUntilNextIntersection implements Gene {
     
     public DirectionUntilNextIntersection(Configuration configuration) {
         this.configuration = configuration;
-        this.direction = Direction.pickOne(configuration.random());;
+        this.direction = Direction.pickOne(configuration.random());
     }
     
     public DirectionUntilNextIntersection(DirectionUntilNextIntersection directionUntilNextIntersection) {
