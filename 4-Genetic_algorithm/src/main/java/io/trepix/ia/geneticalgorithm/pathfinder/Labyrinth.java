@@ -3,77 +3,13 @@ package io.trepix.ia.geneticalgorithm.pathfinder;
 import java.util.List;
 
 public class Labyrinth {
-    private Box start;
-    private Box end;
+    private final Box start;
+    private final Box end;
 
     public Labyrinth(String map) {
-        Box[][] boxMap = new Box[map.split("\n").length][map.split("\n")[0].length()];
-
-        // Nos separramos y después se trata cada línea
-        String[] lineas = map.split("\n");
-        int numLineas = 0;
-        for (String linea : lineas) {
-            if (numLineas % 2 != 0) {
-                // Número impar, línea de pasillo
-                int index = linea.indexOf("E");
-                if (index != -1) {
-                    // Tenemos una entrada en ese pasillo
-                    if (index == linea.length() - 1) {
-                        index--;
-                    }
-                    if (boxMap[numLineas / 2][index / 3] == null) {
-                        boxMap[numLineas / 2][index / 3] = new Box(index / 3, numLineas / 2);
-                    }
-                    start = boxMap[numLineas / 2][index / 3];
-                }
-                index = linea.indexOf("S");
-                if (index != -1) {
-                    // Salida en el pasillo
-                    if (index == linea.length() - 1) {
-                        index--;
-                    }
-                    if (boxMap[numLineas / 2][index / 3] == null) {
-                        boxMap[numLineas / 2][index / 3] = new Box(index / 3, numLineas / 2);
-                    }
-                    end = boxMap[numLineas / 2][index / 3];
-                }
-                // recorremos el pasillo para crear los caminos horizontales
-                for (int columna = 0; columna < linea.length() / 3; columna++) {
-                    String casillaStr = linea.substring(columna * 3, columna * 3 + 3);
-                    if (!casillaStr.contains("|") && !casillaStr.contains("E") && !casillaStr.contains("S")) {
-                        // Paso abierto, se añade
-                        if (boxMap[numLineas / 2][columna - 1] == null) {
-                            boxMap[numLineas / 2][columna - 1] = new Box(columna - 1, numLineas / 2);
-                        }
-                        if (boxMap[numLineas / 2][columna] == null) {
-                            boxMap[numLineas / 2][columna] = new Box(columna, numLineas / 2);
-                        }
-                        Box origin = boxMap[numLineas / 2][columna - 1];
-                        Box destination = boxMap[numLineas / 2][columna];
-                        origin.addAdjacent(destination);
-                    }
-                }
-            } else {
-                // Línea par : en los muros
-                String[] casillas = linea.substring(1).split("\\*");
-                int columna = 0;
-                for (String bloc : casillas) {
-                    if (bloc.equals("  ")) {
-                        if (boxMap[numLineas / 2 - 1][columna] == null) {
-                            boxMap[numLineas / 2 - 1][columna] = new Box(columna, numLineas / 2 - 1);
-                        }
-                        if (boxMap[numLineas / 2][columna] == null) {
-                            boxMap[numLineas / 2][columna] = new Box(columna, numLineas / 2);
-                        }
-                        Box origin = boxMap[numLineas / 2 - 1][columna];
-                        Box destination = boxMap[numLineas / 2][columna];
-                        origin.addAdjacent(destination);
-                    }
-                    columna++;
-                }
-            }
-            numLineas++;
-        }
+        Box[] boxes = new MapParser().parse(map);
+        start = boxes[0];
+        end = boxes[1];
     }
 
     private Box moveStraight(Box origin, Displacement displacement) {
@@ -100,4 +36,81 @@ public class Labyrinth {
 
     record Displacement(int vertical, int horizontal) {
     }
+
+    public static class MapParser {
+
+        private Box[][] boxMap;
+
+        public Box[] parse(String map) {
+            int rows = map.split("\n").length;
+            int columns = map.split("\n")[0].length();
+
+            boxMap = new Box[rows][columns];
+            Box start = null;
+            Box end = null;
+
+            String[] lines = map.split("\n");
+            int linesCounter = 0;
+            for (String line : lines) {
+                if (linesCounter % 2 != 0) {
+                    // Número impar, línea de pasillo
+                    int index = line.indexOf("E");
+                    if (index != -1) {
+                        // Tenemos una entrada en ese pasillo
+                        if (index == line.length() - 1) {
+                            index--;
+                        }
+                        int x = index / 3;
+                        int y = linesCounter / 2;
+                        start = getOrCreate(x, y);
+                    }
+                    index = line.indexOf("S");
+                    if (index != -1) {
+                        // Salida en el pasillo
+                        if (index == line.length() - 1) {
+                            index--;
+                        }
+                        int x = index / 3;
+                        int y = linesCounter / 2;
+                        end = getOrCreate(x, y);
+                    }
+                    // recorremos el pasillo para crear los caminos horizontales
+                    for (int x = 0; x < line.length() / 3; x++) {
+                        String casillaStr = line.substring(x * 3, x * 3 + 3);
+                        if (!casillaStr.contains("|") && !casillaStr.contains("E") && !casillaStr.contains("S")) {
+                            // Paso abierto, se añade
+                            int y = linesCounter / 2;
+                            Box origin = getOrCreate(x - 1, y);
+                            Box destination = getOrCreate(x, y);
+                            origin.addAdjacent(destination);
+                        }
+                    }
+                } else {
+                    // Línea par : en los muros
+                    String[] casillas = line.substring(1).split("\\*");
+                    int x = 0;
+                    for (String bloc : casillas) {
+                        if (bloc.equals("  ")) {
+                            int y = linesCounter / 2;
+                            Box origin = getOrCreate(x, y - 1);
+                            Box destination = getOrCreate(x, y);
+                            origin.addAdjacent(destination);
+                        }
+                        x++;
+                    }
+                }
+                linesCounter++;
+            }
+            return new Box[]{start, end};
+        }
+
+        private Box getOrCreate(int x, int y) {
+            if (boxMap[x][y] == null) {
+                boxMap[x][y] = new Box(x, y);
+            }
+            return boxMap[x][y];
+        }
+    }
+
+
 }
