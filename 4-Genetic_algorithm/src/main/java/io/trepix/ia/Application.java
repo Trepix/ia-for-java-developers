@@ -56,7 +56,7 @@ public class Application implements Output {
     private String map() {
         return """
                 *--*--*--*--*--*--*
-                E        |  |     |
+                S        |  |     |
                 *--*--*  *  *  *--*
                 |     |     |     |
                 *  *  *  *  *  *  *
@@ -66,20 +66,20 @@ public class Application implements Output {
                 *  *--*--*  *  *  *
                 |  |        |  |  |
                 *  *  *  *--*  *  *
-                |     |     |     S
+                |     |     |     E
                 *--*--*--*--*--*--*""";
     }
 
     private String otherMap() {
         return """
             *--*--*--*--*
-            E           |
+            S           |
             *  *  *--*--*
             |  |  |     |
             *  *--*  *  *
             |        |  |
             *  *--*--*  *
-            |        |  S
+            |        |  E
             *--*--*--*--*""";
     }
     private List<City> cities() {
