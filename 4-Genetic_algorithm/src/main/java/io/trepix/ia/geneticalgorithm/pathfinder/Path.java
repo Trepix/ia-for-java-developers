@@ -7,70 +7,61 @@ import io.trepix.ia.geneticalgorithm.Individual;
 import java.util.ArrayList;
 import java.util.List;
 
-// Un individuo se mueve en el laberinto
 public class Path extends Individual {
 
     private final Configuration configuration;
     private final Labyrinth labyrinth;
-
-    // Constructor por defecto : individuo aleatorio
     public Path(Configuration configuration, Labyrinth labyrinth) {
         this.configuration = configuration;
         this.labyrinth = labyrinth;
-        genome = new ArrayList();
+        this.genome = new ArrayList<>();
         for (int i = 0; i < configuration.genesNumber(); i++) {
             genome.add(new DirectionUntilNextIntersection(configuration));
         }
     }
 
-    // Constructor con un padre : copia y muta
-    public Path(Path padre) {
-        configuration = padre.configuration;
-        labyrinth = padre.labyrinth;
-        genome = new ArrayList();
-        for (Gene g : padre.genome) {
-            genome.add(new DirectionUntilNextIntersection((DirectionUntilNextIntersection) g));
+    public Path(Path father) {
+        this.configuration = father.configuration;
+        this.labyrinth = father.labyrinth;
+        this.genome = new ArrayList<>();
+        for (Gene gene : father.genome) {
+            genome.add(((DirectionUntilNextIntersection) gene).copy());
         }
         mutate();
     }
 
-    // Constructor con dos padres : crossover y muta
-    public Path(Path padre1, Path padre2) {
-        this.configuration = padre1.configuration;
-        this.labyrinth = padre1.labyrinth;
-        genome = new ArrayList();
-        // Crossover
-        int index = configuration.random().nextInt(padre1.genome.size());
-        for (Gene g : padre1.genome.subList(0, index)) {
-            genome.add(new DirectionUntilNextIntersection((DirectionUntilNextIntersection) g));
+    public Path(Path father1, Path father2) {
+        this.configuration = father1.configuration;
+        this.labyrinth = father1.labyrinth;
+        this.genome = new ArrayList<>();
+
+        int cutOffIndex = configuration.random().nextInt(father1.genome.size());
+        genome = new ArrayList<>();
+        for (Gene gene : father1.genome.subList(0, cutOffIndex)) {
+            genome.add(((DirectionUntilNextIntersection) gene).copy());
         }
-        if (index < padre2.genome.size()) {
-            for (Gene g : padre2.genome.subList(index, padre2.genome.size())) {
-                genome.add(new DirectionUntilNextIntersection((DirectionUntilNextIntersection) g));
+        if (cutOffIndex < father2.genome.size()) {
+            for (Gene gene : father2.genome.subList(cutOffIndex, father2.genome.size())) {
+                genome.add(((DirectionUntilNextIntersection) gene).copy());
             }
         }
-        // Mutación
         mutate();
     }
 
-    // Mutacion (eliminación, adición o modificación de genes)
     @Override
     public void mutate() {
-        // ¿Eliminación de un gen?
-        if (configuration.random().nextDouble() < configuration.geneDeletionRate()) {
+        if (configuration.haveToDeleteGene()) {
             int index = configuration.random().nextInt(genome.size());
             genome.remove(index);
         }
 
-        // ¿Adición de un gen al final?
-        if (configuration.random().nextDouble() < configuration.geneAggregationRate()) {
+        if (configuration.haveToAggregateGene()) {
             genome.add(new DirectionUntilNextIntersection(configuration));
         }
 
-        // ¿Cambia valores?
-        for (Gene g : genome) {
-            if (configuration.random().nextDouble() < configuration.mutationRate()) {
-                g.mutate();
+        for (Gene gene : genome) {
+            if (configuration.haveToMutate()) {
+                gene.mutate();
             }
         }
     }

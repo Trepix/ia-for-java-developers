@@ -31,24 +31,9 @@ public class Configuration {
     public int genesNumber() {
         return this.population.genesNumber;
     }
-    public double mutationRate() {
-        return this.rates.mutation;
-    }
 
     public boolean haveToMutate() {
         return this.random().nextDouble() < this.rates.mutation;
-    }
-
-    public double geneAggregationRate() {
-        return this.rates.geneAggregation;
-    }
-
-    public double geneDeletionRate() {
-        return this.rates.geneDeletion;
-    }
-
-    public double crossoverRate() {
-        return this.rates.crossover;
     }
 
     public Random random() {
@@ -60,7 +45,15 @@ public class Configuration {
     }
 
     boolean haveToApplyCrossover() {
-        return random().nextDouble() < crossoverRate();
+        return random().nextDouble() < this.rates.crossover;
+    }
+
+    public boolean haveToDeleteGene() {
+        return random().nextDouble() < this.rates.geneDeletion;
+    }
+
+    public boolean haveToAggregateGene() {
+        return random().nextDouble() < this.rates.geneAggregation;
     }
 
     public static class ConfigurationBuilder {

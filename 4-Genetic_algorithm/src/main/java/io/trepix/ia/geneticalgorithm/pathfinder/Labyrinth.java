@@ -26,7 +26,7 @@ public class Labyrinth {
     double evaluate(List<DirectionUntilNextIntersection> directions) {
         Box box = start;
         for (var directionUntilNextIntersection : directions) {
-            Direction direction = directionUntilNextIntersection.direction;
+            Direction direction = directionUntilNextIntersection.direction();
             box = moveStraight(box, direction.displacement());
             if (box.equals(end)) {
                 break;
