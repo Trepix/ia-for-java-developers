@@ -1,8 +1,8 @@
-package application.AlgoritmosMochila;
+package io.trepix.ia.application.AlgoritmosMochila;
 
-import Metaheuristico.Algoritmos.BusquedaTabu;
-import Metaheuristico.ISolucion;
-import application.SolucionMochila;
+import io.trepix.ia.Metaheuristico.Algoritmos.BusquedaTabu;
+import io.trepix.ia.Metaheuristico.ISolucion;
+import io.trepix.ia.application.SolucionMochila;
 import java.util.ArrayList;
 
 // Búsqueda tabu para el problema de la mochila

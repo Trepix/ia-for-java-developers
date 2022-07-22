@@ -1,4 +1,4 @@
-package Metaheuristico;
+package io.trepix.ia.Metaheuristico;
 
 // Solución genérica al problema
 public interface ISolucion {

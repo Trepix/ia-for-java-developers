@@ -1,14 +1,15 @@
-package application.AlgoritmosMochila;
+package io.trepix.ia.application.AlgoritmosMochila;
 
-import Metaheuristico.Algoritmos.EnjambreParticular;
-import Metaheuristico.ISolucion;
-import application.Caja;
-import application.ProblemaMochila;
-import application.SolucionMochila;
+import io.trepix.ia.Metaheuristico.Algoritmos.EnjambreParticulas;
+import io.trepix.ia.Metaheuristico.ISolucion;
+import io.trepix.ia.application.Caja;
+import io.trepix.ia.application.ProblemaMochila;
+import io.trepix.ia.application.SolucionMochila;
+
 import java.util.ArrayList;
 
 // Enjambre particular para el problema de la mochila
-public class EnjambreParticularMochila extends EnjambreParticular {
+public class EnjambreParticulasMochila extends EnjambreParticulas {
     protected int numIteraciones = 0;
     private final static int NUM_MAX_ITERACIONES = 200;
     

@@ -1,6 +1,6 @@
-package application;
+package io.trepix.ia.application;
 
-import Metaheuristico.ISolucion;
+import io.trepix.ia.Metaheuristico.ISolucion;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
@@ -47,7 +47,7 @@ public class SolucionMochila implements ISolucion {
     
     @Override
     public boolean equals(Object o) {
-        if (!(o instanciaof SolucionMochila)) {
+        if (!(o instanceof SolucionMochila)) {
             return false;
         }
         SolucionMochila sol = (SolucionMochila) o;

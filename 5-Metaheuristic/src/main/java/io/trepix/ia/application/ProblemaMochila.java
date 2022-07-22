@@ -1,7 +1,7 @@
-package application;
+package io.trepix.ia.application;
 
-import Metaheuristico.IProblema;
-import Metaheuristico.ISolucion;
+import io.trepix.ia.Metaheuristico.IProblema;
+import io.trepix.ia.Metaheuristico.ISolucion;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -76,7 +76,7 @@ public class ProblemaMochila implements IProblema {
     }
     
     public void EliminarDemasiadoPesadas(ArrayList<Caja> cajasPosibles, double espacioDispo) {
-        Iterator<Caja> iterador = cajasPosibles.iterador();
+        Iterator<Caja> iterador = cajasPosibles.iterator();
         while (iterador.hasNext()) {
             Caja b = iterador.next();
             if (b.pesos > espacioDispo) {

@@ -1,11 +1,11 @@
-package application.AlgoritmosMochila;
+package io.trepix.ia.application.AlgoritmosMochila;
 
-import Metaheuristico.Algoritmos.RecorridoSimulado;
-import Metaheuristico.ISolucion;
-import application.ProblemaMochila;
+import io.trepix.ia.Metaheuristico.Algoritmos.RecocidoSimulado;
+import io.trepix.ia.Metaheuristico.ISolucion;
+import io.trepix.ia.application.ProblemaMochila;
 
 // Recorrido simulado para el problema de la mochila
-public class RecorridoSimuladoMochila extends RecorridoSimulado {
+public class RecocidoSimuladoMochila extends RecocidoSimulado {
     protected int numIteracionesSinMejora = 0;
     protected int numIteraciones = 0;
     

@@ -1,13 +1,9 @@
-package application;
+package io.trepix.ia.application;
 
-import Metaheuristico.Algoritmo;
-import Metaheuristico.IHM;
-import Metaheuristico.IProblema;
-import application.AlgoritmosMochila.DescensoGradienteMochila;
-import application.AlgoritmosMochila.AlgoritmoVorazMochila;
-import application.AlgoritmosMochila.EnjambreParticularMochila;
-import application.AlgoritmosMochila.BusquedaTabuMochila;
-import application.AlgoritmosMochila.RecorridoSimuladoMochila;
+import io.trepix.ia.Metaheuristico.Algoritmo;
+import io.trepix.ia.Metaheuristico.IHM;
+import io.trepix.ia.Metaheuristico.IProblema;
+import io.trepix.ia.application.AlgoritmosMochila.*;
 
 // Clase principal
 public class Mochila implements IHM {
@@ -49,12 +45,12 @@ public class Mochila implements IHM {
         System.out.println();
         
         System.out.println("Recorrido simulado");
-        algo = new RecorridoSimuladoMochila();
+        algo = new RecocidoSimuladoMochila();
         algo.Resolver(pb, this);
         System.out.println();
         
         System.out.println("Enjambre particular");
-        algo = new EnjambreParticularMochila();
+        algo = new EnjambreParticulasMochila();
         algo.Resolver(pb, this);
         System.out.println();
     }

@@ -1,7 +1,7 @@
-package application.AlgoritmosMochila;
+package io.trepix.ia.application.AlgoritmosMochila;
 
-import Metaheuristico.Algoritmos.DescensoGradiente;
-import Metaheuristico.ISolucion;
+import io.trepix.ia.Metaheuristico.Algoritmos.DescensoGradiente;
+import io.trepix.ia.Metaheuristico.ISolucion;
 
 // Descenso de gradiente para el problema de la mochila
 public class DescensoGradienteMochila extends DescensoGradiente {

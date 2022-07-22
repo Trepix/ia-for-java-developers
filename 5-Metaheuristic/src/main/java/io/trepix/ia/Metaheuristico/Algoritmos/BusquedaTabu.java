@@ -1,9 +1,9 @@
-package Metaheuristico.Algoritmos;
+package io.trepix.ia.Metaheuristico.Algoritmos;
 
-import Metaheuristico.Algoritmo;
-import Metaheuristico.IHM;
-import Metaheuristico.IProblema;
-import Metaheuristico.ISolucion;
+import io.trepix.ia.Metaheuristico.Algoritmo;
+import io.trepix.ia.Metaheuristico.IHM;
+import io.trepix.ia.Metaheuristico.IProblema;
+import io.trepix.ia.Metaheuristico.ISolucion;
 import java.util.ArrayList;
 
 // Búsqueda tabu : nos movemos al mejor vocino no presente en la lista tabu
