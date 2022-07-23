@@ -1,13 +1,14 @@
 package io.trepix.ia.kp;
 
-import io.trepix.ia.metaheuristics.IProblema;
-import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.metaheuristics.Problem;
+import io.trepix.ia.metaheuristics.Solution;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 // El problema de la mochila a resolver (maximizar el valor sin sobrepasar el peso)
-public class ProblemaMochila implements IProblema {
+public class ProblemaMochila implements Problem {
     protected ArrayList<Caja> cajasDispo = null;
     public double pesosMax;
     public static Random generador = null;
@@ -55,7 +56,7 @@ public class ProblemaMochila implements IProblema {
     }
     
     @Override
-    public ISolucion SolucionAleatoria() {
+    public Solution SolucionAleatoria() {
         SolucionMochila solucion = new SolucionMochila();
         ArrayList<Caja> cajasPosibles = Cajas();
         double espacioDispo = pesosMax;
@@ -86,11 +87,11 @@ public class ProblemaMochila implements IProblema {
     }
     
     @Override
-    public ISolucion MejorSolucion(ArrayList<ISolucion> soluciones) {
+    public Solution MejorSolucion(List<Solution> soluciones) {
         if (!soluciones.isEmpty()) {
-            ISolucion mejor = soluciones.get(0);
-            for (ISolucion sol : soluciones) {
-                if (sol.getValor() > mejor.getValor()) {
+            Solution mejor = soluciones.get(0);
+            for (Solution sol : soluciones) {
+                if (sol.value() > mejor.value()) {
                     mejor = sol;
                 }
             }
@@ -102,8 +103,8 @@ public class ProblemaMochila implements IProblema {
     }
     
     @Override
-    public ArrayList<ISolucion> Vecindario(ISolucion solucionActual) {
-        ArrayList<ISolucion> vecindario = new ArrayList();
+    public List<Solution> Vecindario(Solution solucionActual) {
+        ArrayList<Solution> vecindario = new ArrayList();
         for (int i = 0; i < NUM_VECINOS; i++) {
             // Creación de un clon
             SolucionMochila solucion = new SolucionMochila((SolucionMochila) solucionActual);

@@ -1,11 +1,11 @@
 package io.trepix.ia.kp;
 
-import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.metaheuristics.Solution;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 
 // Una solución potencial = una carga posible de la mochila
-public class SolucionMochila implements ISolucion {
+public class SolucionMochila implements Solution {
     public ArrayList<Caja> contenido;
     
     public SolucionMochila() {
@@ -26,7 +26,7 @@ public class SolucionMochila implements ISolucion {
     }
     
     @Override
-    public double getValor() {
+    public double value() {
         double valor = 0.0;
         for (Caja b : contenido) {
             valor += b.valor;
@@ -37,7 +37,7 @@ public class SolucionMochila implements ISolucion {
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(" - ");
-        sj.add("Valor : " + getValor());
+        sj.add("Valor : " + value());
         sj.add("Peso : " + getPeso());
         for(Caja b : contenido) {
             sj.add(b.toString());
@@ -51,7 +51,7 @@ public class SolucionMochila implements ISolucion {
             return false;
         }
         SolucionMochila sol = (SolucionMochila) o;
-        if (sol.contenido.size() != this.contenido.size() || sol.getPeso() != this.getPeso() || sol.getValor() != this.getValor()) {
+        if (sol.contenido.size() != this.contenido.size() || sol.getPeso() != this.getPeso() || sol.value() != this.value()) {
             return false;
         }
         for(Caja b : contenido) {

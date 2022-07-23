@@ -1,32 +1,33 @@
 package io.trepix.ia.metaheuristics.algorithms;
 
-import io.trepix.ia.metaheuristics.Algoritmo;
+import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.IHM;
-import io.trepix.ia.metaheuristics.IProblema;
-import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.metaheuristics.Problem;
+import io.trepix.ia.metaheuristics.Solution;
 import java.util.ArrayList;
+import java.util.List;
 
 // Descendiente de gradiente : se busca al mejor vecino hasta que no hay más mejorías
-public abstract class DescensoGradiente extends Algoritmo {
-    protected ISolucion solucionActual;
+public abstract class DescensoGradiente extends Algorithm {
+    protected Solution solucionActual;
     
     @Override
-    public final void Resolver(IProblema _pb, IHM ihm) {
-        super.Resolver(_pb, ihm);
+    public final void Resolver(Problem problem, IHM ihm) {
+        super.Resolver(problem, ihm);
         
-        solucionActual = problema.SolucionAleatoria();
+        solucionActual = this.problem.SolucionAleatoria();
         while(!CriterioParada()) {
-            ArrayList<ISolucion> vecindario = problema.Vecindario(solucionActual);
+            List<Solution> vecindario = this.problem.Vecindario(solucionActual);
             if (vecindario != null) {
-                ISolucion mejorSolucion = problema.MejorSolucion(vecindario);
+                Solution mejorSolucion = this.problem.MejorSolucion(vecindario);
                 Actualizar(mejorSolucion);
             }
             Incrementar();
         }
-        EnviarResultado();
+        sendResult();
     }
     
     protected abstract boolean CriterioParada();
-    protected abstract void Actualizar(ISolucion solucion);
+    protected abstract void Actualizar(Solution solucion);
     protected abstract void Incrementar();
 }

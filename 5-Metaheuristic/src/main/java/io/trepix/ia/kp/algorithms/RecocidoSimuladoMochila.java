@@ -1,7 +1,7 @@
 package io.trepix.ia.kp.algorithms;
 
 import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
-import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.kp.ProblemaMochila;
 
 // Recorrido simulado para el problema de la mochila
@@ -28,16 +28,16 @@ public class RecocidoSimuladoMochila extends RecocidoSimulado {
     }
 
     @Override
-    protected void Actualizar(ISolucion solucion) {
+    protected void Actualizar(Solution solucion) {
         double probar = 0.0;
-        if (solucion.getValor() < solucionActual.getValor()) {
+        if (solucion.value() < solucionActual.value()) {
             // Solución menos buena, se calcula la prueba de aceptación
-            probar = Math.exp(-1 * (solucionActual.getValor() - solucion.getValor()) / solucionActual.getValor() / temperatura);
+            probar = Math.exp(-1 * (solucionActual.value() - solucion.value()) / solucionActual.value() / temperatura);
         }
-        if (solucion.getValor() > solucionActual.getValor() || ProblemaMochila.generador.nextDouble() < probar) {
+        if (solucion.value() > solucionActual.value() || ProblemaMochila.generador.nextDouble() < probar) {
             // Se acepta el cambio
             solucionActual = solucion;
-            if (solucion.getValor() > mejorSolucion.getValor()) {
+            if (solucion.value() > mejorSolucion.value()) {
                 mejorSolucion = solucion;
                 numIteracionesSinMejora = 0;
             }  
@@ -51,7 +51,7 @@ public class RecocidoSimuladoMochila extends RecocidoSimulado {
     }
 
     @Override
-    protected void EnviarResultado() {
+    protected void sendResult() {
         ihm.MostrarMensaje(mejorSolucion.toString());
     }
 }

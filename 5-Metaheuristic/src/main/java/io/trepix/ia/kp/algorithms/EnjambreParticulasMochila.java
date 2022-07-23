@@ -1,7 +1,7 @@
 package io.trepix.ia.kp.algorithms;
 
 import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
-import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.kp.Caja;
 import io.trepix.ia.kp.ProblemaMochila;
 import io.trepix.ia.kp.SolucionMochila;
@@ -15,7 +15,7 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
     
     @Override
     protected void ActualizarSoluciones() {
-        for (ISolucion sol : soluciones) {
+        for (Solution sol : soluciones) {
             SolucionMochila solucion = (SolucionMochila) sol;
             if (!solucion.equals(mejorSolucion)) {
                 // Añadir un elemento de los mejores
@@ -23,7 +23,7 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
                 solucion = AgregarElemento(solucion, mejorActual);
                 // Disminución del peso si es necesario
                 int index;
-                while (solucion.getPeso() > ((ProblemaMochila)problema).pesosMax) {
+                while (solucion.getPeso() > ((ProblemaMochila) problem).pesosMax) {
                     index = ProblemaMochila.generador.nextInt(solucion.contenido.size());
                     solucion.contenido.remove(index);
                 }
@@ -33,7 +33,7 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
         }
     }
     
-    protected SolucionMochila AgregarElemento(SolucionMochila solucion, ISolucion solucionSource) {
+    protected SolucionMochila AgregarElemento(SolucionMochila solucion, Solution solucionSource) {
         int index = ProblemaMochila.generador.nextInt(((SolucionMochila)solucionSource).contenido.size());
         Caja b = ((SolucionMochila)solucionSource).contenido.get(index);
         if (!solucion.contenido.contains(b)) {
@@ -43,10 +43,10 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
     }
     
     protected SolucionMochila Completar(SolucionMochila solucion) {
-        double espacioDispo = ((ProblemaMochila)problema).pesosMax - solucion.getPeso();
-        ArrayList<Caja> cajasPosibles = ((ProblemaMochila)problema).Cajas();
+        double espacioDispo = ((ProblemaMochila) problem).pesosMax - solucion.getPeso();
+        ArrayList<Caja> cajasPosibles = ((ProblemaMochila) problem).Cajas();
         cajasPosibles.removeAll(solucion.contenido);
-        ((ProblemaMochila)problema).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
+        ((ProblemaMochila) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
         Caja b;
         int index;
         while (!cajasPosibles.isEmpty()) {
@@ -54,8 +54,8 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
             b = cajasPosibles.get(index);
             solucion.contenido.add(b);
             cajasPosibles.remove(b);
-            espacioDispo = ((ProblemaMochila)problema).pesosMax - solucion.getPeso();
-            ((ProblemaMochila)problema).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
+            espacioDispo = ((ProblemaMochila) problem).pesosMax - solucion.getPeso();
+            ((ProblemaMochila) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
         }
         return solucion;
     }
@@ -63,12 +63,12 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
     @Override
     protected void ActualizarVariables() {
         mejorActual = soluciones.get(0);
-        for (ISolucion sol : soluciones) {
-            if (sol.getValor() > mejorActual.getValor()) {
+        for (Solution sol : soluciones) {
+            if (sol.value() > mejorActual.value()) {
                 mejorActual = sol;
             }
         }
-        if (mejorActual.getValor() > mejorSolucion.getValor()) {
+        if (mejorActual.value() > mejorSolucion.value()) {
             mejorSolucion = mejorActual;
         }
     }
@@ -84,7 +84,7 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
     }
 
     @Override
-    protected void EnviarResultado() {
+    protected void sendResult() {
         ihm.MostrarMensaje(mejorSolucion.toString());
     }
 }

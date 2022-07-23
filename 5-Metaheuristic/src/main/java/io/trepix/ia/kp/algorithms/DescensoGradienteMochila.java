@@ -1,7 +1,7 @@
 package io.trepix.ia.kp.algorithms;
 
 import io.trepix.ia.metaheuristics.algorithms.DescensoGradiente;
-import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.metaheuristics.Solution;
 
 // Descenso de gradiente para el problema de la mochila
 public class DescensoGradienteMochila extends DescensoGradiente {
@@ -19,15 +19,15 @@ public class DescensoGradienteMochila extends DescensoGradiente {
     }
     
     @Override
-    protected void Actualizar(ISolucion solucion) {
-        if (solucion.getValor() > solucionActual.getValor()) {
+    protected void Actualizar(Solution solucion) {
+        if (solucion.value() > solucionActual.value()) {
             solucionActual = solucion;
             numIteracionesSinMejora = 0;
         }
     }
 
     @Override
-    protected void EnviarResultado() {
+    protected void sendResult() {
         ihm.MostrarMensaje(solucionActual.toString());
     }
 

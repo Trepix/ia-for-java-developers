@@ -1,29 +1,29 @@
 package io.trepix.ia.metaheuristics.algorithms;
 
-import io.trepix.ia.metaheuristics.Algoritmo;
+import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.IHM;
-import io.trepix.ia.metaheuristics.IProblema;
-import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.metaheuristics.Problem;
+import io.trepix.ia.metaheuristics.Solution;
 import java.util.ArrayList;
 
 // Algoritmo por enjambre : varias soluciones se van a desplazar en el espacio de búsqueda
-public abstract class EnjambreParticulas extends Algoritmo {
-    protected ArrayList<ISolucion> soluciones;
-    protected ISolucion mejorSolucion;
-    protected ISolucion mejorActual;
+public abstract class EnjambreParticulas extends Algorithm {
+    protected ArrayList<Solution> soluciones;
+    protected Solution mejorSolucion;
+    protected Solution mejorActual;
 
     protected final static int NUM_INDIVIDUOS = 30;
     
     @Override
-    public final void Resolver(IProblema pb, IHM ihm) {
+    public final void Resolver(Problem problem, IHM ihm) {
         // Iinicialización
-        super.Resolver(pb, ihm);
+        super.Resolver(problem, ihm);
         soluciones = new ArrayList();
         for (int i = 0; i < NUM_INDIVIDUOS; i++) {
-            ISolucion nuevaSol = problema.SolucionAleatoria();
+            Solution nuevaSol = this.problem.SolucionAleatoria();
             soluciones.add(nuevaSol);
         }
-        mejorSolucion = problema.MejorSolucion(soluciones);
+        mejorSolucion = this.problem.MejorSolucion(soluciones);
         mejorActual = mejorSolucion;
         
         // Bucle
@@ -33,7 +33,7 @@ public abstract class EnjambreParticulas extends Algoritmo {
             Incrementar();
         }
         
-        EnviarResultado();
+        sendResult();
     }
     
     protected abstract void ActualizarVariables();

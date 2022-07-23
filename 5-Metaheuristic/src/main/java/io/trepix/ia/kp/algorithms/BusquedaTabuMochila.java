@@ -1,9 +1,10 @@
 package io.trepix.ia.kp.algorithms;
 
 import io.trepix.ia.metaheuristics.algorithms.BusquedaTabu;
-import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.kp.SolucionMochila;
 import java.util.ArrayList;
+import java.util.List;
 
 // Búsqueda tabu para el problema de la mochila
 public class BusquedaTabuMochila extends BusquedaTabu {
@@ -21,11 +22,11 @@ public class BusquedaTabuMochila extends BusquedaTabu {
     }
     
     @Override
-    protected void Actualizar(ISolucion solucion) {
+    protected void Actualizar(Solution solucion) {
         if (!listaTabu.contains(solucion)) {
             solucionActual = solucion;
             AgregarListaTabu(solucion);
-            if (mejorSolucion.getValor() < solucion.getValor()) {
+            if (mejorSolucion.value() < solucion.value()) {
                 mejorSolucion = solucion;
                 numIteracionesSinMejora = 0;
             }
@@ -39,12 +40,12 @@ public class BusquedaTabuMochila extends BusquedaTabu {
     }
     
     @Override
-    protected void EnviarResultado() {
+    protected void sendResult() {
         ihm.MostrarMensaje(mejorSolucion.toString());
     }
     
     @Override
-    protected void AgregarListaTabu(ISolucion solucion) {
+    protected void AgregarListaTabu(Solution solucion) {
         while (listaTabu.size() >= NUM_MAX_POSICIONES_TABU) {
             listaTabu.remove(0);
         }
@@ -52,7 +53,7 @@ public class BusquedaTabuMochila extends BusquedaTabu {
     }
 
     @Override
-    protected ArrayList<ISolucion> EliminarSolucionesTabues(ArrayList<ISolucion> vecindario) {
+    protected List<Solution> EliminarSolucionesTabues(List<Solution> vecindario) {
         vecindario.removeAll(listaTabu);
         return vecindario;
     }

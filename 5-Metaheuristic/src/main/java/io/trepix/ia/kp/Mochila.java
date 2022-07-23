@@ -1,8 +1,8 @@
 package io.trepix.ia.kp;
 
-import io.trepix.ia.metaheuristics.Algoritmo;
+import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.IHM;
-import io.trepix.ia.metaheuristics.IProblema;
+import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.kp.algorithms.*;
 
 // Clase principal
@@ -26,11 +26,11 @@ public class Mochila implements IHM {
         LanzarAlgoritmos(pb);
     }
     
-    private void LanzarAlgoritmos(IProblema pb) {
-        Algoritmo algo;
+    private void LanzarAlgoritmos(Problem pb) {
+        Algorithm algo;
         
         System.out.println("Algoritmo voraz");
-        algo = new AlgoritmoVorazMochila();
+        algo = new AlgorithmVorazMochila();
         algo.Resolver(pb, this);
         System.out.println();
         

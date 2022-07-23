@@ -1,41 +1,42 @@
 package io.trepix.ia.metaheuristics.algorithms;
 
-import io.trepix.ia.metaheuristics.Algoritmo;
+import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.IHM;
-import io.trepix.ia.metaheuristics.IProblema;
-import io.trepix.ia.metaheuristics.ISolucion;
-import java.util.ArrayList;
+import io.trepix.ia.metaheuristics.Problem;
+import io.trepix.ia.metaheuristics.Solution;
+
+import java.util.List;
 
 // Búsqueda tabu : nos movemos al mejor vocino no presente en la lista tabu
-public abstract class BusquedaTabu extends Algoritmo {
-    protected ISolucion solucionActual;
-    protected ISolucion mejorSolucion;
+public abstract class BusquedaTabu extends Algorithm {
+    protected Solution solucionActual;
+    protected Solution mejorSolucion;
     
     @Override
-    public final void Resolver(IProblema pb, IHM ihm) {
-        super.Resolver(pb, ihm);
+    public final void Resolver(Problem problem, IHM ihm) {
+        super.Resolver(problem, ihm);
         
-        solucionActual = problema.SolucionAleatoria();
+        solucionActual = this.problem.SolucionAleatoria();
         mejorSolucion = solucionActual;
         AgregarListaTabu(solucionActual);
         
         while (!CriterioParada()) {
-            ArrayList<ISolucion> vecindario = problema.Vecindario(solucionActual);
+            List<Solution> vecindario = this.problem.Vecindario(solucionActual);
             if (vecindario != null) {
                 vecindario = EliminarSolucionesTabues(vecindario);
-                ISolucion mejorVecino = problema.MejorSolucion(vecindario);
+                Solution mejorVecino = this.problem.MejorSolucion(vecindario);
                 if (mejorVecino != null) {
                     Actualizar(mejorVecino);
                 }
             }
             Incrementar();
         }
-        EnviarResultado();
+        sendResult();
     }
     
-    protected abstract void AgregarListaTabu(ISolucion solucion);
-    protected abstract ArrayList<ISolucion> EliminarSolucionesTabues(ArrayList<ISolucion> vecindario);
+    protected abstract void AgregarListaTabu(Solution solucion);
+    protected abstract List<Solution> EliminarSolucionesTabues(List<Solution> vecindario);
     protected abstract boolean CriterioParada();
-    protected abstract void Actualizar(ISolucion solucion);
+    protected abstract void Actualizar(Solution solucion);
     protected abstract void Incrementar();
 }
