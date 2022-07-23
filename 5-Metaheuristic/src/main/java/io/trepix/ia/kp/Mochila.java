@@ -1,9 +1,9 @@
-package io.trepix.ia.application;
+package io.trepix.ia.kp;
 
-import io.trepix.ia.Metaheuristico.Algoritmo;
-import io.trepix.ia.Metaheuristico.IHM;
-import io.trepix.ia.Metaheuristico.IProblema;
-import io.trepix.ia.application.AlgoritmosMochila.*;
+import io.trepix.ia.metaheuristics.Algoritmo;
+import io.trepix.ia.metaheuristics.IHM;
+import io.trepix.ia.metaheuristics.IProblema;
+import io.trepix.ia.kp.algorithms.*;
 
 // Clase principal
 public class Mochila implements IHM {

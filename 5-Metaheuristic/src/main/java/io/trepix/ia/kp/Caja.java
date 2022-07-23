@@ -1,4 +1,4 @@
-package io.trepix.ia.application;
+package io.trepix.ia.kp;
 
 // Una caja en el problema de la mochila
 public class Caja {

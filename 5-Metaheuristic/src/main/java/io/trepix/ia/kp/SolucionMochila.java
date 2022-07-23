@@ -1,6 +1,6 @@
-package io.trepix.ia.application;
+package io.trepix.ia.kp;
 
-import io.trepix.ia.Metaheuristico.ISolucion;
+import io.trepix.ia.metaheuristics.ISolucion;
 import java.util.ArrayList;
 import java.util.StringJoiner;
 

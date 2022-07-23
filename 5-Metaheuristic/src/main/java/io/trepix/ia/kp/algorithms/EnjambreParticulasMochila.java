@@ -1,10 +1,10 @@
-package io.trepix.ia.application.AlgoritmosMochila;
+package io.trepix.ia.kp.algorithms;
 
-import io.trepix.ia.Metaheuristico.Algoritmos.EnjambreParticulas;
-import io.trepix.ia.Metaheuristico.ISolucion;
-import io.trepix.ia.application.Caja;
-import io.trepix.ia.application.ProblemaMochila;
-import io.trepix.ia.application.SolucionMochila;
+import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
+import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.kp.Caja;
+import io.trepix.ia.kp.ProblemaMochila;
+import io.trepix.ia.kp.SolucionMochila;
 
 import java.util.ArrayList;
 

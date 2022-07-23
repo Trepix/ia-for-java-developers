@@ -1,8 +1,8 @@
-package io.trepix.ia.application.AlgoritmosMochila;
+package io.trepix.ia.kp.algorithms;
 
-import io.trepix.ia.Metaheuristico.Algoritmos.RecocidoSimulado;
-import io.trepix.ia.Metaheuristico.ISolucion;
-import io.trepix.ia.application.ProblemaMochila;
+import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
+import io.trepix.ia.metaheuristics.ISolucion;
+import io.trepix.ia.kp.ProblemaMochila;
 
 // Recorrido simulado para el problema de la mochila
 public class RecocidoSimuladoMochila extends RecocidoSimulado {

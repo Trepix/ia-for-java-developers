@@ -1,8 +1,8 @@
-package io.trepix.ia.Metaheuristico.Algoritmos;
+package io.trepix.ia.metaheuristics.algorithms;
 
-import io.trepix.ia.Metaheuristico.Algoritmo;
-import io.trepix.ia.Metaheuristico.IHM;
-import io.trepix.ia.Metaheuristico.IProblema;
+import io.trepix.ia.metaheuristics.Algoritmo;
+import io.trepix.ia.metaheuristics.IHM;
+import io.trepix.ia.metaheuristics.IProblema;
 
 // Resolucion por algoritmo voraz : construcción progresiva de la solución
 public abstract class AlgoritmoVoraz extends Algoritmo {

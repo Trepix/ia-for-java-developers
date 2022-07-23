@@ -1,9 +1,9 @@
-package io.trepix.ia.Metaheuristico.Algoritmos;
+package io.trepix.ia.metaheuristics.algorithms;
 
-import io.trepix.ia.Metaheuristico.Algoritmo;
-import io.trepix.ia.Metaheuristico.IHM;
-import io.trepix.ia.Metaheuristico.IProblema;
-import io.trepix.ia.Metaheuristico.ISolucion;
+import io.trepix.ia.metaheuristics.Algoritmo;
+import io.trepix.ia.metaheuristics.IHM;
+import io.trepix.ia.metaheuristics.IProblema;
+import io.trepix.ia.metaheuristics.ISolucion;
 import java.util.ArrayList;
 
 // Algoritmo del recorrido : se hacen aproximaciones cada vez más pequeñas con la temperatura que baja

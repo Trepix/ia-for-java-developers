@@ -1,4 +1,4 @@
-package io.trepix.ia.Metaheuristico;
+package io.trepix.ia.metaheuristics;
 
 // Algoritmo genérico
 public abstract class Algoritmo {

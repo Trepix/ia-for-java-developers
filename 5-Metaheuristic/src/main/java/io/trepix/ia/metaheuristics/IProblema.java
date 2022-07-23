@@ -1,4 +1,4 @@
-package io.trepix.ia.Metaheuristico;
+package io.trepix.ia.metaheuristics;
 
 import java.util.ArrayList;
 
