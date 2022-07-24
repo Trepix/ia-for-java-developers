@@ -1,18 +1,22 @@
 package io.trepix.ia.metaheuristics.algorithms;
 
 import io.trepix.ia.metaheuristics.Algorithm;
-import io.trepix.ia.metaheuristics.IHM;
+import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
-import java.util.ArrayList;
+
 import java.util.List;
 
 // Descendiente de gradiente : se busca al mejor vecino hasta que no hay más mejorías
 public abstract class DescensoGradiente extends Algorithm {
     protected Solution solucionActual;
+
+    public DescensoGradiente() {
+        super("Descenso de gradiente");
+    }
     
     @Override
-    public final void Resolver(Problem problem, IHM ihm) {
+    public final void Resolver(Problem problem, HumanMachineInterface ihm) {
         super.Resolver(problem, ihm);
         
         solucionActual = this.problem.SolucionAleatoria();

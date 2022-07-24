@@ -41,7 +41,7 @@ public class BusquedaTabuMochila extends BusquedaTabu {
     
     @Override
     protected void sendResult() {
-        ihm.MostrarMensaje(mejorSolucion.toString());
+        ihm.show(mejorSolucion.toString());
     }
     
     @Override
