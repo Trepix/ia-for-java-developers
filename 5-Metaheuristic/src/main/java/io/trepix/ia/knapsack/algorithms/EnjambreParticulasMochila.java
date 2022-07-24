@@ -85,6 +85,6 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
 
     @Override
     protected void sendResult() {
-        ihm.MostrarMensaje(mejorSolucion.toString());
+        ihm.show(mejorSolucion.toString());
     }
 }

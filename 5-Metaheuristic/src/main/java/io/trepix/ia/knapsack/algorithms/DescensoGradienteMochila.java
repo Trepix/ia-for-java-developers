@@ -28,7 +28,7 @@ public class DescensoGradienteMochila extends DescensoGradiente {
 
     @Override
     protected void sendResult() {
-        ihm.MostrarMensaje(solucionActual.toString());
+        ihm.show(solucionActual.toString());
     }
 
 }

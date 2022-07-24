@@ -1,7 +1,7 @@
 package io.trepix.ia.metaheuristics.algorithms;
 
 import io.trepix.ia.metaheuristics.Algorithm;
-import io.trepix.ia.metaheuristics.IHM;
+import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 
@@ -11,9 +11,13 @@ import java.util.List;
 public abstract class BusquedaTabu extends Algorithm {
     protected Solution solucionActual;
     protected Solution mejorSolucion;
+
+    public BusquedaTabu() {
+        super("Búsqueda tabú");
+    }
     
     @Override
-    public final void Resolver(Problem problem, IHM ihm) {
+    public final void Resolver(Problem problem, HumanMachineInterface ihm) {
         super.Resolver(problem, ihm);
         
         solucionActual = this.problem.SolucionAleatoria();

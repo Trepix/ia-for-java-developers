@@ -28,7 +28,7 @@ public class AlgorithmVorazMochila extends AlgorithmVoraz {
 
     @Override
     protected void sendResult() {
-        ihm.MostrarMensaje(solucion.toString());
+        ihm.show(solucion.toString());
     }
 
 }

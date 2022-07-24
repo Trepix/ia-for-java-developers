@@ -52,6 +52,6 @@ public class RecocidoSimuladoMochila extends RecocidoSimulado {
 
     @Override
     protected void sendResult() {
-        ihm.MostrarMensaje(mejorSolucion.toString());
+        ihm.show(mejorSolucion.toString());
     }
 }
