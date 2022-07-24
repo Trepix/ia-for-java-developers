@@ -1,4 +1,4 @@
-package io.trepix.ia.kp;
+package io.trepix.ia.knapsack;
 
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;

@@ -1,9 +1,9 @@
-package io.trepix.ia.kp.algorithms;
+package io.trepix.ia.knapsack.algorithms;
 
 import io.trepix.ia.metaheuristics.algorithms.AlgorithmVoraz;
-import io.trepix.ia.kp.Caja;
-import io.trepix.ia.kp.ProblemaMochila;
-import io.trepix.ia.kp.SolucionMochila;
+import io.trepix.ia.knapsack.Caja;
+import io.trepix.ia.knapsack.ProblemaMochila;
+import io.trepix.ia.knapsack.SolucionMochila;
 import java.util.ArrayList;
 import java.util.Collections;
 

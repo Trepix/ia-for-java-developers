@@ -1,8 +1,8 @@
-package io.trepix.ia.kp.algorithms;
+package io.trepix.ia.knapsack.algorithms;
 
 import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
 import io.trepix.ia.metaheuristics.Solution;
-import io.trepix.ia.kp.ProblemaMochila;
+import io.trepix.ia.knapsack.ProblemaMochila;
 
 // Recorrido simulado para el problema de la mochila
 public class RecocidoSimuladoMochila extends RecocidoSimulado {

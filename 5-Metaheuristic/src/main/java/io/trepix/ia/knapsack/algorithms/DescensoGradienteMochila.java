@@ -1,4 +1,4 @@
-package io.trepix.ia.kp.algorithms;
+package io.trepix.ia.knapsack.algorithms;
 
 import io.trepix.ia.metaheuristics.algorithms.DescensoGradiente;
 import io.trepix.ia.metaheuristics.Solution;
