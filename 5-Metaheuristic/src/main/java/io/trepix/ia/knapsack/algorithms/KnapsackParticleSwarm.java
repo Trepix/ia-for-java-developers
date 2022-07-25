@@ -4,19 +4,19 @@ import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
 import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.knapsack.Caja;
-import io.trepix.ia.knapsack.ProblemaMochila;
+import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.SolucionMochila;
 
 import java.util.ArrayList;
 
 // Enjambre particular para el problema de la mochila
-public class EnjambreParticulasMochila extends EnjambreParticulas {
+public class KnapsackParticleSwarm extends EnjambreParticulas {
     protected int numIteraciones = 0;
     private final static int NUM_MAX_ITERACIONES = 200;
 
     private final HumanMachineInterface hmi;
 
-    public EnjambreParticulasMochila(HumanMachineInterface hmi) {
+    public KnapsackParticleSwarm(HumanMachineInterface hmi) {
         this.hmi = hmi;
     }
 
@@ -30,8 +30,8 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
                 solucion = AgregarElemento(solucion, mejorActual);
                 // Disminución del peso si es necesario
                 int index;
-                while (solucion.getPeso() > ((ProblemaMochila) problem).pesosMax) {
-                    index = ProblemaMochila.generador.nextInt(solucion.contenido.size());
+                while (solucion.getPeso() > ((KnapsackProblem) problem).pesosMax) {
+                    index = KnapsackProblem.generador.nextInt(solucion.contenido.size());
                     solucion.contenido.remove(index);
                 }
                 // Para terminar, se completa
@@ -41,7 +41,7 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
     }
     
     protected SolucionMochila AgregarElemento(SolucionMochila solucion, Solution solucionSource) {
-        int index = ProblemaMochila.generador.nextInt(((SolucionMochila)solucionSource).contenido.size());
+        int index = KnapsackProblem.generador.nextInt(((SolucionMochila)solucionSource).contenido.size());
         Caja b = ((SolucionMochila)solucionSource).contenido.get(index);
         if (!solucion.contenido.contains(b)) {
             solucion.contenido.add(b);
@@ -50,19 +50,19 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
     }
     
     protected SolucionMochila Completar(SolucionMochila solucion) {
-        double espacioDispo = ((ProblemaMochila) problem).pesosMax - solucion.getPeso();
-        ArrayList<Caja> cajasPosibles = ((ProblemaMochila) problem).Cajas();
+        double espacioDispo = ((KnapsackProblem) problem).pesosMax - solucion.getPeso();
+        ArrayList<Caja> cajasPosibles = ((KnapsackProblem) problem).Cajas();
         cajasPosibles.removeAll(solucion.contenido);
-        ((ProblemaMochila) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
+        ((KnapsackProblem) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
         Caja b;
         int index;
         while (!cajasPosibles.isEmpty()) {
-            index = ProblemaMochila.generador.nextInt(cajasPosibles.size());
+            index = KnapsackProblem.generador.nextInt(cajasPosibles.size());
             b = cajasPosibles.get(index);
             solucion.contenido.add(b);
             cajasPosibles.remove(b);
-            espacioDispo = ((ProblemaMochila) problem).pesosMax - solucion.getPeso();
-            ((ProblemaMochila) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
+            espacioDispo = ((KnapsackProblem) problem).pesosMax - solucion.getPeso();
+            ((KnapsackProblem) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
         }
         return solucion;
     }

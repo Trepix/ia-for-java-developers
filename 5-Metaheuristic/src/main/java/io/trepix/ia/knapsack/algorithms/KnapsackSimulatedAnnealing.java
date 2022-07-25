@@ -3,10 +3,10 @@ package io.trepix.ia.knapsack.algorithms;
 import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
 import io.trepix.ia.metaheuristics.Solution;
-import io.trepix.ia.knapsack.ProblemaMochila;
+import io.trepix.ia.knapsack.KnapsackProblem;
 
 // Recorrido simulado para el problema de la mochila
-public class RecocidoSimuladoMochila extends RecocidoSimulado {
+public class KnapsackSimulatedAnnealing extends RecocidoSimulado {
     protected int numIteracionesSinMejora = 0;
     protected int numIteraciones = 0;
     
@@ -15,7 +15,7 @@ public class RecocidoSimuladoMochila extends RecocidoSimulado {
 
     private final HumanMachineInterface hmi;
 
-    public RecocidoSimuladoMochila(HumanMachineInterface hmi) {
+    public KnapsackSimulatedAnnealing(HumanMachineInterface hmi) {
         this.hmi = hmi;
     }
 
@@ -41,7 +41,7 @@ public class RecocidoSimuladoMochila extends RecocidoSimulado {
             // Solución menos buena, se calcula la prueba de aceptación
             probar = Math.exp(-1 * (solucionActual.value() - solucion.value()) / solucionActual.value() / temperatura);
         }
-        if (solucion.value() > solucionActual.value() || ProblemaMochila.generador.nextDouble() < probar) {
+        if (solucion.value() > solucionActual.value() || KnapsackProblem.generador.nextDouble() < probar) {
             // Se acepta el cambio
             solucionActual = solucion;
             if (solucion.value() > mejorSolucion.value()) {

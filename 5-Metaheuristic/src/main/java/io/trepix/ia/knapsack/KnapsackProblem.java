@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Random;
 
 // El problema de la mochila a resolver (maximizar el valor sin sobrepasar el peso)
-public class ProblemaMochila implements Problem {
+public class KnapsackProblem implements Problem {
     protected ArrayList<Caja> cajasDispo = null;
     public double pesosMax;
     public static Random generador = null;
     public final static int NUM_VECINOS = 30;
     
     // Problema del libro (12 cajas)
-    public ProblemaMochila() {
+    public KnapsackProblem() {
         // Lista de las cajas
         cajasDispo = new ArrayList();
         cajasDispo.add(new Caja("A", 4, 15)); 
@@ -38,7 +38,7 @@ public class ProblemaMochila implements Problem {
     }
     
     // Constructor de problemas aleatorias
-    public ProblemaMochila(int numCajas, double _pesosMax, double valorMax) {
+    public KnapsackProblem(int numCajas, double _pesosMax, double valorMax) {
         cajasDispo = new ArrayList();
         pesosMax = _pesosMax;
         if (generador == null) {
