@@ -9,46 +9,17 @@ import java.util.Random;
 
 // El problema de la mochila a resolver (maximizar el valor sin sobrepasar el peso)
 public class KnapsackProblem implements Problem {
-    protected ArrayList<Caja> cajasDispo = null;
+    protected List<Caja> cajasDispo;
     public double pesosMax;
     public static Random generador = null;
     public final static int NUM_VECINOS = 30;
     
-    // Problema del libro (12 cajas)
-    public KnapsackProblem() {
-        // Lista de las cajas
-        cajasDispo = new ArrayList();
-        cajasDispo.add(new Caja("A", 4, 15)); 
-        cajasDispo.add(new Caja("B", 7, 15)); 
-        cajasDispo.add(new Caja("C", 10, 20)); 
-        cajasDispo.add(new Caja("D", 3, 10)); 
-        cajasDispo.add(new Caja("E", 6, 11)); 
-        cajasDispo.add(new Caja("F", 12, 16)); 
-        cajasDispo.add(new Caja("G", 11, 12)); 
-        cajasDispo.add(new Caja("H", 16, 22)); 
-        cajasDispo.add(new Caja("I", 5, 12)); 
-        cajasDispo.add(new Caja("J", 14, 21)); 
-        cajasDispo.add(new Caja("K", 4, 10)); 
-        cajasDispo.add(new Caja("L", 3, 7)); 
+    public KnapsackProblem(List<Caja> items, double maximumKnapsackWeight) {
+        this.pesosMax = maximumKnapsackWeight;
+        this.cajasDispo = items;
+        generador = new Random();
+    }
 
-        pesosMax = 20;
-        if (generador == null) {
-            generador = new Random();
-        }
-    }
-    
-    // Constructor de problemas aleatorias
-    public KnapsackProblem(int numCajas, double _pesosMax, double valorMax) {
-        cajasDispo = new ArrayList();
-        pesosMax = _pesosMax;
-        if (generador == null) {
-            generador = new Random();
-        }
-        for (int i = 0; i < numCajas; i++) {
-            cajasDispo.add(new Caja(Integer.toString(i), generador.nextDouble() * pesosMax, generador.nextDouble() * valorMax));
-        }
-    }
-    
     public ArrayList<Caja> Cajas() {
         ArrayList<Caja> copia = new ArrayList();
         copia.addAll(cajasDispo);
