@@ -1,7 +1,6 @@
 package io.trepix.ia.metaheuristics.algorithms;
 
 import io.trepix.ia.metaheuristics.Algorithm;
-import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 
@@ -18,8 +17,8 @@ public abstract class RecocidoSimulado extends Algorithm {
     }
     
     @Override
-    public final void Resolver(Problem problem, HumanMachineInterface ihm) {
-        super.Resolver(problem, ihm);
+    public final void solve(Problem problem) {
+        super.solve(problem);
         
         solucionActual = this.problem.SolucionAleatoria();
         mejorSolucion = solucionActual;

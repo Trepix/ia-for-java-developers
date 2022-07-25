@@ -1,7 +1,6 @@
 package io.trepix.ia.metaheuristics.algorithms;
 
 import io.trepix.ia.metaheuristics.Algorithm;
-import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 import java.util.ArrayList;
@@ -19,9 +18,9 @@ public abstract class EnjambreParticulas extends Algorithm {
     }
     
     @Override
-    public final void Resolver(Problem problem, HumanMachineInterface ihm) {
+    public final void solve(Problem problem) {
         // Iinicialización
-        super.Resolver(problem, ihm);
+        super.solve(problem);
         soluciones = new ArrayList();
         for (int i = 0; i < NUM_INDIVIDUOS; i++) {
             Solution nuevaSol = this.problem.SolucionAleatoria();
