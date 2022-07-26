@@ -16,9 +16,9 @@ public abstract class EnjambreParticulas extends Algorithm {
     public EnjambreParticulas() {
         super("Particle Swarm");
     }
-    
+
     @Override
-    public final void solve(Problem problem) {
+    public final Solution solve(Problem problem) {
         // Iinicialización
         super.solve(problem);
         soluciones = new ArrayList();
@@ -28,18 +28,13 @@ public abstract class EnjambreParticulas extends Algorithm {
         }
         mejorSolucion = this.problem.MejorSolucion(soluciones);
         mejorActual = mejorSolucion;
-        
+
         // Bucle
         while (!CriterioParada()) {
             ActualizarVariables();
             ActualizarSoluciones();
             Incrementar();
         }
-    }
-
-    @Override
-    public final Solution _solve(Problem problem) {
-        this.solve(problem);
         return mejorSolucion;
     }
 

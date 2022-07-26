@@ -20,7 +20,7 @@ public class KnapsackGreedyAlgorithm extends AlgorithmVoraz {
     }
 
     @Override
-    protected void ConstruirSolucion() {
+    protected Solution ConstruirSolucion() {
         solucion = new SolucionMochila();
         KnapsackProblem pb = (KnapsackProblem) problem;
         ArrayList<Caja> cajasPosibles = pb.Cajas();
@@ -32,11 +32,6 @@ public class KnapsackGreedyAlgorithm extends AlgorithmVoraz {
                 espacioDispo -= b.pesos;
             }
         }
-    }
-
-    @Override
-    protected Solution _ConstruirSolucion() {
-        this.ConstruirSolucion();
         return solucion;
     }
 
