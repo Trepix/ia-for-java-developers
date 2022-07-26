@@ -6,6 +6,7 @@ import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.Problem;
+import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.List;
 
@@ -73,7 +74,11 @@ public class Application implements HumanMachineInterface {
 
     private static void runAlgorithm(Algorithm algorithm, Problem problem) {
         System.out.println(algorithm.name());
-        algorithm.solve(problem);
+        if (algorithm instanceof KnapsackGreedyAlgorithm) {
+            Solution solution = algorithm._solve(problem);
+            System.out.println(solution.toString());
+        }
+        else algorithm.solve(problem);
         System.out.println();
     }
 

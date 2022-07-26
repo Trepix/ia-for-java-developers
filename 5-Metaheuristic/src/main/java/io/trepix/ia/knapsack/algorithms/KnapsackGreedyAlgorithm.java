@@ -1,6 +1,7 @@
 package io.trepix.ia.knapsack.algorithms;
 
 import io.trepix.ia.metaheuristics.HumanMachineInterface;
+import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.AlgorithmVoraz;
 import io.trepix.ia.knapsack.Caja;
 import io.trepix.ia.knapsack.KnapsackProblem;
@@ -34,8 +35,12 @@ public class KnapsackGreedyAlgorithm extends AlgorithmVoraz {
     }
 
     @Override
-    protected void sendResult() {
-        hmi.show(solucion.toString());
+    protected Solution _ConstruirSolucion() {
+        this.ConstruirSolucion();
+        return solucion;
     }
+
+    @Override
+    protected void sendResult() {}
 
 }
