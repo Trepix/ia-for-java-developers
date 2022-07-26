@@ -36,6 +36,12 @@ public abstract class BusquedaTabu extends Algorithm {
         }
         sendResult();
     }
+
+    @Override
+    public final Solution _solve(Problem problem) {
+        this.solve(problem);
+        return mejorSolucion;
+    }
     
     protected abstract void AgregarListaTabu(Solution solucion);
     protected abstract List<Solution> EliminarSolucionesTabues(List<Solution> vecindario);

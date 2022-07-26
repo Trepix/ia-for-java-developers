@@ -74,7 +74,7 @@ public class Application implements HumanMachineInterface {
 
     private static void runAlgorithm(Algorithm algorithm, Problem problem) {
         System.out.println(algorithm.name());
-        if (algorithm instanceof KnapsackGreedyAlgorithm) {
+        if (algorithm instanceof KnapsackGreedyAlgorithm || algorithm instanceof KnapsackTabuSearch) {
             Solution solution = algorithm._solve(problem);
             System.out.println(solution.toString());
         }
