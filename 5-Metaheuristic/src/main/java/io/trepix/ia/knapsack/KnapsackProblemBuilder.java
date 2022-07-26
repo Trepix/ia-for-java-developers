@@ -9,6 +9,8 @@ import static java.lang.Math.log10;
 
 public class KnapsackProblemBuilder {
 
+    private static final int NEIGHBOURS_NUMBER = 30;
+
     private List<Caja> items;
 
     private double maxKnapsackWeight;
@@ -51,14 +53,15 @@ public class KnapsackProblemBuilder {
     }
 
     public KnapsackProblem build() {
+        Random random = new Random(this.seed);
         if (items == null) {
-            items = buildRandomItems();
+            items = createtems(random);
         }
-        return new KnapsackProblem(items, maxKnapsackWeight);
+        Configuration configuration = new Configuration(maxKnapsackWeight, NEIGHBOURS_NUMBER, random);
+        return new KnapsackProblem(items, configuration);
     }
 
-    private List<Caja> buildRandomItems() {
-        Random random = new Random(this.seed);
+    private List<Caja> createtems(Random random) {
         List<Caja> items = new LinkedList<>();
         for (int i = 1; i <= itemsNumber; i++) {
             String name = leadingZeros(i);

@@ -12,12 +12,13 @@ public class KnapsackProblem implements Problem {
     protected List<Caja> cajasDispo;
     public double pesosMax;
     public static Random generador = null;
-    public final static int NUM_VECINOS = 30;
-    
-    public KnapsackProblem(List<Caja> items, double maximumKnapsackWeight) {
-        this.pesosMax = maximumKnapsackWeight;
+    private final int NUM_VECINOS;
+
+    public KnapsackProblem(List<Caja> items, Configuration configuration) {
+        this.pesosMax = configuration.maximumKnapsackWeight();
         this.cajasDispo = items;
-        generador = new Random();
+        generador = configuration.random();
+        this.NUM_VECINOS = configuration.neighboursNumber();
     }
 
     public ArrayList<Caja> Cajas() {
