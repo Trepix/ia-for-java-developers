@@ -47,9 +47,7 @@ public class KnapsackTabuSearch extends BusquedaTabu {
     }
     
     @Override
-    protected void sendResult() {
-        hmi.show(mejorSolucion.toString());
-    }
+    protected void sendResult() { }
     
     @Override
     protected void AgregarListaTabu(Solution solucion) {
