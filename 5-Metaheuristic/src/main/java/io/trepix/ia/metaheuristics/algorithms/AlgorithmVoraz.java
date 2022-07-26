@@ -7,7 +7,7 @@ import io.trepix.ia.metaheuristics.Problem;
 public abstract class AlgorithmVoraz extends Algorithm {
 
     public AlgorithmVoraz() {
-        super("Algoritmo voraz");
+        super("Greedy Algorithm");
     }
 
     @Override
