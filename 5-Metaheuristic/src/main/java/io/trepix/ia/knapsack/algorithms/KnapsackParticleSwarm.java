@@ -1,11 +1,10 @@
 package io.trepix.ia.knapsack.algorithms;
 
-import io.trepix.ia.metaheuristics.HumanMachineInterface;
-import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.knapsack.Caja;
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.SolucionMochila;
+import io.trepix.ia.metaheuristics.Solution;
+import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
 
 import java.util.ArrayList;
 
@@ -13,12 +12,6 @@ import java.util.ArrayList;
 public class KnapsackParticleSwarm extends EnjambreParticulas {
     protected int numIteraciones = 0;
     private final static int NUM_MAX_ITERACIONES = 200;
-
-    private final HumanMachineInterface hmi;
-
-    public KnapsackParticleSwarm(HumanMachineInterface hmi) {
-        this.hmi = hmi;
-    }
 
     @Override
     protected void ActualizarSoluciones() {

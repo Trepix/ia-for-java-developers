@@ -1,9 +1,9 @@
 package io.trepix.ia.knapsack.algorithms;
 
-import io.trepix.ia.metaheuristics.HumanMachineInterface;
-import io.trepix.ia.metaheuristics.algorithms.BusquedaTabu;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.knapsack.SolucionMochila;
+import io.trepix.ia.metaheuristics.Solution;
+import io.trepix.ia.metaheuristics.algorithms.BusquedaTabu;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +16,6 @@ public class KnapsackTabuSearch extends BusquedaTabu {
     private final static int NUM_MAX_ITERACIONES = 100;
     private final static int NUM_MAX_ITERACIONES_SIN_MEJORA = 30;
     private final static int NUM_MAX_POSICIONES_TABU = 50;
-
-    private final HumanMachineInterface hmi;
-
-    public KnapsackTabuSearch(HumanMachineInterface hmi) {
-        this.hmi = hmi;
-    }
 
     @Override
     protected boolean CriterioParada() {

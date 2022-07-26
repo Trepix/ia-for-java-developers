@@ -4,7 +4,6 @@ import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackProblemBuilder;
 import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
-import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 
@@ -15,16 +14,13 @@ import static io.trepix.ia.knapsack.KnapsackProblemBuilder.withItems;
 import static io.trepix.ia.knapsack.KnapsackProblemBuilder.withRandomItems;
 import static java.lang.Long.parseLong;
 
-public class Application implements HumanMachineInterface {
-
-    private static final Application app = new Application();
-
+public class Application {
     private static final List<Algorithm> KNAPSACK_ALGORITHMS = List.of(
-            new KnapsackGreedyAlgorithm(app),
-            new KnapsackGradientDescent(app),
-            new KnapsackTabuSearch(app),
-            new KnapsackSimulatedAnnealing(app),
-            new KnapsackParticleSwarm(app)
+            new KnapsackGreedyAlgorithm(),
+            new KnapsackGradientDescent(),
+            new KnapsackTabuSearch(),
+            new KnapsackSimulatedAnnealing(),
+            new KnapsackParticleSwarm()
     );
 
     public static void main(String[] args) {
@@ -77,8 +73,4 @@ public class Application implements HumanMachineInterface {
         System.out.println();
     }
 
-    @Override
-    public void show(String message) {
-        System.out.println(message);
-    }
 }
