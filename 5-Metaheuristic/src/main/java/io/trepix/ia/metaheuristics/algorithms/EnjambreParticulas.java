@@ -38,7 +38,13 @@ public abstract class EnjambreParticulas extends Algorithm {
         
         sendResult();
     }
-    
+
+    @Override
+    public final Solution _solve(Problem problem) {
+        this.solve(problem);
+        return mejorSolucion;
+    }
+
     protected abstract void ActualizarVariables();
     protected abstract void ActualizarSoluciones();
     protected abstract boolean CriterioParada();

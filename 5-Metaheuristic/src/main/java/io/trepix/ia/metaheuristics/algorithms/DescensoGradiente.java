@@ -29,6 +29,12 @@ public abstract class DescensoGradiente extends Algorithm {
         }
         sendResult();
     }
+
+    @Override
+    public final Solution _solve(Problem problem) {
+        this.solve(problem);
+        return solucionActual;
+    }
     
     protected abstract boolean CriterioParada();
     protected abstract void Actualizar(Solution solucion);

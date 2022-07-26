@@ -58,7 +58,5 @@ public class KnapsackSimulatedAnnealing extends RecocidoSimulado {
     }
 
     @Override
-    protected void sendResult() {
-        hmi.show(mejorSolucion.toString());
-    }
+    protected void sendResult() { }
 }
