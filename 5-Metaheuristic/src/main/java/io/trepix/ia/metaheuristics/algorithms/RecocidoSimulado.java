@@ -15,15 +15,15 @@ public abstract class RecocidoSimulado extends Algorithm {
     public RecocidoSimulado() {
         super("Simulated Annealing");
     }
-    
+
     @Override
-    public final void solve(Problem problem) {
+    public final Solution solve(Problem problem) {
         super.solve(problem);
-        
+
         solucionActual = this.problem.SolucionAleatoria();
         mejorSolucion = solucionActual;
         InitializarTemperatura();
-        
+
         while (!CriterioParada()) {
             List<Solution> vecindario = this.problem.Vecindario(solucionActual);
             if (vecindario != null) {
@@ -33,11 +33,6 @@ public abstract class RecocidoSimulado extends Algorithm {
             Incrementar();
             ActualizarTemperatura();
         }
-    }
-
-    @Override
-    public final Solution _solve(Problem problem) {
-        this.solve(problem);
         return mejorSolucion;
     }
     

@@ -13,11 +13,11 @@ public abstract class DescensoGradiente extends Algorithm {
     public DescensoGradiente() {
         super("Gradient Descent");
     }
-    
+
     @Override
-    public final void solve(Problem problem) {
+    public final Solution solve(Problem problem) {
         super.solve(problem);
-        
+
         solucionActual = this.problem.SolucionAleatoria();
         while(!CriterioParada()) {
             List<Solution> vecindario = this.problem.Vecindario(solucionActual);
@@ -27,11 +27,6 @@ public abstract class DescensoGradiente extends Algorithm {
             }
             Incrementar();
         }
-    }
-
-    @Override
-    public final Solution _solve(Problem problem) {
-        this.solve(problem);
         return solucionActual;
     }
     

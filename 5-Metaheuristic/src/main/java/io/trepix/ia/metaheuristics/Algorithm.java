@@ -6,12 +6,8 @@ public abstract class Algorithm {
     protected Algorithm(String name) {
         this.name = name;
     }
-    
-    public void solve(Problem problem) {
-        this.problem = problem;
-    }
 
-    public Solution _solve(Problem problem) {
+    public Solution solve(Problem problem) {
         this.problem = problem;
         return null;
     }

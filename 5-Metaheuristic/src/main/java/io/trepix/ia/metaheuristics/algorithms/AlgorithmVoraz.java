@@ -12,18 +12,10 @@ public abstract class AlgorithmVoraz extends Algorithm {
     }
 
     @Override
-    public final void solve(Problem problem) {
+    public final Solution solve(Problem problem) {
         super.solve(problem);
-        ConstruirSolucion();
+        return ConstruirSolucion();
     }
 
-    @Override
-    public final Solution _solve(Problem problem) {
-        super.solve(problem);
-        return _ConstruirSolucion();
-    }
-    
-    protected abstract void ConstruirSolucion();
-
-    protected abstract Solution _ConstruirSolucion();
+    protected abstract Solution ConstruirSolucion();
 }

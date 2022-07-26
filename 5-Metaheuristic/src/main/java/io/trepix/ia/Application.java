@@ -74,7 +74,7 @@ public class Application implements HumanMachineInterface {
 
     private static void runAlgorithm(Algorithm algorithm, Problem problem) {
         System.out.println(algorithm.name());
-        Solution solution = algorithm._solve(problem);
+        Solution solution = algorithm.solve(problem);
         System.out.println(solution.toString());
         System.out.println();
     }
