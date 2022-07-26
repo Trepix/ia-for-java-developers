@@ -8,6 +8,8 @@ import java.util.List;
 
 // Algoritmo del recorrido : se hacen aproximaciones cada vez más pequeñas con la temperatura que baja
 public abstract class RecocidoSimulado extends Algorithm {
+
+    protected Problem problem;
     protected Solution solucionActual;
     protected Solution mejorSolucion;
     protected double temperatura;
@@ -18,7 +20,7 @@ public abstract class RecocidoSimulado extends Algorithm {
 
     @Override
     public final Solution solve(Problem problem) {
-        super.solve(problem);
+        this.problem = problem;
 
         solucionActual = this.problem.SolucionAleatoria();
         mejorSolucion = solucionActual;
@@ -35,10 +37,14 @@ public abstract class RecocidoSimulado extends Algorithm {
         }
         return mejorSolucion;
     }
-    
+
     protected abstract void ActualizarTemperatura();
+
     protected abstract void InitializarTemperatura();
+
     protected abstract boolean CriterioParada();
+
     protected abstract void Actualizar(Solution solucion);
+
     protected abstract void Incrementar();
 }

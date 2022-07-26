@@ -8,6 +8,8 @@ import java.util.List;
 
 // Descendiente de gradiente : se busca al mejor vecino hasta que no hay más mejorías
 public abstract class DescensoGradiente extends Algorithm {
+
+    protected Problem problem;
     protected Solution solucionActual;
 
     public DescensoGradiente() {
@@ -16,10 +18,10 @@ public abstract class DescensoGradiente extends Algorithm {
 
     @Override
     public final Solution solve(Problem problem) {
-        super.solve(problem);
+        this.problem = problem;
 
         solucionActual = this.problem.SolucionAleatoria();
-        while(!CriterioParada()) {
+        while (!CriterioParada()) {
             List<Solution> vecindario = this.problem.Vecindario(solucionActual);
             if (vecindario != null) {
                 Solution mejorSolucion = this.problem.MejorSolucion(vecindario);
@@ -29,8 +31,10 @@ public abstract class DescensoGradiente extends Algorithm {
         }
         return solucionActual;
     }
-    
+
     protected abstract boolean CriterioParada();
+
     protected abstract void Actualizar(Solution solucion);
+
     protected abstract void Incrementar();
 }

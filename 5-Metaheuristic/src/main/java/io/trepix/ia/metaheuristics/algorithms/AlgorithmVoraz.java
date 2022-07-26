@@ -7,13 +7,15 @@ import io.trepix.ia.metaheuristics.Solution;
 // Resolucion por algoritmo voraz : construcción progresiva de la solución
 public abstract class AlgorithmVoraz extends Algorithm {
 
+    protected Problem problem;
+
     public AlgorithmVoraz() {
         super("Greedy Algorithm");
     }
 
     @Override
     public final Solution solve(Problem problem) {
-        super.solve(problem);
+        this.problem = problem;
         return ConstruirSolucion();
     }
 

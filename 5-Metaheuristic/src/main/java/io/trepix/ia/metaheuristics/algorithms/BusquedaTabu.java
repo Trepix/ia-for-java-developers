@@ -8,6 +8,8 @@ import java.util.List;
 
 // Búsqueda tabu : nos movemos al mejor vocino no presente en la lista tabu
 public abstract class BusquedaTabu extends Algorithm {
+
+    protected Problem problem;
     protected Solution solucionActual;
     protected Solution mejorSolucion;
 
@@ -17,7 +19,7 @@ public abstract class BusquedaTabu extends Algorithm {
 
     @Override
     public final Solution solve(Problem problem) {
-        super.solve(problem);
+        this.problem = problem;
 
         solucionActual = this.problem.SolucionAleatoria();
         mejorSolucion = solucionActual;
@@ -36,10 +38,14 @@ public abstract class BusquedaTabu extends Algorithm {
         }
         return mejorSolucion;
     }
-    
+
     protected abstract void AgregarListaTabu(Solution solucion);
+
     protected abstract List<Solution> EliminarSolucionesTabues(List<Solution> vecindario);
+
     protected abstract boolean CriterioParada();
+
     protected abstract void Actualizar(Solution solucion);
+
     protected abstract void Incrementar();
 }
