@@ -15,8 +15,7 @@ public abstract class Algorithm {
         this.problem = problem;
         return null;
     }
-    
-    protected abstract void sendResult();
+
     public String name() {
         return this.name;
     }

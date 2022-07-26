@@ -34,7 +34,6 @@ public abstract class BusquedaTabu extends Algorithm {
             }
             Incrementar();
         }
-        sendResult();
     }
 
     @Override

@@ -45,10 +45,7 @@ public class KnapsackTabuSearch extends BusquedaTabu {
         numIteracionesSinMejora++;
         numIteraciones++;
     }
-    
-    @Override
-    protected void sendResult() { }
-    
+
     @Override
     protected void AgregarListaTabu(Solution solucion) {
         while (listaTabu.size() >= NUM_MAX_POSICIONES_TABU) {

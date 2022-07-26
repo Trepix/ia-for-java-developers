@@ -35,8 +35,6 @@ public abstract class EnjambreParticulas extends Algorithm {
             ActualizarSoluciones();
             Incrementar();
         }
-        
-        sendResult();
     }
 
     @Override

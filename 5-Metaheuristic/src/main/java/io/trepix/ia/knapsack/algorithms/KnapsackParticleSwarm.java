@@ -90,6 +90,4 @@ public class KnapsackParticleSwarm extends EnjambreParticulas {
         numIteraciones++;
     }
 
-    @Override
-    protected void sendResult() { }
 }

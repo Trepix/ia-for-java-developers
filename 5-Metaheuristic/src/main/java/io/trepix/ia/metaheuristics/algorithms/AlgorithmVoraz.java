@@ -15,7 +15,6 @@ public abstract class AlgorithmVoraz extends Algorithm {
     public final void solve(Problem problem) {
         super.solve(problem);
         ConstruirSolucion();
-        sendResult();
     }
 
     @Override
