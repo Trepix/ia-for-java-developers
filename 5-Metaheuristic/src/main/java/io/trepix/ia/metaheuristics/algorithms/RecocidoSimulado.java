@@ -35,6 +35,12 @@ public abstract class RecocidoSimulado extends Algorithm {
         }
         sendResult();
     }
+
+    @Override
+    public final Solution _solve(Problem problem) {
+        this.solve(problem);
+        return mejorSolucion;
+    }
     
     protected abstract void ActualizarTemperatura();
     protected abstract void InitializarTemperatura();

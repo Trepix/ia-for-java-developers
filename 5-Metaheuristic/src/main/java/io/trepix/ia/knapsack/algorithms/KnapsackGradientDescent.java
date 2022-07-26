@@ -34,8 +34,6 @@ public class KnapsackGradientDescent extends DescensoGradiente {
     }
 
     @Override
-    protected void sendResult() {
-        hmi.show(solucionActual.toString());
-    }
+    protected void sendResult() {}
 
 }

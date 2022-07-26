@@ -91,7 +91,5 @@ public class KnapsackParticleSwarm extends EnjambreParticulas {
     }
 
     @Override
-    protected void sendResult() {
-        hmi.show(mejorSolucion.toString());
-    }
+    protected void sendResult() { }
 }
