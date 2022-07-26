@@ -40,7 +40,4 @@ public class KnapsackGreedyAlgorithm extends AlgorithmVoraz {
         return solucion;
     }
 
-    @Override
-    protected void sendResult() {}
-
 }

@@ -57,6 +57,4 @@ public class KnapsackSimulatedAnnealing extends RecocidoSimulado {
         numIteraciones++;
     }
 
-    @Override
-    protected void sendResult() { }
 }

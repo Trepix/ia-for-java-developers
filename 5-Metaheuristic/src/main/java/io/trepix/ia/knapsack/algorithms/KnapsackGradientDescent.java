@@ -33,7 +33,4 @@ public class KnapsackGradientDescent extends DescensoGradiente {
         }
     }
 
-    @Override
-    protected void sendResult() {}
-
 }

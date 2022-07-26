@@ -27,7 +27,6 @@ public abstract class DescensoGradiente extends Algorithm {
             }
             Incrementar();
         }
-        sendResult();
     }
 
     @Override

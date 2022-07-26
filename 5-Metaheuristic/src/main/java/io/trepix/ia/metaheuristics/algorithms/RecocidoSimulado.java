@@ -33,7 +33,6 @@ public abstract class RecocidoSimulado extends Algorithm {
             Incrementar();
             ActualizarTemperatura();
         }
-        sendResult();
     }
 
     @Override
