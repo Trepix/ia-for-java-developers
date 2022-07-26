@@ -10,6 +10,11 @@ public abstract class Algorithm {
     public void solve(Problem problem) {
         this.problem = problem;
     }
+
+    public Solution _solve(Problem problem) {
+        this.problem = problem;
+        return null;
+    }
     
     protected abstract void sendResult();
     public String name() {
