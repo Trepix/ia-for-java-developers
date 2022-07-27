@@ -7,7 +7,7 @@ import io.trepix.ia.metaheuristics.Solution;
 import java.util.List;
 
 // Búsqueda tabu : nos movemos al mejor vocino no presente en la lista tabu
-public abstract class BusquedaTabu extends Algorithm {
+public abstract class BusquedaTabu<T extends Problem> extends Algorithm<T> {
 
     protected Problem problem;
     protected Solution solucionActual;
@@ -37,6 +37,11 @@ public abstract class BusquedaTabu extends Algorithm {
             Incrementar();
         }
         return mejorSolucion;
+    }
+
+    @Override
+    public final Solution _solve(T problem) {
+        return this.solve(problem);
     }
 
     protected abstract void AgregarListaTabu(Solution solucion);

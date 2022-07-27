@@ -7,7 +7,7 @@ import io.trepix.ia.metaheuristics.Solution;
 import java.util.ArrayList;
 
 // Algoritmo por enjambre : varias soluciones se van a desplazar en el espacio de búsqueda
-public abstract class EnjambreParticulas extends Algorithm {
+public abstract class EnjambreParticulas<T extends Problem> extends Algorithm<T> {
 
     protected final static int NUM_INDIVIDUOS = 30;
     protected Problem problem;
@@ -38,6 +38,11 @@ public abstract class EnjambreParticulas extends Algorithm {
             Incrementar();
         }
         return mejorSolucion;
+    }
+
+    @Override
+    public final Solution _solve(T problem) {
+        return this.solve(problem);
     }
 
     protected abstract void ActualizarVariables();

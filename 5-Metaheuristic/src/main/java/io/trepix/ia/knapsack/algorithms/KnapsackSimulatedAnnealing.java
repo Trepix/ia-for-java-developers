@@ -5,7 +5,7 @@ import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
 
 // Recorrido simulado para el problema de la mochila
-public class KnapsackSimulatedAnnealing extends RecocidoSimulado {
+public class KnapsackSimulatedAnnealing extends RecocidoSimulado<KnapsackProblem> {
     private final static int NUM_MAX_ITERACIONES = 100;
     private final static int NUM_MAX_ITERACIONES_SIN_MEJORA = 30;
     protected int numIteracionesSinMejora = 0;
