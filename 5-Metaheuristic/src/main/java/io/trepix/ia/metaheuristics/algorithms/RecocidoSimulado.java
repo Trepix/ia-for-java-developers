@@ -19,7 +19,7 @@ public abstract class RecocidoSimulado<T extends Problem> extends Algorithm<T> {
     }
 
     @Override
-    public final Solution solve(Problem problem) {
+    public final Solution solve(T problem) {
         this.problem = problem;
 
         solucionActual = this.problem.SolucionAleatoria();
@@ -36,11 +36,6 @@ public abstract class RecocidoSimulado<T extends Problem> extends Algorithm<T> {
             ActualizarTemperatura();
         }
         return mejorSolucion;
-    }
-
-    @Override
-    public final Solution _solve(T problem) {
-        return this.solve(problem);
     }
 
     protected abstract void ActualizarTemperatura();

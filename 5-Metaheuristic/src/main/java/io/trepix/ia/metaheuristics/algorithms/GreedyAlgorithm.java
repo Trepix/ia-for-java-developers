@@ -11,15 +11,9 @@ public abstract class GreedyAlgorithm<T extends Problem> extends Algorithm<T> {
         super("Greedy Algorithm");
     }
 
-    @Override
-    public final Solution solve(Problem problem) {
+    public final Solution solve(T problem) {
         return findSolution(problem);
     }
 
-    public final Solution _solve(T problem) {
-        return _findSolution(problem);
-    }
-
-    protected abstract Solution _findSolution(T problem);
     protected abstract Solution findSolution(Problem problem);
 }

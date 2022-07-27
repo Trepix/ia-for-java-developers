@@ -20,7 +20,7 @@ public abstract class EnjambreParticulas<T extends Problem> extends Algorithm<T>
     }
 
     @Override
-    public final Solution solve(Problem problem) {
+    public final Solution solve(T problem) {
         // Iinicialización
         this.problem = problem;
         soluciones = new ArrayList();
@@ -38,11 +38,6 @@ public abstract class EnjambreParticulas<T extends Problem> extends Algorithm<T>
             Incrementar();
         }
         return mejorSolucion;
-    }
-
-    @Override
-    public final Solution _solve(T problem) {
-        return this.solve(problem);
     }
 
     protected abstract void ActualizarVariables();
