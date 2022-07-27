@@ -18,7 +18,7 @@ public abstract class BusquedaTabu<T extends Problem> extends Algorithm<T> {
     }
 
     @Override
-    public final Solution solve(Problem problem) {
+    public final Solution solve(T problem) {
         this.problem = problem;
 
         solucionActual = this.problem.SolucionAleatoria();
@@ -37,11 +37,6 @@ public abstract class BusquedaTabu<T extends Problem> extends Algorithm<T> {
             Incrementar();
         }
         return mejorSolucion;
-    }
-
-    @Override
-    public final Solution _solve(T problem) {
-        return this.solve(problem);
     }
 
     protected abstract void AgregarListaTabu(Solution solucion);

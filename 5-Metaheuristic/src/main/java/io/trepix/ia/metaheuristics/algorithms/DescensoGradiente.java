@@ -4,7 +4,6 @@ import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 
-import javax.sound.sampled.Port;
 import java.util.List;
 
 // Descendiente de gradiente : se busca al mejor vecino hasta que no hay más mejorías
@@ -18,7 +17,7 @@ public abstract class DescensoGradiente<T extends Problem> extends Algorithm<T> 
     }
 
     @Override
-    public final Solution solve(Problem problem) {
+    public final Solution solve(T problem) {
         this.problem = problem;
 
         solucionActual = this.problem.SolucionAleatoria();
@@ -31,11 +30,6 @@ public abstract class DescensoGradiente<T extends Problem> extends Algorithm<T> 
             Incrementar();
         }
         return solucionActual;
-    }
-
-    @Override
-    public final Solution _solve(T problem) {
-        return this.solve(problem);
     }
 
     protected abstract boolean CriterioParada();
