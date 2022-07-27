@@ -15,5 +15,5 @@ public abstract class GreedyAlgorithm<T extends Problem> extends Algorithm<T> {
         return findSolution(problem);
     }
 
-    protected abstract Solution findSolution(Problem problem);
+    protected abstract Solution findSolution(T problem);
 }
