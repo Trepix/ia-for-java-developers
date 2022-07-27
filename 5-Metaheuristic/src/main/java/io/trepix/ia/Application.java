@@ -74,7 +74,7 @@ public class Application {
     private static void runAlgorithm(Algorithm algorithm, Problem problem) {
         System.out.println(algorithm.name());
         Solution solution;
-        if (algorithm instanceof GreedyAlgorithm<?>) {
+        if (algorithm instanceof GreedyAlgorithm<?> || algorithm instanceof KnapsackGradientDescent) {
             solution = algorithm._solve(problem);
         }
         else solution = algorithm.solve(problem);
