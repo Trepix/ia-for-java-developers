@@ -6,6 +6,7 @@ import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
+import io.trepix.ia.metaheuristics.algorithms.GreedyAlgorithm;
 
 import java.util.List;
 
@@ -72,7 +73,11 @@ public class Application {
 
     private static void runAlgorithm(Algorithm algorithm, Problem problem) {
         System.out.println(algorithm.name());
-        Solution solution = algorithm.solve(problem);
+        Solution solution;
+        if (algorithm instanceof GreedyAlgorithm<?>) {
+            solution = algorithm._solve(problem);
+        }
+        else solution = algorithm.solve(problem);
         System.out.println(solution.toString());
         System.out.println();
     }
