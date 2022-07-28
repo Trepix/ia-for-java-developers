@@ -6,10 +6,8 @@ import java.util.List;
 public class Knapsack {
 
     private final double maximumWeight;
-
-    private double currentWeight = 0;
-
     private final List<Item> items;
+    private double currentWeight = 0;
 
     public Knapsack(double maximumWeight) {
         this.maximumWeight = maximumWeight;
@@ -27,5 +25,9 @@ public class Knapsack {
     public void add(Item item) {
         items.add(item);
         currentWeight += item.weight();
+    }
+
+    public boolean isFull() {
+        return currentWeight == maximumWeight;
     }
 }

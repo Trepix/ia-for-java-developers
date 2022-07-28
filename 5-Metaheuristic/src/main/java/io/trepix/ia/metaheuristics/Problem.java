@@ -8,9 +8,8 @@ public interface Problem {
     //Devuleve el vecindario de una solución
     List<Solution> neighbours(Solution solucionActual);
 
-    Optional<Solution> bestNeighbour(Solution solucionActual);
-    
-    // Crea una solución aleatoria
+    Optional<Solution> bestNeighbour(Solution solution);
+
     Solution randomSolution();
     
     // Devuelve la mejor solución de un conjunto

@@ -7,6 +7,7 @@ import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Enjambre particular para el problema de la mochila
 public class KnapsackParticleSwarm extends EnjambreParticulas<KnapsackProblem> {
@@ -44,7 +45,7 @@ public class KnapsackParticleSwarm extends EnjambreParticulas<KnapsackProblem> {
     
     protected KnapsackSolution Completar(KnapsackSolution solucion) {
         double espacioDispo = ((KnapsackProblem) problem).maximumWeight() - solucion.getPeso();
-        ArrayList<Item> cajasPosibles = ((KnapsackProblem) problem).items();
+        List<Item> cajasPosibles = ((KnapsackProblem) problem).items();
         cajasPosibles.removeAll(solucion.contenido);
         ((KnapsackProblem) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
         Item b;
