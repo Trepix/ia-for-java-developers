@@ -2,10 +2,8 @@ package io.trepix.ia.knapsack;
 
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
 
 // El problema de la mochila a resolver (maximizar el valor sin sobrepasar el peso)
 public class KnapsackProblem implements Problem {
@@ -103,6 +101,11 @@ public class KnapsackProblem implements Problem {
             vecindario.add(solucion);
         }
         return vecindario;
+    }
+
+    @Override
+    public Optional<Solution> bestNeighbour(Solution solucionActual) {
+        return this.neighbours(solucionActual).stream().max(Solution::compareTo);
     }
 
     public Knapsack emptyKnapsack() {

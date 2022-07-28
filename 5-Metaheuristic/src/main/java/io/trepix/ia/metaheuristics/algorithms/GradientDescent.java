@@ -4,8 +4,6 @@ import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 
-import java.util.List;
-
 public abstract class GradientDescent<T extends Problem> extends Algorithm<T> {
     protected Solution currentSolution;
 
@@ -17,12 +15,13 @@ public abstract class GradientDescent<T extends Problem> extends Algorithm<T> {
     public final Solution solve(T problem) {
         currentSolution = problem.randomSolution();
         while (!meetStopCriteria()) {
-            List<Solution> neighboursSolution = problem.neighbours(currentSolution);
-            var solution = problem.MejorSolucion(neighboursSolution);
-            if (solution.isBetterThan(currentSolution)) {
-                currentSolution = solution;
-                bestSolutionFound(currentSolution);
-            }
+            problem.bestNeighbour(currentSolution)
+                    .filter(solution -> solution.isBetterThan(currentSolution))
+                    .ifPresent(solution -> {
+                        currentSolution = solution;
+                        betterSolutionFound(currentSolution);
+                    });
+
             updateCriteriaVariables();
         }
         return currentSolution;
@@ -30,7 +29,7 @@ public abstract class GradientDescent<T extends Problem> extends Algorithm<T> {
 
     protected abstract boolean meetStopCriteria();
 
-    protected abstract void bestSolutionFound(Solution solution);
+    protected abstract void betterSolutionFound(Solution solution);
 
     protected abstract void updateCriteriaVariables();
 }

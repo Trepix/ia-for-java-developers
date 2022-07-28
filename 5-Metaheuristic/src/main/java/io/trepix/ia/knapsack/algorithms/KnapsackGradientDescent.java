@@ -14,7 +14,7 @@ public class KnapsackGradientDescent extends GradientDescent<KnapsackProblem> {
     }
 
     @Override
-    protected void bestSolutionFound(Solution solution) {
+    protected void betterSolutionFound(Solution solution) {
         iterationsWithoutImprovement = 0;
     }
 
