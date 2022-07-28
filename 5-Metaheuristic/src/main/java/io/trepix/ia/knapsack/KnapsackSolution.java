@@ -2,25 +2,30 @@ package io.trepix.ia.knapsack;
 
 import io.trepix.ia.metaheuristics.Solution;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringJoiner;
 
 // Una solución potencial = una carga posible de la mochila
-public class SolucionMochila implements Solution {
-    public ArrayList<Caja> contenido;
+public class KnapsackSolution implements Solution {
+    public List<Item> contenido;
     
-    public SolucionMochila() {
+    public KnapsackSolution() {
         contenido = new ArrayList();
     }
+
+    public KnapsackSolution(Knapsack knapsack) {
+        contenido = knapsack.items();
+    }
     
-    public SolucionMochila(SolucionMochila original) {
+    public KnapsackSolution(KnapsackSolution original) {
         contenido = new ArrayList();
         contenido.addAll(original.contenido);
     }
     
     public double getPeso() {
         double pesos = 0.0;
-        for (Caja b : contenido) {
-            pesos += b.pesos;
+        for (Item b : contenido) {
+            pesos += b.weight();
         }
         return pesos;
     }
@@ -28,8 +33,8 @@ public class SolucionMochila implements Solution {
     @Override
     public double value() {
         double valor = 0.0;
-        for (Caja b : contenido) {
-            valor += b.valor;
+        for (Item b : contenido) {
+            valor += b.value;
         }
         return valor;
     }
@@ -39,7 +44,7 @@ public class SolucionMochila implements Solution {
         StringJoiner sj = new StringJoiner(" - ");
         sj.add("Valor : " + value());
         sj.add("Peso : " + getPeso());
-        for(Caja b : contenido) {
+        for(Item b : contenido) {
             sj.add(b.toString());
         }
         return sj.toString();
@@ -47,14 +52,14 @@ public class SolucionMochila implements Solution {
     
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof SolucionMochila)) {
+        if (!(o instanceof KnapsackSolution)) {
             return false;
         }
-        SolucionMochila sol = (SolucionMochila) o;
+        KnapsackSolution sol = (KnapsackSolution) o;
         if (sol.contenido.size() != this.contenido.size() || sol.getPeso() != this.getPeso() || sol.value() != this.value()) {
             return false;
         }
-        for(Caja b : contenido) {
+        for(Item b : contenido) {
             if (!sol.contenido.contains(b)) {
                 return false;
             }

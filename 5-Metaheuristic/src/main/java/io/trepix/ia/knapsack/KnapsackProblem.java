@@ -9,28 +9,28 @@ import java.util.Random;
 
 // El problema de la mochila a resolver (maximizar el valor sin sobrepasar el peso)
 public class KnapsackProblem implements Problem {
-    protected List<Caja> cajasDispo;
-    public double pesosMax;
+    protected List<Item> cajasDispo;
+    private double pesosMax;
     public static Random generador = null;
     private final int NUM_VECINOS;
 
-    public KnapsackProblem(List<Caja> items, Configuration configuration) {
+    public KnapsackProblem(List<Item> items, Configuration configuration) {
         this.pesosMax = configuration.maximumKnapsackWeight();
         this.cajasDispo = items;
         generador = configuration.random();
         this.NUM_VECINOS = configuration.neighboursNumber();
     }
 
-    public ArrayList<Caja> Cajas() {
-        ArrayList<Caja> copia = new ArrayList();
+    public ArrayList<Item> items() {
+        ArrayList<Item> copia = new ArrayList();
         copia.addAll(cajasDispo);
         return copia;
     }
     
     @Override
     public Solution SolucionAleatoria() {
-        SolucionMochila solucion = new SolucionMochila();
-        ArrayList<Caja> cajasPosibles = Cajas();
+        KnapsackSolution solucion = new KnapsackSolution();
+        ArrayList<Item> cajasPosibles = items();
         double espacioDispo = pesosMax;
         // Se eliminan las demasiado pesadas
         EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
@@ -38,21 +38,21 @@ public class KnapsackProblem implements Problem {
             // Elección aleatoria de una caja
             int index = generador.nextInt(cajasPosibles.size());
             // Actualización de la solución
-            Caja b = cajasPosibles.get(index);
+            Item b = cajasPosibles.get(index);
             solucion.contenido.add(b);
             cajasPosibles.remove(index);
-            espacioDispo -= b.pesos;
+            espacioDispo -= b.weight();
             // Actualización de la lista
             EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
         }
         return solucion;
     }
     
-    public void EliminarDemasiadoPesadas(ArrayList<Caja> cajasPosibles, double espacioDispo) {
-        Iterator<Caja> iterador = cajasPosibles.iterator();
+    public void EliminarDemasiadoPesadas(ArrayList<Item> cajasPosibles, double espacioDispo) {
+        Iterator<Item> iterador = cajasPosibles.iterator();
         while (iterador.hasNext()) {
-            Caja b = iterador.next();
-            if (b.pesos > espacioDispo) {
+            Item b = iterador.next();
+            if (b.weight() > espacioDispo) {
                 iterador.remove();
             }
         }
@@ -79,12 +79,12 @@ public class KnapsackProblem implements Problem {
         ArrayList<Solution> vecindario = new ArrayList();
         for (int i = 0; i < NUM_VECINOS; i++) {
             // Creación de un clon
-            SolucionMochila solucion = new SolucionMochila((SolucionMochila) solucionActual);
+            KnapsackSolution solucion = new KnapsackSolution((KnapsackSolution) solucionActual);
             // se elimina un elemento
             int index = generador.nextInt(solucion.contenido.size());
             solucion.contenido.remove(index);
             // Cálculo de los pesos y de las cajas disponibles
-            ArrayList<Caja> cajasPosibles = Cajas();
+            ArrayList<Item> cajasPosibles = items();
             double espacioDispo = pesosMax - solucion.getPeso();
             cajasPosibles.removeAll(solucion.contenido);
             EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
@@ -93,15 +93,23 @@ public class KnapsackProblem implements Problem {
                 // Elección aleatoria de una caja
                 index = generador.nextInt(cajasPosibles.size());
                 // Actualización de la solución
-                Caja b = cajasPosibles.get(index);
+                Item b = cajasPosibles.get(index);
                 solucion.contenido.add(b);
                 cajasPosibles.remove(index);
-                espacioDispo -= b.pesos;
+                espacioDispo -= b.weight();
                 // Actualización de la lista
                 EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
             }
             vecindario.add(solucion);
         }
         return vecindario;
+    }
+
+    public Knapsack knapsack() {
+        return new Knapsack(maximumWeight());
+    }
+
+    public double maximumWeight() {
+        return pesosMax;
     }
 }
