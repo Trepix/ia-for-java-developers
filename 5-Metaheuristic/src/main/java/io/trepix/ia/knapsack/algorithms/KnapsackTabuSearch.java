@@ -1,7 +1,7 @@
 package io.trepix.ia.knapsack.algorithms;
 
 import io.trepix.ia.knapsack.KnapsackProblem;
-import io.trepix.ia.knapsack.SolucionMochila;
+import io.trepix.ia.knapsack.KnapsackSolution;
 import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.BusquedaTabu;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class KnapsackTabuSearch extends BusquedaTabu<KnapsackProblem> {
     protected int numIteracionesSinMejora = 0;
     protected int numIteraciones = 0;
-    protected ArrayList<SolucionMochila> listaTabu = new ArrayList();
+    protected ArrayList<KnapsackSolution> listaTabu = new ArrayList();
     
     private final static int NUM_MAX_ITERACIONES = 100;
     private final static int NUM_MAX_ITERACIONES_SIN_MEJORA = 30;
@@ -46,7 +46,7 @@ public class KnapsackTabuSearch extends BusquedaTabu<KnapsackProblem> {
         while (listaTabu.size() >= NUM_MAX_POSICIONES_TABU) {
             listaTabu.remove(0);
         }
-        listaTabu.add((SolucionMochila) solucion);
+        listaTabu.add((KnapsackSolution) solucion);
     }
 
     @Override

@@ -11,7 +11,7 @@ public class KnapsackProblemBuilder {
 
     private static final int NEIGHBOURS_NUMBER = 30;
 
-    private List<Caja> items;
+    private List<Item> items;
 
     private double maxKnapsackWeight;
 
@@ -61,13 +61,13 @@ public class KnapsackProblemBuilder {
         return new KnapsackProblem(items, configuration);
     }
 
-    private List<Caja> createItems(Random random) {
-        List<Caja> items = new LinkedList<>();
+    private List<Item> createItems(Random random) {
+        List<Item> items = new LinkedList<>();
         for (int i = 1; i <= itemsNumber; i++) {
             String name = leadingZeros(i);
             double weight = random.nextDouble() * maxKnapsackWeight;
             double value = random.nextDouble() * maxValue;
-            items.add(new Caja(name, weight, value));
+            items.add(new Item(name, weight, value));
         }
         return items;
     }
@@ -99,8 +99,8 @@ public class KnapsackProblemBuilder {
             return this;
         }
 
-        public Caja build() {
-            return new Caja(name, weight, value);
+        public Item build() {
+            return new Item(name, weight, value);
         }
     }
 }
