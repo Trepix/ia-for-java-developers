@@ -29,7 +29,12 @@ public class KnapsackSolution implements Solution {
         }
         return pesos;
     }
-    
+
+    @Override
+    public boolean isBetterThan(Solution solution) {
+        return this.value() > solution.value();
+    }
+
     @Override
     public double value() {
         double valor = 0.0;

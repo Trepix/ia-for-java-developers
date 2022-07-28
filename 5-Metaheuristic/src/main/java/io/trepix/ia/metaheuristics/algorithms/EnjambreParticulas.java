@@ -25,7 +25,7 @@ public abstract class EnjambreParticulas<T extends Problem> extends Algorithm<T>
         this.problem = problem;
         soluciones = new ArrayList();
         for (int i = 0; i < NUM_INDIVIDUOS; i++) {
-            Solution nuevaSol = this.problem.SolucionAleatoria();
+            Solution nuevaSol = this.problem.randomSolution();
             soluciones.add(nuevaSol);
         }
         mejorSolucion = this.problem.MejorSolucion(soluciones);

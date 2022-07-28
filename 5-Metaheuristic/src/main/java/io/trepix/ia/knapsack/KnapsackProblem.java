@@ -28,7 +28,7 @@ public class KnapsackProblem implements Problem {
     }
     
     @Override
-    public Solution SolucionAleatoria() {
+    public Solution randomSolution() {
         KnapsackSolution solucion = new KnapsackSolution();
         ArrayList<Item> cajasPosibles = items();
         double espacioDispo = pesosMax;
@@ -75,7 +75,7 @@ public class KnapsackProblem implements Problem {
     }
     
     @Override
-    public List<Solution> Vecindario(Solution solucionActual) {
+    public List<Solution> neighbours(Solution solucionActual) {
         ArrayList<Solution> vecindario = new ArrayList();
         for (int i = 0; i < NUM_VECINOS; i++) {
             // Creación de un clon
@@ -105,7 +105,7 @@ public class KnapsackProblem implements Problem {
         return vecindario;
     }
 
-    public Knapsack knapsack() {
+    public Knapsack emptyKnapsack() {
         return new Knapsack(maximumWeight());
     }
 

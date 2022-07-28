@@ -22,12 +22,12 @@ public abstract class RecocidoSimulado<T extends Problem> extends Algorithm<T> {
     public final Solution solve(T problem) {
         this.problem = problem;
 
-        solucionActual = this.problem.SolucionAleatoria();
+        solucionActual = this.problem.randomSolution();
         mejorSolucion = solucionActual;
         InitializarTemperatura();
 
         while (!CriterioParada()) {
-            List<Solution> vecindario = this.problem.Vecindario(solucionActual);
+            List<Solution> vecindario = this.problem.neighbours(solucionActual);
             if (vecindario != null) {
                 Solution mejorVecino = this.problem.MejorSolucion(vecindario);
                 Actualizar(mejorVecino);

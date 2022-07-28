@@ -13,7 +13,7 @@ import static java.util.Comparator.comparing;
 public class KnapsackGreedyAlgorithm extends GreedyAlgorithm<KnapsackProblem> {
     @Override
     protected Solution findSolution(KnapsackProblem problem) {
-        var knapsack = problem.knapsack();
+        var knapsack = problem.emptyKnapsack();
         List<Item> items = problem.items();
         items.sort(comparing(Item::relativeValue).reversed());
         for (Item item : items) {

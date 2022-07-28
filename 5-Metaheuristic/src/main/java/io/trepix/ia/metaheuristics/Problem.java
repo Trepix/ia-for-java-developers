@@ -5,10 +5,10 @@ import java.util.List;
 public interface Problem {
 
     //Devuleve el vecindario de una solución
-    List<Solution> Vecindario(Solution solucionActual);
+    List<Solution> neighbours(Solution solucionActual);
     
     // Crea una solución aleatoria
-    Solution SolucionAleatoria();
+    Solution randomSolution();
     
     // Devuelve la mejor solución de un conjunto
     Solution MejorSolucion(List<Solution> soluciones);
