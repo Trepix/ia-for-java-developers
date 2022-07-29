@@ -73,4 +73,9 @@ public class KnapsackSolution implements Solution {
     public int compareTo(Solution solution) {
         return compare(this.value(), solution.value());
     }
+
+    @Override
+    public boolean isBetterThan(Solution solution) {
+        return this.compareTo(solution) > 0;
+    }
 }
