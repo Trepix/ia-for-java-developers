@@ -2,10 +2,10 @@ package io.trepix.ia.knapsack.algorithms;
 
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.metaheuristics.Solution;
-import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
+import io.trepix.ia.metaheuristics.algorithms.SimulatedAnnealing;
 
 // Recorrido simulado para el problema de la mochila
-public class KnapsackSimulatedAnnealing extends RecocidoSimulado<KnapsackProblem> {
+public class KnapsackSimulatedAnnealing extends SimulatedAnnealing<KnapsackProblem> {
     private final static int NUM_MAX_ITERACIONES = 100;
     private final static int NUM_MAX_ITERACIONES_SIN_MEJORA = 30;
     protected int numIteracionesSinMejora = 0;

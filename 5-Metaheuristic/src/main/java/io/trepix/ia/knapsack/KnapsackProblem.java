@@ -4,7 +4,10 @@ import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.Solutions;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class KnapsackProblem implements Problem {
     public static Random generador = null;

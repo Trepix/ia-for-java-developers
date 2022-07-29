@@ -6,15 +6,14 @@ import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.List;
 
-// Algoritmo del recorrido : se hacen aproximaciones cada vez más pequeñas con la temperatura que baja
-public abstract class RecocidoSimulado<T extends Problem> extends Algorithm<T> {
+public abstract class SimulatedAnnealing<T extends Problem> extends Algorithm<T> {
 
     protected Problem problem;
     protected Solution solucionActual;
     protected Solution mejorSolucion;
     protected double temperatura;
 
-    public RecocidoSimulado() {
+    public SimulatedAnnealing() {
         super("Simulated Annealing");
     }
 
