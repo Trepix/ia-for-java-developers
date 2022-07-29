@@ -8,7 +8,7 @@ public interface Problem {
     //Devuleve el vecindario de una solución
     List<Solution> neighbours(Solution solucionActual);
 
-    Optional<Solution> bestNeighbour(Solution solution);
+    Solutions _neighbours(Solution solution);
 
     Solution randomSolution();
     

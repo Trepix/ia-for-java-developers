@@ -2,6 +2,7 @@ package io.trepix.ia.knapsack;
 
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
+import io.trepix.ia.metaheuristics.Solutions;
 
 import java.util.*;
 
@@ -96,8 +97,8 @@ public class KnapsackProblem implements Problem {
     }
 
     @Override
-    public Optional<Solution> bestNeighbour(Solution solution) {
-        return this.neighbours(solution).stream().max(Solution::compareTo);
+    public Solutions _neighbours(Solution solution) {
+        return new Solutions(this.neighbours(solution));
     }
 
     public Knapsack emptyKnapsack() {

@@ -15,7 +15,8 @@ public abstract class GradientDescent<T extends Problem> extends Algorithm<T> {
     public final Solution solve(T problem) {
         currentSolution = problem.randomSolution();
         while (!meetStopCriteria()) {
-            problem.bestNeighbour(currentSolution)
+            problem._neighbours(currentSolution)
+                    .best()
                     .filter(solution -> solution.isBetterThan(currentSolution))
                     .ifPresent(solution -> {
                         currentSolution = solution;

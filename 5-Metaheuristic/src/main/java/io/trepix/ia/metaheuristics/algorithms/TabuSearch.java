@@ -5,7 +5,6 @@ import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.Queue;
 
 public abstract class TabuSearch<T extends Problem> extends Algorithm<T> {
@@ -25,11 +24,9 @@ public abstract class TabuSearch<T extends Problem> extends Algorithm<T> {
         addTabuSolution(currentSolution);
 
         while (!meetStopCriteria()) {
-            var neighbours = problem.neighbours(currentSolution);
-            neighbours.removeAll(tabuSolutions);
-            Solution bestSolution = problem.MejorSolucion(neighbours);
-            Optional.ofNullable(bestSolution)
-                    .ifPresent(this::update);
+            var solutions = problem._neighbours(currentSolution);
+            solutions.remove(tabuSolutions);
+            solutions.best().ifPresent(this::update);
             updateCriteriaVariables();
         }
         return bestSolution;
