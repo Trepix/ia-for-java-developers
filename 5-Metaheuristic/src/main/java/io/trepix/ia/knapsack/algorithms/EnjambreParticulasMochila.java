@@ -1,5 +1,6 @@
 package io.trepix.ia.knapsack.algorithms;
 
+import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
 import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.knapsack.Caja;
@@ -12,7 +13,13 @@ import java.util.ArrayList;
 public class EnjambreParticulasMochila extends EnjambreParticulas {
     protected int numIteraciones = 0;
     private final static int NUM_MAX_ITERACIONES = 200;
-    
+
+    private final HumanMachineInterface hmi;
+
+    public EnjambreParticulasMochila(HumanMachineInterface hmi) {
+        this.hmi = hmi;
+    }
+
     @Override
     protected void ActualizarSoluciones() {
         for (Solution sol : soluciones) {
@@ -85,6 +92,6 @@ public class EnjambreParticulasMochila extends EnjambreParticulas {
 
     @Override
     protected void sendResult() {
-        ihm.show(mejorSolucion.toString());
+        hmi.show(mejorSolucion.toString());
     }
 }

@@ -1,5 +1,6 @@
 package io.trepix.ia.knapsack.algorithms;
 
+import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.algorithms.AlgorithmVoraz;
 import io.trepix.ia.knapsack.Caja;
 import io.trepix.ia.knapsack.ProblemaMochila;
@@ -10,7 +11,13 @@ import java.util.Collections;
 // Algoritmo voraz para el problema de la mochila
 public class AlgorithmVorazMochila extends AlgorithmVoraz {
     SolucionMochila solucion;
-    
+
+    private final HumanMachineInterface hmi;
+
+    public AlgorithmVorazMochila(HumanMachineInterface hmi) {
+        this.hmi = hmi;
+    }
+
     @Override
     protected void ConstruirSolucion() {
         solucion = new SolucionMochila();
@@ -28,7 +35,7 @@ public class AlgorithmVorazMochila extends AlgorithmVoraz {
 
     @Override
     protected void sendResult() {
-        ihm.show(solucion.toString());
+        hmi.show(solucion.toString());
     }
 
 }

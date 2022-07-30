@@ -8,8 +8,9 @@ import io.trepix.ia.knapsack.algorithms.*;
 import java.util.List;
 
 public class Main implements HumanMachineInterface {
+
+    private static final Main app = new Main();
     public static void main(String[] args) {
-        Main app = new Main();
         app.run();
     }
 
@@ -33,17 +34,17 @@ public class Main implements HumanMachineInterface {
 
     private List<Algorithm> knapsackAlgorithms() {
         return List.of(
-                new AlgorithmVorazMochila(),
-                new DescensoGradienteMochila(),
-                new BusquedaTabuMochila(),
-                new RecocidoSimuladoMochila(),
-                new EnjambreParticulasMochila()
+                new AlgorithmVorazMochila(app),
+                new DescensoGradienteMochila(app),
+                new BusquedaTabuMochila(app),
+                new RecocidoSimuladoMochila(app),
+                new EnjambreParticulasMochila(app)
         );
     }
 
     private void runAlgorithm(Algorithm algorithm, Problem problem) {
         System.out.println(algorithm.name());
-        algorithm.Resolver(problem, this);
+        algorithm.solve(problem);
         System.out.println();
     }
 }

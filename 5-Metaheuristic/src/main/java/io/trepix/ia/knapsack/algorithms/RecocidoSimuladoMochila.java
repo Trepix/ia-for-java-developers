@@ -1,5 +1,6 @@
 package io.trepix.ia.knapsack.algorithms;
 
+import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
 import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.knapsack.ProblemaMochila;
@@ -11,7 +12,13 @@ public class RecocidoSimuladoMochila extends RecocidoSimulado {
     
     private final static int NUM_MAX_ITERACIONES = 100;
     private final static int NUM_MAX_ITERACIONES_SIN_MEJORA = 30;
-    
+
+    private final HumanMachineInterface hmi;
+
+    public RecocidoSimuladoMochila(HumanMachineInterface hmi) {
+        this.hmi = hmi;
+    }
+
     @Override
     protected void ActualizarTemperatura() {
         temperatura *= 0.95;
@@ -52,6 +59,6 @@ public class RecocidoSimuladoMochila extends RecocidoSimulado {
 
     @Override
     protected void sendResult() {
-        ihm.show(mejorSolucion.toString());
+        hmi.show(mejorSolucion.toString());
     }
 }
