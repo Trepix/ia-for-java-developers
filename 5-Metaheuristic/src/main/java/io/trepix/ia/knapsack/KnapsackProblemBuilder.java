@@ -55,13 +55,13 @@ public class KnapsackProblemBuilder {
     public KnapsackProblem build() {
         Random random = new Random(this.seed);
         if (items == null) {
-            items = createtems(random);
+            items = createItems(random);
         }
         Configuration configuration = new Configuration(maxKnapsackWeight, NEIGHBOURS_NUMBER, random);
         return new KnapsackProblem(items, configuration);
     }
 
-    private List<Caja> createtems(Random random) {
+    private List<Caja> createItems(Random random) {
         List<Caja> items = new LinkedList<>();
         for (int i = 1; i <= itemsNumber; i++) {
             String name = leadingZeros(i);

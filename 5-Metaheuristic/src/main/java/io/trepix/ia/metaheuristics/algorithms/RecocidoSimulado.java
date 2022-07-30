@@ -13,7 +13,7 @@ public abstract class RecocidoSimulado extends Algorithm {
     protected double temperatura;
 
     public RecocidoSimulado() {
-        super("Recorrido simulado");
+        super("Simulated Annealing");
     }
     
     @Override

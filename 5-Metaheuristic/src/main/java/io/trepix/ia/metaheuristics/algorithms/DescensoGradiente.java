@@ -11,7 +11,7 @@ public abstract class DescensoGradiente extends Algorithm {
     protected Solution solucionActual;
 
     public DescensoGradiente() {
-        super("Descenso de gradiente");
+        super("Gradient Descent");
     }
     
     @Override

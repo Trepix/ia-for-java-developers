@@ -14,7 +14,7 @@ public abstract class EnjambreParticulas extends Algorithm {
     protected final static int NUM_INDIVIDUOS = 30;
 
     public EnjambreParticulas() {
-        super("Enjambre particular");
+        super("Particle Swarm");
     }
     
     @Override

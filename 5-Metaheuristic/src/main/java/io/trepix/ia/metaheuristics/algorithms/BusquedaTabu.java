@@ -12,7 +12,7 @@ public abstract class BusquedaTabu extends Algorithm {
     protected Solution mejorSolucion;
 
     public BusquedaTabu() {
-        super("Búsqueda tabú");
+        super("Tabu Search");
     }
     
     @Override

@@ -1,6 +1,7 @@
 package io.trepix.ia;
 
 import io.trepix.ia.knapsack.KnapsackProblem;
+import io.trepix.ia.knapsack.KnapsackProblemBuilder;
 import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.HumanMachineInterface;
@@ -11,22 +12,31 @@ import java.util.List;
 import static io.trepix.ia.knapsack.KnapsackProblemBuilder.ItemBuilder.name;
 import static io.trepix.ia.knapsack.KnapsackProblemBuilder.withItems;
 import static io.trepix.ia.knapsack.KnapsackProblemBuilder.withRandomItems;
+import static java.lang.Long.parseLong;
 
-public class Main implements HumanMachineInterface {
+public class Application implements HumanMachineInterface {
 
-    private static final Main app = new Main();
+    private static final Application app = new Application();
+
     public static void main(String[] args) {
+
         System.out.println("Optimization metaheuristics");
         Problem problem = defaultItems();
         runAlgorithms(problem);
 
         System.out.println("*****************************************\n");
-        problem = withRandomItems()
+        problem = knapsackProblemBuilder(args)
                 .withNumberOfItems(100)
                 .maxItemValue(20)
                 .maxKnapsackWeight(30)
                 .build();
         runAlgorithms(problem);
+    }
+
+    private static KnapsackProblemBuilder knapsackProblemBuilder(String[] args) {
+        if (args.length < 1) return withRandomItems();
+        long seed = parseLong(args[0]);
+        return withRandomItems(seed);
     }
 
     private static KnapsackProblem defaultItems() {
@@ -50,6 +60,7 @@ public class Main implements HumanMachineInterface {
     private static void runAlgorithms(Problem problem) {
         knapsackAlgorithms().forEach(algorithm -> runAlgorithm(algorithm, problem));
     }
+
     private static List<Algorithm> knapsackAlgorithms() {
         return List.of(
                 new KnapsackGreedyAlgorithm(app),
