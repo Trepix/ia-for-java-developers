@@ -4,9 +4,7 @@ import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackProblemBuilder;
 import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
-import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
-import io.trepix.ia.metaheuristics.algorithms.GreedyAlgorithm;
 
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class Application {
     public static void main(String[] args) {
 
         System.out.println("Optimization metaheuristics");
-        Problem problem = defaultItems();
+        var problem = defaultItems();
         runAlgorithms(problem);
 
         System.out.println("*****************************************\n");
@@ -57,11 +55,11 @@ public class Application {
                 .build();
     }
 
-    private static void runAlgorithms(Problem problem) {
+    private static void runAlgorithms(KnapsackProblem problem) {
         knapsackAlgorithms().forEach(algorithm -> runAlgorithm(algorithm, problem));
     }
 
-    private static List<Algorithm> knapsackAlgorithms() {
+    private static List<Algorithm<KnapsackProblem>> knapsackAlgorithms() {
         return List.of(
                 new KnapsackGreedyAlgorithm(),
                 new KnapsackGradientDescent(),
@@ -71,13 +69,9 @@ public class Application {
         );
     }
 
-    private static void runAlgorithm(Algorithm algorithm, Problem problem) {
+    private static void runAlgorithm(Algorithm<KnapsackProblem> algorithm, KnapsackProblem problem) {
         System.out.println(algorithm.name());
-        Solution solution;
-        if (algorithm instanceof GreedyAlgorithm<?> || algorithm instanceof KnapsackGradientDescent) {
-            solution = algorithm._solve(problem);
-        }
-        else solution = algorithm.solve(problem);
+        Solution solution = algorithm._solve(problem);
         System.out.println(solution.toString());
         System.out.println();
     }

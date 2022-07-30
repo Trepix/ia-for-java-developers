@@ -9,7 +9,7 @@ import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
 import java.util.ArrayList;
 
 // Enjambre particular para el problema de la mochila
-public class KnapsackParticleSwarm extends EnjambreParticulas {
+public class KnapsackParticleSwarm extends EnjambreParticulas<KnapsackProblem> {
     protected int numIteraciones = 0;
     private final static int NUM_MAX_ITERACIONES = 200;
 

@@ -1,5 +1,6 @@
 package io.trepix.ia.knapsack.algorithms;
 
+import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.SolucionMochila;
 import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.BusquedaTabu;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Búsqueda tabu para el problema de la mochila
-public class KnapsackTabuSearch extends BusquedaTabu {
+public class KnapsackTabuSearch extends BusquedaTabu<KnapsackProblem> {
     protected int numIteracionesSinMejora = 0;
     protected int numIteraciones = 0;
     protected ArrayList<SolucionMochila> listaTabu = new ArrayList();

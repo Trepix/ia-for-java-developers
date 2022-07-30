@@ -8,9 +8,7 @@ public abstract class Algorithm<T extends Problem> {
 
     public abstract Solution solve(Problem problem);
 
-    public Solution _solve(T problem) {
-        return null;
-    }
+    public abstract Solution _solve(T problem);
 
     public String name() {
         return this.name;
