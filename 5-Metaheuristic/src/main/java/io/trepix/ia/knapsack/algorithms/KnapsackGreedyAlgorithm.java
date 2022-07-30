@@ -1,23 +1,17 @@
 package io.trepix.ia.knapsack.algorithms;
 
-import io.trepix.ia.metaheuristics.HumanMachineInterface;
-import io.trepix.ia.metaheuristics.Solution;
-import io.trepix.ia.metaheuristics.algorithms.AlgorithmVoraz;
 import io.trepix.ia.knapsack.Caja;
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.SolucionMochila;
+import io.trepix.ia.metaheuristics.Solution;
+import io.trepix.ia.metaheuristics.algorithms.AlgorithmVoraz;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 // Algoritmo voraz para el problema de la mochila
 public class KnapsackGreedyAlgorithm extends AlgorithmVoraz {
     SolucionMochila solucion;
-
-    private final HumanMachineInterface hmi;
-
-    public KnapsackGreedyAlgorithm(HumanMachineInterface hmi) {
-        this.hmi = hmi;
-    }
 
     @Override
     protected Solution ConstruirSolucion() {

@@ -1,23 +1,15 @@
 package io.trepix.ia.knapsack.algorithms;
 
-import io.trepix.ia.metaheuristics.HumanMachineInterface;
-import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.knapsack.KnapsackProblem;
+import io.trepix.ia.metaheuristics.Solution;
+import io.trepix.ia.metaheuristics.algorithms.RecocidoSimulado;
 
 // Recorrido simulado para el problema de la mochila
 public class KnapsackSimulatedAnnealing extends RecocidoSimulado {
-    protected int numIteracionesSinMejora = 0;
-    protected int numIteraciones = 0;
-    
     private final static int NUM_MAX_ITERACIONES = 100;
     private final static int NUM_MAX_ITERACIONES_SIN_MEJORA = 30;
-
-    private final HumanMachineInterface hmi;
-
-    public KnapsackSimulatedAnnealing(HumanMachineInterface hmi) {
-        this.hmi = hmi;
-    }
+    protected int numIteracionesSinMejora = 0;
+    protected int numIteraciones = 0;
 
     @Override
     protected void ActualizarTemperatura() {
@@ -47,7 +39,7 @@ public class KnapsackSimulatedAnnealing extends RecocidoSimulado {
             if (solucion.value() > mejorSolucion.value()) {
                 mejorSolucion = solucion;
                 numIteracionesSinMejora = 0;
-            }  
+            }
         }
     }
 
