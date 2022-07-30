@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Búsqueda tabu para el problema de la mochila
-public class BusquedaTabuMochila extends BusquedaTabu {
+public class KnapsackTabuSearch extends BusquedaTabu {
     protected int numIteracionesSinMejora = 0;
     protected int numIteraciones = 0;
     protected ArrayList<SolucionMochila> listaTabu = new ArrayList();
@@ -19,7 +19,7 @@ public class BusquedaTabuMochila extends BusquedaTabu {
 
     private final HumanMachineInterface hmi;
 
-    public BusquedaTabuMochila(HumanMachineInterface hmi) {
+    public KnapsackTabuSearch(HumanMachineInterface hmi) {
         this.hmi = hmi;
     }
 

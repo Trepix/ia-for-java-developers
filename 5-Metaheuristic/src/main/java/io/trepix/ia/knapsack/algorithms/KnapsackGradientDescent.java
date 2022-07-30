@@ -5,13 +5,13 @@ import io.trepix.ia.metaheuristics.algorithms.DescensoGradiente;
 import io.trepix.ia.metaheuristics.Solution;
 
 // Descenso de gradiente para el problema de la mochila
-public class DescensoGradienteMochila extends DescensoGradiente {
+public class KnapsackGradientDescent extends DescensoGradiente {
     protected int numIteracionesSinMejora = 0;
     protected final static int NUM_MAX_ITERACIONES_SIN_MEJORA = 50;
 
     private final HumanMachineInterface hmi;
 
-    public DescensoGradienteMochila(HumanMachineInterface hmi) {
+    public KnapsackGradientDescent(HumanMachineInterface hmi) {
         this.hmi = hmi;
     }
 

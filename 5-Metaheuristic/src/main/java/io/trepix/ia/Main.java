@@ -1,5 +1,6 @@
-package io.trepix.ia.knapsack;
+package io.trepix.ia;
 
+import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.HumanMachineInterface;
 import io.trepix.ia.metaheuristics.Problem;
@@ -21,24 +22,25 @@ public class Main implements HumanMachineInterface {
 
     private void run() {
         System.out.println("Optimization metaheuristics");
-        ProblemaMochila pb = new ProblemaMochila();
-        LanzarAlgoritmos(pb);
+        Problem problem = new KnapsackProblem();
+        runAlgorithms(problem);
+        
         System.out.println("*****************************************\n");
-        pb = new ProblemaMochila(100, 30, 20);
-        LanzarAlgoritmos(pb);
+        problem = new KnapsackProblem(100, 30, 20);
+        runAlgorithms(problem);
     }
     
-    private void LanzarAlgoritmos(Problem problem) {
+    private void runAlgorithms(Problem problem) {
         knapsackAlgorithms().forEach(algorithm -> runAlgorithm(algorithm, problem));
     }
 
     private List<Algorithm> knapsackAlgorithms() {
         return List.of(
-                new AlgorithmVorazMochila(app),
-                new DescensoGradienteMochila(app),
-                new BusquedaTabuMochila(app),
-                new RecocidoSimuladoMochila(app),
-                new EnjambreParticulasMochila(app)
+                new KnapsackGreedyAlgorithm(app),
+                new KnapsackGradientDescent(app),
+                new KnapsackTabuSearch(app),
+                new KnapsackSimulatedAnnealing(app),
+                new KnapsackParticleSwarm(app)
         );
     }
 
