@@ -7,6 +7,9 @@ import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.function.Supplier;
 
 import static io.trepix.ia.knapsack.KnapsackProblemBuilder.ItemBuilder.name;
 import static io.trepix.ia.knapsack.KnapsackProblemBuilder.withItems;
@@ -16,10 +19,13 @@ import static java.lang.Long.parseLong;
 
 public class Application {
 
+    private static Random generator;
+
     public static void main(String[] args) {
 
         System.out.println("Optimization metaheuristics");
         var problem = defaultItems();
+        generator = KnapsackProblem.generador;
         runAlgorithms(problem);
 
         System.out.println("*****************************************\n");
@@ -28,6 +34,7 @@ public class Application {
                 .maxItemValue(20)
                 .maxKnapsackWeight(30)
                 .build();
+        generator = KnapsackProblem.generador;
         runAlgorithms(problem);
     }
 
@@ -65,7 +72,7 @@ public class Application {
                 new KnapsackGradientDescent(),
                 new KnapsackTabuSearch(),
                 new KnapsackParticleSwarm(),
-                new KnapsackSimulatedAnnealing()
+                new KnapsackSimulatedAnnealing(generator)
         );
     }
 
