@@ -16,6 +16,10 @@ public class Item {
         return name + " (" + weight + ", " + value + ")";
     }
 
+    public double value() {
+        return this.value;
+    }
+
     public double relativeValue() {
         return this.value / this.weight;
     }

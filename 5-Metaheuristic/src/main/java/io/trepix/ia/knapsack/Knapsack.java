@@ -6,28 +6,30 @@ import java.util.List;
 public class Knapsack {
 
     private final double maximumWeight;
-    private final List<Item> items;
-    private double currentWeight = 0;
+    private final Items items;
 
     public Knapsack(double maximumWeight) {
         this.maximumWeight = maximumWeight;
-        items = new LinkedList<>();
+        items = new Items();
     }
 
     public List<Item> items() {
-        return items;
+        List<Item> list = new LinkedList<>();
+        for(Item item : items) {
+            list.add(item);
+        }
+        return list;
     }
 
     public boolean canCarryWith(Item item) {
-        return currentWeight + item.weight() <= maximumWeight;
+        return items.weight() + item.weight() <= maximumWeight;
     }
 
     public void add(Item item) {
         items.add(item);
-        currentWeight += item.weight();
     }
 
     public boolean isFull() {
-        return currentWeight == maximumWeight;
+        return items.weight() == maximumWeight;
     }
 }

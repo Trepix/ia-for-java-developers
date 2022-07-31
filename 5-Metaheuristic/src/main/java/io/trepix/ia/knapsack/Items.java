@@ -11,6 +11,10 @@ public class Items implements Iterable<Item> {
 
     private ArrayList<Item> items;
 
+    Items() {
+        this.items = new ArrayList<>();
+    }
+
     Items(ArrayList<Item> items) {
         this.items = items;
     }
@@ -37,5 +41,13 @@ public class Items implements Iterable<Item> {
     public Item popRandom(Random generator) {
         int index = generator.nextInt(items.size());
         return items.remove(index);
+    }
+
+    public double weight() {
+        return items.stream().map(Item::weight).reduce(0.0, Double::sum);
+    }
+
+    public void add(Item item) {
+        this.items.add(item);
     }
 }
