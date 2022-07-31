@@ -5,15 +5,15 @@ import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.TabuSearch;
 
 public class KnapsackTabuSearch extends TabuSearch<KnapsackProblem> {
-    private final static int NUM_MAX_ITERACIONES = 100;
-    private final static int NUM_MAX_ITERACIONES_SIN_MEJORA = 30;
-    private final static int NUM_MAX_POSICIONES_TABU = 50;
+    private final static int MAX_ITERATIONS = 100;
+    private final static int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 30;
+    private final static int MAX_TABU_SOLUTIONS = 50;
     protected int iterationsWithoutImprovement = 0;
     protected int iterations = 0;
 
     @Override
     protected boolean meetStopCriteria() {
-        return (iterations > NUM_MAX_ITERACIONES || iterationsWithoutImprovement > NUM_MAX_ITERACIONES_SIN_MEJORA);
+        return (iterations > MAX_ITERATIONS || iterationsWithoutImprovement > MAX_ITERATIONS_WITHOUT_IMPROVEMENT);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class KnapsackTabuSearch extends TabuSearch<KnapsackProblem> {
 
     @Override
     protected int maxTabuSolutions() {
-        return NUM_MAX_POSICIONES_TABU;
+        return MAX_TABU_SOLUTIONS;
     }
 
 }

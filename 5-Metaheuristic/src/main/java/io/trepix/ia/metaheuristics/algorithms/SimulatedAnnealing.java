@@ -4,46 +4,65 @@ import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 
-import java.util.List;
+import java.util.Random;
 
 public abstract class SimulatedAnnealing<T extends Problem> extends Algorithm<T> {
 
-    protected Problem problem;
-    protected Solution solucionActual;
-    protected Solution mejorSolucion;
-    protected double temperatura;
+    private final Random generator;
+    protected Solution currentSolution;
+    protected Solution bestSolution;
+    protected double temperature;
 
-    public SimulatedAnnealing() {
+    public SimulatedAnnealing(Random generator) {
         super("Simulated Annealing");
+        this.generator = generator;
     }
 
     @Override
     public final Solution solve(T problem) {
-        this.problem = problem;
+        temperature = initialTemperature();
+        currentSolution = problem.randomSolution();
+        bestSolution = currentSolution;
 
-        solucionActual = this.problem.randomSolution();
-        mejorSolucion = solucionActual;
-        InitializarTemperatura();
+        while (!meetStopCriteria()) {
+            problem._neighbours(currentSolution)
+                    .best()
+                    .ifPresent(solution -> {
+                        if (solution.isBetterThan(currentSolution) || isNotTooWorse(solution)) {
+                            currentSolution = solution;
+                            if (solution.isBetterThan(bestSolution)) {
+                                bestSolution = solution;
+                                betterSolutionFound(bestSolution);
+                            }
+                        }
+                    });
 
-        while (!CriterioParada()) {
-            List<Solution> vecindario = this.problem.neighbours(solucionActual);
-            if (vecindario != null) {
-                Solution mejorVecino = this.problem.MejorSolucion(vecindario);
-                Actualizar(mejorVecino);
-            }
-            Incrementar();
-            ActualizarTemperatura();
+            updateCriteriaVariables();
+            temperature = decreaseTemperature(temperature);
         }
-        return mejorSolucion;
+        return bestSolution;
     }
 
-    protected abstract void ActualizarTemperatura();
+    private boolean isNotTooWorse(Solution solution) {
+        return generator.nextDouble() < metropolisProbability(solution);
+    }
 
-    protected abstract void InitializarTemperatura();
+    private double metropolisProbability(Solution solution) {
+        double metropolisProbability = 0.0;
+        if (currentSolution.isBetterThan(solution)) {
+            double solutionQualityLoss = (currentSolution.value() - solution.value()) / currentSolution.value();
+            metropolisProbability = Math.exp(-1 * solutionQualityLoss / temperature);
+        }
+        return metropolisProbability;
+    }
 
-    protected abstract boolean CriterioParada();
+    protected abstract double decreaseTemperature(double temperature);
 
-    protected abstract void Actualizar(Solution solucion);
+    protected abstract double initialTemperature();
 
-    protected abstract void Incrementar();
+    protected abstract boolean meetStopCriteria();
+
+    protected abstract void betterSolutionFound(Solution solution);
+
+    protected abstract void updateCriteriaVariables();
 }
