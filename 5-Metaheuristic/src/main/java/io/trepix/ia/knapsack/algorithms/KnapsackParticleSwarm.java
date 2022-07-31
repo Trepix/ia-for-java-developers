@@ -8,10 +8,9 @@ import io.trepix.ia.metaheuristics.algorithms.ParticleSwarm;
 
 import java.util.List;
 
-// Enjambre particular para el problema de la mochila
 public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
-    protected int numIteraciones = 0;
-    private final static int NUM_MAX_ITERACIONES = 200;
+    protected int iterations = 0;
+    private final static int MAX_ITERATIONS = 200;
 
     @Override
     protected void updateSolutions() {
@@ -59,28 +58,15 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
         }
         return solucion;
     }
-    
-    @Override
-    protected void updateVariables() {
-        bestCurrentSolution = solutions.get(0);
-        for (Solution sol : solutions) {
-            if (sol.value() > bestCurrentSolution.value()) {
-                bestCurrentSolution = sol;
-            }
-        }
-        if (bestCurrentSolution.value() > bestSolution.value()) {
-            bestSolution = bestCurrentSolution;
-        }
-    }
 
     @Override
     protected boolean meetStopCriteria() {
-        return numIteraciones > NUM_MAX_ITERACIONES;
+        return iterations > MAX_ITERATIONS;
     }
 
     @Override
     protected void updateCriteriaVariables() {
-        numIteraciones++;
+        iterations++;
     }
 
 }

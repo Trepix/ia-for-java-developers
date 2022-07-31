@@ -32,14 +32,15 @@ public abstract class ParticleSwarm<T extends Problem> extends Algorithm<T> {
         bestCurrentSolution = bestSolution;
         
         while (!meetStopCriteria()) {
-            updateVariables();
+            bestCurrentSolution = new Solutions(solutions).best().get();
+            if (bestCurrentSolution.isBetterThan(bestSolution)) {
+                bestSolution = bestCurrentSolution;
+            }
             updateSolutions();
             updateCriteriaVariables();
         }
         return bestSolution;
     }
-
-    protected abstract void updateVariables();
 
     protected abstract void updateSolutions();
 
