@@ -45,8 +45,8 @@ public class Knapsack implements Cloneable {
         items.add(item);
     }
 
-    public boolean isFull() {
-        return items.weight() == maximumWeight;
+    public boolean isNotFull() {
+        return items.weight() < maximumWeight;
     }
 
 

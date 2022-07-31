@@ -35,7 +35,7 @@ public class KnapsackProblem implements Problem {
         var knapsack = this.emptyKnapsack();
         Items items = _items();
         items.removeWhichCannotBeCarried(knapsack);
-        while (!knapsack.isFull() && !items.isEmpty()) {
+        while (knapsack.isNotFull() && items.isNotEmpty()) {
             Item item = items.popRandom(generador);
             knapsack.add(item);
             items.removeWhichCannotBeCarried(knapsack);
@@ -80,7 +80,7 @@ public class KnapsackProblem implements Problem {
             allItems.removeUsedItems(knapsack);
             allItems.removeWhichCannotBeCarried(knapsack);
 
-            while (!knapsack.isFull() && !allItems.isEmpty()) {
+            while (knapsack.isNotFull() && allItems.isNotEmpty()) {
                 Item item = allItems.popRandom(generador);
                 knapsack.add(item);
                 allItems.removeWhichCannotBeCarried(knapsack);

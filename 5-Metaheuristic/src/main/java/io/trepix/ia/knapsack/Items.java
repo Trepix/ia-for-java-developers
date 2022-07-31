@@ -34,8 +34,8 @@ public class Items implements Iterable<Item>, Cloneable {
                 .collect(toCollection(ArrayList::new));
     }
 
-    public boolean isEmpty() {
-        return items.isEmpty();
+    public boolean isNotEmpty() {
+        return !items.isEmpty();
     }
 
     public Item popRandom(Random generator) {
