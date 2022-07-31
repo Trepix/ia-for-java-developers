@@ -1,7 +1,7 @@
 package io.trepix.ia.knapsack;
 
 import io.trepix.ia.metaheuristics.Solution;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -9,17 +9,15 @@ import static java.lang.Double.compare;
 
 // Una solución potencial = una carga posible de la mochila
 public class KnapsackSolution implements Solution {
+
+    public final Knapsack knapsack;
     public List<Item> contenido;
 
     public KnapsackSolution(Knapsack knapsack) {
         contenido = knapsack.items();
+        this.knapsack = knapsack;
     }
-    
-    public KnapsackSolution(KnapsackSolution original) {
-        contenido = new ArrayList();
-        contenido.addAll(original.contenido);
-    }
-    
+
     public double getPeso() {
         double pesos = 0.0;
         for (Item b : contenido) {
@@ -78,4 +76,5 @@ public class KnapsackSolution implements Solution {
     public boolean isBetterThan(Solution solution) {
         return this.compareTo(solution) > 0;
     }
+
 }

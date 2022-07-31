@@ -2,15 +2,31 @@ package io.trepix.ia.knapsack;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
-public class Knapsack {
+public class Knapsack implements Cloneable {
 
     private final double maximumWeight;
-    private final Items items;
+    private Items items;
 
     public Knapsack(double maximumWeight) {
         this.maximumWeight = maximumWeight;
         items = new Items();
+    }
+
+    @Override
+    public Knapsack clone() {
+        try {
+            Knapsack clone = (Knapsack) super.clone();
+            clone.items = items.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    public Items _items() {
+        return this.items;
     }
 
     public List<Item> items() {
@@ -31,5 +47,10 @@ public class Knapsack {
 
     public boolean isFull() {
         return items.weight() == maximumWeight;
+    }
+
+
+    public void popRandomItem(Random generator) {
+        items.popRandom(generator);
     }
 }

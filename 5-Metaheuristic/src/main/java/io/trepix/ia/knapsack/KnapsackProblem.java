@@ -70,33 +70,24 @@ public class KnapsackProblem implements Problem {
 
     @Override
     public Solutions neighbours(Solution solution) {
-        ArrayList<Solution> vecindario = new ArrayList();
+        ArrayList<Solution> neighbours = new ArrayList<>();
+        var originalKnapsack = ((KnapsackSolution) solution).knapsack;
+
         for (int i = 0; i < neighboursNumber; i++) {
-            // Creación de un clon
-            KnapsackSolution solucion = new KnapsackSolution((KnapsackSolution) solution);
-            // se elimina un elemento
-            int index = generador.nextInt(solucion.contenido.size());
-            solucion.contenido.remove(index);
-            // Cálculo de los pesos y de las cajas disponibles
-            List<Item> cajasPosibles = items();
-            double espacioDispo = maxWeight - solucion.getPeso();
-            cajasPosibles.removeAll(solucion.contenido);
-            EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
-            // Se añaden las cajas
-            while (espacioDispo > 0 && !cajasPosibles.isEmpty()) {
-                // Elección aleatoria de una caja
-                index = generador.nextInt(cajasPosibles.size());
-                // Actualización de la solución
-                Item b = cajasPosibles.get(index);
-                solucion.contenido.add(b);
-                cajasPosibles.remove(index);
-                espacioDispo -= b.weight();
-                // Actualización de la lista
-                EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
+            var knapsack = originalKnapsack.clone();
+            knapsack.popRandomItem(generador);
+            var allItems = _items();
+            allItems.removeUsedItems(knapsack);
+            allItems.removeWhichCannotBeCarried(knapsack);
+
+            while (!knapsack.isFull() && !allItems.isEmpty()) {
+                Item item = allItems.popRandom(generador);
+                knapsack.add(item);
+                allItems.removeWhichCannotBeCarried(knapsack);
             }
-            vecindario.add(solucion);
+            neighbours.add(new KnapsackSolution(knapsack));
         }
-        return new Solutions(vecindario);
+        return new Solutions(neighbours);
     }
 
     public Knapsack emptyKnapsack() {

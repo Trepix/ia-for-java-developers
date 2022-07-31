@@ -7,7 +7,7 @@ import java.util.Random;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toCollection;
 
-public class Items implements Iterable<Item> {
+public class Items implements Iterable<Item>, Cloneable {
 
     private ArrayList<Item> items;
 
@@ -49,5 +49,21 @@ public class Items implements Iterable<Item> {
 
     public void add(Item item) {
         this.items.add(item);
+    }
+
+    @Override
+    public Items clone() {
+        try {
+            Items clone = (Items) super.clone();
+            clone.items = new ArrayList<>(this.items);
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    public void removeUsedItems(Knapsack knapsack) {
+        Items knapsackItems = knapsack._items();
+        items.removeAll(knapsackItems.items);
     }
 }
