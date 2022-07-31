@@ -54,21 +54,6 @@ public class KnapsackProblem implements Problem {
     }
 
     @Override
-    public Solution MejorSolucion(List<Solution> soluciones) {
-        if (!soluciones.isEmpty()) {
-            Solution mejor = soluciones.get(0);
-            for (Solution sol : soluciones) {
-                if (sol.value() > mejor.value()) {
-                    mejor = sol;
-                }
-            }
-            return mejor;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
     public Solutions neighbours(Solution solution) {
         ArrayList<Solution> neighbours = new ArrayList<>();
         var originalKnapsack = ((KnapsackSolution) solution).knapsack;

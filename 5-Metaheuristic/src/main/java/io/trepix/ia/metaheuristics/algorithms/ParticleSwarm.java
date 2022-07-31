@@ -3,6 +3,7 @@ package io.trepix.ia.metaheuristics.algorithms;
 import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
+import io.trepix.ia.metaheuristics.Solutions;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,8 @@ public abstract class ParticleSwarm<T extends Problem> extends Algorithm<T> {
             Solution solution = this.problem.randomSolution();
             solutions.add(solution);
         }
-        bestSolution = this.problem.MejorSolucion(solutions);
+
+        bestSolution = new Solutions(solutions).best().get();
         bestCurrentSolution = bestSolution;
         
         while (!meetStopCriteria()) {
