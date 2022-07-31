@@ -18,30 +18,31 @@ import static java.lang.Long.parseLong;
 
 
 public class Application {
-
-    private static Random generator;
+    private static Long seed;
 
     public static void main(String[] args) {
+        seed = seed(args);
 
-        System.out.println("Optimization metaheuristics");
+        System.out.println("Optimization metaheuristics (seed: " + seed + ")");
         var problem = defaultItems();
-        generator = KnapsackProblem.generador;
         runAlgorithms(problem);
 
         System.out.println("*****************************************\n");
-        problem = knapsackProblemBuilder(args)
+        problem = withRandomItems(seed)
                 .withNumberOfItems(100)
                 .maxItemValue(20)
                 .maxKnapsackWeight(30)
                 .build();
-        generator = KnapsackProblem.generador;
         runAlgorithms(problem);
     }
 
-    private static KnapsackProblemBuilder knapsackProblemBuilder(String[] args) {
-        if (args.length < 1) return withRandomItems();
-        long seed = parseLong(args[0]);
-        return withRandomItems(seed);
+    private static long seed(String[] args) {
+        if (args.length < 1) return new Random().nextLong();
+        return parseLong(args[0]);
+    }
+
+    private static Random random() {
+        return new Random(seed);
     }
 
     private static KnapsackProblem defaultItems() {
@@ -72,7 +73,7 @@ public class Application {
                 new KnapsackGradientDescent(),
                 new KnapsackTabuSearch(),
                 new KnapsackParticleSwarm(),
-                new KnapsackSimulatedAnnealing(generator)
+                new KnapsackSimulatedAnnealing(random())
         );
     }
 

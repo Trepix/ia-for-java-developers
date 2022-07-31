@@ -30,13 +30,6 @@ public class KnapsackProblemBuilder {
         builder.seed = seed;
         return builder;
     }
-
-    public static KnapsackProblemBuilder withRandomItems() {
-        KnapsackProblemBuilder builder = new KnapsackProblemBuilder();
-        builder.seed = new Random().nextLong();
-        return builder;
-    }
-
     public KnapsackProblemBuilder withNumberOfItems(int numberOfItems) {
         this.itemsNumber = numberOfItems;
         return this;
