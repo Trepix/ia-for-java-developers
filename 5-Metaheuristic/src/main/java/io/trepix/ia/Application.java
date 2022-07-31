@@ -1,15 +1,12 @@
 package io.trepix.ia;
 
 import io.trepix.ia.knapsack.KnapsackProblem;
-import io.trepix.ia.knapsack.KnapsackProblemBuilder;
 import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
-import java.util.function.Supplier;
 
 import static io.trepix.ia.knapsack.KnapsackProblemBuilder.ItemBuilder.name;
 import static io.trepix.ia.knapsack.KnapsackProblemBuilder.withItems;

@@ -4,24 +4,23 @@ import io.trepix.ia.knapsack.Item;
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackSolution;
 import io.trepix.ia.metaheuristics.Solution;
-import io.trepix.ia.metaheuristics.algorithms.EnjambreParticulas;
+import io.trepix.ia.metaheuristics.algorithms.ParticleSwarm;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // Enjambre particular para el problema de la mochila
-public class KnapsackParticleSwarm extends EnjambreParticulas<KnapsackProblem> {
+public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
     protected int numIteraciones = 0;
     private final static int NUM_MAX_ITERACIONES = 200;
 
     @Override
-    protected void ActualizarSoluciones() {
-        for (Solution sol : soluciones) {
+    protected void updateSolutions() {
+        for (Solution sol : solutions) {
             KnapsackSolution solucion = (KnapsackSolution) sol;
-            if (!solucion.equals(mejorSolucion)) {
+            if (!solucion.equals(bestSolution)) {
                 // Añadir un elemento de los mejores
-                solucion = AgregarElemento(solucion, mejorSolucion);
-                solucion = AgregarElemento(solucion, mejorActual);
+                solucion = AgregarElemento(solucion, bestSolution);
+                solucion = AgregarElemento(solucion, bestCurrentSolution);
                 // Disminución del peso si es necesario
                 int index;
                 while (solucion.getPeso() > ((KnapsackProblem) problem).maximumWeight()) {
@@ -62,25 +61,25 @@ public class KnapsackParticleSwarm extends EnjambreParticulas<KnapsackProblem> {
     }
     
     @Override
-    protected void ActualizarVariables() {
-        mejorActual = soluciones.get(0);
-        for (Solution sol : soluciones) {
-            if (sol.value() > mejorActual.value()) {
-                mejorActual = sol;
+    protected void updateVariables() {
+        bestCurrentSolution = solutions.get(0);
+        for (Solution sol : solutions) {
+            if (sol.value() > bestCurrentSolution.value()) {
+                bestCurrentSolution = sol;
             }
         }
-        if (mejorActual.value() > mejorSolucion.value()) {
-            mejorSolucion = mejorActual;
+        if (bestCurrentSolution.value() > bestSolution.value()) {
+            bestSolution = bestCurrentSolution;
         }
     }
 
     @Override
-    protected boolean CriterioParada() {
+    protected boolean meetStopCriteria() {
         return numIteraciones > NUM_MAX_ITERACIONES;
     }
 
     @Override
-    protected void Incrementar() {
+    protected void updateCriteriaVariables() {
         numIteraciones++;
     }
 
