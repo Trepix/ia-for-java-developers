@@ -69,11 +69,11 @@ public class KnapsackProblem implements Problem {
     }
 
     @Override
-    public List<Solution> neighbours(Solution solucionActual) {
+    public Solutions neighbours(Solution solution) {
         ArrayList<Solution> vecindario = new ArrayList();
         for (int i = 0; i < neighboursNumber; i++) {
             // Creación de un clon
-            KnapsackSolution solucion = new KnapsackSolution((KnapsackSolution) solucionActual);
+            KnapsackSolution solucion = new KnapsackSolution((KnapsackSolution) solution);
             // se elimina un elemento
             int index = generador.nextInt(solucion.contenido.size());
             solucion.contenido.remove(index);
@@ -96,12 +96,7 @@ public class KnapsackProblem implements Problem {
             }
             vecindario.add(solucion);
         }
-        return vecindario;
-    }
-
-    @Override
-    public Solutions _neighbours(Solution solution) {
-        return new Solutions(this.neighbours(solution));
+        return new Solutions(vecindario);
     }
 
     public Knapsack emptyKnapsack() {

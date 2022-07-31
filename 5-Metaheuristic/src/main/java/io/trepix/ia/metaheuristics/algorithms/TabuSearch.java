@@ -24,7 +24,7 @@ public abstract class TabuSearch<T extends Problem> extends Algorithm<T> {
         addTabuSolution(currentSolution);
 
         while (!meetStopCriteria()) {
-            var solutions = problem._neighbours(currentSolution);
+            var solutions = problem.neighbours(currentSolution);
             solutions.remove(tabuSolutions);
             solutions.best().ifPresent(this::update);
             updateCriteriaVariables();

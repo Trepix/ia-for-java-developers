@@ -25,7 +25,7 @@ public abstract class SimulatedAnnealing<T extends Problem> extends Algorithm<T>
         bestSolution = currentSolution;
 
         while (!meetStopCriteria()) {
-            problem._neighbours(currentSolution)
+            problem.neighbours(currentSolution)
                     .best()
                     .ifPresent(solution -> {
                         if (solution.isBetterThan(currentSolution) || isNotTooWorse(solution)) {
