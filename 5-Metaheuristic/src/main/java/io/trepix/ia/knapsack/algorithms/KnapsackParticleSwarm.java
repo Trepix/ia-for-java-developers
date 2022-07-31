@@ -7,10 +7,17 @@ import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.ParticleSwarm;
 
 import java.util.List;
+import java.util.Random;
 
 public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
+    private final Random generator;
     protected int iterations = 0;
     private final static int MAX_ITERATIONS = 200;
+
+    public KnapsackParticleSwarm(Random generator) {
+        super();
+        this.generator = generator;
+    }
 
     @Override
     protected void updateSolutions() {
@@ -23,7 +30,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
                 // Disminución del peso si es necesario
                 int index;
                 while (solucion.getPeso() > ((KnapsackProblem) problem).maximumWeight()) {
-                    index = KnapsackProblem.generador.nextInt(solucion.contenido.size());
+                    index = generator.nextInt(solucion.contenido.size());
                     solucion.contenido.remove(index);
                 }
                 // Para terminar, se completa
@@ -33,7 +40,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
     }
     
     protected KnapsackSolution AgregarElemento(KnapsackSolution solucion, Solution solucionSource) {
-        int index = KnapsackProblem.generador.nextInt(((KnapsackSolution)solucionSource).contenido.size());
+        int index = generator.nextInt(((KnapsackSolution)solucionSource).contenido.size());
         Item b = ((KnapsackSolution)solucionSource).contenido.get(index);
         if (!solucion.contenido.contains(b)) {
             solucion.contenido.add(b);
@@ -49,7 +56,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
         Item b;
         int index;
         while (!cajasPosibles.isEmpty()) {
-            index = KnapsackProblem.generador.nextInt(cajasPosibles.size());
+            index = generator.nextInt(cajasPosibles.size());
             b = cajasPosibles.get(index);
             solucion.contenido.add(b);
             cajasPosibles.remove(b);
