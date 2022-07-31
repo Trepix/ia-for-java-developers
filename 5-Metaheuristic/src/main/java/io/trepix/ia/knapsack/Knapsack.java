@@ -25,10 +25,6 @@ public class Knapsack implements Cloneable {
         }
     }
 
-    public Items _items() {
-        return this.items;
-    }
-
     public List<Item> items() {
         List<Item> list = new LinkedList<>();
         for(Item item : items) {
@@ -39,6 +35,13 @@ public class Knapsack implements Cloneable {
 
     public boolean canCarryWith(Item item) {
         return items.weight() + item.weight() <= maximumWeight;
+    }
+
+    public boolean isCarrying(Item searchedItem) {
+        for (Item item: items) {
+            if (searchedItem.equals(item)) return true;
+        }
+        return false;
     }
 
     public void add(Item item) {

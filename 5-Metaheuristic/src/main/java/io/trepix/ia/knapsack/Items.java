@@ -63,7 +63,9 @@ public class Items implements Iterable<Item>, Cloneable {
     }
 
     public void removeUsedItems(Knapsack knapsack) {
-        Items knapsackItems = knapsack._items();
-        items.removeAll(knapsackItems.items);
+        items = items.stream()
+                .filter(searchedItem -> !knapsack.isCarrying(searchedItem))
+                .collect(toCollection(ArrayList::new));
+
     }
 }

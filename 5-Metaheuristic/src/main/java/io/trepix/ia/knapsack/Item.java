@@ -1,5 +1,7 @@
 package io.trepix.ia.knapsack;
 
+import java.util.Objects;
+
 public class Item {
     public final double value;
     private final double weight;
@@ -26,5 +28,18 @@ public class Item {
 
     public double weight() {
         return weight;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Double.compare(item.value, value) == 0 && Double.compare(item.weight, weight) == 0 && Objects.equals(name, item.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, weight, name);
     }
 }
