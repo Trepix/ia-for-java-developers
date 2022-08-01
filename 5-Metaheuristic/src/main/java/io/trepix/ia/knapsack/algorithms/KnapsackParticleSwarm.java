@@ -23,32 +23,32 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
     protected void updateSolutions() {
         ArrayList<Solution> newSolutions = new ArrayList<>();
         for (Solution sol : solutions) {
-            KnapsackSolution solucion = (KnapsackSolution) sol;
-            if (!solucion.equals(bestSolution)) {
-                // Añadir un elemento de los mejores
-                solucion = AgregarElemento(solucion, bestSolution);
-                solucion = AgregarElemento(solucion, bestCurrentSolution);
-                // Disminución del peso si es necesario
-                int index;
-                while (solucion.getPeso() > ((KnapsackProblem)problem).maximumWeight()) {
-                    index = generator.nextInt(solucion.contenido.size());
-                    solucion.contenido.remove(index);
-                }
-                // Para terminar, se completa
-                solucion = fillKnapsack(solucion);
+            KnapsackSolution solution = (KnapsackSolution) sol;
+            if (!solution.equals(bestSolution)) {
+                solution = improveSolution(solution, bestSolution);
+                solution = improveSolution(solution, bestCurrentSolution);
+                solution = complete(solution);
             }
-            newSolutions.add(solucion);
+            newSolutions.add(solution);
         }
         solutions = newSolutions;
     }
     
-    protected KnapsackSolution AgregarElemento(KnapsackSolution solucion, Solution solucionSource) {
-        int index = generator.nextInt(((KnapsackSolution)solucionSource).contenido.size());
-        Item b = ((KnapsackSolution)solucionSource).contenido.get(index);
-        if (!solucion.contenido.contains(b)) {
-            solucion.contenido.add(b);
+    protected KnapsackSolution improveSolution(KnapsackSolution solution, Solution bestSolution) {
+        int index = generator.nextInt(((KnapsackSolution)bestSolution).contenido.size());
+        Item item = ((KnapsackSolution)bestSolution).contenido.get(index);
+        if (!solution.contenido.contains(item)) {
+            solution.contenido.add(item);
+            while (solution.getPeso() + item.weight() > solution.knapsack.maximumWeight()) {
+                index = generator.nextInt(solution.contenido.size());
+                solution.contenido.remove(index);
+            }
         }
-        return solucion;
+        return solution;
+    }
+
+    protected KnapsackSolution complete(KnapsackSolution knapsackSolution) {
+        return fillKnapsack(knapsackSolution);
     }
     
     protected KnapsackSolution fillKnapsack(KnapsackSolution solution) {
