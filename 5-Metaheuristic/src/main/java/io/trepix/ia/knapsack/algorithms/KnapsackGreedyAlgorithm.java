@@ -9,7 +9,7 @@ public class KnapsackGreedyAlgorithm extends GreedyAlgorithm<KnapsackProblem, Kn
     @Override
     protected KnapsackSolution findSolution(KnapsackProblem problem) {
         var knapsack = problem.emptyKnapsack();
-        var items = problem._items();
+        var items = problem.items();
         items.sortByHighestRelativeValue();
         for (Item item : items) {
             if (knapsack.canCarryWith(item)) {

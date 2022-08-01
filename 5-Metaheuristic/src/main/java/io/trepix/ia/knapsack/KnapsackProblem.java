@@ -21,18 +21,14 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
         this.neighboursNumber = configuration.neighboursNumber();
     }
 
-    public List<Item> items() {
-        return new ArrayList<>(cajasDispo);
-    }
-
-    public Items _items() {
+    public Items items() {
         return new Items(new ArrayList<>(cajasDispo));
     }
 
     @Override
     public KnapsackSolution randomSolution() {
         var knapsack = this.emptyKnapsack();
-        Items items = _items();
+        Items items = items();
         items.removeWhichCannotBeCarried(knapsack);
         while (knapsack.isNotFull() && items.isNotEmpty()) {
             Item item = items.popRandom(generator);
@@ -40,16 +36,6 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
             items.removeWhichCannotBeCarried(knapsack);
         }
         return new KnapsackSolution(knapsack);
-    }
-
-    public void EliminarDemasiadoPesadas(List<Item> cajasPosibles, double espacioDispo) {
-        Iterator<Item> iterador = cajasPosibles.iterator();
-        while (iterador.hasNext()) {
-            Item b = iterador.next();
-            if (b.weight() > espacioDispo) {
-                iterador.remove();
-            }
-        }
     }
 
     @Override
@@ -60,7 +46,7 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
         for (int i = 0; i < neighboursNumber; i++) {
             var knapsack = originalKnapsack.clone();
             knapsack.popRandomItem(generator);
-            var allItems = _items();
+            var allItems = items();
             allItems.removeUsedItems(knapsack);
             allItems.removeWhichCannotBeCarried(knapsack);
 

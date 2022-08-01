@@ -52,7 +52,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
     
     protected KnapsackSolution fillKnapsack(KnapsackSolution solution) {
         var knapsack = solution.knapsack();
-        var allItems = problem._items();
+        var allItems = problem.items();
         allItems.removeUsedItems(knapsack);
         allItems.removeWhichCannotBeCarried(knapsack);
 
