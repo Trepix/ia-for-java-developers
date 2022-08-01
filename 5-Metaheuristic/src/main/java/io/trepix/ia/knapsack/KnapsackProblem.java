@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 public class KnapsackProblem implements Problem {
-    public static Random generador = null;
+    private final Random generator;
     private final double maxWeight;
     private final int neighboursNumber;
     protected List<Item> cajasDispo;
@@ -18,7 +18,7 @@ public class KnapsackProblem implements Problem {
     public KnapsackProblem(List<Item> items, Configuration configuration) {
         this.maxWeight = configuration.maximumKnapsackWeight();
         this.cajasDispo = items;
-        generador = configuration.random();
+        this.generator = configuration.random();
         this.neighboursNumber = configuration.neighboursNumber();
     }
 
@@ -36,7 +36,7 @@ public class KnapsackProblem implements Problem {
         Items items = _items();
         items.removeWhichCannotBeCarried(knapsack);
         while (knapsack.isNotFull() && items.isNotEmpty()) {
-            Item item = items.popRandom(generador);
+            Item item = items.popRandom(generator);
             knapsack.add(item);
             items.removeWhichCannotBeCarried(knapsack);
         }
@@ -60,13 +60,13 @@ public class KnapsackProblem implements Problem {
 
         for (int i = 0; i < neighboursNumber; i++) {
             var knapsack = originalKnapsack.clone();
-            knapsack.popRandomItem(generador);
+            knapsack.popRandomItem(generator);
             var allItems = _items();
             allItems.removeUsedItems(knapsack);
             allItems.removeWhichCannotBeCarried(knapsack);
 
             while (knapsack.isNotFull() && allItems.isNotEmpty()) {
-                Item item = allItems.popRandom(generador);
+                Item item = allItems.popRandom(generator);
                 knapsack.add(item);
                 allItems.removeWhichCannotBeCarried(knapsack);
             }
