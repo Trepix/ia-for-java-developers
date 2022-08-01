@@ -4,30 +4,29 @@ import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solutions;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 public class KnapsackProblem implements Problem<KnapsackSolution> {
     private final Random generator;
-    private final double maxWeight;
+    private final Knapsack emptyKnapsack;
     private final int neighboursNumber;
-    protected List<Item> cajasDispo;
+    private final Items items;
 
     public KnapsackProblem(List<Item> items, Configuration configuration) {
-        this.maxWeight = configuration.maximumKnapsackWeight();
-        this.cajasDispo = items;
+        this.items = new Items(new ArrayList<>(items));
         this.generator = configuration.random();
         this.neighboursNumber = configuration.neighboursNumber();
+        this.emptyKnapsack = new Knapsack(configuration.maximumKnapsackWeight());
     }
 
     public Items items() {
-        return new Items(new ArrayList<>(cajasDispo));
+        return items.clone();
     }
 
     @Override
     public KnapsackSolution randomSolution() {
-        var knapsack = this.emptyKnapsack();
+        var knapsack = this.emptyKnapsack.clone();
         Items items = items();
         items.removeWhichCannotBeCarried(knapsack);
         while (knapsack.isNotFull() && items.isNotEmpty()) {
@@ -61,10 +60,7 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
     }
 
     public Knapsack emptyKnapsack() {
-        return new Knapsack(maximumWeight());
+        return this.emptyKnapsack.clone();
     }
 
-    public double maximumWeight() {
-        return maxWeight;
-    }
 }
