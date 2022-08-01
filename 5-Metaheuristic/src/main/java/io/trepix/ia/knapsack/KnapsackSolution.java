@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import static java.lang.Double.compare;
+import static java.lang.Double.max;
 
 // Una solución potencial = una carga posible de la mochila
 public class KnapsackSolution implements Solution {
@@ -16,6 +17,14 @@ public class KnapsackSolution implements Solution {
     public KnapsackSolution(Knapsack knapsack) {
         contenido = knapsack.items();
         this.knapsack = knapsack;
+    }
+
+    public Knapsack knapsack() {
+        var knapsack = new Knapsack(this.knapsack.maximumWeight());
+        for (Item item : contenido) {
+            knapsack.add(item);
+        }
+        return knapsack;
     }
 
     public double getPeso() {

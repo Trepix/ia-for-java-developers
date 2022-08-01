@@ -6,7 +6,7 @@ import io.trepix.ia.knapsack.KnapsackSolution;
 import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.ParticleSwarm;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
@@ -21,6 +21,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
 
     @Override
     protected void updateSolutions() {
+        ArrayList<Solution> newSolutions = new ArrayList<>();
         for (Solution sol : solutions) {
             KnapsackSolution solucion = (KnapsackSolution) sol;
             if (!solucion.equals(bestSolution)) {
@@ -29,14 +30,16 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
                 solucion = AgregarElemento(solucion, bestCurrentSolution);
                 // Disminución del peso si es necesario
                 int index;
-                while (solucion.getPeso() > ((KnapsackProblem) problem).maximumWeight()) {
+                while (solucion.getPeso() > ((KnapsackProblem)problem).maximumWeight()) {
                     index = generator.nextInt(solucion.contenido.size());
                     solucion.contenido.remove(index);
                 }
                 // Para terminar, se completa
-                solucion = Completar(solucion);
+                solucion = fillKnapsack(solucion);
             }
+            newSolutions.add(solucion);
         }
+        solutions = newSolutions;
     }
     
     protected KnapsackSolution AgregarElemento(KnapsackSolution solucion, Solution solucionSource) {
@@ -48,23 +51,20 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
         return solucion;
     }
     
-    protected KnapsackSolution Completar(KnapsackSolution solucion) {
-        double espacioDispo = ((KnapsackProblem) problem).maximumWeight() - solucion.getPeso();
-        List<Item> cajasPosibles = ((KnapsackProblem) problem).items();
-        cajasPosibles.removeAll(solucion.contenido);
-        ((KnapsackProblem) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
-        Item b;
-        int index;
-        while (!cajasPosibles.isEmpty()) {
-            index = generator.nextInt(cajasPosibles.size());
-            b = cajasPosibles.get(index);
-            solucion.contenido.add(b);
-            cajasPosibles.remove(b);
-            espacioDispo = ((KnapsackProblem) problem).maximumWeight() - solucion.getPeso();
-            ((KnapsackProblem) problem).EliminarDemasiadoPesadas(cajasPosibles, espacioDispo);
+    protected KnapsackSolution fillKnapsack(KnapsackSolution solution) {
+        var knapsack = solution.knapsack();
+        var allItems = ((KnapsackProblem)problem)._items();
+        allItems.removeUsedItems(knapsack);
+        allItems.removeWhichCannotBeCarried(knapsack);
+
+        while (allItems.isNotEmpty()) {
+            Item item = allItems.popRandom(generator);
+            knapsack.add(item);
+            allItems.removeWhichCannotBeCarried(knapsack);
         }
-        return solucion;
+        return new KnapsackSolution(knapsack);
     }
+
 
     @Override
     protected boolean meetStopCriteria() {

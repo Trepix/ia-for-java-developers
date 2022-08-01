@@ -14,6 +14,10 @@ public class Knapsack implements Cloneable {
         items = new Items();
     }
 
+    public double maximumWeight() {
+        return maximumWeight;
+    }
+
     @Override
     public Knapsack clone() {
         try {
