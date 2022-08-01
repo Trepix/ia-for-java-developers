@@ -1,6 +1,7 @@
 package io.trepix.ia;
 
 import io.trepix.ia.knapsack.KnapsackProblem;
+import io.trepix.ia.knapsack.KnapsackSolution;
 import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Solution;
@@ -64,7 +65,7 @@ public class Application {
         knapsackAlgorithms().forEach(algorithm -> runAlgorithm(algorithm, problem));
     }
 
-    private static List<Algorithm<KnapsackProblem>> knapsackAlgorithms() {
+    private static List<Algorithm<KnapsackProblem, KnapsackSolution>> knapsackAlgorithms() {
         return List.of(
                 new KnapsackGreedyAlgorithm(),
                 new KnapsackGradientDescent(),
@@ -74,7 +75,7 @@ public class Application {
         );
     }
 
-    private static void runAlgorithm(Algorithm<KnapsackProblem> algorithm, KnapsackProblem problem) {
+    private static void runAlgorithm(Algorithm<KnapsackProblem, KnapsackSolution> algorithm, KnapsackProblem problem) {
         System.out.println(algorithm.name());
         Solution solution = algorithm.solve(problem);
         System.out.println(solution.toString());

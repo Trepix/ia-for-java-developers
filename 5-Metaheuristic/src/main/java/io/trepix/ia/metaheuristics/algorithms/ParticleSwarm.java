@@ -7,32 +7,32 @@ import io.trepix.ia.metaheuristics.Solutions;
 
 import java.util.ArrayList;
 
-public abstract class ParticleSwarm<T extends Problem> extends Algorithm<T> {
+public abstract class ParticleSwarm<P extends Problem<S>, S extends Solution> extends Algorithm<P, S> {
 
     protected final static int PARTICLES = 30;
-    protected Problem problem;
-    protected ArrayList<Solution> solutions;
-    protected Solution bestSolution;
-    protected Solution bestCurrentSolution;
+    protected P problem;
+    protected ArrayList<S> solutions;
+    protected S bestSolution;
+    protected S bestCurrentSolution;
 
     public ParticleSwarm() {
         super("Particle Swarm");
     }
 
     @Override
-    public final Solution solve(T problem) {
+    public final S solve(P problem) {
         this.problem = problem;
         solutions = new ArrayList<>();
         for (int i = 0; i < PARTICLES; i++) {
-            Solution solution = this.problem.randomSolution();
+            S solution = this.problem.randomSolution();
             solutions.add(solution);
         }
 
-        bestSolution = new Solutions(solutions).best().get();
+        bestSolution = new Solutions<>(solutions).best().get();
         bestCurrentSolution = bestSolution;
         
         while (!meetStopCriteria()) {
-            bestCurrentSolution = new Solutions(solutions).best().get();
+            bestCurrentSolution = new Solutions<>(solutions).best().get();
             if (bestCurrentSolution.isBetterThan(bestSolution)) {
                 bestSolution = bestCurrentSolution;
             }

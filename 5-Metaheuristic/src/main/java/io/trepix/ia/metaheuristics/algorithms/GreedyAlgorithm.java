@@ -4,17 +4,17 @@ import io.trepix.ia.metaheuristics.Algorithm;
 import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 
-public abstract class GreedyAlgorithm<T extends Problem> extends Algorithm<T> {
+public abstract class GreedyAlgorithm<P extends Problem<S>, S extends Solution> extends Algorithm<P, S> {
 
-    protected Problem problem;
+    protected P problem;
 
     public GreedyAlgorithm() {
         super("Greedy Algorithm");
     }
 
-    public final Solution solve(T problem) {
+    public final S solve(P problem) {
         return findSolution(problem);
     }
 
-    protected abstract Solution findSolution(T problem);
+    protected abstract S findSolution(P problem);
 }

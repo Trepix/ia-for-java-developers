@@ -3,12 +3,11 @@ package io.trepix.ia.knapsack.algorithms;
 import io.trepix.ia.knapsack.Item;
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackSolution;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.GreedyAlgorithm;
 
-public class KnapsackGreedyAlgorithm extends GreedyAlgorithm<KnapsackProblem> {
+public class KnapsackGreedyAlgorithm extends GreedyAlgorithm<KnapsackProblem, KnapsackSolution> {
     @Override
-    protected Solution findSolution(KnapsackProblem problem) {
+    protected KnapsackSolution findSolution(KnapsackProblem problem) {
         var knapsack = problem.emptyKnapsack();
         var items = problem._items();
         items.sortByHighestRelativeValue();

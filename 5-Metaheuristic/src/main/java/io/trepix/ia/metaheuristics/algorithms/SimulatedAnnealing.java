@@ -6,11 +6,11 @@ import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.Random;
 
-public abstract class SimulatedAnnealing<T extends Problem> extends Algorithm<T> {
+public abstract class SimulatedAnnealing<P extends Problem<S>, S extends Solution> extends Algorithm<P, S> {
 
     private final Random generator;
-    protected Solution currentSolution;
-    protected Solution bestSolution;
+    protected S currentSolution;
+    protected S bestSolution;
     protected double temperature;
 
     public SimulatedAnnealing(Random generator) {
@@ -19,7 +19,7 @@ public abstract class SimulatedAnnealing<T extends Problem> extends Algorithm<T>
     }
 
     @Override
-    public final Solution solve(T problem) {
+    public final S solve(P problem) {
         temperature = initialTemperature();
         currentSolution = problem.randomSolution();
         bestSolution = currentSolution;

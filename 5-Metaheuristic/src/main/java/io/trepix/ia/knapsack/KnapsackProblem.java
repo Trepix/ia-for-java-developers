@@ -1,7 +1,6 @@
 package io.trepix.ia.knapsack;
 
 import io.trepix.ia.metaheuristics.Problem;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.Solutions;
 
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class KnapsackProblem implements Problem {
+public class KnapsackProblem implements Problem<KnapsackSolution> {
     private final Random generator;
     private final double maxWeight;
     private final int neighboursNumber;
@@ -31,7 +30,7 @@ public class KnapsackProblem implements Problem {
     }
 
     @Override
-    public Solution randomSolution() {
+    public KnapsackSolution randomSolution() {
         var knapsack = this.emptyKnapsack();
         Items items = _items();
         items.removeWhichCannotBeCarried(knapsack);
@@ -54,9 +53,9 @@ public class KnapsackProblem implements Problem {
     }
 
     @Override
-    public Solutions neighbours(Solution solution) {
-        ArrayList<Solution> neighbours = new ArrayList<>();
-        var originalKnapsack = ((KnapsackSolution) solution).knapsack;
+    public Solutions<KnapsackSolution> neighbours(KnapsackSolution solution) {
+        ArrayList<KnapsackSolution> neighbours = new ArrayList<>();
+        var originalKnapsack = solution.knapsack;
 
         for (int i = 0; i < neighboursNumber; i++) {
             var knapsack = originalKnapsack.clone();
@@ -72,7 +71,7 @@ public class KnapsackProblem implements Problem {
             }
             neighbours.add(new KnapsackSolution(knapsack));
         }
-        return new Solutions(neighbours);
+        return new Solutions<>(neighbours);
     }
 
     public Knapsack emptyKnapsack() {

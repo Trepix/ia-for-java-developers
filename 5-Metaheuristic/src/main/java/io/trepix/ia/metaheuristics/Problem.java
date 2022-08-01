@@ -1,9 +1,9 @@
 package io.trepix.ia.metaheuristics;
 
-public interface Problem {
+public interface Problem<S extends Solution> {
 
-    Solutions neighbours(Solution solution);
+    Solutions<S> neighbours(S solution);
 
-    Solution randomSolution();
+    S randomSolution();
 
 }

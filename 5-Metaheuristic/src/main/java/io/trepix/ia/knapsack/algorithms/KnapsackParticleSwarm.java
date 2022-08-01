@@ -3,13 +3,12 @@ package io.trepix.ia.knapsack.algorithms;
 import io.trepix.ia.knapsack.Item;
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackSolution;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.ParticleSwarm;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
+public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, KnapsackSolution> {
     private final Random generator;
     protected int iterations = 0;
     private final static int MAX_ITERATIONS = 200;
@@ -21,9 +20,9 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
 
     @Override
     protected void updateSolutions() {
-        ArrayList<Solution> newSolutions = new ArrayList<>();
-        for (Solution sol : solutions) {
-            KnapsackSolution solution = (KnapsackSolution) sol;
+        ArrayList<KnapsackSolution> newSolutions = new ArrayList<>();
+        for (KnapsackSolution sol : solutions) {
+            KnapsackSolution solution = sol;
             if (!solution.equals(bestSolution)) {
                 solution = improveSolution(solution, bestSolution);
                 solution = improveSolution(solution, bestCurrentSolution);
@@ -34,9 +33,9 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
         solutions = newSolutions;
     }
     
-    protected KnapsackSolution improveSolution(KnapsackSolution solution, Solution bestSolution) {
-        int index = generator.nextInt(((KnapsackSolution)bestSolution).contenido.size());
-        Item item = ((KnapsackSolution)bestSolution).contenido.get(index);
+    protected KnapsackSolution improveSolution(KnapsackSolution solution, KnapsackSolution bestSolution) {
+        int index = generator.nextInt(bestSolution.contenido.size());
+        Item item = bestSolution.contenido.get(index);
         if (!solution.contenido.contains(item)) {
             solution.contenido.add(item);
             while (solution.getPeso() + item.weight() > solution.knapsack.maximumWeight()) {
@@ -53,7 +52,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem> {
     
     protected KnapsackSolution fillKnapsack(KnapsackSolution solution) {
         var knapsack = solution.knapsack();
-        var allItems = ((KnapsackProblem)problem)._items();
+        var allItems = problem._items();
         allItems.removeUsedItems(knapsack);
         allItems.removeWhichCannotBeCarried(knapsack);
 

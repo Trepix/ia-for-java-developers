@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import static java.lang.Double.compare;
-import static java.lang.Double.max;
 
 // Una solución potencial = una carga posible de la mochila
 public class KnapsackSolution implements Solution {
