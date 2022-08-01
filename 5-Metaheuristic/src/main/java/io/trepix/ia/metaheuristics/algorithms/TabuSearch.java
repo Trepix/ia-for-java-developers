@@ -26,7 +26,16 @@ public abstract class TabuSearch<P extends Problem<S>, S extends Solution> exten
         while (!meetStopCriteria()) {
             var solutions = problem.neighbours(currentSolution);
             solutions.remove(tabuSolutions);
-            solutions.best().ifPresent(this::update);
+            solutions.best().ifPresent(solution -> {
+                if (!tabuSolutions.contains(solution)) {
+                    currentSolution = solution;
+                    addTabuSolution(solution);
+                    if (solution.isBetterThan(bestSolution)) {
+                        bestSolution = solution;
+                        betterSolutionFound(bestSolution);
+                    }
+                }
+            });
             updateCriteriaVariables();
         }
         return bestSolution;
@@ -38,17 +47,6 @@ public abstract class TabuSearch<P extends Problem<S>, S extends Solution> exten
             tabuSolutions.remove();
         }
         tabuSolutions.add(solution);
-    }
-
-    private void update(S solution) {
-        if (!tabuSolutions.contains(solution)) {
-            currentSolution = solution;
-            addTabuSolution(solution);
-            if (solution.isBetterThan(bestSolution)) {
-                bestSolution = solution;
-                betterSolutionFound(bestSolution);
-            }
-        }
     }
 
     protected abstract boolean meetStopCriteria();

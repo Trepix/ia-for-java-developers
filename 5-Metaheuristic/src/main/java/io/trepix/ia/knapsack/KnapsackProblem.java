@@ -26,14 +26,8 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
 
     @Override
     public KnapsackSolution randomSolution() {
-        var knapsack = this.emptyKnapsack.clone();
-        Items items = items();
-        items.removeWhichCannotBeCarried(knapsack);
-        while (knapsack.isNotFull() && items.isNotEmpty()) {
-            Item item = items.popRandom(generator);
-            knapsack.add(item);
-            items.removeWhichCannotBeCarried(knapsack);
-        }
+        var knapsack = emptyKnapsack.clone();
+        knapsack.randomFillWith(items(), generator);
         return new KnapsackSolution(knapsack);
     }
 
@@ -45,15 +39,7 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
         for (int i = 0; i < neighboursNumber; i++) {
             var knapsack = originalKnapsack.clone();
             knapsack.popRandomItem(generator);
-            var allItems = items();
-            allItems.removeUsedItems(knapsack);
-            allItems.removeWhichCannotBeCarried(knapsack);
-
-            while (knapsack.isNotFull() && allItems.isNotEmpty()) {
-                Item item = allItems.popRandom(generator);
-                knapsack.add(item);
-                allItems.removeWhichCannotBeCarried(knapsack);
-            }
+            knapsack.randomFillWith(items(), generator);
             neighbours.add(new KnapsackSolution(knapsack));
         }
         return new Solutions<>(neighbours);

@@ -47,20 +47,8 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
     }
 
     protected KnapsackSolution complete(KnapsackSolution knapsackSolution) {
-        return fillKnapsack(knapsackSolution);
-    }
-    
-    protected KnapsackSolution fillKnapsack(KnapsackSolution solution) {
-        var knapsack = solution.knapsack();
-        var allItems = problem.items();
-        allItems.removeUsedItems(knapsack);
-        allItems.removeWhichCannotBeCarried(knapsack);
-
-        while (allItems.isNotEmpty()) {
-            Item item = allItems.popRandom(generator);
-            knapsack.add(item);
-            allItems.removeWhichCannotBeCarried(knapsack);
-        }
+        var knapsack = knapsackSolution.knapsack();
+        knapsack.randomFillWith(problem.items(), generator);
         return new KnapsackSolution(knapsack);
     }
 

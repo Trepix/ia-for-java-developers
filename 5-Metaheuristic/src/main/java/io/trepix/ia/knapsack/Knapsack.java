@@ -60,4 +60,14 @@ public class Knapsack implements Cloneable {
     public void popRandomItem(Random generator) {
         items.popRandom(generator);
     }
+
+    public void randomFillWith(Items allItems, Random generator) {
+        allItems.removeUsedItems(this);
+        allItems.removeWhichCannotBeCarried(this);
+        while (this.isNotFull() && allItems.isNotEmpty()) {
+            Item item = allItems.popRandom(generator);
+            this.add(item);
+            allItems.removeWhichCannotBeCarried(this);
+        }
+    }
 }
