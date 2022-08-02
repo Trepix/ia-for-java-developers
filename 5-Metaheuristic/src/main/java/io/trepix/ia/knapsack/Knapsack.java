@@ -2,6 +2,7 @@ package io.trepix.ia.knapsack;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Knapsack implements Cloneable {
@@ -81,5 +82,18 @@ public class Knapsack implements Cloneable {
 
     public Item peekRandomItem(Random generator) {
         return items.peekRandom(generator);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Knapsack knapsack = (Knapsack) o;
+        return Double.compare(knapsack.maximumWeight, maximumWeight) == 0 && items.equals(knapsack.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(maximumWeight, items);
     }
 }

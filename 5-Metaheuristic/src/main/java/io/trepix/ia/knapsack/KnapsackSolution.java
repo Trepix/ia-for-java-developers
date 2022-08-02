@@ -57,18 +57,10 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof KnapsackSolution solution)) {
-            return false;
-        }
-        if (solution.knapsack.items().size() != this.knapsack.items().size() || solution.getPeso() != this.getPeso() || solution.value() != this.value()) {
-            return false;
-        }
-        for(Item b : knapsack.items()) {
-            if (!solution.knapsack.items().contains(b)) {
-                return false;
-            }
-        }
-        return true;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        KnapsackSolution that = (KnapsackSolution) o;
+        return knapsack.equals(that.knapsack);
     }
 
     @Override

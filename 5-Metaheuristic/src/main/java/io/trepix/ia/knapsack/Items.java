@@ -76,4 +76,16 @@ public class Items implements Iterable<Item>, Cloneable {
         return items.stream().map(Item::value).reduce(0.0, Double::sum);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Items items1 = (Items) o;
+        return new HashSet<>(this.items).equals(new HashSet<>(items1.items));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(items);
+    }
 }
