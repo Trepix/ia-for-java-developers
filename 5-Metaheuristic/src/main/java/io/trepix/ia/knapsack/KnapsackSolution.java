@@ -2,7 +2,7 @@ package io.trepix.ia.knapsack;
 
 import io.trepix.ia.metaheuristics.Solution;
 
-import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.StringJoiner;
 
@@ -13,20 +13,14 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     public final Knapsack knapsack;
 
     private final Random generator;
-    public List<Item> contenido;
 
     public KnapsackSolution(Knapsack knapsack, Random generator) {
-        contenido = knapsack.items();
         this.knapsack = knapsack;
         this.generator = generator;
     }
 
     public Knapsack knapsack() {
-        var knapsack = new Knapsack(this.knapsack.maximumWeight());
-        for (Item item : contenido) {
-            knapsack.add(item);
-        }
-        return knapsack;
+        return knapsack.clone();
     }
 
     public double getPeso() {
@@ -39,13 +33,13 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
 
     @Override
     public void improveWith(KnapsackSolution betterSolution) {
-        int index = generator.nextInt(betterSolution.contenido.size());
-        Item item = betterSolution.contenido.get(index);
-        if (!this.contenido.contains(item)) {
-            this.contenido.add(item);
-            while (this.getPeso() + item.weight() > this.knapsack.maximumWeight()) {
-                index = generator.nextInt(this.contenido.size());
-                this.contenido.remove(index);
+        var betterKnapsack = betterSolution.knapsack();
+        var item = betterKnapsack.peekRandomItem(generator);
+
+        if (!knapsack.isCarrying(item)) {
+            knapsack.add(item);
+            while (knapsack.weight() + item.weight() > this.knapsack.maximumWeight()) {
+                knapsack.popRandomItem(generator);
             }
         }
     }
@@ -60,18 +54,17 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
         }
         return sj.toString();
     }
-    
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof KnapsackSolution)) {
+        if (!(o instanceof KnapsackSolution solution)) {
             return false;
         }
-        KnapsackSolution solution = (KnapsackSolution) o;
-        if (solution.contenido.size() != this.contenido.size() || solution.getPeso() != this.getPeso() || solution.value() != this.value()) {
+        if (solution.knapsack.items().size() != this.knapsack.items().size() || solution.getPeso() != this.getPeso() || solution.value() != this.value()) {
             return false;
         }
-        for(Item b : contenido) {
-            if (!solution.contenido.contains(b)) {
+        for(Item b : knapsack.items()) {
+            if (!solution.knapsack.items().contains(b)) {
                 return false;
             }
         }
@@ -80,7 +73,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
 
     @Override
     public int hashCode() {
-        return 42;
+        return Objects.hash(knapsack);
     }
 
     @Override

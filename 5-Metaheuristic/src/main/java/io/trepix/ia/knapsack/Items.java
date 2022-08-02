@@ -1,8 +1,6 @@
 package io.trepix.ia.knapsack;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toCollection;
@@ -43,6 +41,11 @@ public class Items implements Iterable<Item>, Cloneable {
         return items.remove(index);
     }
 
+    public Item peekRandom(Random generator) {
+        int index = generator.nextInt(items.size());
+        return items.get(index);
+    }
+
     public double weight() {
         return items.stream().map(Item::weight).reduce(0.0, Double::sum);
     }
@@ -72,4 +75,5 @@ public class Items implements Iterable<Item>, Cloneable {
     public double value() {
         return items.stream().map(Item::value).reduce(0.0, Double::sum);
     }
+    
 }

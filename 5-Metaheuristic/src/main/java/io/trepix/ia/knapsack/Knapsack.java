@@ -78,4 +78,8 @@ public class Knapsack implements Cloneable {
     public double value() {
         return items.value();
     }
+
+    public Item peekRandomItem(Random generator) {
+        return items.peekRandom(generator);
+    }
 }
