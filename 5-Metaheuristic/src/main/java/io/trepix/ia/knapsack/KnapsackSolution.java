@@ -47,6 +47,19 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     }
 
     @Override
+    public void improveWith(KnapsackSolution betterSolution, Random generator) {
+        int index = generator.nextInt(betterSolution.contenido.size());
+        Item item = betterSolution.contenido.get(index);
+        if (!this.contenido.contains(item)) {
+            this.contenido.add(item);
+            while (this.getPeso() + item.weight() > this.knapsack.maximumWeight()) {
+                index = generator.nextInt(this.contenido.size());
+                this.contenido.remove(index);
+            }
+        }
+    }
+
+    @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(" - ");
         sj.add("Valor : " + value());
