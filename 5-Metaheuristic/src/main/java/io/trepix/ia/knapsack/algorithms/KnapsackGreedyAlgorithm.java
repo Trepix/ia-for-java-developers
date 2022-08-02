@@ -16,7 +16,7 @@ public class KnapsackGreedyAlgorithm extends GreedyAlgorithm<KnapsackProblem, Kn
                 knapsack.add(item);
             }
         }
-        return new KnapsackSolution(knapsack);
+        return problem.solution(knapsack);
     }
 
 }

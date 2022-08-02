@@ -28,7 +28,7 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
     public KnapsackSolution randomSolution() {
         var knapsack = emptyKnapsack.clone();
         knapsack.randomFillWith(items(), generator);
-        return new KnapsackSolution(knapsack);
+        return this.solution(knapsack);
     }
 
     @Override
@@ -40,13 +40,17 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
             var knapsack = originalKnapsack.clone();
             knapsack.popRandomItem(generator);
             knapsack.randomFillWith(items(), generator);
-            neighbours.add(new KnapsackSolution(knapsack));
+            neighbours.add(this.solution(knapsack));
         }
         return new Solutions<>(neighbours);
     }
 
     public Knapsack emptyKnapsack() {
         return this.emptyKnapsack.clone();
+    }
+
+    public KnapsackSolution solution(Knapsack knapsack) {
+        return new KnapsackSolution(knapsack);
     }
 
 }

@@ -49,7 +49,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
     protected KnapsackSolution complete(KnapsackSolution knapsackSolution) {
         var knapsack = knapsackSolution.knapsack();
         knapsack.randomFillWith(problem.items(), generator);
-        return new KnapsackSolution(knapsack);
+        return problem.solution(knapsack);
     }
 
 
