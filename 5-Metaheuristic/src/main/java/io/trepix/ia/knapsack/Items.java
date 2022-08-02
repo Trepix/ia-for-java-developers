@@ -68,4 +68,8 @@ public class Items implements Iterable<Item>, Cloneable {
                 .collect(toCollection(ArrayList::new));
 
     }
+
+    public double value() {
+        return items.stream().map(Item::value).reduce(0.0, Double::sum);
+    }
 }

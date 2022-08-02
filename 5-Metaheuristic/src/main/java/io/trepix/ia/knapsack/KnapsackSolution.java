@@ -8,7 +8,6 @@ import java.util.StringJoiner;
 
 import static java.lang.Double.compare;
 
-// Una solución potencial = una carga posible de la mochila
 public class KnapsackSolution implements Solution<KnapsackSolution> {
 
     public final Knapsack knapsack;
@@ -31,19 +30,11 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     }
 
     public double getPeso() {
-        double pesos = 0.0;
-        for (Item b : contenido) {
-            pesos += b.weight();
-        }
-        return pesos;
+        return knapsack().weight();
     }
     @Override
     public double value() {
-        double valor = 0.0;
-        for (Item b : contenido) {
-            valor += b.value;
-        }
-        return valor;
+        return knapsack().value();
     }
 
     @Override
@@ -64,7 +55,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
         StringJoiner sj = new StringJoiner(" - ");
         sj.add("Valor : " + value());
         sj.add("Peso : " + getPeso());
-        for(Item b : contenido) {
+        for(Item b : knapsack().items()) {
             sj.add(b.toString());
         }
         return sj.toString();

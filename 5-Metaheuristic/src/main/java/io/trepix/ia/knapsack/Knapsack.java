@@ -70,4 +70,12 @@ public class Knapsack implements Cloneable {
             allItems.removeWhichCannotBeCarried(this);
         }
     }
+
+    public double weight() {
+        return items.weight();
+    }
+
+    public double value() {
+        return items.value();
+    }
 }
