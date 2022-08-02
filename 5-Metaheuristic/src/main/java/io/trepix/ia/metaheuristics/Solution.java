@@ -1,6 +1,6 @@
 package io.trepix.ia.metaheuristics;
-public interface Solution extends Comparable<Solution> {
+public interface Solution<S> extends Comparable<Solution<S>> {
 
-    boolean isBetterThan(Solution solution);
+    boolean isBetterThan(S solution);
     double value();
 }

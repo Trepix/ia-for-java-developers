@@ -18,7 +18,7 @@ public class KnapsackTabuSearch extends TabuSearch<KnapsackProblem, KnapsackSolu
     }
 
     @Override
-    protected void betterSolutionFound(Solution solution) {
+    protected void betterSolutionFound(KnapsackSolution solution) {
         iterationsWithoutImprovement = 0;
     }
 

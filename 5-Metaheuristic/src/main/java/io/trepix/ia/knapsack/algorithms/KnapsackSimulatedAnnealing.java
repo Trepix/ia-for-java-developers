@@ -2,7 +2,6 @@ package io.trepix.ia.knapsack.algorithms;
 
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackSolution;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.SimulatedAnnealing;
 
 import java.util.Random;
@@ -33,7 +32,7 @@ public class KnapsackSimulatedAnnealing extends SimulatedAnnealing<KnapsackProbl
     }
 
     @Override
-    protected void betterSolutionFound(Solution solution) {
+    protected void betterSolutionFound(KnapsackSolution solution) {
         iterationsWithoutImprovement = 0;
     }
 

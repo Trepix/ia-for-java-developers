@@ -1,6 +1,6 @@
 package io.trepix.ia.metaheuristics;
 
-public abstract class Algorithm<P extends Problem<S>, S extends Solution> {
+public abstract class Algorithm<P extends Problem<S>, S extends Solution<S>> {
     private final String name;
 
     protected Algorithm(String name) {

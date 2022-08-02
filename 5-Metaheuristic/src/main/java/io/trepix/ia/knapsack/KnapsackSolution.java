@@ -9,7 +9,7 @@ import java.util.StringJoiner;
 import static java.lang.Double.compare;
 
 // Una solución potencial = una carga posible de la mochila
-public class KnapsackSolution implements Solution {
+public class KnapsackSolution implements Solution<KnapsackSolution> {
 
     public final Knapsack knapsack;
 
@@ -80,12 +80,12 @@ public class KnapsackSolution implements Solution {
     }
 
     @Override
-    public int compareTo(Solution solution) {
+    public int compareTo(Solution<KnapsackSolution> solution) {
         return compare(this.value(), solution.value());
     }
 
     @Override
-    public boolean isBetterThan(Solution solution) {
+    public boolean isBetterThan(KnapsackSolution solution) {
         return this.compareTo(solution) > 0;
     }
 

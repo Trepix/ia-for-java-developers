@@ -7,7 +7,7 @@ import io.trepix.ia.metaheuristics.Solution;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public abstract class TabuSearch<P extends Problem<S>, S extends Solution> extends Algorithm<P, S> {
+public abstract class TabuSearch<P extends Problem<S>, S extends Solution<S>> extends Algorithm<P, S> {
 
     private final Queue<S> tabuSolutions = new LinkedList<>();
     protected S currentSolution;
@@ -53,7 +53,7 @@ public abstract class TabuSearch<P extends Problem<S>, S extends Solution> exten
 
     protected abstract int maxTabuSolutions();
 
-    protected abstract void betterSolutionFound(Solution solution);
+    protected abstract void betterSolutionFound(S solution);
 
     protected abstract void updateCriteriaVariables();
 }

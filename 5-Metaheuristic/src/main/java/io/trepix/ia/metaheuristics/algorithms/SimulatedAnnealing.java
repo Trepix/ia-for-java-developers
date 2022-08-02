@@ -6,7 +6,7 @@ import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.Random;
 
-public abstract class SimulatedAnnealing<P extends Problem<S>, S extends Solution> extends Algorithm<P, S> {
+public abstract class SimulatedAnnealing<P extends Problem<S>, S extends Solution<S>> extends Algorithm<P, S> {
 
     private final Random generator;
     protected S currentSolution;
@@ -43,11 +43,11 @@ public abstract class SimulatedAnnealing<P extends Problem<S>, S extends Solutio
         return bestSolution;
     }
 
-    private boolean isNotTooWorse(Solution solution) {
+    private boolean isNotTooWorse(S solution) {
         return generator.nextDouble() < metropolisProbability(solution);
     }
 
-    private double metropolisProbability(Solution solution) {
+    private double metropolisProbability(S solution) {
         double metropolisProbability = 0.0;
         if (currentSolution.isBetterThan(solution)) {
             double solutionQualityLoss = (currentSolution.value() - solution.value()) / currentSolution.value();
@@ -62,7 +62,7 @@ public abstract class SimulatedAnnealing<P extends Problem<S>, S extends Solutio
 
     protected abstract boolean meetStopCriteria();
 
-    protected abstract void betterSolutionFound(Solution solution);
+    protected abstract void betterSolutionFound(S solution);
 
     protected abstract void updateCriteriaVariables();
 }
