@@ -36,7 +36,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
         var betterKnapsack = betterSolution.knapsack();
         var item = betterKnapsack.peekRandomItem(generator);
 
-        if (!knapsack.isCarrying(item)) {
+        if (knapsack.isNotCarrying(item)) {
             knapsack.add(item);
             while (knapsack.weight() + item.weight() > this.knapsack.maximumWeight()) {
                 knapsack.popRandomItem(generator);

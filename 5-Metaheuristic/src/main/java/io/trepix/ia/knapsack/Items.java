@@ -67,7 +67,7 @@ public class Items implements Iterable<Item>, Cloneable {
 
     public void removeUsedItems(Knapsack knapsack) {
         items = items.stream()
-                .filter(searchedItem -> !knapsack.isCarrying(searchedItem))
+                .filter(searchedItem -> knapsack.isNotCarrying(searchedItem))
                 .collect(toCollection(ArrayList::new));
 
     }
@@ -75,5 +75,5 @@ public class Items implements Iterable<Item>, Cloneable {
     public double value() {
         return items.stream().map(Item::value).reduce(0.0, Double::sum);
     }
-    
+
 }

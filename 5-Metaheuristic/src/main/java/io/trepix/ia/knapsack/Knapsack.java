@@ -41,11 +41,11 @@ public class Knapsack implements Cloneable {
         return items.weight() + item.weight() <= maximumWeight;
     }
 
-    public boolean isCarrying(Item searchedItem) {
+    public boolean isNotCarrying(Item searchedItem) {
         for (Item item: items) {
-            if (searchedItem.equals(item)) return true;
+            if (searchedItem.equals(item)) return false;
         }
-        return false;
+        return true;
     }
 
     public void add(Item item) {
