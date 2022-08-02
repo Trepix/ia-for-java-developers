@@ -3,6 +3,7 @@ package io.trepix.ia.knapsack;
 import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.List;
+import java.util.Random;
 import java.util.StringJoiner;
 
 import static java.lang.Double.compare;
@@ -11,11 +12,14 @@ import static java.lang.Double.compare;
 public class KnapsackSolution implements Solution {
 
     public final Knapsack knapsack;
+
+    private final Random generator;
     public List<Item> contenido;
 
-    public KnapsackSolution(Knapsack knapsack) {
+    public KnapsackSolution(Knapsack knapsack, Random generator) {
         contenido = knapsack.items();
         this.knapsack = knapsack;
+        this.generator = generator;
     }
 
     public Knapsack knapsack() {

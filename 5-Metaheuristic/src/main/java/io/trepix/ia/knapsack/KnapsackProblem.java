@@ -50,7 +50,7 @@ public class KnapsackProblem implements Problem<KnapsackSolution> {
     }
 
     public KnapsackSolution solution(Knapsack knapsack) {
-        return new KnapsackSolution(knapsack);
+        return new KnapsackSolution(knapsack, new Random(generator.nextLong()));
     }
 
 }
