@@ -7,58 +7,58 @@ import static java.util.stream.Collectors.toCollection;
 
 public class Items implements Iterable<Item>, Cloneable {
 
-    private ArrayList<Item> items;
+    private ArrayList<Item> list;
 
     Items() {
-        this.items = new ArrayList<>();
+        this.list = new ArrayList<>();
     }
 
     Items(ArrayList<Item> items) {
-        this.items = items;
+        this.list = items;
     }
 
     @Override
     public Iterator<Item> iterator() {
-        return items.iterator();
+        return list.iterator();
     }
 
     public void sortByHighestRelativeValue() {
-        items.sort(comparing(Item::relativeValue).reversed());
+        list.sort(comparing(Item::relativeValue).reversed());
     }
 
     public void removeWhichCannotBeCarried(Knapsack knapsack) {
-        items = items.stream()
+        list = list.stream()
                 .filter(knapsack::canCarryWith)
                 .collect(toCollection(ArrayList::new));
     }
 
     public boolean isNotEmpty() {
-        return !items.isEmpty();
+        return !list.isEmpty();
     }
 
     public Item popRandom(Random generator) {
-        int index = generator.nextInt(items.size());
-        return items.remove(index);
+        int index = generator.nextInt(list.size());
+        return list.remove(index);
     }
 
     public Item peekRandom(Random generator) {
-        int index = generator.nextInt(items.size());
-        return items.get(index);
+        int index = generator.nextInt(list.size());
+        return list.get(index);
     }
 
     public double weight() {
-        return items.stream().map(Item::weight).reduce(0.0, Double::sum);
+        return list.stream().map(Item::weight).reduce(0.0, Double::sum);
     }
 
     public void add(Item item) {
-        this.items.add(item);
+        this.list.add(item);
     }
 
     @Override
     public Items clone() {
         try {
             Items clone = (Items) super.clone();
-            clone.items = new ArrayList<>(this.items);
+            clone.list = new ArrayList<>(this.list);
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
@@ -66,26 +66,27 @@ public class Items implements Iterable<Item>, Cloneable {
     }
 
     public void removeUsedItems(Knapsack knapsack) {
-        items = items.stream()
-                .filter(searchedItem -> knapsack.isNotCarrying(searchedItem))
+        list = list.stream()
+                .filter(knapsack::isNotCarrying)
                 .collect(toCollection(ArrayList::new));
 
     }
 
     public double value() {
-        return items.stream().map(Item::value).reduce(0.0, Double::sum);
+        return list.stream().map(Item::value).reduce(0.0, Double::sum);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Items items1 = (Items) o;
-        return new HashSet<>(this.items).equals(new HashSet<>(items1.items));
+        Items items = (Items) o;
+        if (items.list.size() != this.list.size()) return false;
+        return new HashSet<>(this.list).equals(new HashSet<>(items.list));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(items);
+        return Objects.hash(list);
     }
 }
