@@ -6,15 +6,15 @@ public class Configuration {
 
     private final double maxKnapsackWeight;
 
-    private final Random random;
+    private final long seed;
 
     private final int neighboursNumber;
 
 
-    public Configuration(double maxKnapsackWeight, int maxNeighbours, Random random) {
+    public Configuration(double maxKnapsackWeight, int maxNeighbours, long seed) {
         this.maxKnapsackWeight = maxKnapsackWeight;
-        this.random = random;
         this.neighboursNumber = maxNeighbours;
+        this.seed = seed;
     }
 
     public double maximumKnapsackWeight() {
@@ -22,7 +22,7 @@ public class Configuration {
     }
 
     public Random random() {
-        return random;
+        return new Random(seed);
     }
 
     public int neighboursNumber() {

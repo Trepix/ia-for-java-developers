@@ -50,7 +50,7 @@ public class KnapsackProblemBuilder {
         if (items == null) {
             items = createItems(random);
         }
-        Configuration configuration = new Configuration(maxKnapsackWeight, NEIGHBOURS_NUMBER, random);
+        Configuration configuration = new Configuration(maxKnapsackWeight, NEIGHBOURS_NUMBER, this.seed);
         return new KnapsackProblem(items, configuration);
     }
 
