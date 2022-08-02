@@ -1,9 +1,7 @@
 package io.trepix.ia.knapsack.algorithms;
 
-import io.trepix.ia.knapsack.Item;
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackSolution;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.ParticleSwarm;
 
 import java.util.ArrayList;
@@ -25,8 +23,8 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
         for (KnapsackSolution sol : solutions) {
             KnapsackSolution solution = sol;
             if (!solution.equals(bestSolution)) {
-                solution.improveWith(bestSolution, generator);
-                solution.improveWith(bestCurrentSolution, generator);
+                solution.improveWith(bestSolution);
+                solution.improveWith(bestCurrentSolution);
                 solution = complete(solution);
             }
             newSolutions.add(solution);

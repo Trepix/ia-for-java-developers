@@ -47,7 +47,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     }
 
     @Override
-    public void improveWith(KnapsackSolution betterSolution, Random generator) {
+    public void improveWith(KnapsackSolution betterSolution) {
         int index = generator.nextInt(betterSolution.contenido.size());
         Item item = betterSolution.contenido.get(index);
         if (!this.contenido.contains(item)) {
