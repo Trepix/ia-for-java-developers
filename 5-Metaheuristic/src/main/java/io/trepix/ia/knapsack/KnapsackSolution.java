@@ -23,7 +23,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
         return knapsack.clone();
     }
 
-    public double getPeso() {
+    private double weight() {
         return knapsack().weight();
     }
     @Override
@@ -32,11 +32,21 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     }
 
     @Override
+    public int compareTo(Solution<KnapsackSolution> solution) {
+        return compare(this.value(), solution.value());
+    }
+
+    @Override
+    public boolean isBetterThan(KnapsackSolution solution) {
+        return this.compareTo(solution) > 0;
+    }
+
+    @Override
     public void improveWith(KnapsackSolution betterSolution) {
         var betterKnapsack = betterSolution.knapsack();
         var item = betterKnapsack.peekRandomItem(generator);
 
-        if (knapsack.isNotCarrying(item)) {
+        if (knapsack.isNotCarrying(item)) { // TODO: change order and use internal CanCarry
             knapsack.add(item);
             while (knapsack.weight() + item.weight() > this.knapsack.maximumWeight()) {
                 knapsack.popRandomItem(generator);
@@ -48,7 +58,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     public String toString() {
         StringJoiner sj = new StringJoiner(" - ");
         sj.add("Valor : " + value());
-        sj.add("Peso : " + getPeso());
+        sj.add("Peso : " + weight());
         for(Item b : knapsack().items()) {
             sj.add(b.toString());
         }
@@ -68,14 +78,6 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
         return Objects.hash(knapsack);
     }
 
-    @Override
-    public int compareTo(Solution<KnapsackSolution> solution) {
-        return compare(this.value(), solution.value());
-    }
 
-    @Override
-    public boolean isBetterThan(KnapsackSolution solution) {
-        return this.compareTo(solution) > 0;
-    }
 
 }

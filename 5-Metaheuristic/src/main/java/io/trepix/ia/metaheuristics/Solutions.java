@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class Solutions<S extends Solution> {
+public class Solutions<S extends Solution<S>> {
 
     private final List<S> solutions;
 

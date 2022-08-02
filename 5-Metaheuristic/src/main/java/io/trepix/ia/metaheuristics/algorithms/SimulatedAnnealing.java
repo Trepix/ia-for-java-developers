@@ -9,9 +9,9 @@ import java.util.Random;
 public abstract class SimulatedAnnealing<P extends Problem<S>, S extends Solution<S>> extends Algorithm<P, S> {
 
     private final Random generator;
-    protected S currentSolution;
-    protected S bestSolution;
-    protected double temperature;
+    private S currentSolution;
+    private S bestSolution;
+    private double temperature;
 
     public SimulatedAnnealing(Random generator) {
         super("Simulated Annealing");

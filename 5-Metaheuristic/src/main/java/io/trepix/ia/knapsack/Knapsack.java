@@ -19,17 +19,6 @@ public class Knapsack implements Cloneable {
         return maximumWeight;
     }
 
-    @Override
-    public Knapsack clone() {
-        try {
-            Knapsack clone = (Knapsack) super.clone();
-            clone.items = items.clone();
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
-
     public List<Item> items() {
         List<Item> list = new LinkedList<>();
         for(Item item : items) {
@@ -49,17 +38,29 @@ public class Knapsack implements Cloneable {
         return true;
     }
 
-    public void add(Item item) {
-        items.add(item);
-    }
-
     public boolean isNotFull() {
         return items.weight() < maximumWeight;
     }
 
 
+    public double weight() {
+        return items.weight();
+    }
+
+    public double value() {
+        return items.value();
+    }
+
+    public Item peekRandomItem(Random generator) {
+        return items.peekRandom(generator);
+    }
+
     public void popRandomItem(Random generator) {
         items.popRandom(generator);
+    }
+
+    public void add(Item item) {
+        items.add(item);
     }
 
     public void randomFillWith(Items allItems, Random generator) {
@@ -72,16 +73,15 @@ public class Knapsack implements Cloneable {
         }
     }
 
-    public double weight() {
-        return items.weight();
-    }
-
-    public double value() {
-        return items.value();
-    }
-
-    public Item peekRandomItem(Random generator) {
-        return items.peekRandom(generator);
+    @Override
+    public Knapsack clone() {
+        try {
+            Knapsack clone = (Knapsack) super.clone();
+            clone.items = items.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 
     @Override

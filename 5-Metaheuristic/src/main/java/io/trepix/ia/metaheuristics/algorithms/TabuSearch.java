@@ -10,8 +10,8 @@ import java.util.Queue;
 public abstract class TabuSearch<P extends Problem<S>, S extends Solution<S>> extends Algorithm<P, S> {
 
     private final Queue<S> tabuSolutions = new LinkedList<>();
-    protected S currentSolution;
-    protected S bestSolution;
+    private S currentSolution;
+    private S bestSolution;
 
     public TabuSearch() {
         super("Tabu Search");

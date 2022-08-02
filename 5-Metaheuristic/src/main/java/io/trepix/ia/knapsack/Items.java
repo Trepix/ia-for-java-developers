@@ -17,11 +17,6 @@ public class Items implements Iterable<Item>, Cloneable {
         this.list = items;
     }
 
-    @Override
-    public Iterator<Item> iterator() {
-        return list.iterator();
-    }
-
     public void sortByHighestRelativeValue() {
         list.sort(comparing(Item::relativeValue).reversed());
     }
@@ -54,6 +49,21 @@ public class Items implements Iterable<Item>, Cloneable {
         this.list.add(item);
     }
 
+    public void removeUsedItems(Knapsack knapsack) {
+        list = list.stream()
+                .filter(knapsack::isNotCarrying)
+                .collect(toCollection(ArrayList::new));
+
+    }
+    public double value() {
+        return list.stream().map(Item::value).reduce(0.0, Double::sum);
+    }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return list.iterator();
+    }
+
     @Override
     public Items clone() {
         try {
@@ -63,17 +73,6 @@ public class Items implements Iterable<Item>, Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
-    }
-
-    public void removeUsedItems(Knapsack knapsack) {
-        list = list.stream()
-                .filter(knapsack::isNotCarrying)
-                .collect(toCollection(ArrayList::new));
-
-    }
-
-    public double value() {
-        return list.stream().map(Item::value).reduce(0.0, Double::sum);
     }
 
     @Override

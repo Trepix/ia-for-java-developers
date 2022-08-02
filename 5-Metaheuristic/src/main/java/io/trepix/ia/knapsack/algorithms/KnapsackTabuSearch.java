@@ -2,7 +2,6 @@ package io.trepix.ia.knapsack.algorithms;
 
 import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackSolution;
-import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.algorithms.TabuSearch;
 
 public class KnapsackTabuSearch extends TabuSearch<KnapsackProblem, KnapsackSolution> {

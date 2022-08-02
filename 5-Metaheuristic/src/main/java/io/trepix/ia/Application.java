@@ -4,7 +4,6 @@ import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackSolution;
 import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
-import io.trepix.ia.metaheuristics.Solution;
 
 import java.util.List;
 import java.util.Random;
@@ -77,7 +76,7 @@ public class Application {
 
     private static void runAlgorithm(Algorithm<KnapsackProblem, KnapsackSolution> algorithm, KnapsackProblem problem) {
         System.out.println(algorithm.name());
-        Solution solution = algorithm.solve(problem);
+        KnapsackSolution solution = algorithm.solve(problem);
         System.out.println(solution.toString());
         System.out.println();
     }

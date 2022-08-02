@@ -21,7 +21,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
     protected void updateSolutions() {
         ArrayList<KnapsackSolution> newSolutions = new ArrayList<>();
         for (KnapsackSolution sol : solutions) {
-            KnapsackSolution solution = sol;
+            KnapsackSolution solution = sol; // TODO: Extract to parent the template patern
             if (!solution.equals(bestSolution)) {
                 solution.improveWith(bestSolution);
                 solution.improveWith(bestCurrentSolution);
@@ -33,7 +33,7 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
     }
 
     protected KnapsackSolution complete(KnapsackSolution knapsackSolution) {
-        var knapsack = knapsackSolution.knapsack();
+        var knapsack = knapsackSolution.knapsack(); // TODO: check if return the instance vs copy solution
         knapsack.randomFillWith(problem.items(), generator);
         return problem.solution(knapsack);
     }

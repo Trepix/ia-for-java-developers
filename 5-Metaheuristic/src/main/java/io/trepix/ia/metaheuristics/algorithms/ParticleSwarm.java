@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public abstract class ParticleSwarm<P extends Problem<S>, S extends Solution<S>> extends Algorithm<P, S> {
 
-    protected final static int PARTICLES = 30;
+    private final static int PARTICLES = 30;
     protected P problem;
     protected ArrayList<S> solutions;
     protected S bestSolution;

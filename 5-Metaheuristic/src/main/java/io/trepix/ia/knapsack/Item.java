@@ -13,11 +13,6 @@ public class Item {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
-        return name + " (" + weight + ", " + value + ")";
-    }
-
     public double value() {
         return this.value;
     }
@@ -28,6 +23,11 @@ public class Item {
 
     public double weight() {
         return weight;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + weight + ", " + value + ")";
     }
 
     @Override
