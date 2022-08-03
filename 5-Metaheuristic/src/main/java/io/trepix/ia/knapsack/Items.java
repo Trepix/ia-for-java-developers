@@ -76,6 +76,15 @@ public class Items implements Iterable<Item>, Cloneable {
     }
 
     @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner(" - ");
+        for (Item item : list) {
+            sj.add(item.toString());
+        }
+        return sj.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

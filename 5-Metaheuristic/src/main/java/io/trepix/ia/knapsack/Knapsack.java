@@ -74,11 +74,7 @@ public class Knapsack implements Cloneable {
 
     @Override
     public String toString() {
-        StringJoiner sj = new StringJoiner(" - ");
-        for (Item item : items) {
-            sj.add(item.toString());
-        }
-        return sj.toString();
+        return items.toString();
     }
 
     @Override
