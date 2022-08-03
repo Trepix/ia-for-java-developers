@@ -4,7 +4,6 @@ import io.trepix.ia.knapsack.KnapsackProblem;
 import io.trepix.ia.knapsack.KnapsackSolution;
 import io.trepix.ia.metaheuristics.algorithms.ParticleSwarm;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, KnapsackSolution> {
@@ -18,20 +17,6 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
     }
 
     @Override
-    protected void updateSolutions() {
-        ArrayList<KnapsackSolution> newSolutions = new ArrayList<>();
-        for (KnapsackSolution sol : solutions) {
-            KnapsackSolution solution = sol; // TODO: Extract to parent the template patern
-            if (!solution.equals(bestSolution)) {
-                solution.improveWith(bestSolution);
-                solution.improveWith(bestCurrentSolution);
-                solution = complete(solution);
-            }
-            newSolutions.add(solution);
-        }
-        solutions = newSolutions;
-    }
-
     protected KnapsackSolution complete(KnapsackSolution knapsackSolution) {
         var knapsack = knapsackSolution.knapsack(); // TODO: check if return the instance vs copy solution
         knapsack.randomFillWith(problem.items(), generator);

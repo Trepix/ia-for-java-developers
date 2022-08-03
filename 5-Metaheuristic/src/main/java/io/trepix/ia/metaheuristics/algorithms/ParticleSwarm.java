@@ -36,13 +36,22 @@ public abstract class ParticleSwarm<P extends Problem<S>, S extends Solution<S>>
             if (bestCurrentSolution.isBetterThan(bestSolution)) {
                 bestSolution = bestCurrentSolution;
             }
-            updateSolutions();
+            ArrayList<S> newSolutions = new ArrayList<>();
+            for (S solution : solutions) {
+                if (!solution.equals(bestSolution)) {
+                    solution.improveWith(bestSolution);
+                    solution.improveWith(bestCurrentSolution);
+                    solution = complete(solution);
+                }
+                newSolutions.add(solution);
+            }
+            solutions = newSolutions;
             updateCriteriaVariables();
         }
         return bestSolution;
     }
 
-    protected abstract void updateSolutions();
+    protected abstract S complete(S solution);
 
     protected abstract boolean meetStopCriteria();
 
