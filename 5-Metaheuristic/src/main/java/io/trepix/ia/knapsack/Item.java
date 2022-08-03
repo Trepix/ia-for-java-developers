@@ -13,6 +13,10 @@ public class Item {
         this.value = value;
     }
 
+    public String name() {
+        return this.name;
+    }
+
     public double value() {
         return this.value;
     }

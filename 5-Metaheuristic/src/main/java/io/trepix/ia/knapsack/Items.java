@@ -78,7 +78,8 @@ public class Items implements Iterable<Item>, Cloneable {
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(" - ");
-        for (Item item : list) {
+        var sortedList = list.stream().sorted(Comparator.comparing(Item::name)).toList();
+        for (Item item : sortedList) {
             sj.add(item.toString());
         }
         return sj.toString();
