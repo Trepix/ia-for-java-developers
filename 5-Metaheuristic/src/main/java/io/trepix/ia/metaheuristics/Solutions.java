@@ -1,10 +1,11 @@
 package io.trepix.ia.metaheuristics;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class Solutions<S extends Solution<S>> {
+public class Solutions<S extends Solution<S>> implements Iterable<S> {
 
     private final List<S> solutions;
 
@@ -18,5 +19,10 @@ public class Solutions<S extends Solution<S>> {
 
     public void remove(Collection<S> solutions) {
         this.solutions.removeAll(solutions);
+    }
+
+    @Override
+    public Iterator<S> iterator() {
+        return solutions.iterator();
     }
 }

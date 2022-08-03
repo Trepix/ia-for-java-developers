@@ -23,7 +23,6 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
         return problem.solution(knapsack);
     }
 
-
     @Override
     protected boolean meetStopCriteria() {
         return iterations > MAX_ITERATIONS;
