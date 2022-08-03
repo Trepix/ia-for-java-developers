@@ -1,9 +1,6 @@
 package io.trepix.ia.knapsack;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Knapsack implements Cloneable {
 
@@ -13,14 +10,6 @@ public class Knapsack implements Cloneable {
     public Knapsack(double maximumWeight) {
         this.maximumWeight = maximumWeight;
         items = new Items();
-    }
-
-    public List<Item> items() {
-        List<Item> list = new LinkedList<>();
-        for(Item item : items) {
-            list.add(item);
-        }
-        return list;
     }
 
     public boolean canCarryWith(Item item) {
@@ -81,6 +70,15 @@ public class Knapsack implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner(" - ");
+        for (Item item : items) {
+            sj.add(item.toString());
+        }
+        return sj.toString();
     }
 
     @Override

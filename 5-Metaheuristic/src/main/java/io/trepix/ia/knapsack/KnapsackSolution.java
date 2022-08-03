@@ -55,13 +55,11 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     }
 
     @Override
-    public String toString() { // TODO: make knapsack iterable of items
+    public String toString() {
         StringJoiner sj = new StringJoiner(" - ");
         sj.add("Valor : " + value());
         sj.add("Peso : " + weight());
-        for(Item b : knapsack().items()) {
-            sj.add(b.toString());
-        }
+        sj.add(knapsack.toString());
         return sj.toString();
     }
 
