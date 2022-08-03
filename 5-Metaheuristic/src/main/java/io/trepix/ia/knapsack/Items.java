@@ -96,6 +96,6 @@ public class Items implements Iterable<Item>, Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(list);
+        return 0;
     }
 }

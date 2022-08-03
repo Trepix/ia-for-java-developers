@@ -1,6 +1,6 @@
 package io.trepix.ia.knapsack;
 
-import java.util.*;
+import java.util.Random;
 
 public class Knapsack implements Cloneable {
 
@@ -17,7 +17,7 @@ public class Knapsack implements Cloneable {
     }
 
     public boolean isNotCarrying(Item searchedItem) {
-        for (Item item: items) {
+        for (Item item : items) {
             if (searchedItem.equals(item)) return false;
         }
         return true;
@@ -87,6 +87,6 @@ public class Knapsack implements Cloneable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(maximumWeight, items);
+        return 0;
     }
 }
