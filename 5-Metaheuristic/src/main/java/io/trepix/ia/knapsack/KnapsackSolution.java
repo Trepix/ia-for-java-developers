@@ -46,16 +46,16 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
         var betterKnapsack = betterSolution.knapsack();
         var item = betterKnapsack.peekRandomItem(generator);
 
-        if (knapsack.isNotCarrying(item)) { // TODO: change order and use internal CanCarry
+        if (knapsack.isNotCarrying(item)) {
             knapsack.add(item);
-            while (knapsack.weight() + item.weight() > this.knapsack.maximumWeight()) {
+            while (knapsack.hasOverweight()) {
                 knapsack.popRandomItem(generator);
             }
         }
     }
 
     @Override
-    public String toString() {
+    public String toString() { // TODO: make knapsack iterable of items
         StringJoiner sj = new StringJoiner(" - ");
         sj.add("Valor : " + value());
         sj.add("Peso : " + weight());

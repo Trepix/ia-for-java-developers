@@ -15,10 +15,6 @@ public class Knapsack implements Cloneable {
         items = new Items();
     }
 
-    public double maximumWeight() {
-        return maximumWeight;
-    }
-
     public List<Item> items() {
         List<Item> list = new LinkedList<>();
         for(Item item : items) {
@@ -42,6 +38,9 @@ public class Knapsack implements Cloneable {
         return items.weight() < maximumWeight;
     }
 
+    public boolean hasOverweight() {
+        return items.weight() > maximumWeight;
+    }
 
     public double weight() {
         return items.weight();
