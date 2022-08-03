@@ -2,7 +2,6 @@ package io.trepix.ia.knapsack;
 
 import io.trepix.ia.metaheuristics.Solution;
 
-import java.util.Objects;
 import java.util.Random;
 import java.util.StringJoiner;
 
@@ -24,12 +23,14 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     }
 
     private double weight() {
-        return knapsack().weight();
+        return knapsack.weight();
     }
     @Override
     public double value() {
-        return knapsack().value();
+        return knapsack.value();
     }
+
+
 
     @Override
     public int compareTo(Solution<KnapsackSolution> solution) {
@@ -43,8 +44,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
 
     @Override
     public void improveWith(KnapsackSolution betterSolution) {
-        var betterKnapsack = betterSolution.knapsack();
-        var item = betterKnapsack.peekRandomItem(generator);
+        var item = betterSolution.knapsack.peekRandomItem(generator);
 
         if (knapsack.isNotCarrying(item)) {
             knapsack.add(item);
@@ -73,7 +73,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(knapsack);
+        return 0;
     }
 
 
