@@ -5,7 +5,6 @@ import io.trepix.ia.metaheuristics.Problem;
 import io.trepix.ia.metaheuristics.Solution;
 import io.trepix.ia.metaheuristics.Solutions;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -36,23 +35,18 @@ public abstract class ParticleSwarm<P extends Problem<S>, S extends Solution<S>>
             if (bestCurrentSolution.isBetterThan(bestSolution)) {
                 bestSolution = bestCurrentSolution;
             }
-            solutions = improveSolutions(solutions);
+            solutions.forEach(this::improveSolution);
             updateCriteriaVariables();
         }
         return bestSolution;
     }
 
-    private Solutions<S> improveSolutions(Solutions<S> solutions) {
-        ArrayList<S> newSolutions = new ArrayList<>();
-        for (S solution : solutions) {
-            if (!solution.equals(bestSolution)) {
-                solution.improveWith(bestSolution);
-                solution.improveWith(bestCurrentSolution);
-                solution = complete(solution);
-            }
-            newSolutions.add(solution);
+    private void improveSolution(S solution) {
+        if (!solution.equals(bestSolution)) {
+            solution.improveWith(bestSolution);
+            solution.improveWith(bestCurrentSolution);
+            complete(solution);
         }
-        return new Solutions<>(newSolutions);
     }
 
     private List<S> randomSolutions() {
@@ -61,7 +55,7 @@ public abstract class ParticleSwarm<P extends Problem<S>, S extends Solution<S>>
                 .collect(toList());
     }
 
-    protected abstract S complete(S solution);
+    protected abstract void complete(S solution);
 
     protected abstract boolean meetStopCriteria();
 

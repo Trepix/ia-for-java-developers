@@ -69,7 +69,7 @@ public class Application {
                 new KnapsackGreedyAlgorithm(),
                 new KnapsackGradientDescent(),
                 new KnapsackTabuSearch(),
-                new KnapsackParticleSwarm(random()),
+                new KnapsackParticleSwarm(),
                 new KnapsackSimulatedAnnealing(random())
         );
     }

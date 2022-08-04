@@ -18,10 +18,6 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
         this.generator = generator;
     }
 
-    public Knapsack knapsack() {
-        return knapsack.clone();
-    }
-
     private double weight() {
         return knapsack.weight();
     }
@@ -29,8 +25,6 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     public double value() {
         return knapsack.value();
     }
-
-
 
     @Override
     public int compareTo(Solution<KnapsackSolution> solution) {
@@ -52,6 +46,10 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
                 knapsack.popRandomItem(generator);
             }
         }
+    }
+
+    public void randomFillWith(Items items) {
+        knapsack.randomFillWith(items, generator);
     }
 
     @Override

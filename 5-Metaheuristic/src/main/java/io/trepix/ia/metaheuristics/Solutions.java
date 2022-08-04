@@ -25,4 +25,5 @@ public class Solutions<S extends Solution<S>> implements Iterable<S> {
     public Iterator<S> iterator() {
         return solutions.iterator();
     }
+
 }
