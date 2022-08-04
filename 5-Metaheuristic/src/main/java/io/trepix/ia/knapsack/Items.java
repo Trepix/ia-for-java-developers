@@ -98,4 +98,8 @@ public class Items implements Iterable<Item>, Cloneable {
     public int hashCode() {
         return 0;
     }
+
+    public Item pop() {
+        return list.remove(0);
+    }
 }

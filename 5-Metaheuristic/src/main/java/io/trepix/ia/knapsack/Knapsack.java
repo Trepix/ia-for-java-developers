@@ -89,4 +89,10 @@ public class Knapsack implements Cloneable {
     public int hashCode() {
         return 0;
     }
+
+    public Knapsack push(Item item) {
+        var knapsack = this.clone();
+        knapsack.add(item);
+        return knapsack;
+    }
 }

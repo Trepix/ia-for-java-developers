@@ -1,10 +1,11 @@
 package io.trepix.ia;
 
-import io.trepix.ia.knapsack.KnapsackProblem;
-import io.trepix.ia.knapsack.KnapsackSolution;
+import io.trepix.ia.knapsack.*;
 import io.trepix.ia.knapsack.algorithms.*;
 import io.trepix.ia.metaheuristics.Algorithm;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +32,21 @@ public class Application {
                 .maxKnapsackWeight(30)
                 .build();
         runAlgorithms(problem);
+
+        bruteforceBacktrackingAlgorithm(problem);
+    }
+
+    private static void bruteforceBacktrackingAlgorithm(KnapsackProblem problem) {
+        Instant start = Instant.now();
+        var knapsack = backtracking(problem.emptyKnapsack(), problem.items());
+        System.out.println("Brute force backtracking");
+        System.out.println(new KnapsackSolution(knapsack, null));
+        Instant end = Instant.now();
+        System.out.println("Time: " + seconds(Duration.between(start,end)));
+    }
+
+    private static double seconds(Duration duration) {
+        return duration.toMillis() / 1000.0;
     }
 
     private static long seed(String[] args) {
@@ -69,8 +85,8 @@ public class Application {
                 new KnapsackGreedyAlgorithm(),
                 new KnapsackGradientDescent(),
                 new KnapsackTabuSearch(),
-                new KnapsackParticleSwarm(),
-                new KnapsackSimulatedAnnealing(random())
+                new KnapsackSimulatedAnnealing(random()),
+                new KnapsackParticleSwarm()
         );
     }
 
@@ -79,6 +95,25 @@ public class Application {
         KnapsackSolution solution = algorithm.solve(problem);
         System.out.println(solution.toString());
         System.out.println();
+    }
+
+    static Knapsack backtracking(Knapsack knapsack, Items items)
+    {
+        items = items.clone();
+        items.removeWhichCannotBeCarried(knapsack);
+
+        if (cantAddMoreItems(knapsack, items)) return knapsack;
+
+        Item item = items.pop();
+        var knapsackWithItem = backtracking(knapsack.push(item), items);
+        var knapsackWithoutItem = backtracking(knapsack.clone(), items);
+
+        if (knapsackWithItem.value() > knapsackWithoutItem.value()) return knapsackWithItem;
+        else return knapsackWithoutItem;
+    }
+
+    private static boolean cantAddMoreItems(Knapsack knapsack, Items items) {
+        return !items.isNotEmpty() || !knapsack.isNotFull();
     }
 
 }
