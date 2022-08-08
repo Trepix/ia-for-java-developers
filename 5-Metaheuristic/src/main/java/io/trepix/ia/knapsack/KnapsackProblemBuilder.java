@@ -45,13 +45,13 @@ public class KnapsackProblemBuilder {
         return this;
     }
 
-    public KnapsackProblem build() {
+    public Problem build() {
         Random random = new Random(this.seed);
         if (items == null) {
             items = createItems(random);
         }
         Configuration configuration = new Configuration(maxKnapsackWeight, NEIGHBOURS_NUMBER, this.seed);
-        return new KnapsackProblem(items, configuration);
+        return new Problem(items, configuration);
     }
 
     private List<Item> createItems(Random random) {

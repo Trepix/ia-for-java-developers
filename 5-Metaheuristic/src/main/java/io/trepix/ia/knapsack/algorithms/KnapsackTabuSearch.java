@@ -1,10 +1,10 @@
 package io.trepix.ia.knapsack.algorithms;
 
-import io.trepix.ia.knapsack.KnapsackProblem;
-import io.trepix.ia.knapsack.KnapsackSolution;
+import io.trepix.ia.knapsack.Problem;
+import io.trepix.ia.knapsack.Solution;
 import io.trepix.ia.metaheuristics.algorithms.TabuSearch;
 
-public class KnapsackTabuSearch extends TabuSearch<KnapsackProblem, KnapsackSolution> {
+public class KnapsackTabuSearch extends TabuSearch<Problem, Solution> {
     private final static int MAX_ITERATIONS = 100;
     private final static int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 30;
     private final static int MAX_TABU_SOLUTIONS = 50;
@@ -17,7 +17,7 @@ public class KnapsackTabuSearch extends TabuSearch<KnapsackProblem, KnapsackSolu
     }
 
     @Override
-    protected void betterSolutionFound(KnapsackSolution solution) {
+    protected void betterSolutionFound(Solution solution) {
         iterationsWithoutImprovement = 0;
     }
 

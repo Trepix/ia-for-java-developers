@@ -1,10 +1,10 @@
 package io.trepix.ia.knapsack.algorithms;
 
-import io.trepix.ia.knapsack.KnapsackProblem;
-import io.trepix.ia.knapsack.KnapsackSolution;
+import io.trepix.ia.knapsack.Problem;
+import io.trepix.ia.knapsack.Solution;
 import io.trepix.ia.metaheuristics.algorithms.ParticleSwarm;
 
-public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, KnapsackSolution> {
+public class KnapsackParticleSwarm extends ParticleSwarm<Problem, Solution> {
     protected int iterations = 0;
     private final static int MAX_ITERATIONS = 200;
 
@@ -13,8 +13,8 @@ public class KnapsackParticleSwarm extends ParticleSwarm<KnapsackProblem, Knapsa
     }
 
     @Override
-    protected void complete(KnapsackSolution knapsackSolution) {
-        knapsackSolution.randomFillWith(problem.items());
+    protected void complete(Solution solution) {
+        solution.randomFillWith(problem.items());
     }
 
     @Override

@@ -36,11 +36,11 @@ public class Application {
         bruteforceBacktrackingAlgorithm(problem);
     }
 
-    private static void bruteforceBacktrackingAlgorithm(KnapsackProblem problem) {
+    private static void bruteforceBacktrackingAlgorithm(Problem problem) {
         Instant start = Instant.now();
         var knapsack = backtracking(problem.emptyKnapsack(), problem.items());
         System.out.println("Brute force backtracking");
-        System.out.println(new KnapsackSolution(knapsack, null));
+        System.out.println(new Solution(knapsack, null));
         Instant end = Instant.now();
         System.out.println("Time: " + seconds(Duration.between(start,end)));
     }
@@ -58,7 +58,7 @@ public class Application {
         return new Random(seed);
     }
 
-    private static KnapsackProblem defaultItems() {
+    private static Problem defaultItems() {
         return withItems(
                 name("A").weight(4).value(15),
                 name("B").weight(7).value(15),
@@ -76,11 +76,11 @@ public class Application {
                 .build();
     }
 
-    private static void runAlgorithms(KnapsackProblem problem) {
+    private static void runAlgorithms(Problem problem) {
         knapsackAlgorithms().forEach(algorithm -> runAlgorithm(algorithm, problem));
     }
 
-    private static List<Algorithm<KnapsackProblem, KnapsackSolution>> knapsackAlgorithms() {
+    private static List<Algorithm<Problem, Solution>> knapsackAlgorithms() {
         return List.of(
                 new KnapsackGreedyAlgorithm(),
                 new KnapsackGradientDescent(),
@@ -90,9 +90,9 @@ public class Application {
         );
     }
 
-    private static void runAlgorithm(Algorithm<KnapsackProblem, KnapsackSolution> algorithm, KnapsackProblem problem) {
+    private static void runAlgorithm(Algorithm<Problem, Solution> algorithm, Problem problem) {
         System.out.println(algorithm.name());
-        KnapsackSolution solution = algorithm.solve(problem);
+        Solution solution = algorithm.solve(problem);
         System.out.println(solution.toString());
         System.out.println();
     }

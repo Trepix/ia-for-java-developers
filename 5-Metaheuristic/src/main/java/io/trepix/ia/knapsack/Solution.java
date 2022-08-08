@@ -1,19 +1,17 @@
 package io.trepix.ia.knapsack;
 
-import io.trepix.ia.metaheuristics.Solution;
-
 import java.util.Random;
 import java.util.StringJoiner;
 
 import static java.lang.Double.compare;
 
-public class KnapsackSolution implements Solution<KnapsackSolution> {
+public class Solution implements io.trepix.ia.metaheuristics.Solution<Solution> {
 
     public final Knapsack knapsack;
 
     private final Random generator;
 
-    public KnapsackSolution(Knapsack knapsack, Random generator) {
+    public Solution(Knapsack knapsack, Random generator) {
         this.knapsack = knapsack;
         this.generator = generator;
     }
@@ -27,17 +25,17 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     }
 
     @Override
-    public int compareTo(Solution<KnapsackSolution> solution) {
+    public int compareTo(io.trepix.ia.metaheuristics.Solution<Solution> solution) {
         return compare(this.value(), solution.value());
     }
 
     @Override
-    public boolean isBetterThan(KnapsackSolution solution) {
+    public boolean isBetterThan(Solution solution) {
         return this.compareTo(solution) > 0;
     }
 
     @Override
-    public void improveWith(KnapsackSolution betterSolution) {
+    public void improveWith(Solution betterSolution) {
         var item = betterSolution.knapsack.peekRandomItem(generator);
 
         if (knapsack.isNotCarrying(item)) {
@@ -65,7 +63,7 @@ public class KnapsackSolution implements Solution<KnapsackSolution> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        KnapsackSolution that = (KnapsackSolution) o;
+        Solution that = (Solution) o;
         return knapsack.equals(that.knapsack);
     }
 
