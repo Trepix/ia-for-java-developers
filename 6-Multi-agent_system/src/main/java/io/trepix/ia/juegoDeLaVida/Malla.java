@@ -1,11 +1,11 @@
-package JuegoDeLaVida;
+package io.trepix.ia.juegoDeLaVida;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Random;
 
 // Tabla que representa el entorno del juego de la vida + las células
-public class Tabla {
+public class Malla {
     protected int ancho;
     protected int alto;
     protected boolean[][] contenido;
@@ -16,7 +16,7 @@ public class Tabla {
         support.addPropertyChangeListener(pcl);
     }
         
-    public Tabla(int _ancho, int _alto, double _densidad) {
+    public Malla(int _ancho, int _alto, double _densidad) {
         ancho = _ancho;
         alto = _alto;
         Random generador = new Random();

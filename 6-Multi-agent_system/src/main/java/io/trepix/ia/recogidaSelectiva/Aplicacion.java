@@ -1,19 +1,19 @@
-package JuegoDeLaVida;
+package io.trepix.ia.recogidaSelectiva;
 
 import javax.swing.JFrame;
 
-// Ventana principal de la aplicación (y lanzamiento)
+// Clase que contiene el main y crea la ventana + lanza la simulation
 public class Aplicacion {
     public static void main(String[] args) {
         // Creación de la ventana
         JFrame ventana = new JFrame();
-        ventana.setTitle("Juego de la vida");
+        ventana.setTitle("Recogida selectiva");
         ventana.setSize(600, 400);
         ventana.setLocationRelativeTo(null);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setResizable(false);
         // Creación del contenido
-        juegoDeLaVidaJPanel panel = new juegoDeLaVidaJPanel();
+        ClasificacionJPanel panel = new ClasificacionJPanel();
         ventana.setContentPane(panel);
         // Visualización
         ventana.setVisible(true);

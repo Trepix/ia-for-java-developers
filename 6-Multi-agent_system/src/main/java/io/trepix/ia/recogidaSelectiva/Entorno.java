@@ -1,9 +1,9 @@
-package recogidaSelectiva;
+package io.trepix.ia.recogidaSelectiva;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Colleccions;
+import java.util.Collections;
 import java.util.Random;
 
 // Entorno, que contiene los residuos y los agentes
@@ -86,7 +86,7 @@ public class Entorno {
 
         numIteraciones++;
         if (numIteraciones % 500 == 0) {
-            Colleccions.reverse(residuos);
+            Collections.reverse(residuos);
         }
     }
 }

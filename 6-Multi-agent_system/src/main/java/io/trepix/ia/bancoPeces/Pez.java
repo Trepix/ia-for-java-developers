@@ -1,9 +1,9 @@
-package bancoPeces;
+package io.trepix.ia.bancoPeces;
 
 import java.util.ArrayList;
 
 // Un pez, gestionado por un agente
-public class Pez extends Objet {
+public class Pez extends Objeto {
     // Constantes
     public static final double PASO = 3;
     public static final double DISTANCIA_MIN = 5;

@@ -1,11 +1,13 @@
-package recogidaSelectiva;
+package io.trepix.ia.recogidaSelectiva;
 
-import bancoPeces.Objet;
+import io.trepix.ia.bancoPeces.Objeto;
+import io.trepix.ia.bancoPeces.Objeto;
+
 import java.util.ArrayList;
-import java.util.Colleccions;
+import java.util.Collections;
 
 // Agente que va recoger los residuos
-public class AgenteClasificacion extends Objet {
+public class AgenteClasificacion extends Objeto {
     protected final static double PASO = 3;
     protected final static double PROB_CHGT_DIRECTION = 0.05;
     
@@ -53,10 +55,10 @@ public class AgenteClasificacion extends Objet {
     
     protected void ActualizarDireccion(ArrayList<Residuo> residuos) {
         // ¿Dónde ir?
-        ArrayList<Residuo> enZona = new ArrayList();
+        ArrayList<Residuo> enZona = new ArrayList<>();
         enZona.addAll(residuos);
         enZona.removeIf(d -> (Distancia(d) > d.ZonaInfluencia()));
-        Colleccions.sort(enZona, (Residuo d1, Residuo d2) -> (Distancia(d1) < Distancia(d2) ? -1: 1));
+        Collections.sort(enZona, (Residuo d1, Residuo d2) -> (Distancia(d1) < Distancia(d2) ? -1: 1));
         Residuo objetivo = null;
         if (carga != null) {
             enZona.removeIf(d -> d.type != carga.type);
@@ -66,7 +68,7 @@ public class AgenteClasificacion extends Objet {
         }
         
         // ¿Alcanzado un objetivo?
-        if (but == null || ocupado) {
+        if (objetivo == null || ocupado) {
             // Movimiento aleatorio
             if (Entorno.getInstance().generador.nextDouble() < PROB_CHGT_DIRECTION) {
                 velocidadX = Entorno.getInstance().generador.nextDouble() - 0.5;
@@ -81,7 +83,7 @@ public class AgenteClasificacion extends Objet {
             velocidadX = objetivo.posX - posX;
             velocidadY = objetivo.posY - posY;
             // ¿Alcanzado objetivo?
-            if (Distancia(objetivo) < PAS) {
+            if (Distancia(objetivo) < PASO) {
                 if (carga == null) {
                     if (Entorno.getInstance().generador.nextDouble() < objetivo.ProbaDeTomar()) {
                         carga = Entorno.getInstance().TomarResiduo(objetivo);

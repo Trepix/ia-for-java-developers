@@ -1,19 +1,19 @@
-package bancoPeces;
+package io.trepix.ia.juegoDeLaVida;
 
 import javax.swing.JFrame;
 
-// Ejecución de la ventana y de la aplicación
+// Ventana principal de la aplicación (y lanzamiento)
 public class Aplicacion {
     public static void main(String[] args) {
         // Creación de la ventana
         JFrame ventana = new JFrame();
-        ventana.setTitle("Banco de peces");
+        ventana.setTitle("Juego de la vida");
         ventana.setSize(600, 400);
         ventana.setLocationRelativeTo(null);
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventana.setResizable(false);
         // Creación del contenido
-        OceanoJPanel panel = new OceanoJPanel();
+        JuegoDeLaVidaJPanel panel = new JuegoDeLaVidaJPanel();
         ventana.setContentPane(panel);
         // Visualización
         ventana.setVisible(true);

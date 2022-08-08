@@ -1,4 +1,4 @@
-package bancoPeces;
+package io.trepix.ia.bancoPeces;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

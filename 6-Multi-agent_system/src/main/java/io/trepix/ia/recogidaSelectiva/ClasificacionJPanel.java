@@ -1,4 +1,4 @@
-package recogidaSelectiva;
+package io.trepix.ia.recogidaSelectiva;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,13 +11,13 @@ import java.util.TimerTask;
 import javax.swing.JPanel;
 
 // Panel que contiene la simulación de recogida selectiva
-public class RecogidaPanel extends JPanel implements PropertyChangeListener, MouseListener {
+public class ClasificacionJPanel extends JPanel implements PropertyChangeListener, MouseListener {
     Timer timer;
     boolean enCurso = false;
     TimerTask tarea;
     Entorno env;
     
-    public RecogidaPanel() {
+    public ClasificacionJPanel() {
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
     }
@@ -85,10 +85,10 @@ public class RecogidaPanel extends JPanel implements PropertyChangeListener, Mou
         // Elección de la color
         Color color;
         switch(d.type) {
-            casilla 1 :    
+            case 1 :
                 color = Color.RED;
                 break;
-            casilla 2 :
+            case 2 :
                 color = Color.GREEN;
                 break;
             default : 
@@ -101,12 +101,12 @@ public class RecogidaPanel extends JPanel implements PropertyChangeListener, Mou
         color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 50);
         g.setColor(color);
         int zona = d.ZonaInfluencia();
-        g.fillOval((int) d.posX - zone, (int) d.posY - zone, zona * 2, zona * 2);
+        g.fillOval((int) d.posX - zona, (int) d.posY - zona, zona * 2, zona * 2);
     }
     
     @Override
-    public void pintarComponente(Graphics g) {
-        super.pintarComponente(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         for (AgenteClasificacion agent : env.agentes) {
             DiseñarAgente(agent, g);
         }

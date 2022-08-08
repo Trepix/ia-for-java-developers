@@ -1,4 +1,4 @@
-package JuegoDeLaVida;
+package io.trepix.ia.juegoDeLaVida;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,19 +11,19 @@ import java.util.TimerTask;
 import javax.swing.JPanel;
 
 // Panel principal que gestiona el juego de la vida (su creación + su lanzamiento + actualización)
-public class juegoDeLaVidaJPanel extends JPanel implements PropertyChangeListener, MouseListener {
+public class JuegoDeLaVidaJPanel extends JPanel implements PropertyChangeListener, MouseListener {
     Timer timer;
     boolean enCurso = false;
-    Tabla tabla;
+    Malla tabla;
     TimerTask tarea;
     
-    public juegoDeLaVidaJPanel() {
+    public JuegoDeLaVidaJPanel() {
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
     }
     
     public void Lanzar() {
-        tabla = new Tabla(this.getWidth() / 3, getHeight() / 3, 0.1);
+        tabla = new Malla(this.getWidth() / 3, getHeight() / 3, 0.1);
         tabla.AgregarChangeListener(this);
         timer = new Timer();
         tarea = new TimerTask() {
@@ -46,8 +46,8 @@ public class juegoDeLaVidaJPanel extends JPanel implements PropertyChangeListene
     }
     
     @Override
-    public void pintarComponente(Graphics g) {
-        super.pintarComponente(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         for (int i = 0; i < tabla.ancho; i++) {
             for (int j = 0; j < tabla.alto; j++) {
                 if (tabla.contenido[i][j]) {

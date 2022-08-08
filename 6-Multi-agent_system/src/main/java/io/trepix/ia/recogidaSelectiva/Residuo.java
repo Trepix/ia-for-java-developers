@@ -1,9 +1,9 @@
-package recogidaSelectiva;
+package io.trepix.ia.recogidaSelectiva;
 
-import bancoPeces.Objet;
+import io.trepix.ia.bancoPeces.Objeto;
 
 // Residuos en el entorno
-public class Residuo extends Objet {
+public class Residuo extends Objeto {
     protected final static double DISMINUCION = 0.6;
     
     protected int type;
