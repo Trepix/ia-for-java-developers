@@ -11,7 +11,7 @@ import java.util.TimerTask;
 import javax.swing.JPanel;
 
 // Panel principal que gestiona el juego de la vida (su creación + su lanzamiento + actualización)
-public class JuegoDeLaVidaJPanel extends JPanel implements PropertyChangeListener, MouseListener {
+public class JuegoDeLaVidaJPanel extends JPanel implements PropertyChangeListener, MouseClickListener {
     Timer timer;
     boolean enCurso = false;
     Malla tabla;
@@ -83,13 +83,4 @@ public class JuegoDeLaVidaJPanel extends JPanel implements PropertyChangeListene
             enCurso = !enCurso;
         }
     }
-
-    @Override
-    public void mousePressed(MouseEvent e) {}
-    @Override
-    public void mouseReleased(MouseEvent e) {}
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-    @Override
-    public void mouseExited(MouseEvent e) {}
 }
