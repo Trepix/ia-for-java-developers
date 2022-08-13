@@ -1,17 +1,15 @@
 package io.trepix.ia.juegoDeLaVida;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.JPanel;
 
 // Panel principal que gestiona el juego de la vida (su creación + su lanzamiento + actualización)
-public class JuegoDeLaVidaJPanel extends JPanel implements PropertyChangeListener, MouseClickListener {
+public class JuegoDeLaVidaJPanel extends JPanel implements Component, PropertyChangeListener, MouseClickListener {
     Timer timer;
     boolean enCurso = false;
     Malla tabla;
@@ -21,8 +19,9 @@ public class JuegoDeLaVidaJPanel extends JPanel implements PropertyChangeListene
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
     }
-    
-    public void Lanzar() {
+
+    @Override
+    public void start() {
         tabla = new Malla(this.getWidth() / 3, getHeight() / 3, 0.1);
         tabla.AgregarChangeListener(this);
         timer = new Timer();
