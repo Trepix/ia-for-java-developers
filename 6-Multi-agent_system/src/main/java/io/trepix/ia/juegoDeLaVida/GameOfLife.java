@@ -7,31 +7,24 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
+public class GameOfLife extends JPanel implements Component, PropertyChangeListener, MouseClickListener {
 
-// Panel principal que gestiona el juego de la vida (su creación + su lanzamiento + actualización)
-public class JuegoDeLaVidaJPanel extends JPanel implements Component, PropertyChangeListener, MouseClickListener {
+    private static final int SIZE_RATIO = 3;
     Timer timer;
     boolean enCurso = false;
     Malla tabla;
     TimerTask tarea;
     
-    public JuegoDeLaVidaJPanel() {
+    public GameOfLife() {
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
     }
 
     @Override
     public void start() {
-        tabla = new Malla(this.getWidth() / 3, getHeight() / 3, 0.1);
+        tabla = new Malla(this.getWidth() / SIZE_RATIO, getHeight() / SIZE_RATIO, 0.1);
         tabla.AgregarChangeListener(this);
-        timer = new Timer();
-        tarea = new TimerTask() {
-            @Override
-            public void run() {
-                tabla.Actualizar(true);
-            }
-        };
-        timer.scheduleAtFixedRate(tarea, 0, 500);
+        scheduleUpdate();
         enCurso = true;
     }
     
@@ -40,8 +33,8 @@ public class JuegoDeLaVidaJPanel extends JPanel implements Component, PropertyCh
         this.repaint();
     }
     
-    public void DiseñarCelula(Graphics g, int i, int j) {
-        g.fillRect(3*i-1, 3*j-1, 3, 3);
+    public void printCell(Graphics g, int i, int j) {
+        g.fillRect(SIZE_RATIO*i, SIZE_RATIO*j, SIZE_RATIO, SIZE_RATIO);
     }
     
     @Override
@@ -50,7 +43,7 @@ public class JuegoDeLaVidaJPanel extends JPanel implements Component, PropertyCh
         for (int i = 0; i < tabla.ancho; i++) {
             for (int j = 0; j < tabla.alto; j++) {
                 if (tabla.contenido[i][j]) {
-                    DiseñarCelula(g, i, j);
+                    printCell(g, i, j);
                 }
             }
         }
@@ -60,26 +53,32 @@ public class JuegoDeLaVidaJPanel extends JPanel implements Component, PropertyCh
     public void mouseClicked(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {
             // Clic con el botón izquierdo del ratón : añadir celulas vivas
-            tabla.CambiarEstado(e.getX() / 3, e.getY() / 3);
+            tabla.CambiarEstado(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
             tabla.Actualizar(false);
         }
         else if (e.getButton() == MouseEvent.BUTTON3) {
             // Clic con el botón derecho del ratón : pausa el timer
             if (enCurso) {
                 timer.cancel();
-                timer = null;
             }
             else {
-                timer = new Timer();
-                tarea = new TimerTask() {
-                    @Override
-                    public void run() {
-                        tabla.Actualizar(true);
-                    }
-                };
-                timer.scheduleAtFixedRate(tarea, 0, 500);
+                scheduleUpdate();
             }
             enCurso = !enCurso;
         }
+    }
+
+    private void scheduleUpdate() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(updateTask(), 0, 500);
+    }
+
+    private TimerTask updateTask() {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                tabla.Actualizar(true);
+            }
+        };
     }
 }
