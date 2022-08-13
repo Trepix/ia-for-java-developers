@@ -7,7 +7,7 @@ public class WindowBuilder {
 
     private String title;
 
-    private SizeBuilder size;
+    private Size size;
 
     private Component panel;
 
@@ -19,8 +19,8 @@ public class WindowBuilder {
         return builder;
     }
 
-    public WindowBuilder withSize(SizeBuilder sizeBuilder) {
-        this.size = sizeBuilder;
+    public WindowBuilder withSize(Size size) {
+        this.size = size;
         return this;
     }
 
@@ -32,7 +32,7 @@ public class WindowBuilder {
     public void show() {
         JFrame window = new JFrame();
         window.setTitle(title);
-        window.setSize(size.width, size.height);
+        window.setSize(size.width(), size.height());
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
@@ -58,6 +58,10 @@ public class WindowBuilder {
         public SizeBuilder height(int height) {
             this.height = height;
             return this;
+        }
+
+        public Size build() {
+            return new Size(width, height);
         }
     }
 }
