@@ -2,14 +2,16 @@ package io.trepix.ia.juegoDeLaVida;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 // Tabla que representa el entorno del juego de la vida + las células
 public class Malla {
-    protected int ancho;
-    protected int alto;
-    protected boolean[][] contenido;
-    private PropertyChangeSupport support;
+    private final int ancho;
+    private final int alto;
+    private boolean[][] contenido;
+    private final PropertyChangeSupport support;
     private int numIteraciones;
     
     public void AgregarChangeListener(PropertyChangeListener pcl) {
@@ -31,6 +33,16 @@ public class Malla {
                 }
             }
         }
+    }
+
+    public List<Cell> aliveCells() {
+        List<Cell> aliveCells = new LinkedList<>();
+        for (int i = 0; i < ancho; i++) {
+            for (int j = 0; j < alto; j++) {
+                if (contenido[i][j]) aliveCells.add(new Cell(i, j));
+            }
+        }
+        return aliveCells;
     }
     
     public void CambiarEstado(int linea, int columna) {
