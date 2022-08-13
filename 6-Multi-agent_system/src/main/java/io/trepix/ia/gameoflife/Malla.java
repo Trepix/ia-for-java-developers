@@ -18,9 +18,9 @@ public class Malla {
         support.addPropertyChangeListener(pcl);
     }
         
-    public Malla(int _ancho, int _alto, double _densidad) {
-        ancho = _ancho;
-        alto = _alto;
+    public Malla(Size size, double _densidad) {
+        ancho = size.width();
+        alto = size.height();
         Random generador = new Random();
         support = new PropertyChangeSupport(this);
         numIteraciones = 0;

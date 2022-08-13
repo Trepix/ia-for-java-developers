@@ -11,8 +11,10 @@ import java.util.TimerTask;
 public class GameOfLife extends JPanel implements Component, PropertyChangeListener, MouseClickListener {
 
     private static final int SIZE_RATIO = 3;
+    public static final double ALIVE_CELLS_DENSITY = 0.1;
+    public static final int INTERVAL_UPDATE_IN_MILLISECONDS = 500;
     Timer timer;
-    boolean enCurso = false;
+    boolean isRunning = false;
     Malla tabla;
 
     public GameOfLife() {
@@ -22,10 +24,11 @@ public class GameOfLife extends JPanel implements Component, PropertyChangeListe
 
     @Override
     public void start() {
-        tabla = new Malla(this.getWidth() / SIZE_RATIO, getHeight() / SIZE_RATIO, 0.1);
+        var size = new Size(super.getWidth() / SIZE_RATIO, super.getHeight() / SIZE_RATIO);
+        tabla = new Malla(size, ALIVE_CELLS_DENSITY);
         tabla.AgregarChangeListener(this);
         scheduleUpdate();
-        enCurso = true;
+        isRunning = true;
     }
 
     @Override
@@ -33,36 +36,44 @@ public class GameOfLife extends JPanel implements Component, PropertyChangeListe
         this.repaint();
     }
 
-    public void printCell(Graphics g, Cell cell) {
+    public void paintCell(Graphics g, Cell cell) {
         g.fillRect(SIZE_RATIO * cell.x(), SIZE_RATIO * cell.y(), SIZE_RATIO, SIZE_RATIO);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        tabla.aliveCells().forEach(cell -> printCell(g, cell));
+        tabla.aliveCells().forEach(cell -> paintCell(g, cell));
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            // Clic con el botón izquierdo del ratón : añadir celulas vivas
+        if (isLeftClick(e)) {
             tabla.CambiarEstado(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
             tabla.Actualizar(false);
-        } else if (e.getButton() == MouseEvent.BUTTON3) {
-            // Clic con el botón derecho del ratón : pausa el timer
-            if (enCurso) {
+        }
+
+        if (isRightClick(e)) {
+            if (isRunning) {
                 timer.cancel();
             } else {
                 scheduleUpdate();
             }
-            enCurso = !enCurso;
+            isRunning = !isRunning;
         }
+    }
+
+    private static boolean isRightClick(MouseEvent e) {
+        return e.getButton() == MouseEvent.BUTTON3;
+    }
+
+    private static boolean isLeftClick(MouseEvent e) {
+        return e.getButton() == MouseEvent.BUTTON1;
     }
 
     private void scheduleUpdate() {
         timer = new Timer();
-        timer.scheduleAtFixedRate(updateTask(), 0, 500);
+        timer.scheduleAtFixedRate(updateTask(), 0, INTERVAL_UPDATE_IN_MILLISECONDS);
     }
 
     private TimerTask updateTask() {
