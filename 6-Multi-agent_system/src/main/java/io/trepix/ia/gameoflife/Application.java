@@ -1,6 +1,6 @@
-package io.trepix.ia.juegoDeLaVida;
+package io.trepix.ia.gameoflife;
 
-import static io.trepix.ia.juegoDeLaVida.WindowBuilder.SizeBuilder.width;
+import static io.trepix.ia.gameoflife.WindowBuilder.SizeBuilder.width;
 public class Application {
     public static void main(String[] args) {
         WindowBuilder

@@ -1,4 +1,4 @@
-package io.trepix.ia.juegoDeLaVida;
+package io.trepix.ia.gameoflife;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

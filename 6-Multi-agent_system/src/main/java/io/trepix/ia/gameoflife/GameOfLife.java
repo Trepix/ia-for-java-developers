@@ -1,4 +1,4 @@
-package io.trepix.ia.juegoDeLaVida;
+package io.trepix.ia.gameoflife;
 
 import javax.swing.*;
 import java.awt.*;
