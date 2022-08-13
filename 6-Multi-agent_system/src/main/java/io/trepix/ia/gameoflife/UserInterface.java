@@ -8,16 +8,15 @@ import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class GameOfLife extends JPanel implements Component, PropertyChangeListener, MouseClickListener {
+public class UserInterface extends JPanel implements Component, PropertyChangeListener, MouseClickListener {
 
     private static final int SIZE_RATIO = 3;
     public static final double ALIVE_CELLS_DENSITY = 0.1;
     public static final int INTERVAL_UPDATE_IN_MILLISECONDS = 500;
     Timer timer;
-    boolean isRunning = false;
     Malla tabla;
 
-    public GameOfLife() {
+    public UserInterface() {
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
     }
@@ -27,8 +26,7 @@ public class GameOfLife extends JPanel implements Component, PropertyChangeListe
         var size = new Size(super.getWidth() / SIZE_RATIO, super.getHeight() / SIZE_RATIO);
         tabla = new Malla(size, ALIVE_CELLS_DENSITY);
         tabla.AgregarChangeListener(this);
-        scheduleUpdate();
-        isRunning = true;
+        resume();
     }
 
     @Override
@@ -54,12 +52,11 @@ public class GameOfLife extends JPanel implements Component, PropertyChangeListe
         }
 
         if (isRightClick(e)) {
-            if (isRunning) {
-                timer.cancel();
+            if (isRunning()) {
+                stop();
             } else {
-                scheduleUpdate();
+                resume();
             }
-            isRunning = !isRunning;
         }
     }
 
@@ -71,17 +68,24 @@ public class GameOfLife extends JPanel implements Component, PropertyChangeListe
         return e.getButton() == MouseEvent.BUTTON1;
     }
 
-    private void scheduleUpdate() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(updateTask(), 0, INTERVAL_UPDATE_IN_MILLISECONDS);
+    private boolean isRunning() {
+        return timer != null;
     }
 
-    private TimerTask updateTask() {
-        return new TimerTask() {
+    private void stop() {
+        timer.cancel();
+        timer = null;
+    }
+
+    private void resume() {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 tabla.Actualizar(true);
             }
         };
+        timer = new Timer();
+        timer.scheduleAtFixedRate(task, 0, INTERVAL_UPDATE_IN_MILLISECONDS);
     }
+
 }

@@ -6,7 +6,7 @@ public class Application {
         WindowBuilder
                 .withTitle("Game of Life")
                 .withSize(width(600).height(400))
-                .withComponent(new GameOfLife())
+                .withComponent(new UserInterface())
                 .show();
     }
 }
