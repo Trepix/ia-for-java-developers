@@ -1,30 +1,20 @@
 package io.trepix.ia.gameoflife;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 // Tabla que representa el entorno del juego de la vida + las células
-public class Malla {
+public class Malla implements MultiAgentSystem {
     private final int ancho;
     private final int alto;
     private boolean[][] contenido;
-    private final PropertyChangeSupport support;
-    private int numIteraciones;
-    
-    public void AgregarChangeListener(PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
-    }
-        
+
     public Malla(Size size, double _densidad) {
         ancho = size.width();
         alto = size.height();
         Random generador = new Random();
-        support = new PropertyChangeSupport(this);
-        numIteraciones = 0;
-        
+
         contenido = new boolean[ancho][alto];
         for (int i = 0; i < ancho; i++) {
             for (int j = 0; j < alto; j++) {
@@ -64,21 +54,18 @@ public class Malla {
         }
         return nb;
     }
-    
-    public void Actualizar(boolean conAplicacion) {
-        if (conAplicacion) {
-            boolean[][] nuevaTabla = new boolean[ancho][alto];
-            for (int i = 0; i < ancho; i++) {
-                for (int j = 0; j < alto; j++) {
-                    int nb = NumVecinosVivos(i, j);
-                    if (nb == 3 || (nb == 2 && contenido[i][j])) {
-                        nuevaTabla[i][j] = true;
-                    }
+
+    @Override
+    public void update() {
+        boolean[][] nuevaTabla = new boolean[ancho][alto];
+        for (int i = 0; i < ancho; i++) {
+            for (int j = 0; j < alto; j++) {
+                int nb = NumVecinosVivos(i, j);
+                if (nb == 3 || (nb == 2 && contenido[i][j])) {
+                    nuevaTabla[i][j] = true;
                 }
             }
-            contenido = nuevaTabla;
         }
-        support.firePropertyChange("changed", this.numIteraciones, this.numIteraciones+1);
-        this.numIteraciones++;
+        contenido = nuevaTabla;
     }
 }

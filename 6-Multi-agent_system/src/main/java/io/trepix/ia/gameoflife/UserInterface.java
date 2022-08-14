@@ -3,15 +3,13 @@ package io.trepix.ia.gameoflife;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class UserInterface extends JPanel implements Component, PropertyChangeListener, MouseClickListener {
+public class UserInterface extends JPanel implements Component, MouseClickListener {
 
-    private static final int SIZE_RATIO = 3;
     public static final int INTERVAL_UPDATE_IN_MILLISECONDS = 500;
+    private static final int SIZE_RATIO = 3;
     Timer timer;
     Malla tabla;
 
@@ -27,13 +25,7 @@ public class UserInterface extends JPanel implements Component, PropertyChangeLi
 
     @Override
     public void start() {
-        tabla.AgregarChangeListener(this);
         resume();
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        this.repaint();
     }
 
     public void paintCell(Graphics g, Cell cell) {
@@ -50,7 +42,6 @@ public class UserInterface extends JPanel implements Component, PropertyChangeLi
     public void mouseClicked(MouseEvent e) {
         if (isLeftClick(e)) {
             tabla.CambiarEstado(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
-            tabla.Actualizar(false);
         }
 
         if (isRightClick(e)) {
@@ -83,11 +74,15 @@ public class UserInterface extends JPanel implements Component, PropertyChangeLi
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                tabla.Actualizar(true);
+                update();
             }
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(task, 0, INTERVAL_UPDATE_IN_MILLISECONDS);
+    }
+
+    private void update() {
+        tabla.update();
     }
 
 }
