@@ -1,7 +1,7 @@
 package io.trepix.ia.gameoflife;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class GameOfLife implements MultiAgentSystem {
     private final int ancho;
@@ -24,8 +24,8 @@ public class GameOfLife implements MultiAgentSystem {
         }
     }
 
-    public List<Cell> aliveCells() {
-        List<Cell> aliveCells = new LinkedList<>();
+    public Set<Cell> aliveCells() {
+        Set<Cell> aliveCells = new LinkedHashSet<>();
         for (int i = 0; i < ancho; i++) {
             for (int j = 0; j < alto; j++) {
                 if (contenido[i][j]) aliveCells.add(new Cell(i, j));
