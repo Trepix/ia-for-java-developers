@@ -2,16 +2,17 @@ package io.trepix.ia.gameoflife;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+
 public class GameOfLife implements MultiAgentSystem {
     private final int ancho;
     private final int alto;
     private boolean[][] contenido;
 
-    public GameOfLife(Size size, double _densidad) {
+    public GameOfLife(Size size, StartConfig startConfig) {
+        var _densidad = startConfig.density();
+        var generador = startConfig.generator();
         ancho = size.width();
         alto = size.height();
-        Random generador = new Random();
 
         contenido = new boolean[ancho][alto];
         for (int i = 0; i < ancho; i++) {
