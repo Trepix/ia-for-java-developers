@@ -3,14 +3,12 @@ package io.trepix.ia.gameoflife;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
-// Tabla que representa el entorno del juego de la vida + las células
-public class Malla implements MultiAgentSystem {
+public class GameOfLife implements MultiAgentSystem {
     private final int ancho;
     private final int alto;
     private boolean[][] contenido;
 
-    public Malla(Size size, double _densidad) {
+    public GameOfLife(Size size, double _densidad) {
         ancho = size.width();
         alto = size.height();
         Random generador = new Random();
@@ -35,8 +33,8 @@ public class Malla implements MultiAgentSystem {
         return aliveCells;
     }
     
-    public void CambiarEstado(int linea, int columna) {
-        contenido[linea][columna] = !contenido[linea][columna];
+    public void changeState(Cell cell) {
+        contenido[cell.x()][cell.y()] = !contenido[cell.x()][cell.y()];
     }
     
     public int NumVecinosVivos(int columna, int linea) {

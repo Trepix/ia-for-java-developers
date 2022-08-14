@@ -11,7 +11,7 @@ public class Application {
                 .height(400)
                 .build();
 
-        Malla gameOfLife = new Malla(applyRatio(size), ALIVE_CELLS_DENSITY);
+        GameOfLife gameOfLife = new GameOfLife(applyRatio(size), ALIVE_CELLS_DENSITY);
 
         WindowBuilder
                 .withTitle("Game of Life")

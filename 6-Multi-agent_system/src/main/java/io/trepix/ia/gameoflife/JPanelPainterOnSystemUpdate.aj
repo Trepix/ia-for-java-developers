@@ -6,13 +6,13 @@ import javax.swing.JPanel;
 
 public aspect JPanelPainterOnSystemUpdate {
 
-    pointcut whenUserUpdate(Malla mesh) :
-            target(mesh) && call(void CambiarEstado(..));
+    pointcut whenUserUpdate(GameOfLife gameOfLife) :
+            target(gameOfLife) && call(void changeState(..));
 
     pointcut whenUpdate(MultiAgentSystem system) :
             target(system) && call(void update());
 
-    after(Malla mesh) : whenUserUpdate(mesh) {
+    after(GameOfLife gameOfLife) : whenUserUpdate(gameOfLife) {
         updatePanel(thisJoinPoint);
     }
 

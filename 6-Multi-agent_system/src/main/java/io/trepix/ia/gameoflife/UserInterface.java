@@ -11,9 +11,9 @@ public class UserInterface extends JPanel implements Component, MouseClickListen
     public static final int INTERVAL_UPDATE_IN_MILLISECONDS = 500;
     private static final int SIZE_RATIO = 3;
     Timer timer;
-    Malla tabla;
+    GameOfLife tabla;
 
-    public UserInterface(Malla gameOfLife) {
+    public UserInterface(GameOfLife gameOfLife) {
         tabla = gameOfLife;
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
@@ -41,7 +41,8 @@ public class UserInterface extends JPanel implements Component, MouseClickListen
     @Override
     public void mouseClicked(MouseEvent e) {
         if (isLeftClick(e)) {
-            tabla.CambiarEstado(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
+            Cell cell = new Cell(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
+            tabla.changeState(cell);
         }
 
         if (isRightClick(e)) {
