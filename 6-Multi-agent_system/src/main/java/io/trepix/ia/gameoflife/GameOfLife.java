@@ -4,21 +4,19 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class GameOfLife implements MultiAgentSystem {
-    private final int ancho;
-    private final int alto;
-    private boolean[][] contenido;
+    private final Size size;
+    private boolean[][] cells;
 
     public GameOfLife(Size size, StartConfig startConfig) {
-        var _densidad = startConfig.density();
-        var generador = startConfig.generator();
-        ancho = size.width();
-        alto = size.height();
+        var density = startConfig.density();
+        var generator = startConfig.generator();
+        this.size = size;
 
-        contenido = new boolean[ancho][alto];
-        for (int i = 0; i < ancho; i++) {
-            for (int j = 0; j < alto; j++) {
-                if (generador.nextDouble() < _densidad) {
-                    contenido[i][j] = true;
+        cells = new boolean[size.width()][size.height()];
+        for (int i = 0; i < size.width(); i++) {
+            for (int j = 0; j < size.height(); j++) {
+                if (generator.nextDouble() < density) {
+                    cells[i][j] = true;
                 }
             }
         }
@@ -26,27 +24,27 @@ public class GameOfLife implements MultiAgentSystem {
 
     public Set<Cell> aliveCells() {
         Set<Cell> aliveCells = new LinkedHashSet<>();
-        for (int i = 0; i < ancho; i++) {
-            for (int j = 0; j < alto; j++) {
-                if (contenido[i][j]) aliveCells.add(new Cell(i, j));
+        for (int i = 0; i < size.width(); i++) {
+            for (int j = 0; j < size.height(); j++) {
+                if (cells[i][j]) aliveCells.add(new Cell(i, j));
             }
         }
         return aliveCells;
     }
-    
+
     public void changeState(Cell cell) {
-        contenido[cell.x()][cell.y()] = !contenido[cell.x()][cell.y()];
+        cells[cell.x()][cell.y()] = !cells[cell.x()][cell.y()];
     }
-    
-    public int NumVecinosVivos(int columna, int linea) {
-        int i_min = Math.max(0, columna-1);
-        int i_max = Math.min(ancho-1, columna+1);
-        int j_min = Math.max(0, linea-1);
-        int j_max = Math.min(alto-1, linea+1);
+
+    private int aliveNeighbours(int row, int column) {
+        int i_min = Math.max(0, row - 1);
+        int i_max = Math.min(size.width() - 1, row + 1);
+        int j_min = Math.max(0, column - 1);
+        int j_max = Math.min(size.height() - 1, column + 1);
         int nb = 0;
         for (int i = i_min; i <= i_max; i++) {
             for (int j = j_min; j <= j_max; j++) {
-                if (contenido[i][j] && !(i==columna && j==linea)) {
+                if (cells[i][j] && !(i == row && j == column)) {
                     nb++;
                 }
             }
@@ -56,15 +54,15 @@ public class GameOfLife implements MultiAgentSystem {
 
     @Override
     public void update() {
-        boolean[][] nuevaTabla = new boolean[ancho][alto];
-        for (int i = 0; i < ancho; i++) {
-            for (int j = 0; j < alto; j++) {
-                int nb = NumVecinosVivos(i, j);
-                if (nb == 3 || (nb == 2 && contenido[i][j])) {
-                    nuevaTabla[i][j] = true;
+        boolean[][] newCells = new boolean[size.width()][size.height()];
+        for (int i = 0; i < size.width(); i++) {
+            for (int j = 0; j < size.height(); j++) {
+                int nb = aliveNeighbours(i, j);
+                if (nb == 3 || (nb == 2 && cells[i][j])) {
+                    newCells[i][j] = true;
                 }
             }
         }
-        contenido = nuevaTabla;
+        cells = newCells;
     }
 }
