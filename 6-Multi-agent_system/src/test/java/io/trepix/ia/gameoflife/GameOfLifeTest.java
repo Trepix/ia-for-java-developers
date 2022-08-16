@@ -13,16 +13,16 @@ public class GameOfLifeTest {
     static int iterations = 0;
 
     public static void main(String[] args) {
-        assertIteration(Set.of(new Cell(0,4), new Cell(1,4), new Cell(5,0), new Cell(5,1), new Cell(7,0), new Cell(7,1), new Cell(8,0), new Cell(8,1), new Cell(8,2)));
-        assertIteration(Set.of(new Cell(7, 0), new Cell(7, 2), new Cell(8, 0), new Cell(8, 2), new Cell(9, 1)));
-        assertIteration(Set.of(new Cell(8,0), new Cell(8,2), new Cell(9,1)));
-        assertIteration(Set.of(new Cell(8,1), new Cell(9,1)));
+        assertIteration(Set.of(new Position(0,4), new Position(1,4), new Position(5,0), new Position(5,1), new Position(7,0), new Position(7,1), new Position(8,0), new Position(8,1), new Position(8,2)));
+        assertIteration(Set.of(new Position(7, 0), new Position(7, 2), new Position(8, 0), new Position(8, 2), new Position(9, 1)));
+        assertIteration(Set.of(new Position(8,0), new Position(8,2), new Position(9,1)));
+        assertIteration(Set.of(new Position(8,1), new Position(9,1)));
 
         System.out.println("Everything OK, refactor didn't broke anything, ''anything'' exercised by tests :)");
     }
 
-    private static void assertIteration(Set<Cell> expectedAliveCells) {
-        gameOfLife.update();
+    private static void assertIteration(Set<Position> expectedAliveCells) {
+        gameOfLife.evolve();
         var aliveCells = gameOfLife.aliveCells();
         assert expectedAliveCells.equals(aliveCells) : "Alive cells are different in iteration " + iterations++;
     }

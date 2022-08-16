@@ -4,19 +4,19 @@ import org.aspectj.lang.JoinPoint;
 
 import javax.swing.JPanel;
 
-public aspect JPanelPainterOnSystemUpdate {
+public aspect JPanelPainterOnSystemChanges {
 
     pointcut whenUserUpdate(GameOfLife gameOfLife) :
             target(gameOfLife) && call(void changeState(..));
 
-    pointcut whenUpdate(MultiAgentSystem system) :
-            target(system) && call(void update());
+    pointcut whenEvolve(MultiAgentSystem system) :
+            target(system) && call(void evolve());
 
     after(GameOfLife gameOfLife) : whenUserUpdate(gameOfLife) {
         updatePanel(thisJoinPoint);
     }
 
-    after(MultiAgentSystem system) : whenUpdate(system) {
+    after(MultiAgentSystem system) : whenEvolve(system) {
         updatePanel(thisJoinPoint);
     }
 

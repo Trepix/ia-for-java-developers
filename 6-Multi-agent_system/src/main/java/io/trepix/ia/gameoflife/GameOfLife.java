@@ -22,18 +22,18 @@ public class GameOfLife implements MultiAgentSystem {
         }
     }
 
-    public Set<Cell> aliveCells() {
-        Set<Cell> aliveCells = new LinkedHashSet<>();
+    public Set<Position> aliveCells() {
+        Set<Position> aliveCells = new LinkedHashSet<>();
         for (int i = 0; i < size.width(); i++) {
             for (int j = 0; j < size.height(); j++) {
-                if (cells[i][j]) aliveCells.add(new Cell(i, j));
+                if (cells[i][j]) aliveCells.add(new Position(i, j));
             }
         }
         return aliveCells;
     }
 
-    public void changeState(Cell cell) {
-        cells[cell.x()][cell.y()] = !cells[cell.x()][cell.y()];
+    public void changeState(Position position) {
+        cells[position.x()][position.y()] = !cells[position.x()][position.y()];
     }
 
     private int aliveNeighbours(int row, int column) {
@@ -53,7 +53,7 @@ public class GameOfLife implements MultiAgentSystem {
     }
 
     @Override
-    public void update() {
+    public void evolve() {
         boolean[][] newCells = new boolean[size.width()][size.height()];
         for (int i = 0; i < size.width(); i++) {
             for (int j = 0; j < size.height(); j++) {

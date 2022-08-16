@@ -28,21 +28,21 @@ public class UserInterface extends JPanel implements Component, MouseClickListen
         resume();
     }
 
-    public void paintCell(Graphics g, Cell cell) {
-        g.fillRect(SIZE_RATIO * cell.x(), SIZE_RATIO * cell.y(), SIZE_RATIO, SIZE_RATIO);
+    public void paintCell(Graphics g, Position position) {
+        g.fillRect(SIZE_RATIO * position.x(), SIZE_RATIO * position.y(), SIZE_RATIO, SIZE_RATIO);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        tabla.aliveCells().forEach(cell -> paintCell(g, cell));
+        tabla.aliveCells().forEach(position -> paintCell(g, position));
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (isLeftClick(e)) {
-            Cell cell = new Cell(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
-            tabla.changeState(cell);
+            Position position = new Position(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
+            tabla.changeState(position);
         }
 
         if (isRightClick(e)) {
@@ -83,7 +83,7 @@ public class UserInterface extends JPanel implements Component, MouseClickListen
     }
 
     private void update() {
-        tabla.update();
+        tabla.evolve();
     }
 
 }
