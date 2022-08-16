@@ -37,7 +37,10 @@ public class WindowBuilder {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
 
-        window.setContentPane((Container) panel);
+        var container = (Container) panel;
+        container.setPreferredSize(new Dimension(size.width(), size.height()));
+        window.setContentPane(container);
+        window.pack();
         window.setVisible(true);
 
         panel.start();
