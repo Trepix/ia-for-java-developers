@@ -4,8 +4,9 @@ import io.trepix.ia.Size;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+
+import static java.util.Arrays.asList;
 
 // El oceano donde nadan los peces
 public class Oceano {
@@ -39,7 +40,15 @@ public class Oceano {
             peces[i] = new Pez(generador.nextDouble() * ancho, generador.nextDouble() * alto, generador.nextDouble() * 2 * Math.PI);
         }
     }
-    
+
+    public List<Pez> fishes() {
+        return asList(peces);
+    }
+
+    public List<ZonaAEvitar> obstacles() {
+        return obstaculos;
+    }
+
     public void AgregarObstaculo(double _posX, double _posY, double radio) {
         obstaculos.add(new ZonaAEvitar(_posX, _posY, radio));
     }

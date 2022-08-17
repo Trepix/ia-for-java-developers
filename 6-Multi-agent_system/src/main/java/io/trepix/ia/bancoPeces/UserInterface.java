@@ -2,7 +2,6 @@ package io.trepix.ia.bancoPeces;
 
 import io.trepix.ia.MouseClickListener;
 import io.trepix.ia.Component;
-import io.trepix.ia.Size;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -38,11 +37,11 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
         timer.scheduleAtFixedRate(task, 0, INTERVAL_UPDATE_IN_MILLISECONDS);
     }
 
-    protected void DisenarPez(Pez p, Graphics g) {
+    protected void paintFish(Graphics g, Pez p) {
         g.drawLine((int) p.posX, (int) p.posY, (int) (p.posX - 10 * p.velocidadX), (int) (p.posY - 10 * p.velocidadY));
     }
     
-    protected void DisenarObstaculo(ZonaAEvitar o, Graphics g) {
+    protected void paintObstacle(Graphics g, ZonaAEvitar o) {
         g.drawOval((int) (o.posX - o.radio), (int) (o.posY - o.radio), (int) o.radio * 2, (int) o.radio * 2);
     }
     
@@ -54,11 +53,11 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Pez p : oceano.peces) {
-            DisenarPez(p, g);
+        for (Pez p : oceano.fishes()) {
+            paintFish(g, p);
         }
-        for (ZonaAEvitar o : oceano.obstaculos) {
-            DisenarObstaculo(o, g);
+        for (ZonaAEvitar o : oceano.obstacles()) {
+            paintObstacle(g, o);
         }
     }
 
