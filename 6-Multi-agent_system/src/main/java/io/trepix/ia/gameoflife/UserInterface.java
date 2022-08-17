@@ -32,7 +32,7 @@ public class UserInterface extends JPanel implements Component, MouseClickListen
         resume();
     }
 
-    public void paintCell(Graphics g, Position position) {
+    public void paintCell(Graphics g, GridPosition position) {
         g.fillRect(SIZE_RATIO * position.x(), SIZE_RATIO * position.y(), SIZE_RATIO, SIZE_RATIO);
     }
 
@@ -45,7 +45,7 @@ public class UserInterface extends JPanel implements Component, MouseClickListen
     @Override
     public void mouseClicked(MouseEvent e) {
         if (isLeftClick(e)) {
-            Position position = new Position(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
+            GridPosition position = new GridPosition(e.getX() / SIZE_RATIO, e.getY() / SIZE_RATIO);
             tabla.changeState(position);
         }
 

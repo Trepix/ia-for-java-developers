@@ -7,27 +7,27 @@ import static io.trepix.ia.gameoflife.Cell.State.DEAD;
 
 public class Cell {
 
-    private final Position position;
+    private final GridPosition position;
     private final State state;
 
-    private Cell(Position position, State state) {
+    private Cell(GridPosition position, State state) {
         this.position = position;
         this.state = state;
     }
 
-    public static Cell alive(Position position) {
+    public static Cell alive(GridPosition position) {
         return new Cell(position, ALIVE);
     }
 
-    public static Cell dead(Position position) {
+    public static Cell dead(GridPosition position) {
         return new Cell(position, State.DEAD);
     }
 
-    public Position position() {
+    public GridPosition position() {
         return this.position;
     }
 
-    public Cell nextGeneration(Set<Position> aliveCells) {
+    public Cell nextGeneration(Set<GridPosition> aliveCells) {
         int aliveNeighbours = aliveNeighbours(aliveCells);
 
         if (isUnderPopulated(aliveNeighbours)) return dead(this.position);
@@ -53,7 +53,7 @@ public class Cell {
         return state.equals(DEAD) && aliveNeighbours == 3;
     }
 
-    private int aliveNeighbours(Set<Position> aliveCells) {
+    private int aliveNeighbours(Set<GridPosition> aliveCells) {
         return (int) position.neighbours().stream().filter(aliveCells::contains).count();
     }
 
