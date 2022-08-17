@@ -27,7 +27,7 @@ public class Oceano {
         support.removePropertyChangeListener(pcl);
     }    
     
-    public Oceano(int _numPeces, Size size) {
+    public Oceano(Size size, int _numPeces) {
         support = new PropertyChangeSupport(this);
         contador = 0;
         ancho = size.width();

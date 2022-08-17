@@ -14,13 +14,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class UserInterface extends JPanel implements MouseClickListener, PropertyChangeListener, Component {
+
+    public static final int INTERVAL_UPDATE_IN_MILLISECONDS = 15;
     protected Oceano oceano;
     protected Timer timer;
     
-    public UserInterface(Size size) {
+    public UserInterface(Oceano ocean) {
         this.setBackground(new Color(150, 255, 255));
         this.addMouseListener(this);
-        oceano = new Oceano(250, size);
+        oceano = ocean;
         oceano.AgregarChangeListener(this);
     }
 
@@ -33,7 +35,7 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
             }
         };
         timer = new Timer();
-        timer.scheduleAtFixedRate(task, 0, 15);
+        timer.scheduleAtFixedRate(task, 0, INTERVAL_UPDATE_IN_MILLISECONDS);
     }
 
     protected void DisenarPez(Pez p, Graphics g) {
