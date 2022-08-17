@@ -1,5 +1,8 @@
 package io.trepix.ia.gameoflife;
 
+import io.trepix.ia.Component;
+import io.trepix.ia.MouseClickListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;

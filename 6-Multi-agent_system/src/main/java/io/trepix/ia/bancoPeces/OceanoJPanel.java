@@ -1,17 +1,19 @@
 package io.trepix.ia.bancoPeces;
 
+import io.trepix.ia.MouseClickListener;
+import io.trepix.ia.Component;
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
 // La visualizaci�n de nuestra simulaci�n
-public class OceanoJPanel extends JPanel implements MouseListener, PropertyChangeListener {
+public class OceanoJPanel extends JPanel implements MouseClickListener, PropertyChangeListener, Component {
     protected Oceano oceano;
     protected Timer timer;
     
@@ -19,8 +21,9 @@ public class OceanoJPanel extends JPanel implements MouseListener, PropertyChang
         this.setBackground(new Color(150, 255, 255));
         this.addMouseListener(this);
     }
-    
-    public void Lanzar() {
+
+    @Override
+    public void start() {
         oceano = new Oceano(250, this.getWidth(), getHeight());
         oceano.AgregarChangeListener(this);
         TimerTask tarea = new TimerTask() {
@@ -62,12 +65,4 @@ public class OceanoJPanel extends JPanel implements MouseListener, PropertyChang
         oceano.AgregarObstaculo(e.getX(), e.getY(), 10);
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {}
-    @Override
-    public void mouseReleased(MouseEvent e) {}
-    @Override
-    public void mouseEntered(MouseEvent e) {}
-    @Override
-    public void mouseExited(MouseEvent e) {}
 }

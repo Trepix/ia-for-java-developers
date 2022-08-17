@@ -1,5 +1,7 @@
 package io.trepix.ia.gameoflife;
 
+import io.trepix.ia.Component;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ public class WindowBuilder {
 
     private Size size;
 
-    private Component panel;
+    private io.trepix.ia.Component panel;
 
     private WindowBuilder() {}
 

@@ -1,4 +1,4 @@
-package io.trepix.ia.gameoflife;
+package io.trepix.ia;
 
 public interface Component {
     void start();

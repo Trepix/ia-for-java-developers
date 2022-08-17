@@ -17,6 +17,6 @@ public class Aplicacion {
         ventana.setContentPane(panel);
         // Visualización
         ventana.setVisible(true);
-        panel.Lanzar();
+        panel.start();
     }
 }
