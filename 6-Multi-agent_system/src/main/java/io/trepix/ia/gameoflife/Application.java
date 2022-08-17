@@ -1,9 +1,11 @@
 package io.trepix.ia.gameoflife;
 
+import io.trepix.ia.WindowBuilder;
+
 import java.util.Random;
 
 import static io.trepix.ia.gameoflife.UserInterface.applyRatio;
-import static io.trepix.ia.gameoflife.WindowBuilder.SizeBuilder.width;
+import static io.trepix.ia.WindowBuilder.SizeBuilder.width;
 import static java.lang.Long.parseLong;
 
 public class Application {
