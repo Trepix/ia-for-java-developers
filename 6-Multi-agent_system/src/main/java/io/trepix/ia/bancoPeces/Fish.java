@@ -3,7 +3,7 @@ package io.trepix.ia.bancoPeces;
 import java.util.ArrayList;
 
 // Un pez, gestionado por un agente
-public class Pez extends Objeto {
+public class Fish extends Objeto {
     // Constantes
     public static final double PASO = 3;
     public static final double DISTANCIA_MIN = 5;
@@ -16,7 +16,7 @@ public class Pez extends Objeto {
     protected double velocidadY;
     
     // Métodos
-    public Pez(double _x, double _y, double _dir) {
+    public Fish(double _x, double _y, double _dir) {
         posX = _x;
         posY = _y;
         velocidadX = Math.cos(_dir);
@@ -36,7 +36,7 @@ public class Pez extends Objeto {
         posY += PASO * velocidadY;
     }
     
-    protected boolean Alineado(Pez p) {
+    protected boolean Alineado(Fish p) {
         double distanciaCuadrado = DistanciaCuadrado(p);
         return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
     }
@@ -95,12 +95,12 @@ public class Pez extends Objeto {
         }         
     }
     
-    protected boolean EvitarObstaculos(ArrayList<ZonaAEvitar> obstaculos) {
+    protected boolean EvitarObstaculos(ArrayList<Obstacle> obstaculos) {
         if (!obstaculos.isEmpty()) {
             // Búsqueda del obstaculo más cercano
-            ZonaAEvitar obstaculoCercano = obstaculos.get(0);
+            Obstacle obstaculoCercano = obstaculos.get(0);
             double distanciaCuadrado = DistanciaCuadrado(obstaculoCercano);
-            for (ZonaAEvitar o : obstaculos) {
+            for (Obstacle o : obstaculos) {
                 if (DistanciaCuadrado(o) < distanciaCuadrado) {
                     obstaculoCercano = o;
                     distanciaCuadrado = DistanciaCuadrado(o);
@@ -121,9 +121,9 @@ public class Pez extends Objeto {
         return false;        
     }
     
-    protected boolean EvitarPeces(Pez[] peces) {
+    protected boolean EvitarPeces(Fish[] peces) {
         // Búsqueda del pez más cercano
-        Pez p;
+        Fish p;
         if (!peces[0].equals(this)) {
             p = peces[0];
         }
@@ -131,9 +131,9 @@ public class Pez extends Objeto {
             p = peces[1];
         }
         double distanciaCuadrado = DistanciaCuadrado(p);
-        for (Pez pez : peces) {
-            if (DistanciaCuadrado(pez) < distanciaCuadrado && !pez.equals(this)) {
-                p = pez;
+        for (Fish fish : peces) {
+            if (DistanciaCuadrado(fish) < distanciaCuadrado && !fish.equals(this)) {
+                p = fish;
                 distanciaCuadrado = DistanciaCuadrado(p);
             }
         }
@@ -151,11 +151,11 @@ public class Pez extends Objeto {
         return false;
     }
     
-    protected void CalcularDireccionMedia(Pez[] peces) {
+    protected void CalcularDireccionMedia(Fish[] peces) {
         double velocidadXTotal = 0;
         double velocidadYTotal = 0;
         int numTotal = 0;
-        for (Pez p : peces) {
+        for (Fish p : peces) {
             if (Alineado(p)) {
                 velocidadXTotal += p.velocidadX;
                 velocidadYTotal += p.velocidadY;
@@ -169,7 +169,7 @@ public class Pez extends Objeto {
         }
     }
     
-    protected void Actualizar(Pez[] peces, ArrayList<ZonaAEvitar> obstaculos, double ancho, double alto) {
+    protected void Actualizar(Fish[] peces, ArrayList<Obstacle> obstaculos, double ancho, double alto) {
         if (!EvitarMuros(0,0,ancho,alto)) {
             if (!EvitarObstaculos(obstaculos)) {
                 if (!EvitarPeces(peces)) {

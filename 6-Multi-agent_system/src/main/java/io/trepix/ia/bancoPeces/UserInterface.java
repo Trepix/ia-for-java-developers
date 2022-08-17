@@ -15,14 +15,14 @@ import java.util.TimerTask;
 public class UserInterface extends JPanel implements MouseClickListener, PropertyChangeListener, Component {
 
     public static final int INTERVAL_UPDATE_IN_MILLISECONDS = 15;
-    protected Oceano oceano;
+    protected Ocean ocean;
     protected Timer timer;
     
-    public UserInterface(Oceano ocean) {
+    public UserInterface(Ocean ocean) {
         this.setBackground(new Color(150, 255, 255));
         this.addMouseListener(this);
-        oceano = ocean;
-        oceano.AgregarChangeListener(this);
+        this.ocean = ocean;
+        this.ocean.AgregarChangeListener(this);
     }
 
     @Override
@@ -30,18 +30,18 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                oceano.ActualizarOceano();
+                ocean.ActualizarOceano();
             }
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(task, 0, INTERVAL_UPDATE_IN_MILLISECONDS);
     }
 
-    protected void paintFish(Graphics g, Pez p) {
+    protected void paintFish(Graphics g, Fish p) {
         g.drawLine((int) p.posX, (int) p.posY, (int) (p.posX - 10 * p.velocidadX), (int) (p.posY - 10 * p.velocidadY));
     }
     
-    protected void paintObstacle(Graphics g, ZonaAEvitar o) {
+    protected void paintObstacle(Graphics g, Obstacle o) {
         g.drawOval((int) (o.posX - o.radio), (int) (o.posY - o.radio), (int) o.radio * 2, (int) o.radio * 2);
     }
     
@@ -53,17 +53,17 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Pez p : oceano.fishes()) {
-            paintFish(g, p);
+        for (Fish fish : ocean.fishes()) {
+            paintFish(g, fish);
         }
-        for (ZonaAEvitar o : oceano.obstacles()) {
-            paintObstacle(g, o);
+        for (Obstacle obstacle : ocean.obstacles()) {
+            paintObstacle(g, obstacle);
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        oceano.AgregarObstaculo(e.getX(), e.getY(), 10);
+        ocean.AgregarObstaculo(e.getX(), e.getY(), 10);
     }
 
 }

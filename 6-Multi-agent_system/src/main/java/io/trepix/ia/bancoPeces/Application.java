@@ -14,7 +14,7 @@ public class Application {
                 .height(400)
                 .build();
 
-        Oceano ocean = new Oceano(size, FISH_NUMBER);
+        Ocean ocean = new Ocean(size, FISH_NUMBER);
 
         WindowBuilder
                 .withTitle("School of Fish")

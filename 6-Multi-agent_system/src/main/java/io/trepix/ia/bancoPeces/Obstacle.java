@@ -1,11 +1,11 @@
 package io.trepix.ia.bancoPeces;
 
 // Una zona a evitar para los peces. Desaparece automaticamente pasado un instante
-public class ZonaAEvitar extends Objeto {
+public class Obstacle extends Objeto {
     protected double radio;
     protected int tiempoRestante = 500;
     
-    public ZonaAEvitar(double _x, double _y, double _radio) {
+    public Obstacle(double _x, double _y, double _radio) {
         posX = _x;
         posY = _y;
         radio = _radio;

@@ -9,10 +9,10 @@ import java.util.*;
 import static java.util.Arrays.asList;
 
 // El oceano donde nadan los peces
-public class Oceano {
+public class Ocean {
     // Atributos
-    protected Pez[] peces;
-    protected ArrayList<ZonaAEvitar> obstaculos;
+    protected Fish[] peces;
+    protected ArrayList<Obstacle> obstaculos;
     protected Random generador;
     protected double ancho;
     protected double alto;
@@ -28,40 +28,40 @@ public class Oceano {
         support.removePropertyChangeListener(pcl);
     }    
     
-    public Oceano(Size size, int _numPeces) {
+    public Ocean(Size size, int _numPeces) {
         support = new PropertyChangeSupport(this);
         contador = 0;
         ancho = size.width();
         alto = size.height();
         generador = new Random();
         obstaculos = new ArrayList();        
-        peces = new Pez[_numPeces];
+        peces = new Fish[_numPeces];
         for (int i = 0; i < _numPeces; i++) {
-            peces[i] = new Pez(generador.nextDouble() * ancho, generador.nextDouble() * alto, generador.nextDouble() * 2 * Math.PI);
+            peces[i] = new Fish(generador.nextDouble() * ancho, generador.nextDouble() * alto, generador.nextDouble() * 2 * Math.PI);
         }
     }
 
-    public List<Pez> fishes() {
+    public List<Fish> fishes() {
         return asList(peces);
     }
 
-    public List<ZonaAEvitar> obstacles() {
+    public List<Obstacle> obstacles() {
         return obstaculos;
     }
 
     public void AgregarObstaculo(double _posX, double _posY, double radio) {
-        obstaculos.add(new ZonaAEvitar(_posX, _posY, radio));
+        obstaculos.add(new Obstacle(_posX, _posY, radio));
     }
     
     protected void ActualizarObstaculos() {
-        for(ZonaAEvitar obstaculo : obstaculos) {
+        for(Obstacle obstaculo : obstaculos) {
             obstaculo.Actualizar();
         }
         obstaculos.removeIf(o -> o.estaMuerto());
     }
     
     protected void ActualizarPeces() {
-        for (Pez p : peces) {
+        for (Fish p : peces) {
             p.Actualizar(peces, obstaculos, ancho, alto);
         }
     }
