@@ -1,5 +1,6 @@
 package io.trepix.ia.gameoflife;
 
+import io.trepix.ia.Size;
 import io.trepix.ia.WindowBuilder;
 
 import java.util.Random;

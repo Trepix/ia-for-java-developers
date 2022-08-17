@@ -1,6 +1,6 @@
 package io.trepix.ia.bancoPeces;
 
-import io.trepix.ia.gameoflife.Size;
+import io.trepix.ia.Size;
 import io.trepix.ia.WindowBuilder;
 
 import static io.trepix.ia.WindowBuilder.SizeBuilder.width;
@@ -14,7 +14,7 @@ public class Application {
         WindowBuilder
                 .withTitle("School of Fish")
                 .withSize(size)
-                .withComponent(new OceanoJPanel())
+                .withComponent(new UserInterface(size))
                 .show();
     }
 

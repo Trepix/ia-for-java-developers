@@ -1,4 +1,4 @@
-package io.trepix.ia.gameoflife;
+package io.trepix.ia;
 
 public record Size(int width, int height) {
     public Size resize(int ratio) {

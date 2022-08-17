@@ -1,7 +1,5 @@
 package io.trepix.ia;
 
-import io.trepix.ia.gameoflife.Size;
-
 import javax.swing.*;
 import java.awt.*;
 

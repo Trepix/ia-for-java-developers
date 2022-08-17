@@ -1,5 +1,7 @@
 package io.trepix.ia.gameoflife;
 
+import io.trepix.ia.Size;
+
 import java.util.Random;
 import java.util.Set;
 

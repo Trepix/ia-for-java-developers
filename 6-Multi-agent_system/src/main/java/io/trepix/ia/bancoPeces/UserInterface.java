@@ -2,6 +2,7 @@ package io.trepix.ia.bancoPeces;
 
 import io.trepix.ia.MouseClickListener;
 import io.trepix.ia.Component;
+import io.trepix.ia.Size;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -12,28 +13,27 @@ import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-// La visualizaci�n de nuestra simulaci�n
-public class OceanoJPanel extends JPanel implements MouseClickListener, PropertyChangeListener, Component {
+public class UserInterface extends JPanel implements MouseClickListener, PropertyChangeListener, Component {
     protected Oceano oceano;
     protected Timer timer;
     
-    public OceanoJPanel() {
+    public UserInterface(Size size) {
         this.setBackground(new Color(150, 255, 255));
         this.addMouseListener(this);
+        oceano = new Oceano(250, size);
+        oceano.AgregarChangeListener(this);
     }
 
     @Override
     public void start() {
-        oceano = new Oceano(250, this.getWidth(), getHeight());
-        oceano.AgregarChangeListener(this);
-        TimerTask tarea = new TimerTask() {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 oceano.ActualizarOceano();
             }
         };
         timer = new Timer();
-        timer.scheduleAtFixedRate(tarea, 0, 15);
+        timer.scheduleAtFixedRate(task, 0, 15);
     }
 
     protected void DisenarPez(Pez p, Graphics g) {

@@ -1,5 +1,7 @@
 package io.trepix.ia.bancoPeces;
 
+import io.trepix.ia.Size;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -25,11 +27,11 @@ public class Oceano {
         support.removePropertyChangeListener(pcl);
     }    
     
-    public Oceano(int _numPeces, double _ancho, double _alto) {
+    public Oceano(int _numPeces, Size size) {
         support = new PropertyChangeSupport(this);
         contador = 0;
-        ancho = _ancho;
-        alto = _alto;
+        ancho = size.width();
+        alto = size.height();
         generador = new Random();
         obstaculos = new ArrayList();        
         peces = new Pez[_numPeces];

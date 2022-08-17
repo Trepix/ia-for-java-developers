@@ -2,6 +2,7 @@ package io.trepix.ia.gameoflife;
 
 import io.trepix.ia.Component;
 import io.trepix.ia.MouseClickListener;
+import io.trepix.ia.Size;
 
 import javax.swing.*;
 import java.awt.*;
