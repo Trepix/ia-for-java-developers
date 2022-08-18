@@ -107,11 +107,11 @@ public class Fish extends Objeto {
                 }
             }
             
-            if (distanciaCuadrado < 4*(obstaculoCercano.radio * obstaculoCercano.radio)) {
+            if (distanciaCuadrado < 4*(obstaculoCercano.radius() * obstaculoCercano.radius())) {
                 // Si collision, cálculo del vecdor diff
                 double distancia = Math.sqrt(distanciaCuadrado);
-                double difX = (obstaculoCercano.posX - posX) / distancia;
-                double difY = (obstaculoCercano.posY - posY) / distancia;
+                double difX = (obstaculoCercano.x() - posX) / distancia;
+                double difY = (obstaculoCercano.y() - posY) / distancia;
                 velocidadX = velocidadX - difX / 2;
                 velocidadY = velocidadY - difY / 2;
                 Normalizar();

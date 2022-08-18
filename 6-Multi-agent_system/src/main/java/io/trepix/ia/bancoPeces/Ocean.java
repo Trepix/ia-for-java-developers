@@ -49,15 +49,15 @@ public class Ocean {
         return obstaculos;
     }
 
-    public void AgregarObstaculo(double _posX, double _posY, double radio) {
-        obstaculos.add(new Obstacle(_posX, _posY, radio));
+    public void AgregarObstaculo(Position position) {
+        obstaculos.add(new Obstacle(position));
     }
     
     protected void ActualizarObstaculos() {
         for(Obstacle obstaculo : obstaculos) {
-            obstaculo.Actualizar();
+            obstaculo.evolve();
         }
-        obstaculos.removeIf(o -> o.estaMuerto());
+        obstaculos.removeIf(o -> o.isDead());
     }
     
     protected void ActualizarPeces() {

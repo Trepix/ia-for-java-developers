@@ -42,7 +42,7 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
     }
     
     protected void paintObstacle(Graphics g, Obstacle o) {
-        g.drawOval((int) (o.posX - o.radio), (int) (o.posY - o.radio), (int) o.radio * 2, (int) o.radio * 2);
+        g.drawOval((int) (o.x() - o.radius()), (int) (o.y() - o.radius()), (int) o.radius() * 2, (int) o.radius() * 2);
     }
     
     @Override
@@ -63,7 +63,7 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        ocean.AgregarObstaculo(e.getX(), e.getY(), 10);
+        ocean.AgregarObstaculo(new Position(e.getX(), e.getY()));
     }
 
 }

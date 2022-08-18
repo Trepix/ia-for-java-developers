@@ -1,25 +1,33 @@
 package io.trepix.ia.bancoPeces;
 
-// Una zona a evitar para los peces. Desaparece automaticamente pasado un instante
 public class Obstacle extends Objeto {
-    protected double radio;
-    protected int tiempoRestante = 500;
-    
-    public Obstacle(double _x, double _y, double _radio) {
-        posX = _x;
-        posY = _y;
-        radio = _radio;
+    public static final int RADIUS = 10;
+    private final Position position;
+    private int aliveCycles = 500;
+
+    public Obstacle(Position position) {
+        this.position = position;
+        posX = position.x();
+        posY = position.y();
     }
-    
-    public double getRadio() {
-        return radio;
+
+    public double x() {
+        return position.x();
     }
-    
-    public void Actualizar() {
-        tiempoRestante--;
+
+    public double y() {
+        return position.y();
     }
-    
-    public boolean estaMuerto() {
-        return tiempoRestante <= 0;
+
+    public void evolve() {
+        aliveCycles--;
+    }
+
+    public boolean isDead() {
+        return aliveCycles <= 0;
+    }
+
+    public double radius() {
+        return RADIUS;
     }
 }
