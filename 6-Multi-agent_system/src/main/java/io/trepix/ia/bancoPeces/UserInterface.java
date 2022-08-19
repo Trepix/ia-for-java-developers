@@ -63,7 +63,7 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        ocean.AgregarObstaculo(new Position(e.getX(), e.getY()));
+        ocean.addObstacleAt(new Position(e.getX(), e.getY()));
     }
 
 }

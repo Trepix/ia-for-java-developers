@@ -14,31 +14,26 @@ public class Ocean {
     protected Fish[] peces;
     protected ArrayList<Obstacle> obstaculos;
     protected Random generador;
-    protected double ancho;
-    protected double alto;
     private PropertyChangeSupport support;
     private int contador;
-    
-    // Métodos
+
+    private final Size size;
+
     public void AgregarChangeListener(PropertyChangeListener pcl) {
         support.addPropertyChangeListener(pcl);
     }
- 
-    public void EliminarPropertyChangeListener(PropertyChangeListener pcl) {
-        support.removePropertyChangeListener(pcl);
-    }    
-    
-    public Ocean(Size size, int _numPeces) {
+
+    public Ocean(Size size, StartConfig startConfig) {
         support = new PropertyChangeSupport(this);
         contador = 0;
-        ancho = size.width();
-        alto = size.height();
-        generador = new Random();
+        this.generador = startConfig.generator();
+        this.size = size;
         obstaculos = new ArrayList();        
-        peces = new Fish[_numPeces];
-        for (int i = 0; i < _numPeces; i++) {
-            peces[i] = new Fish(generador.nextDouble() * ancho, generador.nextDouble() * alto, generador.nextDouble() * 2 * Math.PI);
+        peces = new Fish[startConfig.fishNumber()];
+        for (int i = 0; i < startConfig.fishNumber(); i++) {
+            peces[i] = new Fish(generador.nextDouble() * size.width(), generador.nextDouble() * size.height(), generador.nextDouble() * 2 * Math.PI);
         }
+
     }
 
     public List<Fish> fishes() {
@@ -49,7 +44,7 @@ public class Ocean {
         return obstaculos;
     }
 
-    public void AgregarObstaculo(Position position) {
+    public void addObstacleAt(Position position) {
         obstaculos.add(new Obstacle(position));
     }
     
@@ -62,7 +57,7 @@ public class Ocean {
     
     protected void ActualizarPeces() {
         for (Fish p : peces) {
-            p.Actualizar(peces, obstaculos, ancho, alto);
+            p.Actualizar(peces, obstaculos, size.width(), size.height());
         }
     }
     
