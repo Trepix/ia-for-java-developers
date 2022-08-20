@@ -1,6 +1,6 @@
 package io.trepix.ia.recogidaSelectiva;
 
-import io.trepix.ia.bancoPeces.Objeto;
+import io.trepix.ia.fishschool.Objeto;
 
 // Residuos en el entorno
 public class Residuo extends Objeto {

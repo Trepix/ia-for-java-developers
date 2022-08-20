@@ -1,7 +1,6 @@
 package io.trepix.ia.recogidaSelectiva;
 
-import io.trepix.ia.bancoPeces.Objeto;
-import io.trepix.ia.bancoPeces.Objeto;
+import io.trepix.ia.fishschool.Objeto;
 
 import java.util.ArrayList;
 import java.util.Collections;

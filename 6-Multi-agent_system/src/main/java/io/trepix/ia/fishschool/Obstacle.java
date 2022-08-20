@@ -1,4 +1,4 @@
-package io.trepix.ia.bancoPeces;
+package io.trepix.ia.fishschool;
 
 public class Obstacle extends Objeto {
     public static final int RADIUS = 10;

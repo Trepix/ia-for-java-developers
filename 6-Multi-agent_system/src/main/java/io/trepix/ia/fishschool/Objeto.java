@@ -1,4 +1,4 @@
-package io.trepix.ia.bancoPeces;
+package io.trepix.ia.fishschool;
 
 // Objeto en el mundo (obstaculo o pez)
 public class Objeto {

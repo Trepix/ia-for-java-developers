@@ -1,6 +1,5 @@
-package io.trepix.ia.bancoPeces;
+package io.trepix.ia.fishschool;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // Un pez, gestionado por un agente
