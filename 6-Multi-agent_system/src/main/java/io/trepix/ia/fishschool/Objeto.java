@@ -1,5 +1,7 @@
 package io.trepix.ia.fishschool;
 
+import java.util.Objects;
+
 // Objeto en el mundo (obstaculo o pez)
 public class Objeto {
     public double posX;
@@ -17,5 +19,17 @@ public class Objeto {
         
     public double Distancia(Objeto o) {
         return Math.sqrt(DistanciaCuadrado(o));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Objeto objeto)) return false;
+        return Double.compare(objeto.posX, posX) == 0 && Double.compare(objeto.posY, posY) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(posX, posY);
     }
 }

@@ -1,6 +1,7 @@
 package io.trepix.ia.fishschool;
 
 import java.util.List;
+import java.util.Objects;
 
 // Un pez, gestionado por un agente
 public class Fish extends Objeto {
@@ -178,5 +179,23 @@ public class Fish extends Objeto {
             }
         }
         ActualizarPosicion();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Fish fish)) return false;
+        double epsilon = 1E-15;
+        return equals(fish.velocidadX, velocidadX, epsilon) && equals(fish.velocidadY, velocidadY, epsilon) &&
+                super.equals(o);
+    }
+
+    private boolean equals(double d1, double d2, double epsilon) {
+        return Math.abs(d1 - d2) < epsilon;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(velocidadX, velocidadY);
     }
 }
