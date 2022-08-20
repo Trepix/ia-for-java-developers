@@ -1,6 +1,7 @@
 package io.trepix.ia.bancoPeces;
 
 import io.trepix.ia.Size;
+import io.trepix.ia.gameoflife.MultiAgentSystem;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -8,14 +9,11 @@ import java.util.*;
 
 import static java.util.Arrays.asList;
 
-// El oceano donde nadan los peces
-public class Ocean {
-    // Atributos
-    protected Fish[] peces;
-    protected ArrayList<Obstacle> obstaculos;
-    protected Random generador;
-    private PropertyChangeSupport support;
-    private int contador;
+public class Ocean implements MultiAgentSystem {
+    protected Fish[] fishes;
+    protected List<Obstacle> obstacles;
+    protected Random generator;
+    private final PropertyChangeSupport support;
 
     private final Size size;
 
@@ -24,47 +22,50 @@ public class Ocean {
     }
 
     public Ocean(Size size, StartConfig startConfig) {
-        support = new PropertyChangeSupport(this);
-        contador = 0;
-        this.generador = startConfig.generator();
+        this.support = new PropertyChangeSupport(this);
+        this.generator = startConfig.generator();
         this.size = size;
-        obstaculos = new ArrayList();        
-        peces = new Fish[startConfig.fishNumber()];
+        this.obstacles = new ArrayList<>();
+        this.fishes = new Fish[startConfig.fishNumber()];
         for (int i = 0; i < startConfig.fishNumber(); i++) {
-            peces[i] = new Fish(generador.nextDouble() * size.width(), generador.nextDouble() * size.height(), generador.nextDouble() * 2 * Math.PI);
+            fishes[i] = createFish();
         }
+    }
 
+    private Fish createFish() {
+        double x = generator.nextDouble() * size.width();
+        double y = generator.nextDouble() * size.height();
+        double direction = generator.nextDouble() * 2 * Math.PI;
+        return new Fish(x, y, direction);
     }
 
     public List<Fish> fishes() {
-        return asList(peces);
+        return asList(fishes);
     }
 
     public List<Obstacle> obstacles() {
-        return obstaculos;
+        return obstacles;
     }
 
     public void addObstacleAt(Position position) {
-        obstaculos.add(new Obstacle(position));
+        obstacles.add(new Obstacle(position));
     }
     
-    protected void ActualizarObstaculos() {
-        for(Obstacle obstaculo : obstaculos) {
-            obstaculo.evolve();
-        }
-        obstaculos.removeIf(o -> o.isDead());
+    protected void evolveObstacles() {
+        obstacles.forEach(Obstacle::evolve);
+        obstacles.removeIf(Obstacle::isDead);
     }
     
-    protected void ActualizarPeces() {
-        for (Fish p : peces) {
-            p.Actualizar(peces, obstaculos, size.width(), size.height());
+    protected void evolveFishes() {
+        for (Fish fish : fishes) {
+            fish.evolve(fishes, obstacles, size.width(), size.height());
         }
     }
-    
-    public void ActualizarOceano() {
-        ActualizarObstaculos();
-        ActualizarPeces();
-        support.firePropertyChange("changed", this.contador, this.contador+1);
-        this.contador++;
+
+    @Override
+    public void evolve() {
+        evolveObstacles();
+        evolveFishes();
+        support.firePropertyChange("changed", 0, 1);
     }
 }

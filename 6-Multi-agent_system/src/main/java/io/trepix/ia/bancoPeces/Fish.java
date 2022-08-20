@@ -1,6 +1,7 @@
 package io.trepix.ia.bancoPeces;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Un pez, gestionado por un agente
 public class Fish extends Objeto {
@@ -95,7 +96,7 @@ public class Fish extends Objeto {
         }         
     }
     
-    protected boolean EvitarObstaculos(ArrayList<Obstacle> obstaculos) {
+    protected boolean EvitarObstaculos(List<Obstacle> obstaculos) {
         if (!obstaculos.isEmpty()) {
             // Búsqueda del obstaculo más cercano
             Obstacle obstaculoCercano = obstaculos.get(0);
@@ -169,7 +170,7 @@ public class Fish extends Objeto {
         }
     }
     
-    protected void Actualizar(Fish[] peces, ArrayList<Obstacle> obstaculos, double ancho, double alto) {
+    protected void evolve(Fish[] peces, List<Obstacle> obstaculos, double ancho, double alto) {
         if (!EvitarMuros(0,0,ancho,alto)) {
             if (!EvitarObstaculos(obstaculos)) {
                 if (!EvitarPeces(peces)) {

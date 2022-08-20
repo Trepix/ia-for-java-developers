@@ -30,7 +30,7 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                ocean.ActualizarOceano();
+                ocean.evolve();
             }
         };
         timer = new Timer();
