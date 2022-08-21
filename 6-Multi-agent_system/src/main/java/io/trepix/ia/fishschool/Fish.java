@@ -15,23 +15,14 @@ public class Fish extends Objeto {
     // Atributos
     protected double velocidadX;
     protected double velocidadY;
-    
-    // Métodos
-    public Fish(double _x, double _y, double _dir) {
-        posX = _x;
-        posY = _y;
-        velocidadX = Math.cos(_dir);
-        velocidadY = Math.sin(_dir);
+
+    public Fish(Position position, Direction direction) {
+        posX = position.x();
+        posY = position.y();
+        velocidadX = direction.x();
+        velocidadY = direction.y();
     }
-    
-    public double getVelocidadX() {
-        return velocidadX;
-    }
-    
-    public double getVelocidadY() {
-        return velocidadY;
-    }
-    
+
     protected void ActualizarPosicion() {
         posX += PASO * velocidadX;
         posY += PASO * velocidadY;

@@ -24,7 +24,7 @@ public class OceanTest {
     }
 
     private static Fish createFish(double x, double y, double radians) {
-        return new Fish(x,y, radians);
+        return new Fish(new Position(x, y), Direction.fromRadians(radians));
     }
 
     private static void assertIteration(List<Fish> expectedFishes) {
