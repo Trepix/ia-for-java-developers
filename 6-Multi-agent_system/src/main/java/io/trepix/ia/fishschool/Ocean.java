@@ -1,5 +1,6 @@
 package io.trepix.ia.fishschool;
 
+import io.trepix.ia.Bounds;
 import io.trepix.ia.Size;
 import io.trepix.ia.gameoflife.MultiAgentSystem;
 
@@ -58,7 +59,7 @@ public class Ocean implements MultiAgentSystem {
     
     protected void evolveFishes() {
         for (Fish fish : fishes) {
-            fish.evolve(fishes, obstacles, size.width(), size.height());
+            fish.evolve(fishes, obstacles, new Bounds(0, size.width(), 0, size.height()));
         }
     }
 

@@ -1,5 +1,7 @@
 package io.trepix.ia.fishschool;
 
+import io.trepix.ia.Bounds;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -33,10 +35,10 @@ public class Fish extends Objeto {
         return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
     }
     
-    protected double DistanciaAlMuro(double murXMin, double murYMin, double murXMax, double murYMax) {
-        double min = Math.min(posX - murXMin, posY - murYMin);
-        min = Math.min(min, murXMax - posX);
-        min = Math.min(min, murYMax - posY);
+    protected double DistanciaAlMuro(Bounds bounds) {
+        double min = Math.min(posX - bounds.lowerWidth(), posY - bounds.lowerHeight());
+        min = Math.min(min, bounds.upperWidth() - posX);
+        min = Math.min(min, bounds.upperHeight() - posY);
         return min;
     }
     
@@ -46,43 +48,43 @@ public class Fish extends Objeto {
         velocidadY /= ancho;
     }
     
-    protected boolean EvitarMuros(double murXMin, double murYMin, double murXMax, double murYMax) {
-        PararEnMuro(murXMin, murYMin, murXMax, murYMax);
-        double distancia = DistanciaAlMuro(murXMin, murYMin, murXMax, murYMax);
+    protected boolean EvitarMuros(Bounds bounds) {
+        PararEnMuro(bounds);
+        double distancia = DistanciaAlMuro(bounds);
         if (distancia < DISTANCIA_MIN) {
-            CambiarDireccionMuro(distancia, murXMin, murYMin, murXMax, murYMax);
+            CambiarDireccionMuro(distancia, bounds);
             Normalizar();
             return true;
         }
         return false;
     }
     
-    private void PararEnMuro(double murXMin, double murYMin, double murXMax, double murYMax) {
-        if (posX < murXMin) {
-            posX = murXMin;
+    private void PararEnMuro(Bounds bounds) {
+        if (posX < bounds.lowerWidth()) {
+            posX = bounds.lowerWidth();
         }
-        else if (posY < murYMin) {
-            posY = murYMin;
+        else if (posY < bounds.lowerHeight()) {
+            posY = bounds.lowerHeight();
         }
-        else if (posX > murXMax) {
-            posX = murXMax;
+        else if (posX > bounds.upperWidth()) {
+            posX = bounds.upperWidth();
         }
-        else if (posY > murYMax) {
-            posY = murYMax;
+        else if (posY > bounds.upperHeight()) {
+            posY = bounds.upperHeight();
         }        
     }
     
-    private void CambiarDireccionMuro(double distancia, double murXMin, double murYMin, double murXMax, double murYMax) {
-        if (distancia == (posX - murXMin)) {
+    private void CambiarDireccionMuro(double distancia, Bounds bounds) {
+        if (distancia == (posX - bounds.lowerWidth())) {
             velocidadX += 0.3;
         }
-        else if (distancia == (posY - murYMin)) { 
+        else if (distancia == (posY - bounds.lowerHeight())) {
             velocidadY += 0.3; 
         } 
-        else if (distancia == (murXMax - posX)) {
+        else if (distancia == (bounds.upperWidth() - posX)) {
             velocidadX -= 0.3;
         } 
-        else if (distancia == (murYMax - posY)) {
+        else if (distancia == (bounds.upperHeight() - posY)) {
             velocidadY -= 0.3;
         }         
     }
@@ -161,8 +163,8 @@ public class Fish extends Objeto {
         }
     }
     
-    protected void evolve(Fish[] peces, List<Obstacle> obstaculos, double ancho, double alto) {
-        if (!EvitarMuros(0,0,ancho,alto)) {
+    protected void evolve(Fish[] peces, List<Obstacle> obstaculos, Bounds bounds) {
+        if (!EvitarMuros(bounds)) {
             if (!EvitarObstaculos(obstaculos)) {
                 if (!EvitarPeces(peces)) {
                     CalcularDireccionMedia(peces);

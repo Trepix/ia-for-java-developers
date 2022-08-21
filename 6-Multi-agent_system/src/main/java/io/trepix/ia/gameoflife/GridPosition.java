@@ -1,5 +1,7 @@
 package io.trepix.ia.gameoflife;
 
+import io.trepix.ia.Bounds;
+
 import java.util.HashSet;
 import java.util.Set;
 
