@@ -58,8 +58,9 @@ public class Ocean implements MultiAgentSystem {
     }
     
     protected void evolveFishes() {
+        var bounds = new Bounds(0, size.width(), 0, size.height());
         for (Fish fish : fishes) {
-            fish.evolve(fishes, obstacles, new Bounds(0, size.width(), 0, size.height()));
+            fish.evolve(fishes, obstacles, bounds);
         }
     }
 

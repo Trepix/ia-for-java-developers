@@ -5,24 +5,23 @@ import io.trepix.ia.Bounds;
 import java.util.List;
 import java.util.Objects;
 
-// Un pez, gestionado por un agente
 public class Fish extends Objeto {
-    // Constantes
     public static final double PASO = 3;
     public static final double DISTANCIA_MIN = 5;
     public static final double DISTANCIA_MIN_CUADRADO = 25;
     public static final double DISTANCIA_MAX = 40;
     public static final double DISTANCIA_MAX_CUADRADO = 1600;
-    
-    // Atributos
+
     protected double velocidadX;
     protected double velocidadY;
 
+    private Position position;
+
+    private Direction direction;
+
     public Fish(Position position, Direction direction) {
-        posX = position.x();
-        posY = position.y();
-        velocidadX = direction.x();
-        velocidadY = direction.y();
+        updatePosition(position);
+        updateDirection(direction);
     }
 
     protected void ActualizarPosicion() {
@@ -35,13 +34,6 @@ public class Fish extends Objeto {
         return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
     }
     
-    protected double DistanciaAlMuro(Bounds bounds) {
-        double min = Math.min(posX - bounds.lowerWidth(), posY - bounds.lowerHeight());
-        min = Math.min(min, bounds.upperWidth() - posX);
-        min = Math.min(min, bounds.upperHeight() - posY);
-        return min;
-    }
-    
     protected void Normalizar() {
         double ancho = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY);
         velocidadX /= ancho;
@@ -49,7 +41,7 @@ public class Fish extends Objeto {
     }
     
     protected boolean EvitarMuros(Bounds bounds) {
-        PararEnMuro(bounds);
+        shiftInside(bounds);
         double distancia = DistanciaAlMuro(bounds);
         if (distancia < DISTANCIA_MIN) {
             CambiarDireccionMuro(distancia, bounds);
@@ -59,21 +51,20 @@ public class Fish extends Objeto {
         return false;
     }
     
-    private void PararEnMuro(Bounds bounds) {
-        if (posX < bounds.lowerWidth()) {
-            posX = bounds.lowerWidth();
+    private void shiftInside(Bounds bounds) {
+        var position = getPosition();
+        if (position.isOutOf(bounds)) {
+            updatePosition(position.shiftInside(bounds));
         }
-        else if (posY < bounds.lowerHeight()) {
-            posY = bounds.lowerHeight();
-        }
-        else if (posX > bounds.upperWidth()) {
-            posX = bounds.upperWidth();
-        }
-        else if (posY > bounds.upperHeight()) {
-            posY = bounds.upperHeight();
-        }        
     }
-    
+
+    private double DistanciaAlMuro(Bounds bounds) {
+        double min = Math.min(posX - bounds.lowerWidth(), posY - bounds.lowerHeight());
+        min = Math.min(min, bounds.upperWidth() - posX);
+        min = Math.min(min, bounds.upperHeight() - posY);
+        return min;
+    }
+
     private void CambiarDireccionMuro(double distancia, Bounds bounds) {
         if (distancia == (posX - bounds.lowerWidth())) {
             velocidadX += 0.3;
@@ -163,16 +154,35 @@ public class Fish extends Objeto {
         }
     }
     
-    protected void evolve(Fish[] peces, List<Obstacle> obstaculos, Bounds bounds) {
+    protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
         if (!EvitarMuros(bounds)) {
-            if (!EvitarObstaculos(obstaculos)) {
-                if (!EvitarPeces(peces)) {
-                    CalcularDireccionMedia(peces);
+            if (!EvitarObstaculos(obstacles)) {
+                if (!EvitarPeces(fishes)) {
+                    CalcularDireccionMedia(fishes);
                 }
             }
         }
         ActualizarPosicion();
     }
+
+    //Narrowed change methods
+
+    private Position getPosition() {
+        return new Position(posX, posY);
+    }
+
+    private void updatePosition(Position position) {
+        posX = position.x();
+        posY = position.y();
+        this.position = position;
+    }
+
+    private void updateDirection(Direction direction) {
+        velocidadX = direction.x();
+        velocidadY = direction.y();
+        this.direction = direction;
+    }
+
 
     @Override
     public boolean equals(Object o) {
