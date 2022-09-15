@@ -188,7 +188,7 @@ public class Fish extends Objeto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Fish fish)) return false;
-        double epsilon = 1E-15;
+        double epsilon = 1E-10;
         return equals(fish.velocidadX, velocidadX, epsilon) && equals(fish.velocidadY, velocidadY, epsilon) &&
                 super.equals(o);
     }

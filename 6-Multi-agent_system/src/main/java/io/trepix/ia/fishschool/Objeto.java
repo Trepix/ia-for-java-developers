@@ -25,7 +25,12 @@ public class Objeto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Objeto objeto)) return false;
-        return Double.compare(objeto.posX, posX) == 0 && Double.compare(objeto.posY, posY) == 0;
+        double epsilon = 1E-10;
+        return equals(objeto.posX, posX, epsilon) && equals(objeto.posY, posY, epsilon);
+    }
+
+    private boolean equals(double d1, double d2, double epsilon) {
+        return Math.abs(d1 - d2) < epsilon;
     }
 
     @Override
