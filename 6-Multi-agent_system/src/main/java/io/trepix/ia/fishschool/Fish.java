@@ -40,31 +40,8 @@ public class Fish extends Objeto {
         velocidadX /= ancho;
         velocidadY /= ancho;
     }
-    
-    protected boolean EvitarMuros(Bounds bounds) {
-        shiftInside(bounds);
-        Bound bound = bounds.nearestTo(getPosition());
-        double distance = bound.distanceTo(position);
-        if (distance < MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND) {
-            moveAwayFrom(bound);
-            return true;
-        }
-        return false;
-    }
-    
-    private void shiftInside(Bounds bounds) {
-        var position = getPosition().shiftInside(bounds);
-        updatePosition(position);
-    }
 
-    private void moveAwayFrom(Bound nearestBound) {
-        updateDirection(switch (nearestBound.name()) {
-            case LOWER_WIDTH -> getDirection().turnToRight();
-            case UPPER_WIDTH -> getDirection().turnToLeft();
-            case LOWER_HEIGHT -> getDirection().turnUpwards();
-            case UPPER_HEIGHT -> getDirection().turnDownwards();
-        });
-    }
+
     
     protected boolean EvitarObstaculos(List<Obstacle> obstaculos) {
         if (!obstaculos.isEmpty()) {
@@ -141,14 +118,37 @@ public class Fish extends Objeto {
     }
     
     protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
-        if (!EvitarMuros(bounds)) {
-            if (!EvitarObstaculos(obstacles)) {
-                if (!EvitarPeces(fishes)) {
-                    CalcularDireccionMedia(fishes);
-                }
+        shiftInside(bounds);
+        if (hasToAvoid(bounds)) {
+            moveAwayFrom(bounds);
+        }
+        else if (!EvitarObstaculos(obstacles)) {
+            if (!EvitarPeces(fishes)) {
+                CalcularDireccionMedia(fishes);
             }
         }
         ActualizarPosicion();
+    }
+
+    private void shiftInside(Bounds bounds) {
+        var position = getPosition().shiftInside(bounds);
+        updatePosition(position);
+    }
+
+    private boolean hasToAvoid(Bounds bounds) {
+        Bound bound = bounds.nearestTo(getPosition());
+        double distance = bound.distanceTo(position);
+        return distance < MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND;
+    }
+
+    private void moveAwayFrom(Bounds bounds) {
+        Bound nearestBound = bounds.nearestTo(getPosition());
+        updateDirection(switch (nearestBound.name()) {
+            case LOWER_WIDTH -> getDirection().turnToRight();
+            case UPPER_WIDTH -> getDirection().turnToLeft();
+            case LOWER_HEIGHT -> getDirection().turnUpwards();
+            case UPPER_HEIGHT -> getDirection().turnDownwards();
+        });
     }
 
     //Narrowed change methods
