@@ -1,4 +1,47 @@
 package io.trepix.ia;
 
+import io.trepix.ia.fishschool.Position;
+
+import java.util.List;
+
+import static io.trepix.ia.Bounds.Bound.Name.*;
+import static java.util.Comparator.comparing;
+
 public record Bounds(int lowerWidth, int upperWidth, int lowerHeight, int upperHeight) {
+
+    public Bound nearestTo(Position position) {
+        var bounds = List.of(
+                new Bound(lowerWidth, LOWER_WIDTH),
+                new Bound(upperWidth, UPPER_WIDTH),
+                new Bound(lowerHeight, LOWER_HEIGHT),
+                new Bound(upperHeight, UPPER_HEIGHT)
+        );
+        return bounds.stream().min(comparing(bound -> bound.distanceTo(position))).get();
+    }
+
+    public static class Bound {
+
+        private final int limit;
+        private final Name name;
+
+        private Bound(int limit, Name name) {
+            this.limit = limit;
+            this.name = name;
+        }
+
+        public Name name() {
+            return this.name;
+        }
+
+        public double distanceTo(Position position) {
+            return switch (name) {
+                case LOWER_WIDTH -> position.x() - limit;
+                case UPPER_WIDTH -> limit - position.x();
+                case LOWER_HEIGHT -> position.y() - limit;
+                case UPPER_HEIGHT -> limit - position.y();
+            };
+        }
+
+        public enum Name {LOWER_WIDTH, UPPER_WIDTH, LOWER_HEIGHT, UPPER_HEIGHT}
+    }
 }

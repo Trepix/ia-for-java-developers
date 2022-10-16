@@ -1,6 +1,5 @@
 package io.trepix.ia.gameoflife;
 
-import io.trepix.ia.Bounds;
 import io.trepix.ia.Size;
 
 import java.util.HashSet;
@@ -47,13 +46,13 @@ public class GameOfLife implements MultiAgentSystem {
     }
 
     private Set<Cell> cellsToEvaluate() {
-        var bounds = new Bounds(0, size.width(), 0, size.height());
+        var bounds = new GridBounds(0, size.width(), 0, size.height());
 
         Set<Cell> deadNeighbours = alive.stream()
                 .map(GridPosition::neighbours)
                 .flatMap(Set::stream)
                 .distinct()
-                .filter(position -> position.isInsideBounds(bounds))
+                .filter(position -> position.isInside(bounds))
                 .filter(position -> !alive.contains(position))
                 .map(Cell::dead)
                 .collect(toSet());

@@ -1,7 +1,5 @@
 package io.trepix.ia.gameoflife;
 
-import io.trepix.ia.Bounds;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +17,7 @@ public record GridPosition(int x, int y) {
         return neighbours;
     }
 
-    public boolean isInsideBounds(Bounds bounds) {
+    public boolean isInside(GridBounds bounds) {
         if (x < bounds.lowerWidth() || x > bounds.upperWidth()) return false;
         if (y < bounds.lowerHeight() || y > bounds.upperHeight()) return false;
         return true;

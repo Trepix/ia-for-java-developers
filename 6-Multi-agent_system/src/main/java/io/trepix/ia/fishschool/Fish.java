@@ -1,9 +1,12 @@
 package io.trepix.ia.fishschool;
 
 import io.trepix.ia.Bounds;
+import io.trepix.ia.Bounds.Bound;
 
 import java.util.List;
 import java.util.Objects;
+
+import static io.trepix.ia.Bounds.Bound.Name.*;
 
 public class Fish extends Objeto {
     public static final double PASO = 3;
@@ -42,42 +45,27 @@ public class Fish extends Objeto {
     
     protected boolean EvitarMuros(Bounds bounds) {
         shiftInside(bounds);
-        double distancia = DistanciaAlMuro(bounds);
-        if (distancia < DISTANCIA_MIN) {
-            CambiarDireccionMuro(distancia, bounds);
-            Normalizar();
+        Bound bound = bounds.nearestTo(getPosition());
+        double distance = bound.distanceTo(position);
+        if (distance < DISTANCIA_MIN) {
+            CambiarDireccionMuro(bound);
             return true;
         }
         return false;
     }
     
     private void shiftInside(Bounds bounds) {
-        var position = getPosition();
-        if (position.isOutOf(bounds)) {
-            updatePosition(position.shiftInside(bounds));
-        }
+        var position = getPosition().shiftInside(bounds);
+        updatePosition(position);
     }
 
-    private double DistanciaAlMuro(Bounds bounds) {
-        double min = Math.min(posX - bounds.lowerWidth(), posY - bounds.lowerHeight());
-        min = Math.min(min, bounds.upperWidth() - posX);
-        min = Math.min(min, bounds.upperHeight() - posY);
-        return min;
-    }
-
-    private void CambiarDireccionMuro(double distancia, Bounds bounds) {
-        if (distancia == (posX - bounds.lowerWidth())) {
-            velocidadX += 0.3;
-        }
-        else if (distancia == (posY - bounds.lowerHeight())) {
-            velocidadY += 0.3; 
-        } 
-        else if (distancia == (bounds.upperWidth() - posX)) {
-            velocidadX -= 0.3;
-        } 
-        else if (distancia == (bounds.upperHeight() - posY)) {
-            velocidadY -= 0.3;
-        }         
+    private void CambiarDireccionMuro(Bound bound) {
+        updateDirection(switch (bound.name()) {
+            case LOWER_WIDTH -> getDirection().rotateX(0.3);
+            case UPPER_WIDTH -> getDirection().rotateX(-0.3);
+            case LOWER_HEIGHT -> getDirection().rotateY(0.3);
+            case UPPER_HEIGHT -> getDirection().rotateY(-0.3);
+        });
     }
     
     protected boolean EvitarObstaculos(List<Obstacle> obstaculos) {
@@ -175,6 +163,10 @@ public class Fish extends Objeto {
         posX = position.x();
         posY = position.y();
         this.position = position;
+    }
+
+    private Direction getDirection() {
+        return new Direction(velocidadX, velocidadY);
     }
 
     private void updateDirection(Direction direction) {
