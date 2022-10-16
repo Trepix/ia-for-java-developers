@@ -6,11 +6,9 @@ import io.trepix.ia.Bounds.Bound;
 import java.util.List;
 import java.util.Objects;
 
-import static io.trepix.ia.Bounds.Bound.Name.*;
-
 public class Fish extends Objeto {
     public static final double PASO = 3;
-    public static final double DISTANCIA_MIN = 5;
+    public static final double MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND = 5;
     public static final double DISTANCIA_MIN_CUADRADO = 25;
     public static final double DISTANCIA_MAX = 40;
     public static final double DISTANCIA_MAX_CUADRADO = 1600;
@@ -47,8 +45,8 @@ public class Fish extends Objeto {
         shiftInside(bounds);
         Bound bound = bounds.nearestTo(getPosition());
         double distance = bound.distanceTo(position);
-        if (distance < DISTANCIA_MIN) {
-            CambiarDireccionMuro(bound);
+        if (distance < MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND) {
+            moveAwayFrom(bound);
             return true;
         }
         return false;
@@ -59,12 +57,12 @@ public class Fish extends Objeto {
         updatePosition(position);
     }
 
-    private void CambiarDireccionMuro(Bound bound) {
-        updateDirection(switch (bound.name()) {
-            case LOWER_WIDTH -> getDirection().rotateX(0.3);
-            case UPPER_WIDTH -> getDirection().rotateX(-0.3);
-            case LOWER_HEIGHT -> getDirection().rotateY(0.3);
-            case UPPER_HEIGHT -> getDirection().rotateY(-0.3);
+    private void moveAwayFrom(Bound nearestBound) {
+        updateDirection(switch (nearestBound.name()) {
+            case LOWER_WIDTH -> getDirection().turnToRight();
+            case UPPER_WIDTH -> getDirection().turnToLeft();
+            case LOWER_HEIGHT -> getDirection().turnUpwards();
+            case UPPER_HEIGHT -> getDirection().turnDownwards();
         });
     }
     
