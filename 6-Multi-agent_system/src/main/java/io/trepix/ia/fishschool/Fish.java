@@ -120,13 +120,15 @@ public class Fish extends Objeto {
     private boolean moveAwayFrom(Bounds bounds) {
         Bound nearestBound = bounds.nearestTo(getPosition());
         double distance = nearestBound.distanceTo(position);
+        double ROTATION = 0.3;
         if (distance < MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND) {
-            updateDirection(switch (nearestBound.name()) {
-                case LOWER_WIDTH -> getDirection().turnToRight();
-                case UPPER_WIDTH -> getDirection().turnToLeft();
-                case LOWER_HEIGHT -> getDirection().turnUpwards();
-                case UPPER_HEIGHT -> getDirection().turnDownwards();
-            });
+            Direction rotation = switch (nearestBound.name()) {
+                case LOWER_WIDTH -> new Direction(ROTATION, 0);
+                case UPPER_WIDTH -> new Direction(-ROTATION, 0);
+                case LOWER_HEIGHT -> new Direction(0, ROTATION);
+                case UPPER_HEIGHT -> new Direction(0, -ROTATION);
+            };
+            updateDirection(getDirection().sum(rotation));
             return true;
         }
         return false;
