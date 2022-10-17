@@ -12,7 +12,6 @@ public class Fish extends Objeto {
     public static final double PASO = 3;
     public static final double MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND = 5;
     public static final double DISTANCIA_MIN_CUADRADO = 25;
-    public static final double DISTANCIA_MAX = 40;
     public static final double DISTANCIA_MAX_CUADRADO = 1600;
 
     protected double velocidadX;
