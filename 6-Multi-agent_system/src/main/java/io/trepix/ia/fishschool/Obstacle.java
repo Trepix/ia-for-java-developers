@@ -30,4 +30,12 @@ public class Obstacle extends Objeto {
     public double radius() {
         return RADIUS;
     }
+
+    public double distanceFrom(Position position) {
+        return position.distanceTo(this.position);
+    }
+
+    public UnitaryDirection directionFrom(Position position) {
+        return position.directionTo(this.position);
+    }
 }

@@ -6,6 +6,8 @@ import io.trepix.ia.Bounds.Bound;
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.Comparator.comparing;
+
 public class Fish extends Objeto {
     public static final double PASO = 3;
     public static final double MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND = 5;
@@ -18,9 +20,9 @@ public class Fish extends Objeto {
 
     private Position position;
 
-    private Direction direction;
+    private UnitaryDirection direction;
 
-    public Fish(Position position, Direction direction) {
+    public Fish(Position position, UnitaryDirection direction) {
         updatePosition(position);
         updateDirection(direction);
     }
@@ -29,53 +31,46 @@ public class Fish extends Objeto {
         posX += PASO * velocidadX;
         posY += PASO * velocidadY;
     }
-    
+
     protected boolean Alineado(Fish p) {
         double distanciaCuadrado = DistanciaCuadrado(p);
         return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
     }
-    
+
     protected void Normalizar() {
         double ancho = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY);
         velocidadX /= ancho;
         velocidadY /= ancho;
     }
 
-
-    
-    protected boolean EvitarObstaculos(List<Obstacle> obstaculos) {
-        if (!obstaculos.isEmpty()) {
-            // Búsqueda del obstaculo más cercano
-            Obstacle obstaculoCercano = obstaculos.get(0);
-            double distanciaCuadrado = DistanciaCuadrado(obstaculoCercano);
-            for (Obstacle o : obstaculos) {
-                if (DistanciaCuadrado(o) < distanciaCuadrado) {
-                    obstaculoCercano = o;
-                    distanciaCuadrado = DistanciaCuadrado(o);
-                }
-            }
-            
-            if (distanciaCuadrado < 4*(obstaculoCercano.radius() * obstaculoCercano.radius())) {
-                // Si collision, cálculo del vecdor diff
-                double distancia = Math.sqrt(distanciaCuadrado);
-                double difX = (obstaculoCercano.x() - posX) / distancia;
-                double difY = (obstaculoCercano.y() - posY) / distancia;
-                velocidadX = velocidadX - difX / 2;
-                velocidadY = velocidadY - difY / 2;
-                Normalizar();
-                return true;
-            }
+    protected boolean dodge(List<Obstacle> obstacles) {
+        if (obstacles.isEmpty()) {
+            return false;
         }
-        return false;        
+
+        Obstacle nearestObstacle = obstacles.stream().min(comparing(this::distanceTo)).get();
+        if (this.willCollideWith(nearestObstacle)) {
+            UnitaryDirection directionToObstacle = nearestObstacle.directionFrom(getPosition());
+            updateDirection(getDirection().turnAwayFrom(directionToObstacle));
+            return true;
+        }
+        return false;
     }
-    
+
+    private boolean willCollideWith(Obstacle nearestObstacle) {
+        return this.distanceTo(nearestObstacle) < 2 * nearestObstacle.radius();
+    }
+
+    private double distanceTo(Obstacle obstacle) {
+        return obstacle.distanceFrom(getPosition());
+    }
+
     protected boolean EvitarPeces(Fish[] peces) {
         // Búsqueda del pez más cercano
         Fish p;
         if (!peces[0].equals(this)) {
             p = peces[0];
-        }
-        else {
+        } else {
             p = peces[1];
         }
         double distanciaCuadrado = DistanciaCuadrado(p);
@@ -85,7 +80,7 @@ public class Fish extends Objeto {
                 distanciaCuadrado = DistanciaCuadrado(p);
             }
         }
-        
+
         // Evitación
         if (distanciaCuadrado < DISTANCIA_MIN_CUADRADO) {
             double distancia = Math.sqrt(distanciaCuadrado);
@@ -98,7 +93,7 @@ public class Fish extends Objeto {
         }
         return false;
     }
-    
+
     protected void CalcularDireccionMedia(Fish[] peces) {
         double velocidadXTotal = 0;
         double velocidadYTotal = 0;
@@ -116,13 +111,10 @@ public class Fish extends Objeto {
             Normalizar();
         }
     }
-    
+
     protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
         shiftInside(bounds);
-        if (hasToAvoid(bounds)) {
-            moveAwayFrom(bounds);
-        }
-        else if (!EvitarObstaculos(obstacles)) {
+        if (!moveAwayFrom(bounds) && !dodge(obstacles)) {
             if (!EvitarPeces(fishes)) {
                 CalcularDireccionMedia(fishes);
             }
@@ -135,20 +127,19 @@ public class Fish extends Objeto {
         updatePosition(position);
     }
 
-    private boolean hasToAvoid(Bounds bounds) {
-        Bound bound = bounds.nearestTo(getPosition());
-        double distance = bound.distanceTo(position);
-        return distance < MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND;
-    }
-
-    private void moveAwayFrom(Bounds bounds) {
+    private boolean moveAwayFrom(Bounds bounds) {
         Bound nearestBound = bounds.nearestTo(getPosition());
-        updateDirection(switch (nearestBound.name()) {
-            case LOWER_WIDTH -> getDirection().turnToRight();
-            case UPPER_WIDTH -> getDirection().turnToLeft();
-            case LOWER_HEIGHT -> getDirection().turnUpwards();
-            case UPPER_HEIGHT -> getDirection().turnDownwards();
-        });
+        double distance = nearestBound.distanceTo(position);
+        if (distance < MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND) {
+            updateDirection(switch (nearestBound.name()) {
+                case LOWER_WIDTH -> getDirection().turnToRight();
+                case UPPER_WIDTH -> getDirection().turnToLeft();
+                case LOWER_HEIGHT -> getDirection().turnUpwards();
+                case UPPER_HEIGHT -> getDirection().turnDownwards();
+            });
+            return true;
+        }
+        return false;
     }
 
     //Narrowed change methods
@@ -163,11 +154,11 @@ public class Fish extends Objeto {
         this.position = position;
     }
 
-    private Direction getDirection() {
-        return new Direction(velocidadX, velocidadY);
+    private UnitaryDirection getDirection() {
+        return new UnitaryDirection(velocidadX, velocidadY);
     }
 
-    private void updateDirection(Direction direction) {
+    private void updateDirection(UnitaryDirection direction) {
         velocidadX = direction.x();
         velocidadY = direction.y();
         this.direction = direction;

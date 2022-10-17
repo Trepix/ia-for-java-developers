@@ -24,10 +24,20 @@ public record Position(double x, double y) {
         return new Position(x, y);
     }
 
+    public double distanceTo(Position position) {
+        return Math.sqrt((x- position.x)*(x- position.x)+(y-position.y)*(y-position.y));
+    }
+
     private boolean isInside(Bounds bounds) {
         if (x < bounds.lowerWidth() || x > bounds.upperHeight()) return false;
         if (y < bounds.lowerHeight() || y > bounds.lowerHeight()) return false;
         return true;
     }
 
+    public UnitaryDirection directionTo(Position position) {
+        double distance = this.distanceTo(position);
+        double xDirection = (position.x() - this.x()) / distance;
+        double yDirection = (position.y() - this.y()) / distance;
+        return new UnitaryDirection(xDirection, yDirection);
+    }
 }
