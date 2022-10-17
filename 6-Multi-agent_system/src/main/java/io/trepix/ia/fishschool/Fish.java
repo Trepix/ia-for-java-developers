@@ -6,12 +6,15 @@ import io.trepix.ia.Bounds.Bound;
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 
 public class Fish extends Objeto {
     public static final double PASO = 3;
     public static final double MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND = 5;
     public static final double DISTANCIA_MIN_CUADRADO = 25;
+
+    public static final double DISTANCIA_MIN = 5;
     public static final double DISTANCIA_MAX_CUADRADO = 1600;
 
     protected double velocidadX;
@@ -42,7 +45,7 @@ public class Fish extends Objeto {
         velocidadY /= ancho;
     }
 
-    protected boolean dodge(List<Obstacle> obstacles) {
+    protected boolean dodgeObstacles(List<Obstacle> obstacles) {
         if (obstacles.isEmpty()) {
             return false;
         }
@@ -64,27 +67,17 @@ public class Fish extends Objeto {
         return obstacle.distanceFrom(getPosition());
     }
 
-    protected boolean EvitarPeces(Fish[] peces) {
-        // Búsqueda del pez más cercano
-        Fish p;
-        if (!peces[0].equals(this)) {
-            p = peces[0];
-        } else {
-            p = peces[1];
-        }
-        double distanciaCuadrado = DistanciaCuadrado(p);
-        for (Fish fish : peces) {
-            if (DistanciaCuadrado(fish) < distanciaCuadrado && !fish.equals(this)) {
-                p = fish;
-                distanciaCuadrado = DistanciaCuadrado(p);
-            }
-        }
+    private double distanceTo(Fish fish) {
+        return fish.getPosition().distanceTo(getPosition());
+    }
 
-        // Evitación
-        if (distanciaCuadrado < DISTANCIA_MIN_CUADRADO) {
-            double distancia = Math.sqrt(distanciaCuadrado);
-            double difX = (p.posX - posX) / distancia;
-            double difY = (p.posY - posY) / distancia;
+    protected boolean dodgeFishes(List<Fish> fishes) {
+        Fish nearestFish = fishes.stream().filter(fish -> !fish.equals(this)).min(comparing(this::distanceTo)).get();
+
+        if (nearestFish.distanceTo(this) < DISTANCIA_MIN) {
+            double distancia = nearestFish.distanceTo(this);
+            double difX = (nearestFish.posX - posX) / distancia;
+            double difY = (nearestFish.posY - posY) / distancia;
             velocidadX = velocidadX - difX / 4;
             velocidadY = velocidadY - difY / 4;
             Normalizar();
@@ -93,7 +86,7 @@ public class Fish extends Objeto {
         return false;
     }
 
-    protected void CalcularDireccionMedia(Fish[] peces) {
+    protected void CalcularDireccionMedia(List<Fish> peces) {
         double velocidadXTotal = 0;
         double velocidadYTotal = 0;
         int numTotal = 0;
@@ -113,10 +106,8 @@ public class Fish extends Objeto {
 
     protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
         shiftInside(bounds);
-        if (!moveAwayFrom(bounds) && !dodge(obstacles)) {
-            if (!EvitarPeces(fishes)) {
-                CalcularDireccionMedia(fishes);
-            }
+        if (!(moveAwayFrom(bounds) || dodgeObstacles(obstacles) || dodgeFishes(asList(fishes)))) {
+            CalcularDireccionMedia(asList(fishes));
         }
         ActualizarPosicion();
     }
