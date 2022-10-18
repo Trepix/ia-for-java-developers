@@ -37,12 +37,6 @@ public class Fish extends Objeto {
         return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
     }
 
-    protected void Normalizar() {
-        double ancho = Math.sqrt(velocidadX * velocidadX + velocidadY * velocidadY);
-        velocidadX /= ancho;
-        velocidadY /= ancho;
-    }
-
     protected boolean dodgeObstacles(List<Obstacle> obstacles) {
         if (obstacles.isEmpty()) {
             return false;
