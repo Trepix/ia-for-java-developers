@@ -124,7 +124,7 @@ public class Fish extends Objeto {
     //Narrowed change methods
 
     private Position getPosition() {
-        return new Position(posX, posY);
+        return this.position;
     }
 
     private void updatePosition(Position position) {
@@ -134,7 +134,7 @@ public class Fish extends Objeto {
     }
 
     private UnitaryDirection getDirection() {
-        return new UnitaryDirection(velocidadX, velocidadY);
+        return this.direction;
     }
 
     private void updateDirection(UnitaryDirection direction) {
