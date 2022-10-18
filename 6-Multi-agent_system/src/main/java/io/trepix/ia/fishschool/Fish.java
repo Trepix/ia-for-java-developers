@@ -11,10 +11,8 @@ import static java.util.Comparator.comparing;
 
 public class Fish extends Objeto {
     public static final double PASO = 3;
-    public static final double MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND = 5;
+    public static final double MIN_DISTANCE_TO_AVOID_COLLISION = 5;
     public static final double DISTANCIA_MIN_CUADRADO = 25;
-
-    public static final double DISTANCIA_MIN = 5;
     public static final double DISTANCIA_MAX_CUADRADO = 1600;
 
     protected double velocidadX;
@@ -29,7 +27,7 @@ public class Fish extends Objeto {
         updateDirection(direction);
     }
 
-    protected void ActualizarPosicion() {
+    protected void move() {
         posX += PASO * velocidadX;
         posY += PASO * velocidadY;
     }
@@ -76,7 +74,7 @@ public class Fish extends Objeto {
     protected boolean dodgeFishes(List<Fish> fishes) {
         Fish nearestFish = fishes.stream().filter(fish -> !fish.equals(this)).min(comparing(this::distanceTo)).get();
 
-        if (nearestFish.distanceTo(this) < DISTANCIA_MIN) {
+        if (nearestFish.distanceTo(this) < MIN_DISTANCE_TO_AVOID_COLLISION) {
             UnitaryDirection directionFromFish = nearestFish.getPosition().directionTo(this.getPosition());
             updateDirection(
                     getDirection().sum(
@@ -109,7 +107,7 @@ public class Fish extends Objeto {
         if (!(moveAwayFrom(bounds) || dodgeObstacles(obstacles) || dodgeFishes(asList(fishes)))) {
             CalcularDireccionMedia(asList(fishes));
         }
-        ActualizarPosicion();
+        move();
     }
 
     private void shiftInside(Bounds bounds) {
@@ -121,7 +119,7 @@ public class Fish extends Objeto {
         Bound nearestBound = bounds.nearestTo(getPosition());
         double distance = nearestBound.distanceTo(position);
         double ROTATE_DIRECTION = 0.3;
-        if (distance < MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND) {
+        if (distance < MIN_DISTANCE_TO_AVOID_COLLISION) {
             Direction rotation = switch (nearestBound.name()) {
                 case LOWER_WIDTH -> new Direction(ROTATE_DIRECTION, 0);
                 case UPPER_WIDTH -> new Direction(-ROTATE_DIRECTION, 0);
