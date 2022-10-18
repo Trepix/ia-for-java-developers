@@ -52,8 +52,10 @@ public class Fish extends Objeto {
 
         Obstacle nearestObstacle = obstacles.stream().min(comparing(this::distanceTo)).get();
         if (this.willCollideWith(nearestObstacle)) {
-            UnitaryDirection directionToObstacle = nearestObstacle.directionFrom(getPosition());
-            updateDirection(getDirection().turnAwayFrom(directionToObstacle));
+            UnitaryDirection directionFromObstacle = nearestObstacle.directionTo(this.getPosition());
+            updateDirection(
+                    getDirection().sum(
+                            directionFromObstacle.reduceBy(2)));
             return true;
         }
         return false;

@@ -35,7 +35,7 @@ public class Obstacle extends Objeto {
         return position.distanceTo(this.position);
     }
 
-    public UnitaryDirection directionFrom(Position position) {
-        return position.directionTo(this.position);
+    public UnitaryDirection directionTo(Position position) {
+        return this.position.directionTo(position);
     }
 }

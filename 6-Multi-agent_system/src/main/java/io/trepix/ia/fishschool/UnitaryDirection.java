@@ -3,7 +3,7 @@ package io.trepix.ia.fishschool;
 public class UnitaryDirection extends Direction {
 
     public UnitaryDirection(double x, double y) {
-        super(x / hypotenuse(x,y), y / hypotenuse(x,y));
+        super(x / hypotenuse(x, y), y / hypotenuse(x, y));
     }
 
     private static double hypotenuse(double x, double y) {
@@ -16,8 +16,8 @@ public class UnitaryDirection extends Direction {
         return new UnitaryDirection(x, y);
     }
 
-    public UnitaryDirection turnAwayFrom(UnitaryDirection direction) {
-        return new UnitaryDirection(x - direction.x / 2, y - direction.y / 2);
+    public Direction reduceBy(double ratio) {
+        return new Direction(x / ratio, y / ratio);
     }
 
     public UnitaryDirection sum(Direction rotation) {
