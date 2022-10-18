@@ -17,4 +17,12 @@ public class Direction {
     public double y() {
         return y;
     }
+
+    public Direction reduceBy(double ratio) {
+        return new Direction(x / ratio, y / ratio);
+    }
+
+    public Direction sum(Direction direction) {
+        return new Direction(x + direction.x, y + direction.y);
+    }
 }

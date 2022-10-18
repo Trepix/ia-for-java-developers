@@ -84,23 +84,18 @@ public class Fish extends Objeto {
         return false;
     }
 
-    protected void CalcularDireccionMedia(List<Fish> peces) {
+    protected void CalcularDireccionMedia(List<Fish> fishes) {
+        var fishSchool = fishes.stream()
+                .filter(this::Alineado)
+                .map(Fish::getDirection)
+                .map(UnitaryDirection::asDirection)
+                .toList();
 
-        double velocidadXTotal = 0;
-        double velocidadYTotal = 0;
-        int numTotal = 0;
-        for (Fish p : peces) {
-            if (Alineado(p)) {
-                velocidadXTotal += p.velocidadX;
-                velocidadYTotal += p.velocidadY;
-                numTotal++;
-            }
-        }
-        if (numTotal >= 1) {
-            velocidadX = (velocidadXTotal / numTotal + velocidadX);
-            velocidadY = (velocidadYTotal / numTotal + velocidadY);
-            Normalizar();
-        }
+        var fishSchoolDirection = fishSchool.stream()
+                .reduce(Direction::sum)
+                .map(x -> x.reduceBy(fishSchool.size()));
+
+        fishSchoolDirection.ifPresent(x -> updateDirection(getDirection().sum(x)));
     }
 
     protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {

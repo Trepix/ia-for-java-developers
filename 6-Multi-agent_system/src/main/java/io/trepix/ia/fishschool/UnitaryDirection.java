@@ -16,11 +16,11 @@ public class UnitaryDirection extends Direction {
         return new UnitaryDirection(x, y);
     }
 
-    public Direction reduceBy(double ratio) {
-        return new Direction(x / ratio, y / ratio);
-    }
-
     public UnitaryDirection sum(Direction rotation) {
         return new UnitaryDirection(x + rotation.x(), y + rotation.y());
+    }
+
+    public Direction asDirection() {
+        return new Direction(x, y);
     }
 }
