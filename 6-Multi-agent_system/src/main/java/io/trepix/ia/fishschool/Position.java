@@ -29,8 +29,8 @@ public record Position(double x, double y) {
     }
 
     private boolean isInside(Bounds bounds) {
-        if (x < bounds.lowerWidth() || x > bounds.upperHeight()) return false;
-        if (y < bounds.lowerHeight() || y > bounds.lowerHeight()) return false;
+        if (x < bounds.lowerWidth() || x > bounds.upperWidth()) return false;
+        if (y < bounds.lowerHeight() || y > bounds.upperHeight()) return false;
         return true;
     }
 
