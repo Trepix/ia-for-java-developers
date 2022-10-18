@@ -85,6 +85,7 @@ public class Fish extends Objeto {
     }
 
     protected void CalcularDireccionMedia(List<Fish> peces) {
+
         double velocidadXTotal = 0;
         double velocidadYTotal = 0;
         int numTotal = 0;
@@ -96,8 +97,8 @@ public class Fish extends Objeto {
             }
         }
         if (numTotal >= 1) {
-            velocidadX = (velocidadXTotal / numTotal + velocidadX) / 2;
-            velocidadY = (velocidadYTotal / numTotal + velocidadY) / 2;
+            velocidadX = (velocidadXTotal / numTotal + velocidadX);
+            velocidadY = (velocidadYTotal / numTotal + velocidadY);
             Normalizar();
         }
     }
