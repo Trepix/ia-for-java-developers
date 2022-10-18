@@ -40,4 +40,8 @@ public record Position(double x, double y) {
         double yDirection = (position.y() - this.y()) / distance;
         return new UnitaryDirection(xDirection, yDirection);
     }
+
+    public Position move(UnitaryDirection direction, double distance) {
+        return new Position(x + direction.x() * distance, y + direction.y() * distance);
+    }
 }

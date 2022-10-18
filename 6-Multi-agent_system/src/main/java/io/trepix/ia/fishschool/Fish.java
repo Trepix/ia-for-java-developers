@@ -10,10 +10,10 @@ import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 
 public class Fish extends Objeto {
-    public static final double PASO = 3;
-    public static final double MIN_DISTANCE_TO_AVOID_COLLISION = 5;
-    public static final double DISTANCIA_MIN_CUADRADO = 25;
-    public static final double DISTANCIA_MAX_CUADRADO = 1600;
+    private static final double MOVING_DISTANCE = 3;
+    private static final double MIN_DISTANCE_TO_AVOID_COLLISION = 5;
+    private static final double DISTANCIA_MIN_CUADRADO = 25;
+    private static final double DISTANCIA_MAX_CUADRADO = 1600;
 
     protected double velocidadX;
     protected double velocidadY;
@@ -28,8 +28,7 @@ public class Fish extends Objeto {
     }
 
     protected void move() {
-        posX += PASO * velocidadX;
-        posY += PASO * velocidadY;
+        updatePosition(getPosition().move(getDirection(), MOVING_DISTANCE));
     }
 
     protected boolean Alineado(Fish p) {
@@ -107,7 +106,7 @@ public class Fish extends Objeto {
 
     private boolean moveAwayFrom(Bounds bounds) {
         Bound nearestBound = bounds.nearestTo(getPosition());
-        double distance = nearestBound.distanceTo(position);
+        double distance = nearestBound.distanceTo(getPosition());
         double ROTATE_DIRECTION = 0.3;
         if (distance < MIN_DISTANCE_TO_AVOID_COLLISION) {
             Direction rotation = switch (nearestBound.name()) {
