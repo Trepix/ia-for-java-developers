@@ -15,9 +15,6 @@ public class Fish extends Objeto {
     private static final double DISTANCIA_MIN_CUADRADO = 25;
     private static final double DISTANCIA_MAX_CUADRADO = 1600;
 
-    protected double velocidadX;
-    protected double velocidadY;
-
     private Position position;
 
     private UnitaryDirection direction;
@@ -25,6 +22,10 @@ public class Fish extends Objeto {
     public Fish(Position position, UnitaryDirection direction) {
         updatePosition(position);
         updateDirection(direction);
+    }
+
+    public Direction direction() {
+        return direction;
     }
 
     protected void move() {
@@ -138,27 +139,18 @@ public class Fish extends Objeto {
     }
 
     private void updateDirection(UnitaryDirection direction) {
-        velocidadX = direction.x();
-        velocidadY = direction.y();
         this.direction = direction;
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Fish fish)) return false;
-        double epsilon = 1E-10;
-        return equals(fish.velocidadX, velocidadX, epsilon) && equals(fish.velocidadY, velocidadY, epsilon) &&
-                super.equals(o);
-    }
-
-    private boolean equals(double d1, double d2, double epsilon) {
-        return Math.abs(d1 - d2) < epsilon;
+        return direction.equals(fish.direction) && super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(velocidadX, velocidadY);
+        return Objects.hash(direction.hashCode());
     }
 }
