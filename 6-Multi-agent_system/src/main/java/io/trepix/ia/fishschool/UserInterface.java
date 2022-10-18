@@ -39,7 +39,8 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
 
     protected void paintFish(Graphics g, Fish p) {
         Direction direction = p.direction();
-        g.drawLine((int) p.posX, (int) p.posY, (int) (p.posX - 10 * direction.x()), (int) (p.posY - 10 * direction.y()));
+        Position position = p.position();
+        g.drawLine((int) position.x(), (int) position.y(), (int) (position.x() - 10 * direction.x()), (int) (position.y() - 10 * direction.y()));
     }
     
     protected void paintObstacle(Graphics g, Obstacle o) {

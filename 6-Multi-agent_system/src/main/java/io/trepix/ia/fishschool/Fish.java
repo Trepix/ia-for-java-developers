@@ -9,14 +9,13 @@ import java.util.Objects;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 
-public class Fish extends Objeto {
+public class Fish {
     private static final double MOVING_DISTANCE = 3;
     private static final double MIN_DISTANCE_TO_AVOID_COLLISION = 5;
     private static final double DISTANCIA_MIN_CUADRADO = 25;
     private static final double DISTANCIA_MAX_CUADRADO = 1600;
 
     private Position position;
-
     private UnitaryDirection direction;
 
     public Fish(Position position, UnitaryDirection direction) {
@@ -28,12 +27,16 @@ public class Fish extends Objeto {
         return direction;
     }
 
+    public Position position() {
+        return position;
+    }
+
     protected void move() {
         updatePosition(getPosition().move(getDirection(), MOVING_DISTANCE));
     }
 
     protected boolean Alineado(Fish p) {
-        double distanciaCuadrado = DistanciaCuadrado(p);
+        double distanciaCuadrado = this.distanceTo(p) * this.distanceTo(p);
         return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
     }
 
@@ -129,8 +132,6 @@ public class Fish extends Objeto {
     }
 
     private void updatePosition(Position position) {
-        posX = position.x();
-        posY = position.y();
         this.position = position;
     }
 
@@ -146,11 +147,11 @@ public class Fish extends Objeto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Fish fish)) return false;
-        return direction.equals(fish.direction) && super.equals(o);
+        return direction.equals(fish.direction) && position.equals(fish.position);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(direction.hashCode());
+        return Objects.hash(direction, position);
     }
 }

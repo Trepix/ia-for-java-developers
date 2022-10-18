@@ -2,6 +2,8 @@ package io.trepix.ia.fishschool;
 
 import io.trepix.ia.Bounds;
 
+import java.util.Objects;
+
 public record Position(double x, double y) {
 
     public Position shiftInside(Bounds bounds) {
@@ -43,5 +45,22 @@ public record Position(double x, double y) {
 
     public Position move(UnitaryDirection direction, double distance) {
         return new Position(x + direction.x() * distance, y + direction.y() * distance);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Position position)) return false;
+        double epsilon = 1E-10;
+        return equals(position.x, x, epsilon) && equals(position.y, y, epsilon);
+    }
+
+    private boolean equals(double d1, double d2, double epsilon) {
+        return Math.abs(d1 - d2) < epsilon;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
