@@ -77,12 +77,10 @@ public class Fish extends Objeto {
         Fish nearestFish = fishes.stream().filter(fish -> !fish.equals(this)).min(comparing(this::distanceTo)).get();
 
         if (nearestFish.distanceTo(this) < DISTANCIA_MIN) {
-            double distancia = nearestFish.distanceTo(this);
-            double difX = (nearestFish.posX - posX) / distancia;
-            double difY = (nearestFish.posY - posY) / distancia;
-            velocidadX = velocidadX - difX / 4;
-            velocidadY = velocidadY - difY / 4;
-            Normalizar();
+            UnitaryDirection directionFromFish = nearestFish.getPosition().directionTo(this.getPosition());
+            updateDirection(
+                    getDirection().sum(
+                            directionFromFish.reduceBy(4)));
             return true;
         }
         return false;
@@ -122,13 +120,13 @@ public class Fish extends Objeto {
     private boolean moveAwayFrom(Bounds bounds) {
         Bound nearestBound = bounds.nearestTo(getPosition());
         double distance = nearestBound.distanceTo(position);
-        double ROTATION = 0.3;
+        double ROTATE_DIRECTION = 0.3;
         if (distance < MIN_DISTANCE_TO_AVOID_COLLISION_WITH_BOUND) {
             Direction rotation = switch (nearestBound.name()) {
-                case LOWER_WIDTH -> new Direction(ROTATION, 0);
-                case UPPER_WIDTH -> new Direction(-ROTATION, 0);
-                case LOWER_HEIGHT -> new Direction(0, ROTATION);
-                case UPPER_HEIGHT -> new Direction(0, -ROTATION);
+                case LOWER_WIDTH -> new Direction(ROTATE_DIRECTION, 0);
+                case UPPER_WIDTH -> new Direction(-ROTATE_DIRECTION, 0);
+                case LOWER_HEIGHT -> new Direction(0, ROTATE_DIRECTION);
+                case UPPER_HEIGHT -> new Direction(0, -ROTATE_DIRECTION);
             };
             updateDirection(getDirection().sum(rotation));
             return true;
