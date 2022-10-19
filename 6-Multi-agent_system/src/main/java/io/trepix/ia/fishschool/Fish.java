@@ -35,8 +35,8 @@ public class Fish {
         this.position = position.move(direction, MOVING_DISTANCE);
     }
 
-    protected boolean Alineado(Fish p) {
-        double distanciaCuadrado = this.distanceTo(p) * this.distanceTo(p);
+    protected boolean belongsToMyFishSchool(Fish fish) {
+        double distanciaCuadrado = this.distanceTo(fish) * this.distanceTo(fish);
         return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
     }
 
@@ -48,8 +48,7 @@ public class Fish {
         Obstacle nearestObstacle = obstacles.stream().min(comparing(this::distanceTo)).get();
         if (this.willCollideWith(nearestObstacle)) {
             Direction directionFromObstacle = nearestObstacle.directionTo(position);
-            this.direction = direction.sum(
-                                directionFromObstacle.normalize().reduceBy(2)).normalize();
+            this.direction = direction.sum(directionFromObstacle.normalize().reduceBy(2)).normalize();
             return true;
         }
         return false;
@@ -71,17 +70,20 @@ public class Fish {
         Fish nearestFish = fishes.stream().filter(fish -> !fish.equals(this)).min(comparing(this::distanceTo)).get();
 
         if (nearestFish.distanceTo(this) < MIN_DISTANCE_TO_AVOID_COLLISION) {
-            Direction directionFromFish = nearestFish.position.directionTo(position);
-            this.direction = direction.sum(
-                                directionFromFish.normalize().reduceBy(4)).normalize();
+            Direction directionFromFish = nearestFish.directionTo(this);
+            this.direction = direction.sum(directionFromFish.normalize().reduceBy(4)).normalize();
             return true;
         }
         return false;
     }
 
-    protected void CalcularDireccionMedia(List<Fish> fishes) {
+    private Direction directionTo(Fish fish) {
+        return this.position.directionTo(fish.position);
+    }
+
+    protected void followCurrentFishSchool(List<Fish> fishes) {
         var fishSchool = fishes.stream()
-                .filter(this::Alineado)
+                .filter(this::belongsToMyFishSchool)
                 .map(Fish::direction)
                 .toList();
 
@@ -95,7 +97,7 @@ public class Fish {
     protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
         shiftInside(bounds);
         if (!(moveAwayFrom(bounds) || dodgeObstacles(obstacles) || dodgeFishes(asList(fishes)))) {
-            CalcularDireccionMedia(asList(fishes));
+            followCurrentFishSchool(asList(fishes));
         }
         move();
     }
