@@ -31,70 +31,7 @@ public class Fish {
         return position;
     }
 
-    protected void move() {
-        this.position = position.move(direction, MOVING_DISTANCE);
-    }
-
-    protected boolean belongsToMyFishSchool(Fish fish) {
-        double distanciaCuadrado = this.distanceTo(fish) * this.distanceTo(fish);
-        return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
-    }
-
-    protected boolean dodgeObstacles(List<Obstacle> obstacles) {
-        if (obstacles.isEmpty()) {
-            return false;
-        }
-
-        Obstacle nearestObstacle = obstacles.stream().min(comparing(this::distanceTo)).get();
-        if (this.willCollideWith(nearestObstacle)) {
-            Direction directionFromObstacle = nearestObstacle.directionTo(position);
-            this.direction = direction.sum(directionFromObstacle.normalize().reduceBy(2)).normalize();
-            return true;
-        }
-        return false;
-    }
-
-    private boolean willCollideWith(Obstacle nearestObstacle) {
-        return this.distanceTo(nearestObstacle) < 2 * nearestObstacle.radius();
-    }
-
-    private double distanceTo(Obstacle obstacle) {
-        return obstacle.distanceFrom(position);
-    }
-
-    private double distanceTo(Fish fish) {
-        return fish.position.distanceTo(position);
-    }
-
-    protected boolean dodgeFishes(List<Fish> fishes) {
-        Fish nearestFish = fishes.stream().filter(fish -> !fish.equals(this)).min(comparing(this::distanceTo)).get();
-
-        if (nearestFish.distanceTo(this) < MIN_DISTANCE_TO_AVOID_COLLISION) {
-            Direction directionFromFish = nearestFish.directionTo(this);
-            this.direction = direction.sum(directionFromFish.normalize().reduceBy(4)).normalize();
-            return true;
-        }
-        return false;
-    }
-
-    private Direction directionTo(Fish fish) {
-        return this.position.directionTo(fish.position);
-    }
-
-    protected void followCurrentFishSchool(List<Fish> fishes) {
-        var fishSchool = fishes.stream()
-                .filter(this::belongsToMyFishSchool)
-                .map(Fish::direction)
-                .toList();
-
-        var fishSchoolDirection = fishSchool.stream()
-                .reduce(Direction::sum)
-                .map(x -> x.reduceBy(fishSchool.size()));
-
-        fishSchoolDirection.ifPresent(direction -> this.direction = this.direction.sum(direction).normalize());
-    }
-
-    protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
+    public void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
         shiftInside(bounds);
         if (!(moveAwayFrom(bounds) || dodgeObstacles(obstacles) || dodgeFishes(asList(fishes)))) {
             followCurrentFishSchool(asList(fishes));
@@ -122,6 +59,70 @@ public class Fish {
         }
         return false;
     }
+
+    private boolean dodgeObstacles(List<Obstacle> obstacles) {
+        if (obstacles.isEmpty()) {
+            return false;
+        }
+
+        Obstacle nearestObstacle = obstacles.stream().min(comparing(this::distanceTo)).get();
+        if (this.willCollideWith(nearestObstacle)) {
+            Direction directionFromObstacle = nearestObstacle.directionTo(position);
+            this.direction = direction.sum(directionFromObstacle.normalize().reduceBy(2)).normalize();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean willCollideWith(Obstacle nearestObstacle) {
+        return this.distanceTo(nearestObstacle) < 2 * nearestObstacle.radius();
+    }
+
+    private double distanceTo(Obstacle obstacle) {
+        return obstacle.distanceFrom(position);
+    }
+
+    private double distanceTo(Fish fish) {
+        return fish.position.distanceTo(position);
+    }
+
+    private boolean dodgeFishes(List<Fish> fishes) {
+        Fish nearestFish = fishes.stream().filter(fish -> !fish.equals(this)).min(comparing(this::distanceTo)).get();
+
+        if (nearestFish.distanceTo(this) < MIN_DISTANCE_TO_AVOID_COLLISION) {
+            Direction directionFromFish = nearestFish.directionTo(this);
+            this.direction = direction.sum(directionFromFish.normalize().reduceBy(4)).normalize();
+            return true;
+        }
+        return false;
+    }
+
+    private Direction directionTo(Fish fish) {
+        return this.position.directionTo(fish.position);
+    }
+
+    private void followCurrentFishSchool(List<Fish> fishes) {
+        var fishSchool = fishes.stream()
+                .filter(this::belongsToMyFishSchool)
+                .map(Fish::direction)
+                .toList();
+
+        var fishSchoolDirection = fishSchool.stream()
+                .reduce(Direction::sum)
+                .map(x -> x.reduceBy(fishSchool.size()));
+
+        fishSchoolDirection.ifPresent(direction -> this.direction = this.direction.sum(direction).normalize());
+    }
+
+    private boolean belongsToMyFishSchool(Fish fish) {
+        double distanciaCuadrado = this.distanceTo(fish) * this.distanceTo(fish);
+        return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
+    }
+
+    private void move() {
+        this.position = position.move(direction, MOVING_DISTANCE);
+    }
+
 
     @Override
     public boolean equals(Object o) {
