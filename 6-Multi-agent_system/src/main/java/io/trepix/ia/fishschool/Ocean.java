@@ -6,12 +6,12 @@ import io.trepix.ia.gameoflife.MultiAgentSystem;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.*;
-
-import static java.util.Arrays.asList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Ocean implements MultiAgentSystem {
-    protected Fish[] fishes;
+    protected List<Fish> fishes;
     protected List<Obstacle> obstacles;
     protected Random generator;
     private final PropertyChangeSupport support;
@@ -27,9 +27,9 @@ public class Ocean implements MultiAgentSystem {
         this.generator = startConfig.generator();
         this.size = size;
         this.obstacles = new ArrayList<>();
-        this.fishes = new Fish[startConfig.fishNumber()];
+        this.fishes = new ArrayList<>(startConfig.fishNumber());
         for (int i = 0; i < startConfig.fishNumber(); i++) {
-            fishes[i] = createFish();
+            this.fishes.add(createFish());
         }
     }
 
@@ -41,7 +41,7 @@ public class Ocean implements MultiAgentSystem {
     }
 
     public List<Fish> fishes() {
-        return asList(fishes);
+        return fishes;
     }
 
     public List<Obstacle> obstacles() {
@@ -60,7 +60,7 @@ public class Ocean implements MultiAgentSystem {
     protected void evolveFishes() {
         var bounds = new Bounds(0, size.width(), 0, size.height());
         for (Fish fish : fishes) {
-            fish.evolve(asList(fishes), obstacles, bounds);
+            fish.evolve(fishes, obstacles, bounds);
         }
     }
 
