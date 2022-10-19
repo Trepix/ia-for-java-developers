@@ -25,8 +25,8 @@ public class AgenteClasificacion extends Objeto {
         this.entorno = entorno;
         posX = _posX;
         posY = _posY;
-        velocidadX = Entorno.getInstance().generador.nextDouble() - 0.5;
-        velocidadY = Entorno.getInstance().generador.nextDouble() - 0.5;
+        velocidadX = this.entorno.generador.nextDouble() - 0.5;
+        velocidadY = this.entorno.generador.nextDouble() - 0.5;
         Normalizar();
     }
     
@@ -37,8 +37,8 @@ public class AgenteClasificacion extends Objeto {
     public void ActualizarPosicion() {
         posX += PASO * velocidadX;
         posY += PASO * velocidadY;
-        double ancho = Entorno.getInstance().getAncho();
-        double alto = Entorno.getInstance().getAlto();
+        double ancho = this.entorno.getAncho();
+        double alto = this.entorno.getAlto();
         if (posX < 0) {
             posX = 0;
         }
@@ -70,9 +70,9 @@ public class AgenteClasificacion extends Objeto {
         // ¿Alcanzado un objetivo?
         if (objetivo == null || ocupado) {
             // Movimiento aleatorio
-            if (Entorno.getInstance().generador.nextDouble() < PROB_CHGT_DIRECTION) {
-                velocidadX = Entorno.getInstance().generador.nextDouble() - 0.5;
-                velocidadY = Entorno.getInstance().generador.nextDouble() - 0.5;
+            if (this.entorno.generador.nextDouble() < PROB_CHGT_DIRECTION) {
+                velocidadX = this.entorno.generador.nextDouble() - 0.5;
+                velocidadY = this.entorno.generador.nextDouble() - 0.5;
             }
             if (ocupado && objetivo == null) {
                 ocupado = false;
@@ -85,12 +85,12 @@ public class AgenteClasificacion extends Objeto {
             // ¿Alcanzado objetivo?
             if (Distancia(objetivo) < PASO) {
                 if (carga == null) {
-                    if (Entorno.getInstance().generador.nextDouble() < objetivo.ProbaDeTomar()) {
-                        carga = Entorno.getInstance().TomarResiduo(objetivo);
+                    if (this.entorno.generador.nextDouble() < objetivo.ProbaDeTomar()) {
+                        carga = this.entorno.TomarResiduo(objetivo);
                     }
                 }
                 else {
-                    Entorno.getInstance().DepositarResiduo(objetivo);
+                    this.entorno.DepositarResiduo(objetivo);
                     carga = null;
                 }
                 ocupado = true;
