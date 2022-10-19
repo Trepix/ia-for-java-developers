@@ -1,5 +1,7 @@
-package io.trepix.ia.gameoflife;
+package io.trepix.ia;
 
+import io.trepix.ia.MultiAgentSystem;
+import io.trepix.ia.gameoflife.GameOfLife;
 import org.aspectj.lang.JoinPoint;
 
 import javax.swing.JPanel;

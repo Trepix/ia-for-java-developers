@@ -2,7 +2,7 @@ package io.trepix.ia.fishschool;
 
 import io.trepix.ia.Bounds;
 import io.trepix.ia.Size;
-import io.trepix.ia.gameoflife.MultiAgentSystem;
+import io.trepix.ia.MultiAgentSystem;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
