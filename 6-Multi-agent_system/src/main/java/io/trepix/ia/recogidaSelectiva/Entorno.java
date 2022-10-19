@@ -8,13 +8,7 @@ import java.util.Random;
 
 // Entorno, que contiene los residuos y los agentes
 public class Entorno {
-    // Gestión del singleton
-    private static Entorno instancia;
-    
-    public static Entorno getInstance() {
-        return instancia;
-    }
-    
+
     // Atributos
     protected Random generador;
     protected double ancho;
@@ -34,7 +28,6 @@ public class Entorno {
         agentes = new ArrayList();
         generador = new Random();
         support = new PropertyChangeSupport(this);
-        instancia = this;
     }
     
     public void Initializar(int _numResiduos, int _numAgentes, double _ancho, double _alto, int _numTiposResiduos) {
