@@ -27,7 +27,6 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
 
     @Override
     public void start() {
-        env.Initializar(50, 30, getWidth(), getHeight(), 3);
         env.AgregarChangeListener(this);
     }
 

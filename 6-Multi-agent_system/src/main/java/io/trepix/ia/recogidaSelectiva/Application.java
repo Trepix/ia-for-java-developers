@@ -15,6 +15,7 @@ public class Application {
                 .build();
 
         Entorno entorno = new Entorno(new Random());
+        entorno.Initializar(50, 30, size.width(), size.height(), 3);
 
         WindowBuilder
                 .withTitle("Selective trash collection")
