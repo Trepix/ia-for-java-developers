@@ -44,7 +44,8 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
     }
     
     protected void paintObstacle(Graphics g, Obstacle o) {
-        g.drawOval((int) (o.x() - o.radius()), (int) (o.y() - o.radius()), (int) o.radius() * 2, (int) o.radius() * 2);
+        Position position = o.position();
+        g.drawOval((int) (position.x() - o.radius()), (int) (position.y() - o.radius()), (int) o.radius() * 2, (int) o.radius() * 2);
     }
     
     @Override

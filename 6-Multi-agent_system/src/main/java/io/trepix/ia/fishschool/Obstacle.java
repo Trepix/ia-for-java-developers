@@ -1,22 +1,18 @@
 package io.trepix.ia.fishschool;
 
-public class Obstacle extends Objeto {
+import java.util.Objects;
+
+public class Obstacle {
     public static final int RADIUS = 10;
     private final Position position;
     private int aliveCycles = 500;
 
     public Obstacle(Position position) {
         this.position = position;
-        posX = position.x();
-        posY = position.y();
     }
 
-    public double x() {
-        return position.x();
-    }
-
-    public double y() {
-        return position.y();
+    public Position position() {
+        return position;
     }
 
     public void evolve() {
@@ -37,5 +33,17 @@ public class Obstacle extends Objeto {
 
     public Direction directionTo(Position position) {
         return this.position.directionTo(position);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Obstacle obstacle)) return false;
+        return aliveCycles == obstacle.aliveCycles && position.equals(obstacle.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, aliveCycles);
     }
 }

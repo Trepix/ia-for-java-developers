@@ -20,11 +20,6 @@ public record Direction(double x, double y) {
         return new Direction(x + rotation.x(), y + rotation.y());
     }
 
-    public Direction asDirection() {
-        return new Direction(x, y);
-    }
-
-
     public Direction reduceBy(double ratio) {
         return new Direction(x / ratio, y / ratio);
     }

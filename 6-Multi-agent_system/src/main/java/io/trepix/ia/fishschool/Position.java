@@ -1,7 +1,5 @@
 package io.trepix.ia.fishschool;
 
-import io.trepix.ia.Bounds;
-
 import java.util.Objects;
 
 public record Position(double x, double y) {
