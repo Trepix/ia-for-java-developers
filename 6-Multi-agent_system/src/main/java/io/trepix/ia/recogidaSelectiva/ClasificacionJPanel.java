@@ -1,5 +1,7 @@
 package io.trepix.ia.recogidaSelectiva;
 
+import io.trepix.ia.MouseClickListener;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -11,7 +13,7 @@ import java.util.TimerTask;
 import javax.swing.JPanel;
 
 // Panel que contiene la simulación de recogida selectiva
-public class ClasificacionJPanel extends JPanel implements PropertyChangeListener, MouseListener {
+public class ClasificacionJPanel extends JPanel implements PropertyChangeListener, MouseClickListener {
     Timer timer;
     boolean enCurso = false;
     TimerTask tarea;
@@ -49,15 +51,6 @@ public class ClasificacionJPanel extends JPanel implements PropertyChangeListene
             enCurso = true;
         }
     }
-
-    @Override
-    public void mousePressed(MouseEvent e) { }
-    @Override
-    public void mouseReleased(MouseEvent e) { }
-    @Override
-    public void mouseEntered(MouseEvent e) { }
-    @Override
-    public void mouseExited(MouseEvent e) { }    
     
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
