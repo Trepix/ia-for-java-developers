@@ -12,8 +12,7 @@ import static java.util.Comparator.comparing;
 public class Fish {
     private static final double MOVING_DISTANCE = 3;
     private static final double MIN_DISTANCE_TO_AVOID_COLLISION = 5;
-    private static final double DISTANCIA_MIN_CUADRADO = 25;
-    private static final double DISTANCIA_MAX_CUADRADO = 1600;
+    private static final double MAX_RANGE_TO_BELONG_TO_FISH_SCHOOL = 40;
 
     private Position position;
     private Direction direction;
@@ -115,8 +114,8 @@ public class Fish {
     }
 
     private boolean belongsToMyFishSchool(Fish fish) {
-        double distanciaCuadrado = this.distanceTo(fish) * this.distanceTo(fish);
-        return (distanciaCuadrado < DISTANCIA_MAX_CUADRADO && distanciaCuadrado > DISTANCIA_MIN_CUADRADO);
+        double distance = this.distanceTo(fish);
+        return (distance < MAX_RANGE_TO_BELONG_TO_FISH_SCHOOL && distance > MIN_DISTANCE_TO_AVOID_COLLISION);
     }
 
     private void move() {
