@@ -103,7 +103,7 @@ public class Fish {
     }
 
     private void shiftInside(Bounds bounds) {
-        var position = getPosition().shiftInside(bounds);
+        var position = bounds.shiftToNearestBound(getPosition());
         updatePosition(position);
     }
 

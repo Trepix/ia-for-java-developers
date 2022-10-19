@@ -19,6 +19,32 @@ public record Bounds(int lowerWidth, int upperWidth, int lowerHeight, int upperH
         return bounds.stream().min(comparing(bound -> bound.distanceTo(position))).get();
     }
 
+    public Position shiftToNearestBound(Position position) {
+        if (isInside(position)) return position;
+
+        var x = position.x();
+        var y = position.y();
+        if (x < lowerWidth) {
+            x = lowerWidth;
+        }
+        else if (y < lowerHeight) {
+            y = lowerHeight;
+        }
+        else if (x > upperWidth) {
+            x = upperWidth;
+        }
+        else if (y > upperHeight) {
+            y = upperHeight;
+        }
+        return new Position(x, y);
+    }
+
+    private boolean isInside(Position position) {
+        if (position.x() < lowerWidth || position.x() > upperWidth) return false;
+        if (position.y() < lowerHeight || position.y() > upperHeight) return false;
+        return true;
+    }
+
     public static class Bound {
 
         private final int limit;
