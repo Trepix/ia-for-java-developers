@@ -1,11 +1,11 @@
 package io.trepix.ia.recogidaSelectiva;
 
+import io.trepix.ia.Component;
 import io.trepix.ia.MouseClickListener;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Timer;
@@ -13,18 +13,19 @@ import java.util.TimerTask;
 import javax.swing.JPanel;
 
 // Panel que contiene la simulación de recogida selectiva
-public class ClasificacionJPanel extends JPanel implements PropertyChangeListener, MouseClickListener {
+public class UserInterface extends JPanel implements PropertyChangeListener, MouseClickListener, Component {
     Timer timer;
     boolean enCurso = false;
     TimerTask tarea;
     Entorno env;
     
-    public ClasificacionJPanel() {
+    public UserInterface() {
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
     }
-    
-    public void Lanzar() {
+
+    @Override
+    public void start() {
         env = Entorno.getInstance();
         env.Initializar(50, 30, getWidth(), getHeight(), 3);
         env.AgregarChangeListener(this);
@@ -107,4 +108,6 @@ public class ClasificacionJPanel extends JPanel implements PropertyChangeListene
             DiseñarResiduo(residuo, g);
         }
     }
+
+
 }
