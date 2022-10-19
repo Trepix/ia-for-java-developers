@@ -26,7 +26,7 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
 
     @Override
     public void start() {
-        env = Entorno.getInstance();
+        env = new Entorno();
         env.Initializar(50, 30, getWidth(), getHeight(), 3);
         env.AgregarChangeListener(this);
     }

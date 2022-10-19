@@ -12,9 +12,6 @@ public class Entorno {
     private static Entorno instancia;
     
     public static Entorno getInstance() {
-        if (instancia == null) {
-            instancia = new Entorno();
-        }
         return instancia;
     }
     
@@ -32,11 +29,12 @@ public class Entorno {
         support.addPropertyChangeListener(pcl);
     }
         
-    private Entorno() {
+    public Entorno() {
         residuos = new ArrayList();
         agentes = new ArrayList();
         generador = new Random();
         support = new PropertyChangeSupport(this);
+        instancia = this;
     }
     
     public void Initializar(int _numResiduos, int _numAgentes, double _ancho, double _alto, int _numTiposResiduos) {
