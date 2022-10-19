@@ -1,4 +1,4 @@
-package io.trepix.ia.fishschool;
+package io.trepix.ia.recogidaSelectiva;
 
 import java.util.Objects;
 

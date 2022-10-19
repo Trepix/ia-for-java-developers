@@ -1,7 +1,5 @@
 package io.trepix.ia.recogidaSelectiva;
 
-import io.trepix.ia.fishschool.Objeto;
-
 // Residuos en el entorno
 public class Residuo extends Objeto {
     protected final static double DISMINUCION = 0.6;
