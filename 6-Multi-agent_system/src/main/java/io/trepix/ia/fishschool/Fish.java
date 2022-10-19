@@ -6,7 +6,6 @@ import io.trepix.ia.Bounds.Bound;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 
 public class Fish {
@@ -30,10 +29,10 @@ public class Fish {
         return position;
     }
 
-    public void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
+    public void evolve(List<Fish> fishes, List<Obstacle> obstacles, Bounds bounds) {
         shiftInside(bounds);
-        if (!(moveAwayFrom(bounds) || dodgeObstacles(obstacles) || dodgeFishes(asList(fishes)))) {
-            followCurrentFishSchool(asList(fishes));
+        if (!moveAwayFrom(bounds) && !dodgeObstacles(obstacles) && !dodgeFishes(fishes)) {
+            followCurrentFishSchool(fishes);
         }
         move();
     }
