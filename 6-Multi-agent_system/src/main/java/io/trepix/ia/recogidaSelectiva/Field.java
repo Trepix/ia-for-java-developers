@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Random;
 
 // Entorno, que contiene los residuos y los agentes
-public class Entorno {
+public class Field {
 
     // Atributos
     protected Random generador;
@@ -23,7 +23,7 @@ public class Entorno {
         support.addPropertyChangeListener(pcl);
     }
         
-    public Entorno(Random generator) {
+    public Field(Random generator) {
         residuos = new ArrayList();
         agentes = new ArrayList();
         this.generador = generator;

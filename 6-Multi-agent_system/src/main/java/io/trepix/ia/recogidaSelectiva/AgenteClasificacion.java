@@ -10,7 +10,7 @@ public class AgenteClasificacion extends Objeto {
     
     protected Residuo carga;
 
-    private final Entorno entorno;
+    private final Field field;
     protected double velocidadX;
     protected double velocidadY;
     protected boolean ocupado = false;
@@ -21,12 +21,12 @@ public class AgenteClasificacion extends Objeto {
         velocidadY /= ancho;
     }
     
-    public AgenteClasificacion(double _posX, double _posY, Entorno entorno) {
-        this.entorno = entorno;
+    public AgenteClasificacion(double _posX, double _posY, Field field) {
+        this.field = field;
         posX = _posX;
         posY = _posY;
-        velocidadX = this.entorno.generador.nextDouble() - 0.5;
-        velocidadY = this.entorno.generador.nextDouble() - 0.5;
+        velocidadX = this.field.generador.nextDouble() - 0.5;
+        velocidadY = this.field.generador.nextDouble() - 0.5;
         Normalizar();
     }
     
@@ -37,8 +37,8 @@ public class AgenteClasificacion extends Objeto {
     public void ActualizarPosicion() {
         posX += PASO * velocidadX;
         posY += PASO * velocidadY;
-        double ancho = this.entorno.getAncho();
-        double alto = this.entorno.getAlto();
+        double ancho = this.field.getAncho();
+        double alto = this.field.getAlto();
         if (posX < 0) {
             posX = 0;
         }
@@ -70,9 +70,9 @@ public class AgenteClasificacion extends Objeto {
         // ¿Alcanzado un objetivo?
         if (objetivo == null || ocupado) {
             // Movimiento aleatorio
-            if (this.entorno.generador.nextDouble() < PROB_CHGT_DIRECTION) {
-                velocidadX = this.entorno.generador.nextDouble() - 0.5;
-                velocidadY = this.entorno.generador.nextDouble() - 0.5;
+            if (this.field.generador.nextDouble() < PROB_CHGT_DIRECTION) {
+                velocidadX = this.field.generador.nextDouble() - 0.5;
+                velocidadY = this.field.generador.nextDouble() - 0.5;
             }
             if (ocupado && objetivo == null) {
                 ocupado = false;
@@ -85,12 +85,12 @@ public class AgenteClasificacion extends Objeto {
             // ¿Alcanzado objetivo?
             if (Distancia(objetivo) < PASO) {
                 if (carga == null) {
-                    if (this.entorno.generador.nextDouble() < objetivo.ProbaDeTomar()) {
-                        carga = this.entorno.TomarResiduo(objetivo);
+                    if (this.field.generador.nextDouble() < objetivo.ProbaDeTomar()) {
+                        carga = this.field.TomarResiduo(objetivo);
                     }
                 }
                 else {
-                    this.entorno.DepositarResiduo(objetivo);
+                    this.field.DepositarResiduo(objetivo);
                     carga = null;
                 }
                 ocupado = true;

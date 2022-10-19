@@ -14,13 +14,13 @@ public class Application {
                 .height(400)
                 .build();
 
-        Entorno entorno = new Entorno(new Random());
-        entorno.Initializar(50, 30, size.width(), size.height(), 3);
+        Field field = new Field(new Random());
+        field.Initializar(50, 30, size.width(), size.height(), 3);
 
         WindowBuilder
                 .withTitle("Selective trash collection")
                 .withSize(size)
-                .withComponent(new UserInterface(entorno))
+                .withComponent(new UserInterface(field))
                 .show();
     }
 }

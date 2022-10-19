@@ -17,10 +17,10 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
     Timer timer;
     boolean enCurso = false;
     TimerTask tarea;
-    Entorno env;
+    Field env;
     
-    public UserInterface(Entorno entorno) {
-        this.env = entorno;
+    public UserInterface(Field field) {
+        this.env = field;
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
     }
