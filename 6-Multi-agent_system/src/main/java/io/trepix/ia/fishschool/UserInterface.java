@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class UserInterface extends JPanel implements MouseClickListener, PropertyChangeListener, Component {
+public class UserInterface extends JPanel implements Component, MouseClickListener {
 
     public static final int INTERVAL_UPDATE_IN_MILLISECONDS = 15;
     protected Ocean ocean;
@@ -22,7 +22,6 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
         this.setBackground(new Color(150, 255, 255));
         this.addMouseListener(this);
         this.ocean = ocean;
-        this.ocean.AgregarChangeListener(this);
     }
 
     @Override
@@ -30,11 +29,14 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                ocean.evolve();
+                update();
             }
         };
         timer = new Timer();
         timer.scheduleAtFixedRate(task, 0, INTERVAL_UPDATE_IN_MILLISECONDS);
+    }
+    private void update() {
+        ocean.evolve();
     }
 
     protected void paintFish(Graphics g, Fish p) {
@@ -46,11 +48,6 @@ public class UserInterface extends JPanel implements MouseClickListener, Propert
     protected void paintObstacle(Graphics g, Obstacle o) {
         Position position = o.position();
         g.drawOval((int) (position.x() - o.radius()), (int) (position.y() - o.radius()), (int) o.radius() * 2, (int) o.radius() * 2);
-    }
-    
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        this.repaint();
     }
 
     @Override

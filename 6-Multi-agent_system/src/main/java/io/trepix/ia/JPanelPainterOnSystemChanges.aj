@@ -1,6 +1,5 @@
 package io.trepix.ia;
 
-import io.trepix.ia.MultiAgentSystem;
 import io.trepix.ia.gameoflife.GameOfLife;
 import org.aspectj.lang.JoinPoint;
 
