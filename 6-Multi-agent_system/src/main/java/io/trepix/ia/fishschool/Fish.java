@@ -19,8 +19,8 @@ public class Fish {
     private Direction direction;
 
     public Fish(Position position, Direction direction) {
-        updatePosition(position);
-        updateDirection(direction);
+        this.position = position;
+        this.direction = direction;
     }
 
     public Direction direction() {
@@ -32,7 +32,7 @@ public class Fish {
     }
 
     protected void move() {
-        updatePosition(getPosition().move(getDirection(), MOVING_DISTANCE));
+        this.position = position.move(direction, MOVING_DISTANCE);
     }
 
     protected boolean Alineado(Fish p) {
@@ -47,10 +47,9 @@ public class Fish {
 
         Obstacle nearestObstacle = obstacles.stream().min(comparing(this::distanceTo)).get();
         if (this.willCollideWith(nearestObstacle)) {
-            Direction directionFromObstacle = nearestObstacle.directionTo(this.getPosition());
-            updateDirection(
-                    getDirection().sum(
-                            directionFromObstacle.normalize().reduceBy(2)).normalize());
+            Direction directionFromObstacle = nearestObstacle.directionTo(position);
+            this.direction = direction.sum(
+                                directionFromObstacle.normalize().reduceBy(2)).normalize();
             return true;
         }
         return false;
@@ -61,21 +60,20 @@ public class Fish {
     }
 
     private double distanceTo(Obstacle obstacle) {
-        return obstacle.distanceFrom(getPosition());
+        return obstacle.distanceFrom(position);
     }
 
     private double distanceTo(Fish fish) {
-        return fish.getPosition().distanceTo(getPosition());
+        return fish.position.distanceTo(position);
     }
 
     protected boolean dodgeFishes(List<Fish> fishes) {
         Fish nearestFish = fishes.stream().filter(fish -> !fish.equals(this)).min(comparing(this::distanceTo)).get();
 
         if (nearestFish.distanceTo(this) < MIN_DISTANCE_TO_AVOID_COLLISION) {
-            Direction directionFromFish = nearestFish.getPosition().directionTo(this.getPosition());
-            updateDirection(
-                    getDirection().sum(
-                            directionFromFish.normalize().reduceBy(4)).normalize());
+            Direction directionFromFish = nearestFish.position.directionTo(position);
+            this.direction = direction.sum(
+                                directionFromFish.normalize().reduceBy(4)).normalize();
             return true;
         }
         return false;
@@ -84,14 +82,14 @@ public class Fish {
     protected void CalcularDireccionMedia(List<Fish> fishes) {
         var fishSchool = fishes.stream()
                 .filter(this::Alineado)
-                .map(Fish::getDirection)
+                .map(Fish::direction)
                 .toList();
 
         var fishSchoolDirection = fishSchool.stream()
                 .reduce(Direction::sum)
                 .map(x -> x.reduceBy(fishSchool.size()));
 
-        fishSchoolDirection.ifPresent(x -> updateDirection(getDirection().sum(x).normalize()));
+        fishSchoolDirection.ifPresent(direction -> this.direction = this.direction.sum(direction).normalize());
     }
 
     protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
@@ -103,13 +101,12 @@ public class Fish {
     }
 
     private void shiftInside(Bounds bounds) {
-        var position = bounds.shiftToNearestBound(getPosition());
-        updatePosition(position);
+        this.position = bounds.shiftToNearestBound(this.position);
     }
 
     private boolean moveAwayFrom(Bounds bounds) {
-        Bound nearestBound = bounds.nearestTo(getPosition());
-        double distance = nearestBound.distanceTo(getPosition());
+        Bound nearestBound = bounds.nearestTo(position);
+        double distance = nearestBound.distanceTo(position);
         double ROTATE_DIRECTION = 0.3;
         if (distance < MIN_DISTANCE_TO_AVOID_COLLISION) {
             Direction rotation = switch (nearestBound.name()) {
@@ -118,28 +115,10 @@ public class Fish {
                 case LOWER_HEIGHT -> new Direction(0, ROTATE_DIRECTION);
                 case UPPER_HEIGHT -> new Direction(0, -ROTATE_DIRECTION);
             };
-            updateDirection(getDirection().sum(rotation).normalize());
+            this.direction = direction.sum(rotation).normalize();
             return true;
         }
         return false;
-    }
-
-    //Narrowed change methods
-
-    private Position getPosition() {
-        return this.position;
-    }
-
-    private void updatePosition(Position position) {
-        this.position = position;
-    }
-
-    private Direction getDirection() {
-        return this.direction;
-    }
-
-    private void updateDirection(Direction direction) {
-        this.direction = direction;
     }
 
     @Override
