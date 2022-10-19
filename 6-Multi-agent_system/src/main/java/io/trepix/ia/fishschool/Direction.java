@@ -1,31 +1,32 @@
 package io.trepix.ia.fishschool;
 
-import java.util.Objects;
+public record Direction(double x, double y) {
 
-public class Direction {
-
-    final double x;
-    final double y;
-
-    public Direction(double x, double y) {
-        this.x = x;
-        this.y = y;
+    static Direction fromRadians(double radians) {
+        var x = Math.cos(radians);
+        var y = Math.sin(radians);
+        return new Direction(x, y);
     }
 
-    public double x() {
-        return x;
+    public Direction normalize() {
+        return new Direction(x / hypotenuse(), y / hypotenuse());
     }
 
-    public double y() {
-        return y;
+    private double hypotenuse() {
+        return Math.sqrt(x * x + y * y);
     }
+
+    public Direction sum(Direction rotation) {
+        return new Direction(x + rotation.x(), y + rotation.y());
+    }
+
+    public Direction asDirection() {
+        return new Direction(x, y);
+    }
+
 
     public Direction reduceBy(double ratio) {
         return new Direction(x / ratio, y / ratio);
-    }
-
-    public Direction sum(Direction direction) {
-        return new Direction(x + direction.x, y + direction.y);
     }
 
     @Override
@@ -40,8 +41,4 @@ public class Direction {
         return Math.abs(d1 - d2) < epsilon;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
-    }
 }

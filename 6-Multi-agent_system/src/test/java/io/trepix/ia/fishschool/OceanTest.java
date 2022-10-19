@@ -64,7 +64,7 @@ public class OceanTest {
     }
 
     private static Fish createFish(double x, double y, double radians) {
-        return new Fish(new Position(x, y), UnitaryDirection.fromRadians(radians));
+        return new Fish(new Position(x, y), Direction.fromRadians(radians));
     }
 
     private static void assertIteration(List<Fish> expectedFishes) {

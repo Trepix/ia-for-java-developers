@@ -36,14 +36,13 @@ public record Position(double x, double y) {
         return true;
     }
 
-    public UnitaryDirection directionTo(Position position) {
-        double distance = this.distanceTo(position);
-        double xDirection = (position.x() - this.x()) / distance;
-        double yDirection = (position.y() - this.y()) / distance;
-        return new UnitaryDirection(xDirection, yDirection);
+    public Direction directionTo(Position position) {
+        double xDirection = (position.x() - this.x());
+        double yDirection = (position.y() - this.y());
+        return new Direction(xDirection, yDirection);
     }
 
-    public Position move(UnitaryDirection direction, double distance) {
+    public Position move(Direction direction, double distance) {
         return new Position(x + direction.x() * distance, y + direction.y() * distance);
     }
 

@@ -16,9 +16,9 @@ public class Fish {
     private static final double DISTANCIA_MAX_CUADRADO = 1600;
 
     private Position position;
-    private UnitaryDirection direction;
+    private Direction direction;
 
-    public Fish(Position position, UnitaryDirection direction) {
+    public Fish(Position position, Direction direction) {
         updatePosition(position);
         updateDirection(direction);
     }
@@ -47,10 +47,10 @@ public class Fish {
 
         Obstacle nearestObstacle = obstacles.stream().min(comparing(this::distanceTo)).get();
         if (this.willCollideWith(nearestObstacle)) {
-            UnitaryDirection directionFromObstacle = nearestObstacle.directionTo(this.getPosition());
+            Direction directionFromObstacle = nearestObstacle.directionTo(this.getPosition());
             updateDirection(
                     getDirection().sum(
-                            directionFromObstacle.reduceBy(2)));
+                            directionFromObstacle.normalize().reduceBy(2)).normalize());
             return true;
         }
         return false;
@@ -72,10 +72,10 @@ public class Fish {
         Fish nearestFish = fishes.stream().filter(fish -> !fish.equals(this)).min(comparing(this::distanceTo)).get();
 
         if (nearestFish.distanceTo(this) < MIN_DISTANCE_TO_AVOID_COLLISION) {
-            UnitaryDirection directionFromFish = nearestFish.getPosition().directionTo(this.getPosition());
+            Direction directionFromFish = nearestFish.getPosition().directionTo(this.getPosition());
             updateDirection(
                     getDirection().sum(
-                            directionFromFish.reduceBy(4)));
+                            directionFromFish.normalize().reduceBy(4)).normalize());
             return true;
         }
         return false;
@@ -85,14 +85,13 @@ public class Fish {
         var fishSchool = fishes.stream()
                 .filter(this::Alineado)
                 .map(Fish::getDirection)
-                .map(UnitaryDirection::asDirection)
                 .toList();
 
         var fishSchoolDirection = fishSchool.stream()
                 .reduce(Direction::sum)
                 .map(x -> x.reduceBy(fishSchool.size()));
 
-        fishSchoolDirection.ifPresent(x -> updateDirection(getDirection().sum(x)));
+        fishSchoolDirection.ifPresent(x -> updateDirection(getDirection().sum(x).normalize()));
     }
 
     protected void evolve(Fish[] fishes, List<Obstacle> obstacles, Bounds bounds) {
@@ -119,7 +118,7 @@ public class Fish {
                 case LOWER_HEIGHT -> new Direction(0, ROTATE_DIRECTION);
                 case UPPER_HEIGHT -> new Direction(0, -ROTATE_DIRECTION);
             };
-            updateDirection(getDirection().sum(rotation));
+            updateDirection(getDirection().sum(rotation).normalize());
             return true;
         }
         return false;
@@ -135,11 +134,11 @@ public class Fish {
         this.position = position;
     }
 
-    private UnitaryDirection getDirection() {
+    private Direction getDirection() {
         return this.direction;
     }
 
-    private void updateDirection(UnitaryDirection direction) {
+    private void updateDirection(Direction direction) {
         this.direction = direction;
     }
 

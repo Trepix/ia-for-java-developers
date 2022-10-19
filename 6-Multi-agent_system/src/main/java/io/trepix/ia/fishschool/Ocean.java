@@ -37,7 +37,7 @@ public class Ocean implements MultiAgentSystem {
         double x = generator.nextDouble() * size.width();
         double y = generator.nextDouble() * size.height();
         double direction = generator.nextDouble() * 2 * Math.PI;
-        return new Fish(new Position(x, y), UnitaryDirection.fromRadians(direction));
+        return new Fish(new Position(x, y), Direction.fromRadians(direction));
     }
 
     public List<Fish> fishes() {
