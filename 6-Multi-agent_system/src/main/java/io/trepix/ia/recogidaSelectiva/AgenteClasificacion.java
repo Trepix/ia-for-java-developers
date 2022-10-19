@@ -9,6 +9,8 @@ public class AgenteClasificacion extends Objeto {
     protected final static double PROB_CHGT_DIRECTION = 0.05;
     
     protected Residuo carga;
+
+    private final Entorno entorno;
     protected double velocidadX;
     protected double velocidadY;
     protected boolean ocupado = false;
@@ -19,7 +21,8 @@ public class AgenteClasificacion extends Objeto {
         velocidadY /= ancho;
     }
     
-    public AgenteClasificacion(double _posX, double _posY) {
+    public AgenteClasificacion(double _posX, double _posY, Entorno entorno) {
+        this.entorno = entorno;
         posX = _posX;
         posY = _posY;
         velocidadX = Entorno.getInstance().generador.nextDouble() - 0.5;

@@ -47,7 +47,7 @@ public class Entorno {
         }
         agentes.clear();
         for (int i = 0; i < _numAgentes; i++) {
-            AgenteClasificacion agent = new AgenteClasificacion(generador.nextDouble() * ancho, generador.nextDouble() * alto);
+            AgenteClasificacion agent = new AgenteClasificacion(generador.nextDouble() * ancho, generador.nextDouble() * alto, this);
             agentes.add(agent);
         }
     }
