@@ -1,11 +1,9 @@
 package io.trepix.ia.fishschool;
 
 import io.trepix.ia.Bounds;
-import io.trepix.ia.Size;
 import io.trepix.ia.MultiAgentSystem;
+import io.trepix.ia.Size;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,16 +12,9 @@ public class Ocean implements MultiAgentSystem {
     protected List<Fish> fishes;
     protected List<Obstacle> obstacles;
     protected Random generator;
-    private final PropertyChangeSupport support;
-
     private final Size size;
 
-    public void AgregarChangeListener(PropertyChangeListener pcl) {
-        support.addPropertyChangeListener(pcl);
-    }
-
     public Ocean(Size size, StartConfig startConfig) {
-        this.support = new PropertyChangeSupport(this);
         this.generator = startConfig.generator();
         this.size = size;
         this.obstacles = new ArrayList<>();
@@ -68,6 +59,5 @@ public class Ocean implements MultiAgentSystem {
     public void evolve() {
         evolveObstacles();
         evolveFishes();
-        support.firePropertyChange("changed", 0, 1);
     }
 }

@@ -1,14 +1,11 @@
 package io.trepix.ia.fishschool;
 
-import io.trepix.ia.MouseClickListener;
 import io.trepix.ia.Component;
+import io.trepix.ia.MouseClickListener;
 
-import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
