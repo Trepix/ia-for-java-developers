@@ -23,10 +23,10 @@ public class Entorno {
         support.addPropertyChangeListener(pcl);
     }
         
-    public Entorno() {
+    public Entorno(Random generator) {
         residuos = new ArrayList();
         agentes = new ArrayList();
-        generador = new Random();
+        this.generador = generator;
         support = new PropertyChangeSupport(this);
     }
     

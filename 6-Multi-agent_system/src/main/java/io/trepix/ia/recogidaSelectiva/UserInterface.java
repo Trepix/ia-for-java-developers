@@ -19,14 +19,14 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
     TimerTask tarea;
     Entorno env;
     
-    public UserInterface() {
+    public UserInterface(Entorno entorno) {
+        this.env = entorno;
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
     }
 
     @Override
     public void start() {
-        env = new Entorno();
         env.Initializar(50, 30, getWidth(), getHeight(), 3);
         env.AgregarChangeListener(this);
     }

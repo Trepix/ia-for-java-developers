@@ -3,6 +3,8 @@ package io.trepix.ia.recogidaSelectiva;
 import io.trepix.ia.Size;
 import io.trepix.ia.WindowBuilder;
 
+import java.util.Random;
+
 import static io.trepix.ia.WindowBuilder.SizeBuilder.width;
 
 public class Application {
@@ -12,10 +14,12 @@ public class Application {
                 .height(400)
                 .build();
 
+        Entorno entorno = new Entorno(new Random());
+
         WindowBuilder
                 .withTitle("Selective trash collection")
                 .withSize(size)
-                .withComponent(new UserInterface())
+                .withComponent(new UserInterface(entorno))
                 .show();
     }
 }
