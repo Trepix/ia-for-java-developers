@@ -14,3 +14,11 @@ This project uses AspectJ, which is set as dependency in `pom.xml`. Also need to
 My goal was to remove these ugly `firePropertyChange` calls just incrementing a counter and as a consequence the dependency with `PropertyChangeSupport`.
 
 Nevertheless, I want to practice some things just for fun, so let's get my hands dirty.
+
+
+### 2nd Disclaimer
+
+In a production code, I would **never** leave the initialization inside the constructor using a Random generator. It's a pain, a harmful and awful pain 🤕.
+
+I'm applying the golden master strategy to allow me to do aggressive and fast refactors.
+I don't intend to back to this code, so I'm not concerned about testing maintainability. Thus, I don't want to invest more time doing a builder or factory to fix this.
