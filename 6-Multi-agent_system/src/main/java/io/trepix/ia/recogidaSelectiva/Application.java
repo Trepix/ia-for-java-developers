@@ -2,6 +2,7 @@ package io.trepix.ia.recogidaSelectiva;
 
 import io.trepix.ia.Size;
 import io.trepix.ia.WindowBuilder;
+import io.trepix.ia.recogidaSelectiva.StartConfig.TrashConfig;
 
 import java.util.Random;
 
@@ -14,8 +15,10 @@ public class Application {
                 .height(400)
                 .build();
 
-        Field field = new Field(new Random());
-        field.Initializar(50, 30, size.width(), size.height(), 3);
+        TrashConfig trashConfig = new TrashConfig(50, 3);
+        StartConfig startConfig = new StartConfig(new Random(), size, trashConfig, 30);
+
+        Field field = new Field(startConfig);
 
         WindowBuilder
                 .withTitle("Selective trash collection")

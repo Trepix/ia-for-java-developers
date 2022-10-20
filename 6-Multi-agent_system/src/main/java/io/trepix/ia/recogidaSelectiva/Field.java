@@ -23,14 +23,23 @@ public class Field {
         support.addPropertyChangeListener(pcl);
     }
         
-    public Field(Random generator) {
+    public Field(StartConfig startConfig) {
         residuos = new ArrayList();
         agentes = new ArrayList();
-        this.generador = generator;
+        this.generador = startConfig.generator();
         support = new PropertyChangeSupport(this);
+        Initializar(startConfig);
     }
-    
-    public void Initializar(int _numResiduos, int _numAgentes, double _ancho, double _alto, int _numTiposResiduos) {
+
+    private void Initializar(StartConfig startConfig) {
+        Initializar(
+                startConfig.trashConfig().amountOfTrash(),
+                startConfig.agentsNumber(),
+                startConfig.size().width(), startConfig.size().height(),
+                startConfig.trashConfig().types());
+    }
+
+    private void Initializar(int _numResiduos, int _numAgentes, double _ancho, double _alto, int _numTiposResiduos) {
         ancho = _ancho;
         alto = _alto;
         residuos.clear();
