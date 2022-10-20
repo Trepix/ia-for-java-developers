@@ -32,28 +32,20 @@ public class Field {
     }
 
     private void Initializar(StartConfig startConfig) {
-        Initializar(
-                startConfig.trashConfig().amountOfTrash(),
-                startConfig.agentsNumber(),
-                startConfig.size().width(), startConfig.size().height(),
-                startConfig.trashConfig().types());
-    }
-
-    private void Initializar(int _numResiduos, int _numAgentes, double _ancho, double _alto, int _numTiposResiduos) {
-        ancho = _ancho;
-        alto = _alto;
+        ancho = startConfig.size().width();
+        alto = startConfig.size().height();
         residuos.clear();
-        for (int i = 0; i < _numResiduos; i++) {
-            Residuo residuo = new Residuo(generador.nextDouble() * ancho, generador.nextDouble() * alto, generador.nextInt(_numTiposResiduos));
+        for (int i = 0; i < startConfig.trashConfig().amountOfTrash(); i++) {
+            Residuo residuo = new Residuo(generador.nextDouble() * ancho, generador.nextDouble() * alto, generador.nextInt(startConfig.trashConfig().types()));
             residuos.add(residuo);
         }
         agentes.clear();
-        for (int i = 0; i < _numAgentes; i++) {
+        for (int i = 0; i < startConfig.agentsNumber(); i++) {
             AgenteClasificacion agent = new AgenteClasificacion(generador.nextDouble() * ancho, generador.nextDouble() * alto, this);
             agentes.add(agent);
         }
     }
-   
+
     public double getAncho() {
         return ancho;
     }
