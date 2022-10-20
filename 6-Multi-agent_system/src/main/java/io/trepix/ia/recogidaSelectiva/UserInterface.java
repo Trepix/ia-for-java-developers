@@ -56,12 +56,12 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
     public void propertyChange(PropertyChangeEvent evt) {
         this.repaint();
         int agentesCargados = 0;
-        for (AgenteClasificacion a : env.agentes) {
+        for (AgenteClasificacion a : env.cleaners) {
             if (a.estaCargado()) {
                 agentesCargados++;
             }
         }
-        System.out.println(env.residuos.size() + " - " + agentesCargados);
+        System.out.println(env.garbage.size() + " - " + agentesCargados);
     }
     
     public void DiseñarAgente(AgenteClasificacion agent, Graphics g) {
@@ -100,10 +100,10 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (AgenteClasificacion agent : env.agentes) {
+        for (AgenteClasificacion agent : env.cleaners) {
             DiseñarAgente(agent, g);
         }
-        for (Residuo residuo : env.residuos) {
+        for (Residuo residuo : env.garbage) {
             DiseñarResiduo(residuo, g);
         }
     }

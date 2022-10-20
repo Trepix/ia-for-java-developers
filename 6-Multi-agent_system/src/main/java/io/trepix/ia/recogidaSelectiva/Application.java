@@ -2,7 +2,7 @@ package io.trepix.ia.recogidaSelectiva;
 
 import io.trepix.ia.Size;
 import io.trepix.ia.WindowBuilder;
-import io.trepix.ia.recogidaSelectiva.StartConfig.TrashConfig;
+import io.trepix.ia.recogidaSelectiva.StartConfig.GarbageConfig;
 
 import java.util.Random;
 
@@ -15,8 +15,8 @@ public class Application {
                 .height(400)
                 .build();
 
-        TrashConfig trashConfig = new TrashConfig(50, 3);
-        StartConfig startConfig = new StartConfig(new Random(), size, trashConfig, 30);
+        GarbageConfig garbageConfig = new GarbageConfig(50, 3);
+        StartConfig startConfig = new StartConfig(new Random(), size, garbageConfig, 30);
 
         Field field = new Field(startConfig);
 

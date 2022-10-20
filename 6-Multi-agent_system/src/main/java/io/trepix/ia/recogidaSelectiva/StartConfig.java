@@ -4,7 +4,7 @@ import io.trepix.ia.Size;
 
 import java.util.Random;
 
-record StartConfig(Random generator, Size size, TrashConfig trashConfig, int agentsNumber) {
+record StartConfig(Random generator, Size size, GarbageConfig garbageConfig, int agentsNumber) {
 
-    record TrashConfig(int amountOfTrash, int types) {}
+    record GarbageConfig(int amountOfGarbage, int types) {}
 }

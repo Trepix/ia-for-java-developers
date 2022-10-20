@@ -25,8 +25,8 @@ public class AgenteClasificacion extends Objeto {
         this.field = field;
         posX = _posX;
         posY = _posY;
-        velocidadX = this.field.generador.nextDouble() - 0.5;
-        velocidadY = this.field.generador.nextDouble() - 0.5;
+        velocidadX = this.field.generator.nextDouble() - 0.5;
+        velocidadY = this.field.generator.nextDouble() - 0.5;
         Normalizar();
     }
     
@@ -37,8 +37,8 @@ public class AgenteClasificacion extends Objeto {
     public void ActualizarPosicion() {
         posX += PASO * velocidadX;
         posY += PASO * velocidadY;
-        double ancho = this.field.getAncho();
-        double alto = this.field.getAlto();
+        double ancho = this.field.width();
+        double alto = this.field.height();
         if (posX < 0) {
             posX = 0;
         }
@@ -70,9 +70,9 @@ public class AgenteClasificacion extends Objeto {
         // ¿Alcanzado un objetivo?
         if (objetivo == null || ocupado) {
             // Movimiento aleatorio
-            if (this.field.generador.nextDouble() < PROB_CHGT_DIRECTION) {
-                velocidadX = this.field.generador.nextDouble() - 0.5;
-                velocidadY = this.field.generador.nextDouble() - 0.5;
+            if (this.field.generator.nextDouble() < PROB_CHGT_DIRECTION) {
+                velocidadX = this.field.generator.nextDouble() - 0.5;
+                velocidadY = this.field.generator.nextDouble() - 0.5;
             }
             if (ocupado && objetivo == null) {
                 ocupado = false;
@@ -85,7 +85,7 @@ public class AgenteClasificacion extends Objeto {
             // ¿Alcanzado objetivo?
             if (Distancia(objetivo) < PASO) {
                 if (carga == null) {
-                    if (this.field.generador.nextDouble() < objetivo.ProbaDeTomar()) {
+                    if (this.field.generator.nextDouble() < objetivo.ProbaDeTomar()) {
                         carga = this.field.TomarResiduo(objetivo);
                     }
                 }
