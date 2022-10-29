@@ -1,5 +1,7 @@
 package io.trepix.ia.wastesorting;
 
+import io.trepix.ia.Direction;
+import io.trepix.ia.Position;
 import io.trepix.ia.Size;
 
 import java.beans.PropertyChangeListener;
@@ -41,7 +43,9 @@ public class Field {
         }
         cleaners.clear();
         for (int i = 0; i < startConfig.agentsNumber(); i++) {
-            AgenteClasificacion agent = new AgenteClasificacion(generator.nextDouble() * width, generator.nextDouble() * height, this);
+            Position position = new Position(generator.nextDouble() * width, generator.nextDouble() * height);
+            Direction direction = new Direction(generator.nextDouble() - 0.5, generator.nextDouble() - 0.5);
+            AgenteClasificacion agent = new AgenteClasificacion(position, direction, this);
             cleaners.add(agent);
         }
     }

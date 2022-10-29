@@ -1,5 +1,8 @@
 package io.trepix.ia.wastesorting;
 
+import io.trepix.ia.Direction;
+import io.trepix.ia.Position;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -21,12 +24,12 @@ public class AgenteClasificacion extends Objeto {
         velocidadY /= ancho;
     }
     
-    public AgenteClasificacion(double _posX, double _posY, Field field) {
+    public AgenteClasificacion(Position position, Direction direction, Field field) {
         this.field = field;
-        posX = _posX;
-        posY = _posY;
-        velocidadX = this.field.generator.nextDouble() - 0.5;
-        velocidadY = this.field.generator.nextDouble() - 0.5;
+        posX = position.x();
+        posY = position.y();
+        velocidadX = direction.x();
+        velocidadY = direction.y();
         Normalizar();
     }
     
