@@ -1,4 +1,4 @@
-package io.trepix.ia.recogidaSelectiva;
+package io.trepix.ia.wastesorting;
 
 import io.trepix.ia.Component;
 import io.trepix.ia.MouseClickListener;

@@ -1,4 +1,4 @@
-package io.trepix.ia.recogidaSelectiva;
+package io.trepix.ia.wastesorting;
 
 // Residuos en el entorno
 public class Residuo extends Objeto {

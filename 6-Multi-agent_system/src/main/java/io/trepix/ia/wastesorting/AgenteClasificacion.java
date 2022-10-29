@@ -1,4 +1,4 @@
-package io.trepix.ia.recogidaSelectiva;
+package io.trepix.ia.wastesorting;
 
 import java.util.ArrayList;
 import java.util.Collections;

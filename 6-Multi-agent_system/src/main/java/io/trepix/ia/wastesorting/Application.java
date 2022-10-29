@@ -1,8 +1,8 @@
-package io.trepix.ia.recogidaSelectiva;
+package io.trepix.ia.wastesorting;
 
 import io.trepix.ia.Size;
 import io.trepix.ia.WindowBuilder;
-import io.trepix.ia.recogidaSelectiva.StartConfig.GarbageConfig;
+import io.trepix.ia.wastesorting.StartConfig.GarbageConfig;
 
 import java.util.Random;
 
