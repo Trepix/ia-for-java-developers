@@ -1,7 +1,5 @@
 package io.trepix.ia;
 
-import io.trepix.ia.fishschool.Position;
-
 import java.util.List;
 
 import static io.trepix.ia.Bounds.Bound.Name.*;

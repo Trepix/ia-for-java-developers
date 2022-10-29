@@ -1,5 +1,8 @@
 package io.trepix.ia.fishschool;
 
+import io.trepix.ia.Direction;
+import io.trepix.ia.Position;
+
 import java.util.Objects;
 
 public class Obstacle {

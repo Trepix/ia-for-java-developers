@@ -1,8 +1,6 @@
 package io.trepix.ia.fishschool;
 
-import io.trepix.ia.Bounds;
-import io.trepix.ia.MultiAgentSystem;
-import io.trepix.ia.Size;
+import io.trepix.ia.*;
 
 import java.util.ArrayList;
 import java.util.List;

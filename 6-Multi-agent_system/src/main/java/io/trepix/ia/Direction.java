@@ -1,4 +1,4 @@
-package io.trepix.ia.fishschool;
+package io.trepix.ia;
 
 public record Direction(double x, double y) {
 

@@ -1,5 +1,7 @@
 package io.trepix.ia.fishschool;
 
+import io.trepix.ia.Direction;
+import io.trepix.ia.Position;
 import io.trepix.ia.Size;
 
 import java.util.Arrays;

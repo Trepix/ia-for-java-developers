@@ -1,4 +1,4 @@
-package io.trepix.ia.fishschool;
+package io.trepix.ia;
 
 import java.util.Objects;
 

@@ -2,6 +2,8 @@ package io.trepix.ia.fishschool;
 
 import io.trepix.ia.Bounds;
 import io.trepix.ia.Bounds.Bound;
+import io.trepix.ia.Direction;
+import io.trepix.ia.Position;
 
 import java.util.List;
 import java.util.Objects;

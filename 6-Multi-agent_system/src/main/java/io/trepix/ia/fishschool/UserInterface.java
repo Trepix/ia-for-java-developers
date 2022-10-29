@@ -1,7 +1,9 @@
 package io.trepix.ia.fishschool;
 
 import io.trepix.ia.Component;
+import io.trepix.ia.Direction;
 import io.trepix.ia.MouseClickListener;
+import io.trepix.ia.Position;
 
 import javax.swing.*;
 import java.awt.*;
