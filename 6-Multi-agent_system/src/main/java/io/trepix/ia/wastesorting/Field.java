@@ -6,7 +6,6 @@ import io.trepix.ia.Size;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.lang.ref.Cleaner;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,8 +14,8 @@ import java.util.Random;
 public class Field {
     protected Random generator;
     private final Size size;
-    protected ArrayList<Residuo> garbage;
-    protected List<AgenteClasificacion> cleaners;
+    protected ArrayList<Garbage> garbage;
+    protected List<ClassifierAgent> cleaners;
     protected int numIteraciones = 0;
     private final PropertyChangeSupport support;
     
@@ -39,14 +38,14 @@ public class Field {
         double height = startConfig.size().height();
         garbage.clear();
         for (int i = 0; i < startConfig.garbageConfig().amountOfGarbage(); i++) {
-            Residuo residuo = new Residuo(generator.nextDouble() * width, generator.nextDouble() * height, generator.nextInt(startConfig.garbageConfig().types()));
-            garbage.add(residuo);
+            Garbage garbage = new Garbage(new Position(generator.nextDouble() * width, generator.nextDouble() * height), generator.nextInt(startConfig.garbageConfig().types()));
+            this.garbage.add(garbage);
         }
         cleaners.clear();
         for (int i = 0; i < startConfig.agentsNumber(); i++) {
             Position position = new Position(generator.nextDouble() * width, generator.nextDouble() * height);
             Direction direction = new Direction(generator.nextDouble() - 0.5, generator.nextDouble() - 0.5);
-            AgenteClasificacion agent = new AgenteClasificacion(position, direction, this);
+            ClassifierAgent agent = new ClassifierAgent(position, direction, this);
             cleaners.add(agent);
         }
     }
@@ -58,26 +57,25 @@ public class Field {
         return size.height();
     }
     
-    public void DepositarResiduo(Residuo d) {
-        d.AumentarTamaño();        
+    public void DepositarResiduo(Garbage d) {
+        d.increase();
     }
     
-    public Residuo TomarResiduo(Residuo d) {
-        if (d.tamaño == 1) {
+    public Garbage TomarResiduo(Garbage d) {
+        if (d.size == 1) {
             garbage.remove(d);
             return d;
         }
         else {
-            d.ReducirTamaño();
-            Residuo carga = new Residuo(d);
+            Garbage carga = d.take();
             return carga;
         }
     }
     
-    public void Actualizar() {
-        for (AgenteClasificacion agent : cleaners) {
-            agent.ActualizarDireccion(garbage);
-            agent.ActualizarPosicion();
+    public void update() {
+        for (ClassifierAgent agent : cleaners) {
+            agent.updateDirection(garbage);
+            agent.updatePosition();
         }
         support.firePropertyChange("changed", numIteraciones, numIteraciones+1);
 
@@ -87,11 +85,11 @@ public class Field {
         }
     }
 
-    public List<Residuo> garbage() {
+    public List<Garbage> garbage() {
         return garbage;
     }
 
-    public List<AgenteClasificacion> cleaners() {
+    public List<ClassifierAgent> cleaners() {
         return cleaners;
     }
 }

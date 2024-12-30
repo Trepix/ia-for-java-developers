@@ -60,17 +60,17 @@ public class FieldTest {
         System.out.println("Everything OK, refactor didn't broke anything, ''anything'' exercised by tests :)");
     }
 
-    private static AgenteClasificacion createCleaner(double x, double y, double radians) {
-        return new AgenteClasificacion(new Position(x, y), Direction.fromRadians(radians), field);
+    private static ClassifierAgent createCleaner(double x, double y, double radians) {
+        return new ClassifierAgent(new Position(x, y), Direction.fromRadians(radians), field);
     }
 
-    private static Residuo createGarbage(double x, double y, int type) {
-        return new Residuo(x, y, type);
+    private static Garbage createGarbage(double x, double y, int type) {
+        return new Garbage(new Position(x, y), type);
     }
 
-    private static void assertIteration(int iterationToTest, List<AgenteClasificacion> expectedCleaners, List<Residuo> expectedGarbage) {
+    private static void assertIteration(int iterationToTest, List<ClassifierAgent> expectedCleaners, List<Garbage> expectedGarbage) {
         while (currentIteration <= iterationToTest) {
-            field.Actualizar();
+            field.update();
             ++currentIteration;
         }
 
@@ -91,8 +91,8 @@ public class FieldTest {
 
         System.out.println("asList(");
         for (int i = 0; i < cleaners.size(); i++) {
-            AgenteClasificacion cleaner = cleaners.get(i);
-            double radians = Math.acos(cleaner.velocidadX);
+            ClassifierAgent cleaner = cleaners.get(i);
+            double radians = Math.acos(cleaner.speedX);
             String templated = String.format("createCleaner(%.15f/%.15f/%.15f)", cleaner.posX, cleaner.posY, radians);
             String result = templated.replace(",", ".").replace("/", ",");
             System.out.print(result);
@@ -102,7 +102,7 @@ public class FieldTest {
 
         System.out.println("asList(");
         for (int i = 0; i < garbage.size(); i++) {
-            Residuo trash = garbage.get(i);
+            Garbage trash = garbage.get(i);
             String templated = String.format("createGarbage(%.15f/%.15f/%d)", trash.posX, trash.posY, trash.type);
             String result = templated.replace(",", ".").replace("/", ",");
             System.out.print(result);

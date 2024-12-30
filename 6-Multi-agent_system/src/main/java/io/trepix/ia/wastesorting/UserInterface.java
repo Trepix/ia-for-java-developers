@@ -44,7 +44,7 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
             tarea = new TimerTask() {
                 @Override
                 public void run() {
-                    env.Actualizar();
+                    env.update();
                 }
             };
             timer.scheduleAtFixedRate(tarea, 0, 10);
@@ -56,16 +56,16 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
     public void propertyChange(PropertyChangeEvent evt) {
         this.repaint();
         int agentesCargados = 0;
-        for (AgenteClasificacion a : env.cleaners) {
-            if (a.estaCargado()) {
+        for (ClassifierAgent a : env.cleaners) {
+            if (a.isLoaded()) {
                 agentesCargados++;
             }
         }
         System.out.println(env.garbage.size() + " - " + agentesCargados);
     }
     
-    public void DiseñarAgente(AgenteClasificacion agent, Graphics g) {
-        if (agent.estaCargado()) {
+    public void DiseñarAgente(ClassifierAgent agent, Graphics g) {
+        if (agent.isLoaded()) {
             g.setColor(Color.GRAY);
         }
         else {
@@ -74,7 +74,7 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
         g.fillRect((int) agent.posX - 1, (int) agent.posY - 1, 3, 3);
     }
     
-    public void DiseñarResiduo(Residuo d, Graphics g) {
+    public void DiseñarResiduo(Garbage d, Graphics g) {
         // Elección de la color
         Color color;
         switch(d.type) {
@@ -100,11 +100,11 @@ public class UserInterface extends JPanel implements PropertyChangeListener, Mou
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (AgenteClasificacion agent : env.cleaners) {
+        for (ClassifierAgent agent : env.cleaners) {
             DiseñarAgente(agent, g);
         }
-        for (Residuo residuo : env.garbage) {
-            DiseñarResiduo(residuo, g);
+        for (Garbage garbage : env.garbage) {
+            DiseñarResiduo(garbage, g);
         }
     }
 
