@@ -3,14 +3,13 @@ package io.trepix.ia.fishschool;
 import io.trepix.ia.Direction;
 import io.trepix.ia.Position;
 import io.trepix.ia.Size;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 
-//Should be executed with option -ea in VM Arguments to enable assertions
 public class OceanTest {
 
     static long seed = 1907;
@@ -19,7 +18,8 @@ public class OceanTest {
 
     static int iterations = 0;
 
-    public static void main(String[] args) {
+    @Test
+    public void run_test() {
         addObstaclesAt(new Position(10, 10), new Position(30, 30));
 
         assertIteration(asList(
@@ -72,6 +72,10 @@ public class OceanTest {
     private static void assertIteration(List<Fish> expectedFishes) {
         ocean.evolve();
         var fishes = ocean.fishes();
-        assert expectedFishes.containsAll(fishes) : "Fishes are different in iteration " + iterations++;
+        assertContains("Fishes are different in iteration " + iterations++, expectedFishes, fishes);
+    }
+
+    private static <T> void assertContains(String message, Collection<T> expected, Collection<T> actual) {
+        Assert.assertTrue(message, expected.containsAll(actual));
     }
 }
