@@ -6,6 +6,7 @@ import io.trepix.ia.Size;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.lang.ref.Cleaner;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -84,5 +85,13 @@ public class Field {
         if (numIteraciones % 500 == 0) {
             Collections.reverse(garbage);
         }
+    }
+
+    public List<Residuo> garbage() {
+        return garbage;
+    }
+
+    public List<AgenteClasificacion> cleaners() {
+        return cleaners;
     }
 }
